@@ -93,25 +93,11 @@
 }
 
 
-- (void)updateVisibileMapAnnotations{
-    [self.treeController refresh:self.animationSwitch.on];
-}
 
 #pragma mark - MKMapView
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-
-#if 0
-    if(fabs(self.lastRegionLatitudeSpan - mapView.visibleMapRect.size.width) > 10){
-        [self updateVisibileMapAnnotations];
-        self.lastRegionLatitudeSpan = mapView.visibleMapRect.size.width;
-    }
-    else {
-        NSLog(@"skipping annotation update");
-    }
-#else
-    [self updateVisibileMapAnnotations];
-#endif
+    [self.treeController refresh:self.animationSwitch.on];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
