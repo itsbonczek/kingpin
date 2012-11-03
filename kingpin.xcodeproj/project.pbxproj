@@ -130,20 +130,20 @@
 		93BBC0901645B78C004BC920 /* tester */ = {
 			isa = PBXGroup;
 			children = (
-				93BBC0AD1645CAE5004BC920 /* TestAnnotation.h */,
-				93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */,
 				93BBC0911645B78C004BC920 /* AppDelegate.h */,
 				93BBC0921645B78C004BC920 /* AppDelegate.m */,
 				93BBC0931645B78C004BC920 /* Default-568h@2x.png */,
 				93BBC0941645B78C004BC920 /* Default.png */,
 				93BBC0951645B78C004BC920 /* Default@2x.png */,
 				93BBC0961645B78C004BC920 /* InfoPlist.strings */,
-				93BBC0981645B78C004BC920 /* ViewController.xib */,
 				93BBC09A1645B78C004BC920 /* kingpinTestApplication-Info.plist */,
 				93BBC09B1645B78C004BC920 /* kingpinTestApplication-Prefix.pch */,
 				93BBC09C1645B78C004BC920 /* main.m */,
+				93BBC0AD1645CAE5004BC920 /* TestAnnotation.h */,
+				93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */,
 				93BBC09D1645B78C004BC920 /* ViewController.h */,
 				93BBC09E1645B78C004BC920 /* ViewController.m */,
+				93BBC0981645B78C004BC920 /* ViewController.xib */,
 			);
 			path = tester;
 			sourceTree = "<group>";
