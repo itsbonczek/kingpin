@@ -1,0 +1,349 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
+		93BBC0521645A2B2004BC920 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0511645A2B2004BC920 /* Foundation.framework */; };
+		93BBC0541645A2B2004BC920 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0531645A2B2004BC920 /* CoreGraphics.framework */; };
+		93BBC07C1645A387004BC920 /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
+		93BBC07D1645A387004BC920 /* KPTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0441645A1F8004BC920 /* KPTreeNode.m */; };
+		93BBC07E1645A387004BC920 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
+		93BBC0821645A39F004BC920 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0811645A39F004BC920 /* MapKit.framework */; };
+		93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0861645A42A004BC920 /* CoreLocation.framework */; };
+		93BBC08A1645A690004BC920 /* KPTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPTreeController.m */; };
+		93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0921645B78C004BC920 /* AppDelegate.m */; };
+		93BBC0A01645B78C004BC920 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0931645B78C004BC920 /* Default-568h@2x.png */; };
+		93BBC0A11645B78C004BC920 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0941645B78C004BC920 /* Default.png */; };
+		93BBC0A21645B78C004BC920 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0951645B78C004BC920 /* Default@2x.png */; };
+		93BBC0A31645B78C004BC920 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0961645B78C004BC920 /* InfoPlist.strings */; };
+		93BBC0A41645B78C004BC920 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0981645B78C004BC920 /* ViewController.xib */; };
+		93BBC0A51645B78C004BC920 /* kingpinTestApplication-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC09A1645B78C004BC920 /* kingpinTestApplication-Info.plist */; };
+		93BBC0A61645B78C004BC920 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC09C1645B78C004BC920 /* main.m */; };
+		93BBC0A71645B78C004BC920 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC09E1645B78C004BC920 /* ViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree.h; sourceTree = "<group>"; };
+		93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTree.m; sourceTree = "<group>"; };
+		93BBC0431645A1F8004BC920 /* KPTreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPTreeNode.h; sourceTree = "<group>"; };
+		93BBC0441645A1F8004BC920 /* KPTreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPTreeNode.m; sourceTree = "<group>"; };
+		93BBC0451645A1F8004BC920 /* KPAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotation.h; sourceTree = "<group>"; };
+		93BBC0461645A1F8004BC920 /* KPAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPAnnotation.m; sourceTree = "<group>"; };
+		93BBC04B1645A2B2004BC920 /* kingpinTestApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kingpinTestApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		93BBC04F1645A2B2004BC920 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		93BBC0511645A2B2004BC920 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		93BBC0531645A2B2004BC920 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		93BBC0811645A39F004BC920 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
+		93BBC0861645A42A004BC920 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
+		93BBC0881645A68F004BC920 /* KPTreeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPTreeController.h; sourceTree = "<group>"; };
+		93BBC0891645A68F004BC920 /* KPTreeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPTreeController.m; sourceTree = "<group>"; };
+		93BBC0911645B78C004BC920 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		93BBC0921645B78C004BC920 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		93BBC0931645B78C004BC920 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		93BBC0941645B78C004BC920 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		93BBC0951645B78C004BC920 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		93BBC0971645B78C004BC920 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		93BBC0991645B78C004BC920 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		93BBC09A1645B78C004BC920 /* kingpinTestApplication-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "kingpinTestApplication-Info.plist"; sourceTree = "<group>"; };
+		93BBC09B1645B78C004BC920 /* kingpinTestApplication-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "kingpinTestApplication-Prefix.pch"; sourceTree = "<group>"; };
+		93BBC09C1645B78C004BC920 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		93BBC09D1645B78C004BC920 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		93BBC09E1645B78C004BC920 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		93BBC0481645A2B2004BC920 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */,
+				93BBC0821645A39F004BC920 /* MapKit.framework in Frameworks */,
+				93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */,
+				93BBC0521645A2B2004BC920 /* Foundation.framework in Frameworks */,
+				93BBC0541645A2B2004BC920 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		93BBC02D1645A119004BC920 = {
+			isa = PBXGroup;
+			children = (
+				93BBC03A1645A16D004BC920 /* kingpin */,
+				93BBC0901645B78C004BC920 /* tester */,
+				93BBC04E1645A2B2004BC920 /* Frameworks */,
+				93BBC04C1645A2B2004BC920 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		93BBC03A1645A16D004BC920 /* kingpin */ = {
+			isa = PBXGroup;
+			children = (
+				93BBC0401645A1F8004BC920 /* src */,
+			);
+			name = kingpin;
+			sourceTree = "<group>";
+		};
+		93BBC0401645A1F8004BC920 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */,
+				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,
+				93BBC0431645A1F8004BC920 /* KPTreeNode.h */,
+				93BBC0441645A1F8004BC920 /* KPTreeNode.m */,
+				93BBC0451645A1F8004BC920 /* KPAnnotation.h */,
+				93BBC0461645A1F8004BC920 /* KPAnnotation.m */,
+				93BBC0881645A68F004BC920 /* KPTreeController.h */,
+				93BBC0891645A68F004BC920 /* KPTreeController.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		93BBC04C1645A2B2004BC920 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				93BBC04B1645A2B2004BC920 /* kingpinTestApplication.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		93BBC04E1645A2B2004BC920 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				93BBC0861645A42A004BC920 /* CoreLocation.framework */,
+				93BBC0811645A39F004BC920 /* MapKit.framework */,
+				93BBC04F1645A2B2004BC920 /* UIKit.framework */,
+				93BBC0511645A2B2004BC920 /* Foundation.framework */,
+				93BBC0531645A2B2004BC920 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		93BBC0901645B78C004BC920 /* tester */ = {
+			isa = PBXGroup;
+			children = (
+				93BBC0911645B78C004BC920 /* AppDelegate.h */,
+				93BBC0921645B78C004BC920 /* AppDelegate.m */,
+				93BBC0931645B78C004BC920 /* Default-568h@2x.png */,
+				93BBC0941645B78C004BC920 /* Default.png */,
+				93BBC0951645B78C004BC920 /* Default@2x.png */,
+				93BBC0961645B78C004BC920 /* InfoPlist.strings */,
+				93BBC0981645B78C004BC920 /* ViewController.xib */,
+				93BBC09A1645B78C004BC920 /* kingpinTestApplication-Info.plist */,
+				93BBC09B1645B78C004BC920 /* kingpinTestApplication-Prefix.pch */,
+				93BBC09C1645B78C004BC920 /* main.m */,
+				93BBC09D1645B78C004BC920 /* ViewController.h */,
+				93BBC09E1645B78C004BC920 /* ViewController.m */,
+			);
+			path = tester;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		93BBC04A1645A2B2004BC920 /* kingpinTestApplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93BBC06D1645A2B3004BC920 /* Build configuration list for PBXNativeTarget "kingpinTestApplication" */;
+			buildPhases = (
+				93BBC0471645A2B2004BC920 /* Sources */,
+				93BBC0481645A2B2004BC920 /* Frameworks */,
+				93BBC0491645A2B2004BC920 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = kingpinTestApplication;
+			productName = CATreeTestApplication;
+			productReference = 93BBC04B1645A2B2004BC920 /* kingpinTestApplication.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		93BBC02F1645A119004BC920 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = 93BBC0321645A119004BC920 /* Build configuration list for PBXProject "kingpin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 93BBC02D1645A119004BC920;
+			productRefGroup = 93BBC04C1645A2B2004BC920 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				93BBC04A1645A2B2004BC920 /* kingpinTestApplication */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		93BBC0491645A2B2004BC920 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93BBC0A01645B78C004BC920 /* Default-568h@2x.png in Resources */,
+				93BBC0A11645B78C004BC920 /* Default.png in Resources */,
+				93BBC0A21645B78C004BC920 /* Default@2x.png in Resources */,
+				93BBC0A31645B78C004BC920 /* InfoPlist.strings in Resources */,
+				93BBC0A41645B78C004BC920 /* ViewController.xib in Resources */,
+				93BBC0A51645B78C004BC920 /* kingpinTestApplication-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		93BBC0471645A2B2004BC920 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93BBC07C1645A387004BC920 /* KPAnnotationTree.m in Sources */,
+				93BBC07D1645A387004BC920 /* KPTreeNode.m in Sources */,
+				93BBC07E1645A387004BC920 /* KPAnnotation.m in Sources */,
+				93BBC08A1645A690004BC920 /* KPTreeController.m in Sources */,
+				93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */,
+				93BBC0A61645B78C004BC920 /* main.m in Sources */,
+				93BBC0A71645B78C004BC920 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		93BBC0961645B78C004BC920 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				93BBC0971645B78C004BC920 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		93BBC0981645B78C004BC920 /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				93BBC0991645B78C004BC920 /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		93BBC0341645A119004BC920 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		93BBC0351645A119004BC920 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		93BBC06E1645A2B3004BC920 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CATreeTestApplication/kingpinTestApplication-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "CATreeTestApplication/kingpinTestApplication-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = kingpinTestApplication;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		93BBC06F1645A2B3004BC920 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CATreeTestApplication/kingpinTestApplication-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "CATreeTestApplication/kingpinTestApplication-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = kingpinTestApplication;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		93BBC0321645A119004BC920 /* Build configuration list for PBXProject "kingpin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93BBC0341645A119004BC920 /* Debug */,
+				93BBC0351645A119004BC920 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		93BBC06D1645A2B3004BC920 /* Build configuration list for PBXNativeTarget "kingpinTestApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93BBC06E1645A2B3004BC920 /* Debug */,
+				93BBC06F1645A2B3004BC920 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 93BBC02F1645A119004BC920 /* Project object */;
+}

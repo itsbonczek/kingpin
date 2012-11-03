@@ -1,0 +1,145 @@
+//
+//  ViewController.m
+//  MapTest
+//
+//  Created by Bryan Bonczek on 6/2/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#import "ViewController.h"
+
+#import "TestAnnotation.h"
+
+#import "KPAnnotation.h"
+#import "KPTreeController.h"
+
+@interface ViewController ()
+
+@property (nonatomic, strong) KPTreeController *treeController;
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+
+    [super viewDidLoad];
+    
+    self.mapView.delegate = self;
+    
+    self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView];
+    self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    [self.treeController setAnnotations:[self annotations]];
+    
+    [self updateVisibileMapAnnotations];
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    self.mapView = nil;
+}
+
+
+- (NSArray *)annotations {
+    
+    // build an NYC and SF cluster
+    
+    NSMutableArray *annotations = [NSMutableArray array];
+    
+    CLLocationCoordinate2D nycCoord = CLLocationCoordinate2DMake(40.77, -73.98);
+    CLLocationCoordinate2D sfCoord = CLLocationCoordinate2DMake(37.85, -122.68);
+    
+    for (int i=0; i<500; i++) {
+        
+        float latAdj = ((random() % 100) / 1000.f);
+        float lngAdj = ((random() % 100) / 1000.f);
+        
+        TestAnnotation *a1 = [[TestAnnotation alloc] init];
+        a1.coordinate = CLLocationCoordinate2DMake(nycCoord.latitude + latAdj, 
+                                                   nycCoord.longitude + lngAdj);
+        [annotations addObject:a1];
+        
+        TestAnnotation *a2 = [[TestAnnotation alloc] init];
+        a2.coordinate = CLLocationCoordinate2DMake(sfCoord.latitude + latAdj,
+                                                   sfCoord.longitude + lngAdj);
+        [annotations addObject:a2];
+
+    }
+    
+    return annotations;
+}
+
+- (CLLocationCoordinate2D)testMapStartCoordinate {
+    return CLLocationCoordinate2DMake(45, -75);
+}
+
+- (CLLocationCoordinate2D)testMapEndCoordinate {
+    return CLLocationCoordinate2DMake(40, -70);
+}
+
+// the map rect that contains all of the coordinates
+
+- (MKMapRect)testMapRect {
+    
+    MKMapPoint start = MKMapPointForCoordinate([self testMapStartCoordinate]);
+    MKMapPoint end = MKMapPointForCoordinate([self testMapEndCoordinate]);
+    
+    MKMapRect exactRegion = MKMapRectMake(start.x,
+                                          start.y,
+                                          end.x - start.x,
+                                          end.y - start.y);
+    
+    return exactRegion;
+}
+
+
+- (void)updateVisibileMapAnnotations{
+    [self.treeController refresh:self.animationSwitch.on];
+}
+
+#pragma mark - MKMapView
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+
+#if 0
+    if(fabs(self.lastRegionLatitudeSpan - mapView.visibleMapRect.size.width) > 10){
+        [self updateVisibileMapAnnotations];
+        self.lastRegionLatitudeSpan = mapView.visibleMapRect.size.width;
+    }
+    else {
+        NSLog(@"skipping annotation update");
+    }
+#else
+    [self updateVisibileMapAnnotations];
+#endif
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    
+    KPAnnotation *a = (KPAnnotation *)view.annotation;
+    
+    if(a.annotations.count > 1){
+        [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(a.coordinate,
+                                                                   a.radius * 2.5f,
+                                                                   a.radius * 2.5f)
+                       animated:YES];
+    }
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    
+    KPAnnotation *a = (KPAnnotation *)annotation;
+    
+    MKPinAnnotationView *v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+    
+    if(!v){
+        v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"pin"];
+    }
+    
+    v.pinColor = (a.annotations.count > 1 ? MKPinAnnotationColorPurple : MKPinAnnotationColorRed);
+    
+    return v;
+    
+}
+
+@end
