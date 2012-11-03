@@ -34,7 +34,7 @@
     
     if(self){
         self.mapView = mapView;
-        self.gridSize = CGSizeMake(80.f, 80.f);
+        self.gridSize = CGSizeMake(40.f, 40.f);
         self.animationDuration = 0.5f;
     }
     
