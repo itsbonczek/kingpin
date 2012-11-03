@@ -45,13 +45,15 @@ Handle the clusters:
 
 Note: You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
 
-Refresh visible annotations, as needed (typically in `-mapView:regionDidChangeAnimated:`):
+Refresh visible annotations as needed:
 
 ```
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     [self.treeController refresh:self.animationSwitch.on];
 }
 ```
+
+This is typically done in `-mapView:regionDidChangeAnimated:`
 
 demo
 ----
