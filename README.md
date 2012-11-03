@@ -59,3 +59,8 @@ demo
 ----
 
 Check out the **tester** target in *kingpin.xcodeproj*
+
+licence
+--------
+
+Apache 2.0
