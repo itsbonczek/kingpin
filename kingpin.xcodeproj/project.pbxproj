@@ -22,9 +22,9 @@
 		93BBC0A21645B78C004BC920 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0951645B78C004BC920 /* Default@2x.png */; };
 		93BBC0A31645B78C004BC920 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0961645B78C004BC920 /* InfoPlist.strings */; };
 		93BBC0A41645B78C004BC920 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0981645B78C004BC920 /* ViewController.xib */; };
-		93BBC0A51645B78C004BC920 /* kingpinTestApplication-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC09A1645B78C004BC920 /* kingpinTestApplication-Info.plist */; };
 		93BBC0A61645B78C004BC920 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC09C1645B78C004BC920 /* main.m */; };
 		93BBC0A71645B78C004BC920 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC09E1645B78C004BC920 /* ViewController.m */; };
+		93BBC0AF1645CAE5004BC920 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +54,8 @@
 		93BBC09C1645B78C004BC920 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		93BBC09D1645B78C004BC920 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		93BBC09E1645B78C004BC920 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		93BBC0AD1645CAE5004BC920 /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
+		93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,8 @@
 		93BBC0901645B78C004BC920 /* tester */ = {
 			isa = PBXGroup;
 			children = (
+				93BBC0AD1645CAE5004BC920 /* TestAnnotation.h */,
+				93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */,
 				93BBC0911645B78C004BC920 /* AppDelegate.h */,
 				93BBC0921645B78C004BC920 /* AppDelegate.m */,
 				93BBC0931645B78C004BC920 /* Default-568h@2x.png */,
@@ -199,7 +203,6 @@
 				93BBC0A21645B78C004BC920 /* Default@2x.png in Resources */,
 				93BBC0A31645B78C004BC920 /* InfoPlist.strings in Resources */,
 				93BBC0A41645B78C004BC920 /* ViewController.xib in Resources */,
-				93BBC0A51645B78C004BC920 /* kingpinTestApplication-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +220,7 @@
 				93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */,
 				93BBC0A61645B78C004BC920 /* main.m in Sources */,
 				93BBC0A71645B78C004BC920 /* ViewController.m in Sources */,
+				93BBC0AF1645CAE5004BC920 /* TestAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +267,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryan Bonczek (7JX939L37Q)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -273,7 +278,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CATreeTestApplication/kingpinTestApplication-Prefix.pch";
+				GCC_PREFIX_HEADER = "tester/kingpinTestApplication-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -282,10 +287,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "CATreeTestApplication/kingpinTestApplication-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/tester/kingpinTestApplication-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = kingpinTestApplication;
+				PROVISIONING_PROFILE = "0992FBE4-A430-4594-9D7C-0369CC910FA2";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -300,6 +306,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryan Bonczek (7JX939L37Q)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -308,14 +315,15 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CATreeTestApplication/kingpinTestApplication-Prefix.pch";
+				GCC_PREFIX_HEADER = "tester/kingpinTestApplication-Prefix.pch";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "CATreeTestApplication/kingpinTestApplication-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/tester/kingpinTestApplication-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = kingpinTestApplication;
+				PROVISIONING_PROFILE = "0992FBE4-A430-4594-9D7C-0369CC910FA2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

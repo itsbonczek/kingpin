@@ -30,8 +30,6 @@
     self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView];
     self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
     [self.treeController setAnnotations:[self annotations]];
-    
-    [self updateVisibileMapAnnotations];
 }
 
 - (void)viewDidUnload {
