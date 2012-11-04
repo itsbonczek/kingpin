@@ -121,6 +121,7 @@
     }
     
     v.pinColor = (a.annotations.count > 1 ? MKPinAnnotationColorPurple : MKPinAnnotationColorRed);
+    v.canShowCallout = YES;
     
     return v;
     
