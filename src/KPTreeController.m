@@ -23,6 +23,8 @@
 
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic) KPAnnotationTree *annotationTree;
+@property (nonatomic) MKMapRect lastRefreshedMapRect;
+@property (nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
 
 @end
 
@@ -34,7 +36,7 @@
     
     if(self){
         self.mapView = mapView;
-        self.gridSize = CGSizeMake(40.f, 40.f);
+        self.gridSize = CGSizeMake(100.f, 100.f);
         self.animationDuration = 0.5f;
     }
     
@@ -47,9 +49,37 @@
 }
 
 - (void)refresh:(BOOL)animated {
-    [self _updateVisibileMapAnnotationsOnMapView:animated];
+    
+    if([self _shouldRefreshVisibleMapRect]){
+        self.lastRefreshedMapRect = self.mapView.visibleMapRect;
+        self.lastRefreshedMapRegion = self.mapView.region;
+        [self _updateVisibileMapAnnotationsOnMapView:animated];
+    }
 }
 
+// only refresh if:
+// - the map has been zoomed
+// - the map has been panned significantly
+
+- (BOOL)_shouldRefreshVisibleMapRect {
+    
+    // zoomed
+    BOOL zoomed = (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > 0.1f);
+    
+    // panned
+    CGPoint lastPoint = [self.mapView convertCoordinate:self.lastRefreshedMapRegion.center
+                                          toPointToView:self.mapView];
+    
+    CGPoint currentPoint = [self.mapView convertCoordinate:self.mapView.region.center
+                                             toPointToView:self.mapView];
+    
+    
+    BOOL pannedSignificantly =
+    (fabs(lastPoint.x - currentPoint.x) > self.mapView.frame.size.width) ||
+    (fabs(lastPoint.y - currentPoint.y) > self.mapView.frame.size.height);
+    
+    return MKMapRectIsNull(self.lastRefreshedMapRect) || zoomed || pannedSignificantly;
+}
 
 #pragma mark - Private
 
@@ -59,9 +89,11 @@
     NSMutableArray *newClusters = [NSMutableArray array];
     NSMutableArray *oldClusters = [NSMutableArray array];
     
-    for(int x = 0; x < self.mapView.frame.size.width; x += self.gridSize.width){
+    // updates visible map rect plus a map view's worth of padding around it
+    
+    for(int x = -self.mapView.frame.size.width; x < self.mapView.frame.size.width * 2; x += self.gridSize.width){
         
-        for(int y = 0; y < self.mapView.frame.size.height; y += self.gridSize.height){
+        for(int y = -self.mapView.frame.size.height; y < self.mapView.frame.size.height * 2; y += self.gridSize.height){
             
             MKMapRect gridRect = [self _mapView:self.mapView
                               mapRectFromCGRect:CGRectMake(x, y, self.gridSize.width, self.gridSize.height)];
