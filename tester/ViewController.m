@@ -13,6 +13,8 @@
 #import "KPAnnotation.h"
 #import "KPTreeController.h"
 
+static const int kNumberOfTestAnnotations = 500;
+
 @interface ViewController ()
 
 @property (nonatomic, strong) KPTreeController *treeController;
@@ -47,7 +49,7 @@
     CLLocationCoordinate2D nycCoord = CLLocationCoordinate2DMake(40.77, -73.98);
     CLLocationCoordinate2D sfCoord = CLLocationCoordinate2DMake(37.85, -122.68);
     
-    for (int i=0; i<500; i++) {
+    for (int i=0; i< kNumberOfTestAnnotations / 2; i++) {
         
         float latAdj = ((random() % 100) / 1000.f);
         float lngAdj = ((random() % 100) / 1000.f);
