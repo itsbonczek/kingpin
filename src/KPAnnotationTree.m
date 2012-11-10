@@ -67,7 +67,7 @@
         return;
     }
     
-    MKMapPoint mapPoint = MKMapPointForCoordinate([curNode.annotation coordinate]);
+    MKMapPoint mapPoint = curNode.mapPoint;
    
     BBTreeLog(@"Testing (%f, %f)...", [curNode.annotation coordinate].latitude, [curNode.annotation coordinate].longitude);
     
@@ -139,6 +139,7 @@
     NSInteger medianIdx = [sortedAnnotations count] / 2;
     
     n.annotation = [sortedAnnotations objectAtIndex:medianIdx];
+    n.mapPoint = MKMapPointForCoordinate(n.annotation.coordinate);
 
     n.left = [self buildTree:[sortedAnnotations subarrayWithRange:NSMakeRange(0, medianIdx)] 
                        level:(curLevel + 1)];

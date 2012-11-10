@@ -23,5 +23,6 @@
 @property (nonatomic) id<MKAnnotation> annotation;
 @property (nonatomic) KPTreeNode *left;
 @property (nonatomic) KPTreeNode *right;
+@property (nonatomic) MKMapPoint mapPoint;
 
 @end

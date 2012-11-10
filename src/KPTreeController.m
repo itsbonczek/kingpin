@@ -25,6 +25,7 @@
 @property (nonatomic) KPAnnotationTree *annotationTree;
 @property (nonatomic) MKMapRect lastRefreshedMapRect;
 @property (nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
+@property (nonatomic) CGRect mapFrame;
 
 @end
 
@@ -36,7 +37,8 @@
     
     if(self){
         self.mapView = mapView;
-        self.gridSize = CGSizeMake(100.f, 100.f);
+        self.mapFrame = self.mapView.frame;
+        self.gridSize = CGSizeMake(60.f, 60.f);
         self.animationDuration = 0.5f;
     }
     
@@ -50,10 +52,10 @@
 
 - (void)refresh:(BOOL)animated {
     
-    if([self _shouldRefreshVisibleMapRect]){
+    if(MKMapRectIsNull(self.lastRefreshedMapRect) || [self _mapWasZoomed] || [self _mapWasPannedSignificantly]){
+        [self _updateVisibileMapAnnotationsOnMapView:animated && [self _mapWasZoomed]];
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
-        [self _updateVisibileMapAnnotationsOnMapView:animated];
     }
 }
 
@@ -61,12 +63,11 @@
 // - the map has been zoomed
 // - the map has been panned significantly
 
-- (BOOL)_shouldRefreshVisibleMapRect {
-    
-    // zoomed
-    BOOL zoomed = (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > 0.1f);
-    
-    // panned
+- (BOOL)_mapWasZoomed {
+    return (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > 0.1f);
+}
+
+- (BOOL)_mapWasPannedSignificantly {
     CGPoint lastPoint = [self.mapView convertCoordinate:self.lastRefreshedMapRegion.center
                                           toPointToView:self.mapView];
     
@@ -74,12 +75,11 @@
                                              toPointToView:self.mapView];
     
     
-    BOOL pannedSignificantly =
-    (fabs(lastPoint.x - currentPoint.x) > self.mapView.frame.size.width) ||
-    (fabs(lastPoint.y - currentPoint.y) > self.mapView.frame.size.height);
-    
-    return MKMapRectIsNull(self.lastRefreshedMapRect) || zoomed || pannedSignificantly;
+    return
+    (fabs(lastPoint.x - currentPoint.x) > self.mapFrame.size.width) ||
+    (fabs(lastPoint.y - currentPoint.y) > self.mapFrame.size.height);
 }
+
 
 #pragma mark - Private
 
@@ -91,9 +91,14 @@
     
     // updates visible map rect plus a map view's worth of padding around it
     
-    for(int x = -self.mapView.frame.size.width; x < self.mapView.frame.size.width * 2; x += self.gridSize.width){
+    float startX = - self.mapFrame.size.width;
+    float endX = 2 * self.mapFrame.size.width;
+    float startY = - self.mapFrame.size.height;
+    float endY = 2 * self.mapFrame.size.height;
+    
+    for(int x = startX; x < endX; x += self.gridSize.width){
         
-        for(int y = -self.mapView.frame.size.height; y < self.mapView.frame.size.height * 2; y += self.gridSize.height){
+        for(int y = startY; y < endY; y += self.gridSize.height){
             
             MKMapRect gridRect = [self _mapView:self.mapView
                               mapRectFromCGRect:CGRectMake(x, y, self.gridSize.width, self.gridSize.height)];
@@ -110,6 +115,8 @@
         }
     }
     
+    NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
+    
     if(animated){
         
         for(KPAnnotation *newCluster in newClusters){
@@ -118,19 +125,30 @@
             
             for(KPAnnotation *oldCluster in oldClusters){
                 if([oldCluster.annotations member:[newCluster.annotations anyObject]]){
-                    [self _animateCluster:newCluster
-                           fromCoordinate:oldCluster.coordinate
-                             toCoordinate:newCluster.coordinate
-                               completion:nil];
+                    
+                    if([visibleAnnotations member:oldCluster]){
+                        [self _animateCluster:newCluster
+                               fromCoordinate:oldCluster.coordinate
+                                 toCoordinate:newCluster.coordinate
+                                   completion:nil];
+                    }
+                    
                     [self.mapView removeAnnotation:oldCluster];
                 }
                 else if([newCluster.annotations member:[oldCluster.annotations anyObject]]){
-                    [self _animateCluster:oldCluster
-                           fromCoordinate:oldCluster.coordinate
-                             toCoordinate:newCluster.coordinate
-                               completion:^(BOOL finished) {
-                                   [self.mapView removeAnnotation:oldCluster];
-                               }];
+                    
+                    if(MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))){
+                        [self _animateCluster:oldCluster
+                               fromCoordinate:oldCluster.coordinate
+                                 toCoordinate:newCluster.coordinate
+                                   completion:^(BOOL finished) {
+                                       [self.mapView removeAnnotation:oldCluster];
+                                   }];
+                    }
+                    else {
+                        [self.mapView removeAnnotation:oldCluster];
+                    }
+                    
                 }
             }
         }
