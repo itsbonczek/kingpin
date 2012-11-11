@@ -125,11 +125,22 @@ static const int kNumberOfTestAnnotations = 500;
     MKPinAnnotationView *v = nil;
     
     if(a.annotations.count > 1){
-        v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+       
+        v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+        
+        if(!v){
+            v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+        }
+        
         v.pinColor = MKPinAnnotationColorPurple;
     }
     else {
-        v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"pin"];
+        v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+        
+        if(!v){
+            v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"pin"];
+        }
+        
         v.pinColor = MKPinAnnotationColorRed;
     }
     
