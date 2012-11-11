@@ -32,15 +32,11 @@
     
     if(self){
         self.annotations = [NSSet setWithArray:annotations];
+        self.title = [NSString stringWithFormat:@"%i things", [self.annotations count]];;
         [self calculateValues];
     }
     
     return self;
-}
-
-
-- (NSString *)title {
-    return [NSString stringWithFormat:@"%i things", [self.annotations count]];
 }
 
 #pragma mark - Private
@@ -52,6 +48,9 @@
     CLLocationDegrees maxLat = -INT_MAX;
     CLLocationDegrees maxLng = -INT_MAX;
     
+    CLLocationDegrees totalLat = 0;
+    CLLocationDegrees totalLng = 0;
+    
     for(id<MKAnnotation> a in self.annotations){
         
         CLLocationDegrees lat = [a coordinate].latitude;
@@ -61,10 +60,14 @@
         minLng = MIN(minLng, lng);
         maxLat = MAX(maxLat, lat);
         maxLng = MAX(maxLng, lng);
+        
+        totalLat += lat;
+        totalLng += lng;
     }
     
     
-    self.coordinate = [[self.annotations anyObject] coordinate];
+    self.coordinate = CLLocationCoordinate2DMake(totalLat / self.annotations.count,
+                                                 totalLng / self.annotations.count);
     
     self.radius = [[[CLLocation alloc] initWithLatitude:minLat
                                               longitude:minLng]

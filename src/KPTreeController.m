@@ -109,7 +109,13 @@
             [oldClusters addObjectsFromArray:existingAnnotations];
             
             if(newAnnotations.count){
+
                 KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
+                
+                if([self.delegate respondsToSelector:@selector(treeController:titleForCluster:)]){
+                    a.title = [self.delegate treeController:self titleForCluster:a];
+                }
+                
                 [newClusters addObject:a];
             }
         }

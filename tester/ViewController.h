@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KPTreeController.h"
 
-@interface ViewController : UIViewController <MKMapViewDelegate>
+@interface ViewController : UIViewController <MKMapViewDelegate, KPTreeControllerDelegate>
  
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 @property (nonatomic) IBOutlet UISwitch *animationSwitch;

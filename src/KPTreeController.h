@@ -19,16 +19,29 @@
 
 #import <MapKit/MapKit.h>
 
+@class KPAnnotation;
+
+@protocol KPTreeControllerDelegate;
+
 @interface KPTreeController : NSObject
 
+@property (nonatomic, weak) id<KPTreeControllerDelegate> delegate;
 @property (nonatomic) CGSize gridSize;
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) UIViewAnimationOptions animationOptions;
+
 
 - (id)initWithMapView:(MKMapView *)mapView;
 
 - (void)setAnnotations:(NSArray *)annoations;
 
 - (void)refresh:(BOOL)animated;
+
+@end
+
+
+@protocol KPTreeControllerDelegate<NSObject>
+
+- (NSString *)treeController:(KPTreeController *)tree titleForCluster:(KPAnnotation *)cluster;
 
 @end

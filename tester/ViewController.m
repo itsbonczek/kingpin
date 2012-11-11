@@ -30,6 +30,7 @@ static const int kNumberOfTestAnnotations = 500;
     self.mapView.delegate = self;
     
     self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView];
+    self.treeController.delegate = self;
     self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
     [self.treeController setAnnotations:[self annotations]];
 }
@@ -102,31 +103,53 @@ static const int kNumberOfTestAnnotations = 500;
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     
-    KPAnnotation *a = (KPAnnotation *)view.annotation;
-    
-    if(a.annotations.count > 1){
-        [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(a.coordinate,
-                                                                   a.radius * 2.5f,
-                                                                   a.radius * 2.5f)
-                       animated:YES];
+    if([view.annotation isKindOfClass:[KPAnnotation class]]){
+        
+        KPAnnotation *cluster = (KPAnnotation *)view.annotation;
+        
+        if(cluster.annotations.count > 1){
+            [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(cluster.coordinate,
+                                                                       cluster.radius * 2.5f,
+                                                                       cluster.radius * 2.5f)
+                           animated:YES];
+        }
     }
+    
+    
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     
     KPAnnotation *a = (KPAnnotation *)annotation;
     
-    MKPinAnnotationView *v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+    MKPinAnnotationView *v = nil;
     
-    if(!v){
-        v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"pin"];
+    if([annotation isKindOfClass:[KPAnnotation class]]){
+        v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+        v.pinColor = MKPinAnnotationColorPurple;
     }
+    else if([annotation isKindOfClass:[TestAnnotation class]]){
+        
+        v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"annotation"];
+        
+        if(!v){
+            v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"annotation"];
+        }
+        
+        v.pinColor = MKPinAnnotationColorRed;
+    }
+
     
-    v.pinColor = (a.annotations.count > 1 ? MKPinAnnotationColorPurple : MKPinAnnotationColorRed);
     v.canShowCallout = YES;
     
     return v;
     
+}
+
+#pragma mark - KPTreeControllerDelegate
+
+- (NSString *)treeController:(KPTreeController *)tree titleForCluster:(KPAnnotation *)cluster {
+    return [NSString stringWithFormat:@"%i custom annotations", cluster.annotations.count];
 }
 
 @end
