@@ -86,8 +86,11 @@
 - (void)_updateVisibileMapAnnotationsOnMapView:(BOOL)animated
 {
     
-    NSMutableArray *newClusters = [NSMutableArray array];
-    NSMutableArray *oldClusters = [NSMutableArray array];
+    NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
+    
+    
+    NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count *2];
+    NSMutableArray *oldClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count];
     
     // updates visible map rect plus a map view's worth of padding around it
     
@@ -121,7 +124,6 @@
         }
     }
     
-    NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
     
     if(animated){
         
