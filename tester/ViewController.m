@@ -33,6 +33,8 @@ static const int kNumberOfTestAnnotations = 500;
     self.treeController.delegate = self;
     self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
     [self.treeController setAnnotations:[self annotations]];
+    
+    self.mapView.showsUserLocation = YES;
 }
 
 - (void)viewDidUnload {
@@ -123,6 +125,10 @@ static const int kNumberOfTestAnnotations = 500;
     KPAnnotation *a = (KPAnnotation *)annotation;
     
     MKPinAnnotationView *v = nil;
+    
+    if([annotation isKindOfClass:[MKUserLocation class]]){
+        return nil;
+    }
     
     if(a.annotations.count > 1){
        
