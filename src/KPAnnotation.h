@@ -18,12 +18,13 @@
 
 @interface KPAnnotation : NSObject <MKAnnotation>
 
-@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
-@property (nonatomic) NSString *title;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *title;
 
 @property (nonatomic, readonly) float radius;
 @property (nonatomic, readonly) NSSet *annotations;
 
+@property (nonatomic, strong) id <MKAnnotation> nestedAnnotation;
 
 - (id)initWithAnnotations:(NSArray *)annotations;
 

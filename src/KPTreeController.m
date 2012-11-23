@@ -51,8 +51,11 @@
 }
 
 - (void)refresh:(BOOL)animated {
-    
-    if(MKMapRectIsNull(self.lastRefreshedMapRect) || [self _mapWasZoomed] || [self _mapWasPannedSignificantly]){
+    [self refresh:animated force:NO];
+}
+
+- (void)refresh:(BOOL)animated force:(BOOL)force {
+    if(force || MKMapRectIsNull(self.lastRefreshedMapRect) || [self _mapWasZoomed] || [self _mapWasPannedSignificantly]){
         [self _updateVisibileMapAnnotationsOnMapView:animated && [self _mapWasZoomed]];
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
