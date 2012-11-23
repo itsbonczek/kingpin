@@ -32,6 +32,11 @@
     
     if(self){
         self.annotations = [NSSet setWithArray:annotations];
+
+        if (self.annotations.count == 1) {
+            [self setNestedAnnotation:[self.annotations anyObject]];
+        }
+
         self.title = [NSString stringWithFormat:@"%i things", [self.annotations count]];;
         [self calculateValues];
     }
