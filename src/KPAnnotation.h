@@ -27,4 +27,9 @@
 
 - (id)initWithAnnotations:(NSArray *)annotations;
 
+// Helpers
+
+// returns NO if the KPAnnotation only contains one annotation
+- (BOOL)isCluster;
+
 @end

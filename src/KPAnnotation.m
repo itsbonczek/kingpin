@@ -39,6 +39,10 @@
     return self;
 }
 
+- (BOOL)isCluster {
+    return (self.annotations.count > 1);
+}
+
 #pragma mark - Private
 
 - (void)calculateValues {
