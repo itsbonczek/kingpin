@@ -14,4 +14,6 @@
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 @property (nonatomic) IBOutlet UISwitch *animationSwitch;
 
+- (IBAction)resetAnnotations:(id)sender;
+
 @end

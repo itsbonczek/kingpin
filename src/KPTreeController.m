@@ -46,8 +46,10 @@
     
 }
 
-- (void)setAnnotations:(NSArray *)annoations {
-    self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annoations];
+- (void)setAnnotations:(NSArray *)annotations {
+    [self.mapView removeAnnotations:self.annotationTree.annotations];
+    self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
+    [self _updateVisibileMapAnnotationsOnMapView:NO];
 }
 
 - (void)refresh:(BOOL)animated {

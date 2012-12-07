@@ -19,6 +19,8 @@
 
 @interface KPAnnotationTree : NSObject
 
+@property (nonatomic, readonly) NSArray *annotations;
+
 - (id)initWithAnnotations:(NSArray *)annotations;
 
 - (NSArray *)annotationsInMapRect:(MKMapRect)rect;

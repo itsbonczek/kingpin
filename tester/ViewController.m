@@ -42,6 +42,10 @@ static const int kNumberOfTestAnnotations = 500;
     self.mapView = nil;
 }
 
+- (IBAction)resetAnnotations:(id)sender {
+    [self.treeController setAnnotations:[self annotations]];
+}
+
 
 - (NSArray *)annotations {
     
@@ -97,6 +101,7 @@ static const int kNumberOfTestAnnotations = 500;
 
 
 
+
 #pragma mark - MKMapView
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
@@ -130,7 +135,7 @@ static const int kNumberOfTestAnnotations = 500;
         return nil;
     }
     
-    if(a.annotations.count > 1){
+    if([a isCluster]){
        
         v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
         
@@ -141,10 +146,12 @@ static const int kNumberOfTestAnnotations = 500;
         v.pinColor = MKPinAnnotationColorPurple;
     }
     else {
+        
         v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
         
         if(!v){
-            v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"pin"];
+            v = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
+                                                reuseIdentifier:@"pin"];
         }
         
         v.pinColor = MKPinAnnotationColorRed;
