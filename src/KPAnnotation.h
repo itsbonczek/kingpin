@@ -20,6 +20,7 @@
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic) NSString *title;
+@property (nonatomic) NSString *subtitle;
 
 @property (nonatomic, readonly) float radius;
 @property (nonatomic, readonly) NSSet *annotations;

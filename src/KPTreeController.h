@@ -30,11 +30,8 @@
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) UIViewAnimationOptions animationOptions;
 
-
 - (id)initWithMapView:(MKMapView *)mapView;
-
 - (void)setAnnotations:(NSArray *)annoations;
-
 - (void)refresh:(BOOL)animated;
 
 @end
@@ -42,6 +39,13 @@
 
 @protocol KPTreeControllerDelegate<NSObject>
 
-- (NSString *)treeController:(KPTreeController *)tree titleForCluster:(KPAnnotation *)cluster;
+- (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation;
+
+/**
+ Note: this is deprecated in favor of treeController: configureAnnotationForDisplay
+*/
+- (NSString *)treeController:(KPTreeController *)tree titleForCluster:(KPAnnotation *)cluster __attribute__ ((deprecated));
+
+
 
 @end

@@ -169,8 +169,9 @@ static const int kNumberOfTestAnnotations = 500;
 
 #pragma mark - KPTreeControllerDelegate
 
-- (NSString *)treeController:(KPTreeController *)tree titleForCluster:(KPAnnotation *)cluster {
-    return [NSString stringWithFormat:@"%i custom annotations", cluster.annotations.count];
+- (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation {
+    annotation.title = [NSString stringWithFormat:@"%i custom annotations", annotation.annotations.count];
+    annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
 }
 
 @end

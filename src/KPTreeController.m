@@ -126,6 +126,10 @@
                     a.title = [self.delegate treeController:self titleForCluster:a];
                 }
                 
+                if([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]){
+                    [self.delegate treeController:self configureAnnotationForDisplay:a];
+                }
+                
                 [newClusters addObject:a];
             }
         }
