@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9346910116A8EC8400DE59FA /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910016A8EC8400DE59FA /* MyAnnotation.m */; };
+		9346910716A8F1C200DE59FA /* NSArray+BB.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+BB.m */; };
 		93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
 		93BBC0521645A2B2004BC920 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0511645A2B2004BC920 /* Foundation.framework */; };
 		93BBC0541645A2B2004BC920 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0531645A2B2004BC920 /* CoreGraphics.framework */; };
@@ -28,6 +30,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		934690FF16A8EC8400DE59FA /* MyAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
+		9346910016A8EC8400DE59FA /* MyAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
+		9346910516A8F1C200DE59FA /* NSArray+BB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+BB.h"; sourceTree = "<group>"; };
+		9346910616A8F1C200DE59FA /* NSArray+BB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+BB.m"; sourceTree = "<group>"; };
 		93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree.h; sourceTree = "<group>"; };
 		93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTree.m; sourceTree = "<group>"; };
 		93BBC0431645A1F8004BC920 /* KPTreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPTreeNode.h; sourceTree = "<group>"; };
@@ -74,6 +80,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9346910316A8F17D00DE59FA /* kp */ = {
+			isa = PBXGroup;
+			children = (
+				93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */,
+				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,
+				93BBC0431645A1F8004BC920 /* KPTreeNode.h */,
+				93BBC0441645A1F8004BC920 /* KPTreeNode.m */,
+				93BBC0451645A1F8004BC920 /* KPAnnotation.h */,
+				93BBC0461645A1F8004BC920 /* KPAnnotation.m */,
+				93BBC0881645A68F004BC920 /* KPTreeController.h */,
+				93BBC0891645A68F004BC920 /* KPTreeController.m */,
+			);
+			name = kp;
+			sourceTree = "<group>";
+		};
+		9346910416A8F18A00DE59FA /* categories */ = {
+			isa = PBXGroup;
+			children = (
+				9346910516A8F1C200DE59FA /* NSArray+BB.h */,
+				9346910616A8F1C200DE59FA /* NSArray+BB.m */,
+			);
+			name = categories;
+			sourceTree = "<group>";
+		};
 		93BBC02D1645A119004BC920 = {
 			isa = PBXGroup;
 			children = (
@@ -95,14 +125,8 @@
 		93BBC0401645A1F8004BC920 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */,
-				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,
-				93BBC0431645A1F8004BC920 /* KPTreeNode.h */,
-				93BBC0441645A1F8004BC920 /* KPTreeNode.m */,
-				93BBC0451645A1F8004BC920 /* KPAnnotation.h */,
-				93BBC0461645A1F8004BC920 /* KPAnnotation.m */,
-				93BBC0881645A68F004BC920 /* KPTreeController.h */,
-				93BBC0891645A68F004BC920 /* KPTreeController.m */,
+				9346910416A8F18A00DE59FA /* categories */,
+				9346910316A8F17D00DE59FA /* kp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -144,6 +168,8 @@
 				93BBC09D1645B78C004BC920 /* ViewController.h */,
 				93BBC09E1645B78C004BC920 /* ViewController.m */,
 				93BBC0981645B78C004BC920 /* ViewController.xib */,
+				934690FF16A8EC8400DE59FA /* MyAnnotation.h */,
+				9346910016A8EC8400DE59FA /* MyAnnotation.m */,
 			);
 			path = tester;
 			sourceTree = "<group>";
@@ -221,6 +247,8 @@
 				93BBC0A61645B78C004BC920 /* main.m in Sources */,
 				93BBC0A71645B78C004BC920 /* ViewController.m in Sources */,
 				93BBC0AF1645CAE5004BC920 /* TestAnnotation.m in Sources */,
+				9346910116A8EC8400DE59FA /* MyAnnotation.m in Sources */,
+				9346910716A8F1C200DE59FA /* NSArray+BB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

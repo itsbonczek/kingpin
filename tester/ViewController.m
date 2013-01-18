@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 
+#import "MyAnnotation.h"
 #import "TestAnnotation.h"
 
 #import "KPAnnotation.h"
@@ -35,6 +36,18 @@ static const int kNumberOfTestAnnotations = 500;
     [self.treeController setAnnotations:[self annotations]];
     
     self.mapView.showsUserLocation = YES;
+    
+    // add two annotations that don't get clustered
+    MyAnnotation *nycAnnotation = [MyAnnotation new];
+    nycAnnotation.coordinate = [self nycCoord];
+    nycAnnotation.title = @"NYC!";
+    
+    MyAnnotation *sfAnnotation = [MyAnnotation new];
+    sfAnnotation.coordinate = [self sfCoord];
+    sfAnnotation.title = @"SF!";
+    
+    [self.mapView addAnnotation:nycAnnotation];
+    [self.mapView addAnnotation:sfAnnotation];
 }
 
 - (void)viewDidUnload {
@@ -53,8 +66,8 @@ static const int kNumberOfTestAnnotations = 500;
     
     NSMutableArray *annotations = [NSMutableArray array];
     
-    CLLocationCoordinate2D nycCoord = CLLocationCoordinate2DMake(40.77, -73.98);
-    CLLocationCoordinate2D sfCoord = CLLocationCoordinate2DMake(37.85, -122.68);
+    CLLocationCoordinate2D nycCoord = [self nycCoord];
+    CLLocationCoordinate2D sfCoord = [self sfCoord];
     
     for (int i=0; i< kNumberOfTestAnnotations / 2; i++) {
         
@@ -76,30 +89,13 @@ static const int kNumberOfTestAnnotations = 500;
     return annotations;
 }
 
-- (CLLocationCoordinate2D)testMapStartCoordinate {
-    return CLLocationCoordinate2DMake(45, -75);
+- (CLLocationCoordinate2D)nycCoord {
+    return CLLocationCoordinate2DMake(40.77, -73.98);
 }
 
-- (CLLocationCoordinate2D)testMapEndCoordinate {
-    return CLLocationCoordinate2DMake(40, -70);
+- (CLLocationCoordinate2D)sfCoord {
+    return CLLocationCoordinate2DMake(37.85, -122.68);
 }
-
-// the map rect that contains all of the coordinates
-
-- (MKMapRect)testMapRect {
-    
-    MKMapPoint start = MKMapPointForCoordinate([self testMapStartCoordinate]);
-    MKMapPoint end = MKMapPointForCoordinate([self testMapEndCoordinate]);
-    
-    MKMapRect exactRegion = MKMapRectMake(start.x,
-                                          start.y,
-                                          end.x - start.x,
-                                          end.y - start.y);
-    
-    return exactRegion;
-}
-
-
 
 
 #pragma mark - MKMapView
@@ -127,37 +123,45 @@ static const int kNumberOfTestAnnotations = 500;
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     
-    KPAnnotation *a = (KPAnnotation *)annotation;
-    
     MKPinAnnotationView *v = nil;
     
-    if([annotation isKindOfClass:[MKUserLocation class]]){
-        return nil;
-    }
+    if([annotation isKindOfClass:[KPAnnotation class]]){
     
-    if([a isCluster]){
-       
-        v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+        KPAnnotation *a = (KPAnnotation *)annotation;
         
-        if(!v){
-            v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+        if([annotation isKindOfClass:[MKUserLocation class]]){
+            return nil;
         }
         
-        v.pinColor = MKPinAnnotationColorPurple;
-    }
-    else {
-        
-        v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-        
-        if(!v){
-            v = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
-                                                reuseIdentifier:@"pin"];
+        if([a isCluster]){
+           
+            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+            
+            if(!v){
+                v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+            }
+            
+            v.pinColor = MKPinAnnotationColorPurple;
+        }
+        else {
+            
+            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+            
+            if(!v){
+                v = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
+                                                    reuseIdentifier:@"pin"];
+            }
+            
+            v.pinColor = MKPinAnnotationColorRed;
         }
         
-        v.pinColor = MKPinAnnotationColorRed;
+        v.canShowCallout = YES;
+        
     }
-    
-    v.canShowCallout = YES;
+    else if([annotation isKindOfClass:[MyAnnotation class]]) {
+        v = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
+        v.pinColor = MKPinAnnotationColorGreen;
+    }
     
     return v;
     

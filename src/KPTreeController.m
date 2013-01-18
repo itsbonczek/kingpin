@@ -19,6 +19,8 @@
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
 
+#import "NSArray+BB.h"
+
 @interface KPTreeController()
 
 @property (nonatomic) MKMapView *mapView;
@@ -90,8 +92,7 @@
     
     NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
     
-    
-    NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count *2];
+    NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count * 2];
     NSMutableArray *oldClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count];
     
     // updates visible map rect plus a map view's worth of padding around it
@@ -108,7 +109,11 @@
             MKMapRect gridRect = [self _mapView:self.mapView
                               mapRectFromCGRect:CGRectMake(x, y, self.gridSize.width, self.gridSize.height)];
             
-            NSArray *existingAnnotations = [[self.mapView annotationsInMapRect:gridRect] allObjects];
+            // we only want the clusters. any other kind of annotation can be ignored
+            NSArray *existingAnnotations = [[[self.mapView annotationsInMapRect:gridRect] allObjects] filter:^BOOL(id annotation) {
+                return [annotation isKindOfClass:[KPAnnotation class]];
+            }];
+
             NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:gridRect];
             
             [oldClusters addObjectsFromArray:existingAnnotations];
@@ -134,6 +139,7 @@
             [self.mapView addAnnotation:newCluster];
             
             for(KPAnnotation *oldCluster in oldClusters){
+                
                 if([oldCluster.annotations member:[newCluster.annotations anyObject]]){
                     
                     if([visibleAnnotations member:oldCluster]){
