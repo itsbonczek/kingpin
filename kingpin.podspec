@@ -6,8 +6,8 @@ Pod::Spec.new do |s|
   s.homepage     = "http://itsbonczek.github.com/kingpin"
   s.author       = { "Bryan Bonczek" => "bonczek@gmail.com" }
   s.license      = 'Apache 2.0'
-  s.source       = { :git => "https://github.com/itsbonczek/kingpin.git", :tag => "0.1.0" }
-  s.platform     = :ios
+  s.source       = { :git => "https://github.com/itsbonczek/kingpin.git" }
+  s.platform     = :ios, 5.0
   s.source_files = 'src/*.{h,m}'
   s.requires_arc = true
   s.frameworks   = 'MapKit', 'CoreLocation'
