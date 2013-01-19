@@ -15,6 +15,7 @@
 //
 
 
+#import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
 @interface KPAnnotationTree : NSObject
