@@ -49,7 +49,7 @@
 }
 
 - (void)setAnnotations:(NSArray *)annotations {
-    [self.mapView removeAnnotations:self.annotationTree.annotations];
+    [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
     [self _updateVisibileMapAnnotationsOnMapView:NO];
 }
@@ -92,6 +92,7 @@
     
     NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
     
+    // we initialize with a rough estimate for size, as to minimize allocations
     NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count * 2];
     NSMutableArray *oldClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count];
     
@@ -109,15 +110,21 @@
             MKMapRect gridRect = [self _mapView:self.mapView
                               mapRectFromCGRect:CGRectMake(x, y, self.gridSize.width, self.gridSize.height)];
             
-            // we only want the clusters. any other kind of annotation can be ignored
+            // only modify clustered annotations in our tree. any other kind of annotation can be ignored
             NSArray *existingAnnotations = [[[self.mapView annotationsInMapRect:gridRect] allObjects] filter:^BOOL(id annotation) {
-                return [annotation isKindOfClass:[KPAnnotation class]];
+                if([annotation isKindOfClass:[KPAnnotation class]]){
+                    return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
+                }
+                else {
+                    return NO;
+                }
             }];
 
             NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:gridRect];
             
             [oldClusters addObjectsFromArray:existingAnnotations];
             
+            // cluster annotations in this grid piece, if there are annotations to be clustered
             if(newAnnotations.count){
 
                 KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];

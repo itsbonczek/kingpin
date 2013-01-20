@@ -27,7 +27,7 @@
 @interface KPAnnotationTree ()
 
 @property (nonatomic) KPTreeNode *root;
-@property (nonatomic, readwrite) NSArray *annotations;
+@property (nonatomic, readwrite) NSSet *annotations;
 
 @end
 
@@ -38,7 +38,7 @@
     self = [super init];
     
     if(self){
-        self.annotations = annotations;
+        self.annotations = [NSSet setWithArray:annotations];
         self.root = [self buildTree:annotations level:0];
     }
     

@@ -20,7 +20,7 @@
 
 @interface KPAnnotationTree : NSObject
 
-@property (nonatomic, readonly) NSArray *annotations;
+@property (nonatomic, readonly) NSSet *annotations;
 
 - (id)initWithAnnotations:(NSArray *)annotations;
 
