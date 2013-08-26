@@ -42,6 +42,7 @@
         self.mapFrame = self.mapView.frame;
         self.gridSize = CGSizeMake(60.f, 60.f);
         self.animationDuration = 0.5f;
+        self.enabled = YES;
     }
     
     return self;
@@ -54,7 +55,7 @@
     [self _updateVisibileMapAnnotationsOnMapView:NO];
 }
 
-- (void)refresh:(BOOL)animated {
+- (void)refreshAnimated:(BOOL)animated {
     
     if(MKMapRectIsNull(self.lastRefreshedMapRect) || [self _mapWasZoomed] || [self _mapWasPannedSignificantly]){
         [self _updateVisibileMapAnnotationsOnMapView:animated && [self _mapWasZoomed]];
@@ -124,10 +125,8 @@
             
             [oldClusters addObjectsFromArray:existingAnnotations];
             
-            // cluster annotations in this grid piece, if there are annotations to be clustered
-            if(newAnnotations.count){
-
-                KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
+            void (^addAnnotations)(NSMutableArray *, NSArray *) = ^(NSMutableArray *cluster, NSArray *annotations) {
+                KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:annotations];
                 
                 if([self.delegate respondsToSelector:@selector(treeController:titleForCluster:)]){
                     a.title = [self.delegate treeController:self titleForCluster:a];
@@ -137,11 +136,23 @@
                     [self.delegate treeController:self configureAnnotationForDisplay:a];
                 }
                 
-                [newClusters addObject:a];
+                [cluster addObject:a];
+            };
+            
+            if (self.isEnabled) {
+                // cluster annotations in this grid piece, if there are annotations to be clustered
+                if(newAnnotations.count) {
+                    addAnnotations(newClusters, newAnnotations);
+                }
+            }
+            else {
+                // add annotation separately as single annotation
+                for (KPAnnotation *a in newAnnotations) {
+                    addAnnotations(newClusters, @[a]);
+                }
             }
         }
     }
-    
     
     if(animated){
         

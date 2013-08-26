@@ -29,10 +29,11 @@
 @property (nonatomic) CGSize gridSize;
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) UIViewAnimationOptions animationOptions;
+@property (nonatomic, getter = isEnabled) BOOL enabled;
 
 - (id)initWithMapView:(MKMapView *)mapView;
 - (void)setAnnotations:(NSArray *)annoations;
-- (void)refresh:(BOOL)animated;
+- (void)refreshAnimated:(BOOL)animated;
 
 @end
 
