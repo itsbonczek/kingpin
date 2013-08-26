@@ -187,19 +187,19 @@
 - (MKMapRect)_mapView:(MKMapView *)mapView mapRectFromCGRect:(CGRect)rect {
     
     CLLocationCoordinate2D topLeftCoord = [mapView convertPoint:CGPointMake(rect.origin.x, rect.origin.y)
-                                           toCoordinateFromView:mapView];
+                                           toCoordinateFromView:mapView.superview];
     
-    CLLocationCoordinate2D bottomRightCorod = [mapView convertPoint:CGPointMake(rect.origin.x + rect.size.width,
+    CLLocationCoordinate2D bottomRightCoord = [mapView convertPoint:CGPointMake(rect.origin.x + rect.size.width,
                                                                                 rect.origin.y + rect.size.height)
-                                               toCoordinateFromView:mapView];
+                                               toCoordinateFromView:mapView.superview];
     
     MKMapPoint topLeftPoint = MKMapPointForCoordinate(topLeftCoord);
-    MKMapPoint bottomRightPoint = MKMapPointForCoordinate(bottomRightCorod);
+    MKMapPoint bottomRightPoint = MKMapPointForCoordinate(bottomRightCoord);
     
     MKMapRect gridRect = MKMapRectMake(topLeftPoint.x,
                                        topLeftPoint.y,
-                                       bottomRightPoint.x - topLeftPoint.x,
-                                       bottomRightPoint.y - topLeftPoint.y);
+                                       fabs(bottomRightPoint.x - topLeftPoint.x),
+                                       fabs(bottomRightPoint.y - topLeftPoint.y));
     
     return gridRect;
     
