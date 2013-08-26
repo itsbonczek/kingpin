@@ -13,7 +13,9 @@
  
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 @property (nonatomic) IBOutlet UISwitch *animationSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
 
 - (IBAction)resetAnnotations:(id)sender;
+- (IBAction)toggleClustering:(id)sender;
 
 @end

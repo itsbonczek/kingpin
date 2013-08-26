@@ -66,6 +66,13 @@ static const int kNumberOfTestAnnotations = 500;
     [self.treeController2 setAnnotations:[self annotations]];
 }
 
+- (IBAction)toggleClustering:(id)sender {
+    self.treeController.enabled = self.enabledSwitch.on;
+    self.treeController2.enabled = self.enabledSwitch.on;
+    
+    [self.treeController refreshAnimated:YES];
+}
+
 
 - (NSArray *)annotations {
     
@@ -108,8 +115,8 @@ static const int kNumberOfTestAnnotations = 500;
 #pragma mark - MKMapView
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [self.treeController refresh:self.animationSwitch.on];
-    [self.treeController2 refresh:self.animationSwitch.on];
+    [self.treeController refreshAnimated:self.animationSwitch.on];
+    [self.treeController2 refreshAnimated:self.animationSwitch.on];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
