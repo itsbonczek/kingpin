@@ -129,10 +129,6 @@
 
                 KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
                 
-                if([self.delegate respondsToSelector:@selector(treeController:titleForCluster:)]){
-                    a.title = [self.delegate treeController:self titleForCluster:a];
-                }
-                
                 if([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]){
                     [self.delegate treeController:self configureAnnotationForDisplay:a];
                 }

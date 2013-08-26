@@ -43,10 +43,4 @@
 
 - (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation;
 
-/**
- Note: this is deprecated in favor of treeController: configureAnnotationForDisplay
-*/
-- (NSString *)treeController:(KPTreeController *)tree titleForCluster:(KPAnnotation *)cluster __attribute__ ((deprecated));
-
-
 @end
