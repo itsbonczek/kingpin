@@ -19,7 +19,7 @@
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
 
-#import "NSArray+BB.h"
+#import "NSArray+KP.h"
 
 @interface KPTreeController()
 
@@ -111,7 +111,7 @@
                               mapRectFromCGRect:CGRectMake(x, y, self.gridSize.width, self.gridSize.height)];
             
             // only modify clustered annotations in our tree. any other kind of annotation can be ignored
-            NSArray *existingAnnotations = [[[self.mapView annotationsInMapRect:gridRect] allObjects] filter:^BOOL(id annotation) {
+            NSArray *existingAnnotations = [[[self.mapView annotationsInMapRect:gridRect] allObjects] kp_filter:^BOOL(id annotation) {
                 if([annotation isKindOfClass:[KPAnnotation class]]){
                     return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
                 }

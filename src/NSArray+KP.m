@@ -18,12 +18,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE. */
 
-#import "NSArray+BB.h"
+#import "NSArray+KP.h"
 
 
-@implementation NSArray (BB)
+@implementation NSArray (KP)
 
-- (NSArray *)map:(id (^)(id))block {
+- (NSArray *)kp_map:(id (^)(id))block {
     
     __block NSMutableArray *array = [NSMutableArray array];
     
@@ -34,7 +34,7 @@
     return array;
 }
 
-- (NSArray *)filter:(BOOL (^)(id))block {
+- (NSArray *)kp_filter:(BOOL (^)(id))block {
 
     __block NSMutableArray *array = [NSMutableArray array];
     

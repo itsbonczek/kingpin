@@ -22,10 +22,9 @@
 
 //NOTE: this may require LLVM 2.0 to compile
 
-@interface NSArray (BB)
+@interface NSArray (KP)
 
-- (NSArray *)filter:(BOOL (^)(id))block;
-- (NSArray *)map:(id (^)(id))block;
-- (void)foreach:(void (^)(id))block;
+- (NSArray *)kp_filter:(BOOL (^)(id))block;
+- (NSArray *)kp_map:(id (^)(id))block;
 
 @end
