@@ -55,6 +55,20 @@ Refresh visible annotations as needed:
 
 This is typically done in `-mapView:regionDidChangeAnimated:`
 
+versions
+--------
+
+All versions are tagged accordingly
+
+0.1.1
+
+* support for multiple tree controllers
+
+0.1.2
+
+* support for 3D maps
+
+
 demo
 ----
 
