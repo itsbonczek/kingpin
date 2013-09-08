@@ -94,35 +94,26 @@
     
     // we initialize with a rough estimate for size, as to minimize allocations
     NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count * 2];
-    NSMutableArray *oldClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count];
     
     // updates visible map rect plus a map view's worth of padding around it
+    MKMapRect bigRect = MKMapRectInset(self.mapView.visibleMapRect,
+                                       -self.mapView.visibleMapRect.size.width,
+                                       -self.mapView.visibleMapRect.size.height);
     
-    float startX = - self.mapFrame.size.width;
-    float endX = 2 * self.mapFrame.size.width;
-    float startY = - self.mapFrame.size.height;
-    float endY = 2 * self.mapFrame.size.height;
+    // calculate the grid size in terms of MKMapPoints
+    double widthPercentage = self.gridSize.width / CGRectGetWidth(self.mapView.frame);
+    double heightPercentage = self.gridSize.height / CGRectGetHeight(self.mapView.frame);
     
-    for(int x = startX; x < endX; x += self.gridSize.width){
+    double widthInterval = ceil(widthPercentage * self.mapView.visibleMapRect.size.width);
+    double heightInterval = ceil(heightPercentage * self.mapView.visibleMapRect.size.height);
+    
+    for(int x = bigRect.origin.x; x < bigRect.origin.x + bigRect.size.width; x += widthInterval){
         
-        for(int y = startY; y < endY; y += self.gridSize.height){
+        for(int y = bigRect.origin.y; y < bigRect.origin.y + bigRect.size.height; y += heightInterval){
             
-            MKMapRect gridRect = [self _mapView:self.mapView
-                              mapRectFromCGRect:CGRectMake(x, y, self.gridSize.width, self.gridSize.height)];
-            
-            // only modify clustered annotations in our tree. any other kind of annotation can be ignored
-            NSArray *existingAnnotations = [[[self.mapView annotationsInMapRect:gridRect] allObjects] kp_filter:^BOOL(id annotation) {
-                if([annotation isKindOfClass:[KPAnnotation class]]){
-                    return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
-                }
-                else {
-                    return NO;
-                }
-            }];
+            MKMapRect gridRect = MKMapRectMake(x, y, widthInterval, heightInterval);
 
             NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:gridRect];
-            
-            [oldClusters addObjectsFromArray:existingAnnotations];
             
             // cluster annotations in this grid piece, if there are annotations to be clustered
             if(newAnnotations.count){
@@ -138,12 +129,23 @@
         }
     }
     
+    NSArray *oldClusters = [[[self.mapView annotationsInMapRect:bigRect] allObjects] kp_filter:^BOOL(id annotation) {
+        
+        if([annotation isKindOfClass:[KPAnnotation class]]){
+            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
+        }
+        else {
+            return NO;
+        }
+    }];
     
     if(animated){
         
         for(KPAnnotation *newCluster in newClusters){
             
             [self.mapView addAnnotation:newCluster];
+            
+            // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
             
             for(KPAnnotation *oldCluster in oldClusters){
                 
@@ -158,6 +160,10 @@
                     
                     [self.mapView removeAnnotation:oldCluster];
                 }
+                
+                // if the new cluster had old annotations, then animate the old annotations to the new one, and remove it
+                // (collapsing animation)
+                
                 else if([newCluster.annotations member:[oldCluster.annotations anyObject]]){
                     
                     if(MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))){
@@ -182,27 +188,6 @@
         [self.mapView addAnnotations:newClusters];
     }
         
-}
-
-- (MKMapRect)_mapView:(MKMapView *)mapView mapRectFromCGRect:(CGRect)rect {
-    
-    CLLocationCoordinate2D topLeftCoord = [mapView convertPoint:CGPointMake(rect.origin.x, rect.origin.y)
-                                           toCoordinateFromView:mapView.superview];
-    
-    CLLocationCoordinate2D bottomRightCoord = [mapView convertPoint:CGPointMake(rect.origin.x + rect.size.width,
-                                                                                rect.origin.y + rect.size.height)
-                                               toCoordinateFromView:mapView.superview];
-    
-    MKMapPoint topLeftPoint = MKMapPointForCoordinate(topLeftCoord);
-    MKMapPoint bottomRightPoint = MKMapPointForCoordinate(bottomRightCoord);
-    
-    MKMapRect gridRect = MKMapRectMake(topLeftPoint.x,
-                                       topLeftPoint.y,
-                                       fabs(bottomRightPoint.x - topLeftPoint.x),
-                                       fabs(bottomRightPoint.y - topLeftPoint.y));
-    
-    return gridRect;
-    
 }
 
 - (void)_animateCluster:(KPAnnotation *)cluster
