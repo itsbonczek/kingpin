@@ -171,12 +171,14 @@
             
             for(KPAnnotation *oldCluster in oldClusters){
                 
+                BOOL shouldAnimate = ![oldCluster.annotations isEqualToSet:newCluster.annotations];
+                
                 if([oldCluster.annotations member:[newCluster.annotations anyObject]]){
                     
-                    if([visibleAnnotations member:oldCluster]){
+                    if([visibleAnnotations member:oldCluster] && shouldAnimate){
                         [self _animateCluster:newCluster
-                               fromCoordinate:oldCluster.coordinate
-                                 toCoordinate:newCluster.coordinate
+                               fromAnnotation:oldCluster
+                                 toAnnotation:newCluster
                                    completion:nil];
                     }
                     
@@ -188,10 +190,11 @@
                 
                 else if([newCluster.annotations member:[oldCluster.annotations anyObject]]){
                     
-                    if(MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))){
+                    if(MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate)) && shouldAnimate){
+                        
                         [self _animateCluster:oldCluster
-                               fromCoordinate:oldCluster.coordinate
-                                 toCoordinate:newCluster.coordinate
+                               fromAnnotation:oldCluster
+                                 toAnnotation:newCluster
                                    completion:^(BOOL finished) {
                                        [self.mapView removeAnnotation:oldCluster];
                                    }];
@@ -213,12 +216,34 @@
 }
 
 - (void)_animateCluster:(KPAnnotation *)cluster
-         fromCoordinate:(CLLocationCoordinate2D)fromCoord
-           toCoordinate:(CLLocationCoordinate2D)toCoord
+         fromAnnotation:(KPAnnotation *)fromAnnotation
+           toAnnotation:(KPAnnotation *)toAnnotation
              completion:(void (^)(BOOL finished))completion
 {
     
+    CLLocationCoordinate2D fromCoord = fromAnnotation.coordinate;
+    CLLocationCoordinate2D toCoord = toAnnotation.coordinate;
+    
     cluster.coordinate = fromCoord;
+    
+    if ([self.delegate respondsToSelector:@selector(treeController:willAnimateAnnotation:fromAnnotation:toAnnotation:)]) {
+        [self.delegate treeController:self willAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
+    }
+    
+    void (^completionDelegate)() = ^ {
+        if ([self.delegate respondsToSelector:@selector(treeController:didAnimateAnnotation:fromAnnotation:toAnnotation:)]) {
+            [self.delegate treeController:self didAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
+        }
+    };
+    
+    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+
+        completionDelegate();
+        
+        if (completion) {
+            completion(finished);
+        }
+    };
     
     [UIView animateWithDuration:self.animationDuration
                           delay:0.f
@@ -226,7 +251,7 @@
                      animations:^{
                          cluster.coordinate = toCoord;
                      }
-                     completion:completion];
+                     completion:completionBlock];
     
 }
 
