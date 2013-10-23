@@ -42,6 +42,7 @@
         self.mapFrame = self.mapView.frame;
         self.gridSize = CGSizeMake(60.f, 60.f);
         self.animationDuration = 0.5f;
+        self.clusteringEnabled = YES;
     }
     
     return self;
@@ -117,14 +118,29 @@
             
             // cluster annotations in this grid piece, if there are annotations to be clustered
             if(newAnnotations.count){
-
-                KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
                 
-                if([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]){
-                    [self.delegate treeController:self configureAnnotationForDisplay:a];
+                // if clustring is disabled, add each annotation individually
+                
+                NSMutableArray *clustersToAdd = [NSMutableArray new];
+                
+                if (self.clusteringEnabled) {
+                    KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
+                    [clustersToAdd addObject:a];
+                }
+                else {
+                    [clustersToAdd addObjectsFromArray:[newAnnotations kp_map:^KPAnnotation *(id<MKAnnotation> a) {
+                        return [[KPAnnotation alloc] initWithAnnotations:@[a]];
+                    }]];
                 }
                 
-                [newClusters addObject:a];
+                for (KPAnnotation *a in clustersToAdd){
+
+                    if([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]){
+                        [self.delegate treeController:self configureAnnotationForDisplay:a];
+                    }
+                    
+                    [newClusters addObject:a];
+                }
             }
         }
     }
