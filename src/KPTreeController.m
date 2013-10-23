@@ -101,6 +101,12 @@
                                        -self.mapView.visibleMapRect.size.width,
                                        -self.mapView.visibleMapRect.size.height);
     
+    if (MKMapRectGetHeight(bigRect) > MKMapRectGetHeight(MKMapRectWorld) ||
+        MKMapRectGetWidth(bigRect) > MKMapRectGetWidth(MKMapRectWorld)) {
+        bigRect = MKMapRectWorld;
+    }
+    
+    
     // calculate the grid size in terms of MKMapPoints
     double widthPercentage = self.gridSize.width / CGRectGetWidth(self.mapView.frame);
     double heightPercentage = self.gridSize.height / CGRectGetHeight(self.mapView.frame);
