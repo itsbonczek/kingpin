@@ -42,6 +42,7 @@
         self.mapView = mapView;
         self.mapFrame = self.mapView.frame;
         self.gridSize = CGSizeMake(60.f, 60.f);
+        self.annotationSize = CGSizeMake(60, 60);
         self.animationDuration = 0.5f;
         self.clusteringEnabled = YES;
     }
@@ -175,6 +176,10 @@
         self.gridPolylines = polylines;
     }
     
+    if (self.clusteringEnabled) {
+        newClusters = [self _mergeOverlappingClusters:newClusters];
+    }
+    
     NSArray *oldClusters = [[[self.mapView annotationsInMapRect:bigRect] allObjects] kp_filter:^BOOL(id annotation) {
         
         if([annotation isKindOfClass:[KPAnnotation class]]){
@@ -277,6 +282,68 @@
                      }
                      completion:completionBlock];
     
+}
+
+// a modified single-linkage cluster algorithm to merge any annotations that visually overlap
+// http://en.wikipedia.org/wiki/Single-linkage_clustering
+// TODO: The runtime can properly be analyzed by figuring out the maximum number of possible overlaps.
+
+- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters {
+    
+    NSMutableArray *mutableClusters = [NSMutableArray arrayWithArray:clusters];
+    
+    BOOL hasOverlaps;
+    
+    do {
+        
+        hasOverlaps = NO;
+        
+        for (int i = 0; i < mutableClusters.count; i++) {
+            for (int j = 0; j < mutableClusters.count; j++) {
+                
+                KPAnnotation *c1 = mutableClusters[i];
+                KPAnnotation *c2 = mutableClusters[j];
+                
+                if (c1 == c2) continue;
+                
+                CGPoint p1 = [self.mapView convertCoordinate:c1.coordinate toPointToView:self.mapView];
+                CGPoint p2 = [self.mapView convertCoordinate:c2.coordinate toPointToView:self.mapView];
+                
+                CGRect r1 = CGRectMake(p1.x - self.annotationSize.width / 2,
+                                       p1.y - self.annotationSize.height / 2,
+                                       self.annotationSize.width,
+                                       self.annotationSize.height);
+                
+                CGRect r2 = CGRectMake(p2.x - self.annotationSize.width / 2,
+                                       p2.y - self.annotationSize.height / 2,
+                                       self.annotationSize.width,
+                                       self.annotationSize.height);
+                
+                if (CGRectIntersectsRect(r1, r2)) {
+                    
+                    NSMutableSet *combinedSet = [NSMutableSet setWithSet:c1.annotations];
+                    [combinedSet unionSet:c2.annotations];
+                    
+                    KPAnnotation *newAnnotation = [[KPAnnotation alloc] initWithAnnotationSet:combinedSet];
+                    
+                    [mutableClusters removeObject:c1];
+                    [mutableClusters removeObject:c2];
+                    [mutableClusters addObject:newAnnotation];
+                    
+                    hasOverlaps = YES;
+                    
+                    break;
+                }
+                
+                if (hasOverlaps) {
+                    break;
+                }
+            }
+        }
+        
+    } while(hasOverlaps);
+    
+    return mutableClusters;
 }
 
 

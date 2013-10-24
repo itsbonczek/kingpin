@@ -29,6 +29,7 @@
 
 
 - (id)initWithAnnotations:(NSArray *)annotations;
+- (id)initWithAnnotationSet:(NSSet *)set;
 
 // Helpers
 

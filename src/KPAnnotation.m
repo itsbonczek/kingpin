@@ -27,11 +27,14 @@
 
 
 - (id)initWithAnnotations:(NSArray *)annotations {
-    
+    return [self initWithAnnotationSet:[NSSet setWithArray:annotations]];
+}
+
+- (id)initWithAnnotationSet:(NSSet *)set {
     self = [super init];
     
     if(self){
-        self.annotations = [NSSet setWithArray:annotations];
+        self.annotations = set;
         self.title = [NSString stringWithFormat:@"%i things", [self.annotations count]];;
         [self calculateValues];
     }

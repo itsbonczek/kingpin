@@ -27,6 +27,7 @@
 
 @property (nonatomic, weak) id<KPTreeControllerDelegate> delegate;
 @property (nonatomic) CGSize gridSize;
+@property (nonatomic) CGSize annotationSize;
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) UIViewAnimationOptions animationOptions;
 @property (nonatomic) BOOL clusteringEnabled;
