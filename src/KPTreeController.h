@@ -30,6 +30,12 @@
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) UIViewAnimationOptions animationOptions;
 @property (nonatomic) BOOL clusteringEnabled;
+@property (nonatomic) BOOL debuggingEnabled;
+
+/**
+ If debuggingEnabled is YES, returns a list of polylines for the grid to be shown on the map
+ */
+@property (nonatomic, readonly) NSArray *gridPolylines;
 
 - (id)initWithMapView:(MKMapView *)mapView;
 - (void)setAnnotations:(NSArray *)annoations;

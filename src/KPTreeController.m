@@ -28,6 +28,7 @@
 @property (nonatomic) MKMapRect lastRefreshedMapRect;
 @property (nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
 @property (nonatomic) CGRect mapFrame;
+@property (nonatomic, readwrite) NSArray *gridPolylines;
 
 @end
 
@@ -114,6 +115,12 @@
     double widthInterval = ceil(widthPercentage * self.mapView.visibleMapRect.size.width);
     double heightInterval = ceil(heightPercentage * self.mapView.visibleMapRect.size.height);
     
+    NSMutableArray *polylines = nil;
+    
+    if (self.debuggingEnabled) {
+        polylines = [NSMutableArray new];
+    }
+    
     for(int x = bigRect.origin.x; x < bigRect.origin.x + bigRect.size.width; x += widthInterval){
         
         for(int y = bigRect.origin.y; y < bigRect.origin.y + bigRect.size.height; y += heightInterval){
@@ -148,7 +155,24 @@
                     [newClusters addObject:a];
                 }
             }
+            
+            if (self.debuggingEnabled) {
+
+                MKMapPoint points[5];
+                points[0] = MKMapPointMake(x, y);
+                points[1] = MKMapPointMake(x + widthInterval, y);
+                points[2] = MKMapPointMake(x + widthInterval, y + heightInterval);
+                points[3] = MKMapPointMake(x, y + heightInterval);
+                points[4] = MKMapPointMake(x, y);
+                
+                [polylines addObject:[MKPolyline polylineWithPoints:points count:5]];
+                
+            }
         }
+    }
+    
+    if (self.debuggingEnabled) {
+        self.gridPolylines = polylines;
     }
     
     NSArray *oldClusters = [[[self.mapView annotationsInMapRect:bigRect] allObjects] kp_filter:^BOOL(id annotation) {
