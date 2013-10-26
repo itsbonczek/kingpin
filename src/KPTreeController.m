@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+#import <objc/runtime.h>
+
 #import "KPTreeController.h"
 
 #import "KPAnnotation.h"
@@ -43,6 +45,7 @@
         self.mapFrame = self.mapView.frame;
         self.gridSize = CGSizeMake(60.f, 60.f);
         self.annotationSize = CGSizeMake(60, 60);
+        self.annotationCenterOffset = CGPointMake(30.f, 30.f);
         self.animationDuration = 0.5f;
         self.clusteringEnabled = YES;
     }
@@ -177,7 +180,7 @@
     }
     
     if (self.clusteringEnabled) {
-        newClusters = [self _mergeOverlappingClusters:newClusters];
+        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters];
     }
     
     NSArray *oldClusters = [[[self.mapView annotationsInMapRect:bigRect] allObjects] kp_filter:^BOOL(id annotation) {
@@ -306,16 +309,29 @@
                 
                 if (c1 == c2) continue;
                 
-                CGPoint p1 = [self.mapView convertCoordinate:c1.coordinate toPointToView:self.mapView];
-                CGPoint p2 = [self.mapView convertCoordinate:c2.coordinate toPointToView:self.mapView];
+                // calculate CGRects for each annotation, memoizing the coord -> point coversion as we go
+                // if the two views overlap, merge them
                 
-                CGRect r1 = CGRectMake(p1.x - self.annotationSize.width / 2,
-                                       p1.y - self.annotationSize.height / 2,
+                if (!c1._annotationPointInMapView) {
+                    c1._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:c1.coordinate
+                                                                                               toPointToView:self.mapView]];
+                }
+                
+                if (!c2._annotationPointInMapView) {
+                    c2._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:c2.coordinate
+                                                                                               toPointToView:self.mapView]];
+                }
+                
+                CGPoint p1 = [c1._annotationPointInMapView CGPointValue];
+                CGPoint p2 = [c2._annotationPointInMapView CGPointValue];
+                
+                CGRect r1 = CGRectMake(p1.x - self.annotationSize.width + self.annotationCenterOffset.x,
+                                       p1.y - self.annotationSize.height + self.annotationCenterOffset.y,
                                        self.annotationSize.width,
                                        self.annotationSize.height);
                 
-                CGRect r2 = CGRectMake(p2.x - self.annotationSize.width / 2,
-                                       p2.y - self.annotationSize.height / 2,
+                CGRect r2 = CGRectMake(p2.x - self.annotationSize.width + self.annotationCenterOffset.x,
+                                       p2.y - self.annotationSize.height + self.annotationCenterOffset.y,
                                        self.annotationSize.width,
                                        self.annotationSize.height);
                 

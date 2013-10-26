@@ -36,4 +36,8 @@
 // returns NO if the KPAnnotation only contains one annotation
 - (BOOL)isCluster;
 
+
+// Private (used by the internal clustering algorithm)
+@property (nonatomic) NSValue *_annotationPointInMapView;
+
 @end
