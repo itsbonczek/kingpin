@@ -118,7 +118,10 @@
     
     double widthInterval = ceil(widthPercentage * self.mapView.visibleMapRect.size.width);
     double heightInterval = ceil(heightPercentage * self.mapView.visibleMapRect.size.height);
-    
+
+    bigRect.origin.x -= fmod(MKMapRectGetMinX(bigRect), widthInterval);
+    bigRect.origin.y -= fmod(MKMapRectGetMinY(bigRect), heightInterval);
+
     NSMutableArray *polylines = nil;
     
     if (self.debuggingEnabled) {
