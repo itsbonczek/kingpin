@@ -23,6 +23,17 @@
 
 #import "NSArray+KP.h"
 
+#import <dispatch/dispatch.h>
+
+FOUNDATION_EXPORT uint64_t dispatch_benchmark(size_t count, void (^block)(void));
+
+#define Benchmark(n, block) \
+    do { \
+        float time = (float)dispatch_benchmark(n, block); \
+        printf("The block have been run %d times. Average time is: %f milliseconds\n",  n, (time / 1000000)); \
+    } while (0);
+
+
 @interface KPTreeController()
 
 @property (nonatomic) MKMapView *mapView;
@@ -56,7 +67,16 @@
 
 - (void)setAnnotations:(NSArray *)annotations {
     [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
+
+
+    /*
+    Benchmark(5, ^{
+        self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
+    });
+     */
+
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
+
     [self _updateVisibileMapAnnotationsOnMapView:NO];
 }
 

@@ -14,7 +14,7 @@
 #import "KPAnnotation.h"
 #import "KPTreeController.h"
 
-static const int kNumberOfTestAnnotations = 500;
+static const int kNumberOfTestAnnotations = 20000;
 
 @interface ViewController ()
 
