@@ -15,7 +15,10 @@
 //
 
 #import "KPAnnotationTree.h"
+#import "KPAnnotationTree_Private.h"
+
 #import "KPTreeNode.h"
+
 #import "KPAnnotation.h"
 
 
@@ -37,13 +40,6 @@ typedef enum {
     KPAnnotationTreeAxisX = 1,
     KPAnnotationTreeAxisY = 2,
 } KPAnnotationTreeAxis;
-
-@interface KPAnnotationTree ()
-
-@property (nonatomic) KPTreeNode *root;
-@property (nonatomic, readwrite) NSSet *annotations;
-
-@end
 
 @implementation KPAnnotationTree
 
