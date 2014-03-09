@@ -114,7 +114,7 @@ static KPTreeNode * buildTree(kp_internal_annotation_t *annotationsX, kp_interna
                         curNode:curNode.left
                        curLevel:(level + 1)];
     }
-    else if(minVal > val){
+    else if(minVal >= val){
         
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
@@ -159,8 +159,6 @@ static KPTreeNode * buildTree(kp_internal_annotation_t *annotationsX, kp_interna
         annotationsX[idx] = _annotation;
     }];
 
-    memcpy(annotationsY, annotationsX, count * sizeof(kp_internal_annotation_t));
-
     qsort_b(annotationsX, count, sizeof(kp_internal_annotation_t), ^int(const void *a1, const void *a2) {
         kp_internal_annotation_t *annotation1 = (kp_internal_annotation_t *)a1;
         kp_internal_annotation_t *annotation2 = (kp_internal_annotation_t *)a2;
@@ -175,6 +173,8 @@ static KPTreeNode * buildTree(kp_internal_annotation_t *annotationsX, kp_interna
 
         return NSOrderedSame;
     });
+
+    memcpy(annotationsY, annotationsX, count * sizeof(kp_internal_annotation_t));
 
     qsort_b(annotationsY, count, sizeof(kp_internal_annotation_t), ^int(const void *a1, const void *a2) {
         kp_internal_annotation_t *annotation1 = (kp_internal_annotation_t *)a1;
