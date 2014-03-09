@@ -41,6 +41,8 @@ typedef enum {
     KPAnnotationTreeAxisY = 2,
 } KPAnnotationTreeAxis;
 
+static KPTreeNode * buildTree(kp_internal_annotation_t *annotationsX, kp_internal_annotation_t *annotationsY, NSUInteger count, NSInteger curLevel);
+
 @implementation KPAnnotationTree
 
 - (id)initWithAnnotations:(NSArray *)annotations {
@@ -189,17 +191,22 @@ typedef enum {
         return NSOrderedSame;
     });
 
-    self.root = [self buildTree:annotationsX annotationsY:annotationsY count:count level:0];
+    self.root = buildTree(annotationsX, annotationsY, count, 0);
 
     free(annotationsX);
     free(annotationsY);
 }
 
-- (KPTreeNode *)buildTree:(kp_internal_annotation_t *)annotationsX annotationsY:(kp_internal_annotation_t *)annotationsY count:(NSUInteger)count level:(NSInteger)curLevel {
+@end
+
+
+#import <assert.h>
+
+static KPTreeNode * buildTree(kp_internal_annotation_t *annotationsX, kp_internal_annotation_t *annotationsY, NSUInteger count, NSInteger curLevel) {
     if (count == 0) {
         return nil;
     }
-    
+
     KPTreeNode *n = [[KPTreeNode alloc] init];
 
     // Prefer machine way of doing odd/even check
@@ -241,14 +248,14 @@ typedef enum {
         }
 
         // Ensure integrity
-        NSAssert(leftAnnotationsYCount == medianIdx, nil);
-        NSAssert(rightAnnotationsYCount == (count - medianIdx - 1), nil);
+        assert(leftAnnotationsYCount == medianIdx);
+        assert(rightAnnotationsYCount == (count - medianIdx - 1));
 
         kp_internal_annotation_t *leftAnnotationsX = annotationsX;
         kp_internal_annotation_t *rightAnnotationsX = annotationsX + (medianIdx + 1);
 
-        n.left = [self buildTree:leftAnnotationsX annotationsY:leftAnnotationsY count:medianIdx level:(curLevel + 1)];
-        n.right = [self buildTree:rightAnnotationsX annotationsY:rightAnnotationsY count:(count - medianIdx - 1) level:(curLevel + 1)];
+        n.left = buildTree(leftAnnotationsX, leftAnnotationsY, medianIdx, curLevel + 1);
+        n.right = buildTree(rightAnnotationsX, rightAnnotationsY, count - medianIdx - 1, curLevel + 1);
 
         free(leftAnnotationsY);
         free(rightAnnotationsY);
@@ -288,20 +295,18 @@ typedef enum {
         }
 
         // Ensure integrity
-        NSAssert(leftAnnotationsXCount == medianIdx, nil);
-        NSAssert(rightAnnotationsXCount == (count - medianIdx - 1), nil);
+        assert(leftAnnotationsXCount == medianIdx);
+        assert(rightAnnotationsXCount == (count - medianIdx - 1));
 
         kp_internal_annotation_t *leftAnnotationsY = annotationsY;
         kp_internal_annotation_t *rightAnnotationsY = annotationsY + (medianIdx + 1);
 
-        n.left = [self buildTree:leftAnnotationsX annotationsY:leftAnnotationsY count:medianIdx level:(curLevel + 1)];
-        n.right = [self buildTree:rightAnnotationsX annotationsY:rightAnnotationsY count:(count - medianIdx - 1) level:(curLevel + 1)];
+        n.left = buildTree(leftAnnotationsX, leftAnnotationsY, medianIdx, curLevel + 1);
+        n.right = buildTree(rightAnnotationsX, rightAnnotationsY, count - medianIdx - 1, curLevel + 1);
         
         free(leftAnnotationsX);
         free(rightAnnotationsX);
     }
-
+    
     return n;
 }
-
-@end
