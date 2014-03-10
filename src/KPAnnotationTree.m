@@ -179,7 +179,8 @@ static MKMapPoint *KPTemporaryPointStorage;
 
     KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
 
-    [annotations enumerateObjectsUsingBlock:^(id <MKAnnotation> annotation, NSUInteger idx, BOOL *stop) {
+    NSUInteger idx = 0;
+    for (id <MKAnnotation> annotation in annotations) {
         MKMapPoint mapPoint = MKMapPointForCoordinate(annotation.coordinate);
 
         kp_internal_annotation_t _annotation;
@@ -190,7 +191,9 @@ static MKMapPoint *KPTemporaryPointStorage;
         _annotation.mapPoint = KPTemporaryPointStorage + idx;
 
         annotationsX[idx] = _annotation;
-    }];
+
+        idx++;
+    };
 
     qsort_b(annotationsX, count, sizeof(kp_internal_annotation_t), ^int(const void *a1, const void *a2) {
         kp_internal_annotation_t *annotation1 = (kp_internal_annotation_t *)a1;
@@ -284,22 +287,26 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
 
     NSUInteger leftAnnotationsSortedByComplementaryAxisCount = 0;
     NSUInteger rightAnnotationsSortedByComplementaryAxisCount = 0;
-    
-    for (NSUInteger i = 0; i < count; i++) {
-        kp_internal_annotation_t annotation = annotationsSortedByComplementaryAxis[i];
 
+
+    kp_internal_annotation_t *iterativeAnnotation = annotationsSortedByComplementaryAxis;
+    NSUInteger idx = 0;
+    while (idx < count) {
         /*
          KP_LIKELY macros, based on __builtin_expect, is used for branch prediction. The performance gain from this is expected to be very small, but it is still logically good to predict branches which are likely to occur often and often.
          
          We check median annotation to skip it because it is already added to the current node.
          */
-        if (KP_LIKELY([annotation.annotation isEqual:n.annotation] == NO)) {
-            if (MKMapPointGetCoordinateForAxis(annotation.mapPoint, axis) < splittingCoordinate) {
-                leftAnnotationsSortedByComplementraryAxis[leftAnnotationsSortedByComplementaryAxisCount++] = annotation;
+        if (KP_LIKELY([iterativeAnnotation->annotation isEqual:n.annotation] == NO)) {
+            if (MKMapPointGetCoordinateForAxis(iterativeAnnotation->mapPoint, axis) < splittingCoordinate) {
+                leftAnnotationsSortedByComplementraryAxis[leftAnnotationsSortedByComplementaryAxisCount++] = *iterativeAnnotation;
             } else {
-                rightAnnotationsSortedByComplementraryAxis[rightAnnotationsSortedByComplementaryAxisCount++] = annotation;
+                rightAnnotationsSortedByComplementraryAxis[rightAnnotationsSortedByComplementaryAxisCount++] = *iterativeAnnotation;
             }
         }
+
+        iterativeAnnotation++;
+        idx++;
     }
 
 
