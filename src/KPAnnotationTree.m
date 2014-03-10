@@ -52,6 +52,13 @@ static inline double MKMapPointGetCoordinateForAxis(MKMapPoint *point, int axis)
 
 static KPTreeNode * buildTree(kp_internal_annotation_t *annotationsX, kp_internal_annotation_t *annotationsY, NSUInteger count, NSInteger curLevel);
 
+typedef struct {
+    kp_internal_annotation_t *annotations;
+    size_t freeidx;
+} kp_temporary_annotation_storage_t;
+
+static kp_temporary_annotation_storage_t KPTemporaryAnnotationStorage;
+
 @implementation KPAnnotationTree
 
 - (id)initWithAnnotations:(NSArray *)annotations {
@@ -215,10 +222,14 @@ static KPTreeNode * buildTree(kp_internal_annotation_t *annotationsX, kp_interna
         return NSOrderedSame;
     });
 
+    KPTemporaryAnnotationStorage.annotations = malloc(count * sizeof(kp_internal_annotation_t));
+    KPTemporaryAnnotationStorage.freeidx = 0;
+
     self.root = buildTree(annotationsX, annotationsY, count, 0);
 
     free(annotationsX);
     free(annotationsY);
+    free(KPTemporaryAnnotationStorage.annotations);
 }
 
 @end
@@ -266,13 +277,15 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
     n.mapPoint = annotationsSortedByCurrentAxis[medianIdx].mapPoint;
 
 
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxis  = malloc(medianIdx * sizeof(kp_internal_annotation_t));
-    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxis = malloc((count - medianIdx - 1) * sizeof(kp_internal_annotation_t));
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxis  = KPTemporaryAnnotationStorage.annotations + KPTemporaryAnnotationStorage.freeidx;
+    KPTemporaryAnnotationStorage.freeidx += medianIdx;
+
+    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxis = KPTemporaryAnnotationStorage.annotations + KPTemporaryAnnotationStorage.freeidx;
+    KPTemporaryAnnotationStorage.freeidx += (count - medianIdx - 1);
 
 
     NSUInteger leftAnnotationsSortedByComplementaryAxisCount = 0;
     NSUInteger rightAnnotationsSortedByComplementaryAxisCount = 0;
-
     
     for (NSUInteger i = 0; i < count; i++) {
         kp_internal_annotation_t annotation = annotationsSortedByComplementaryAxis[i];
@@ -297,6 +310,12 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
     assert(rightAnnotationsSortedByComplementaryAxisCount == (count - medianIdx - 1));
 
 
+    memcpy(annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementraryAxis, leftAnnotationsSortedByComplementaryAxisCount * sizeof(kp_internal_annotation_t));
+    memcpy(annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount, rightAnnotationsSortedByComplementraryAxis, rightAnnotationsSortedByComplementaryAxisCount * sizeof(kp_internal_annotation_t));
+
+
+    KPTemporaryAnnotationStorage.freeidx = 0;
+
     /*
      The following two strings use C pointer <s>gymnastics</s> arithmetics a[i] = *(a + i):
 
@@ -310,12 +329,8 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
 
-    n.left = buildTree(leftAnnotationsSortedByComplementraryAxis, leftAnnotationsSortedByCurrentAxis, medianIdx, curLevel + 1);
-    n.right = buildTree(rightAnnotationsSortedByComplementraryAxis, rightAnnotationsSortedByCurrentAxis, count - medianIdx - 1, curLevel + 1);
-
-
-    free(leftAnnotationsSortedByComplementraryAxis);
-    free(rightAnnotationsSortedByComplementraryAxis);
+    n.left  = buildTree(annotationsSortedByComplementaryAxis, leftAnnotationsSortedByCurrentAxis, leftAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
+    n.right = buildTree(annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount, rightAnnotationsSortedByCurrentAxis, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
 
 
     return n;
