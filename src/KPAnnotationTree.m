@@ -33,7 +33,7 @@
 typedef struct {
     __unsafe_unretained id <MKAnnotation> annotation;
 
-    MKMapPoint mapPoint;
+    MKMapPoint *mapPoint;
 } kp_internal_annotation_t;
 
 typedef enum {
@@ -58,6 +58,8 @@ typedef struct {
 } kp_temporary_annotation_storage_t;
 
 static kp_temporary_annotation_storage_t KPTemporaryAnnotationStorage;
+
+static MKMapPoint * KPTemporaryPointStorage;
 
 @implementation KPAnnotationTree
 
@@ -179,13 +181,17 @@ static kp_temporary_annotation_storage_t KPTemporaryAnnotationStorage;
     kp_internal_annotation_t *annotationsX = malloc(count * sizeof(kp_internal_annotation_t));
     kp_internal_annotation_t *annotationsY = malloc(count * sizeof(kp_internal_annotation_t));
 
+    KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
+
     [annotations enumerateObjectsUsingBlock:^(id <MKAnnotation> annotation, NSUInteger idx, BOOL *stop) {
         MKMapPoint mapPoint = MKMapPointForCoordinate(annotation.coordinate);
 
         kp_internal_annotation_t _annotation;
         _annotation.annotation = annotation;
 
-        _annotation.mapPoint = mapPoint;
+        KPTemporaryPointStorage[idx] = mapPoint;
+
+        _annotation.mapPoint = KPTemporaryPointStorage + idx;
 
         annotationsX[idx] = _annotation;
     }];
@@ -194,11 +200,11 @@ static kp_temporary_annotation_storage_t KPTemporaryAnnotationStorage;
         kp_internal_annotation_t *annotation1 = (kp_internal_annotation_t *)a1;
         kp_internal_annotation_t *annotation2 = (kp_internal_annotation_t *)a2;
 
-        if (annotation1->mapPoint.x > annotation2->mapPoint.x) {
+        if (annotation1->mapPoint->x > annotation2->mapPoint->x) {
             return NSOrderedDescending;
         }
 
-        if (annotation1->mapPoint.x < annotation2->mapPoint.x) {
+        if (annotation1->mapPoint->x < annotation2->mapPoint->x) {
             return NSOrderedAscending;
         }
 
@@ -211,11 +217,11 @@ static kp_temporary_annotation_storage_t KPTemporaryAnnotationStorage;
         kp_internal_annotation_t *annotation1 = (kp_internal_annotation_t *)a1;
         kp_internal_annotation_t *annotation2 = (kp_internal_annotation_t *)a2;
 
-        if (annotation1->mapPoint.y > annotation2->mapPoint.y) {
+        if (annotation1->mapPoint->y > annotation2->mapPoint->y) {
             return NSOrderedDescending;
         }
 
-        if (annotation1->mapPoint.y < annotation2->mapPoint.y) {
+        if (annotation1->mapPoint->y < annotation2->mapPoint->y) {
             return NSOrderedAscending;
         }
 
@@ -230,6 +236,7 @@ static kp_temporary_annotation_storage_t KPTemporaryAnnotationStorage;
     free(annotationsX);
     free(annotationsY);
     free(KPTemporaryAnnotationStorage.annotations);
+    free(KPTemporaryPointStorage);
 }
 
 @end
@@ -254,7 +261,7 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
     kp_internal_annotation_t medianAnnotation = annotationsSortedByCurrentAxis[medianIdx];
 
 
-    double splittingCoordinate = MKMapPointGetCoordinateForAxis(& medianAnnotation.mapPoint, axis);
+    double splittingCoordinate = MKMapPointGetCoordinateForAxis(medianAnnotation.mapPoint, axis);
 
 
     /*
@@ -269,12 +276,12 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
      Apply this method of choosing the median element at each level of recursion.
      */
 
-    while (medianIdx > 0 && MKMapPointGetCoordinateForAxis(& annotationsSortedByCurrentAxis[medianIdx - 1].mapPoint, axis) == MKMapPointGetCoordinateForAxis(& annotationsSortedByCurrentAxis[medianIdx].mapPoint, axis)) {
+    while (medianIdx > 0 && MKMapPointGetCoordinateForAxis(annotationsSortedByCurrentAxis[medianIdx - 1].mapPoint, axis) == MKMapPointGetCoordinateForAxis(annotationsSortedByCurrentAxis[medianIdx].mapPoint, axis)) {
         medianIdx--;
     }
 
     n.annotation = annotationsSortedByCurrentAxis[medianIdx].annotation;
-    n.mapPoint = annotationsSortedByCurrentAxis[medianIdx].mapPoint;
+    n.mapPoint = *(annotationsSortedByCurrentAxis[medianIdx].mapPoint);
 
 
     kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxis  = KPTemporaryAnnotationStorage.annotations + KPTemporaryAnnotationStorage.freeidx;
@@ -296,7 +303,7 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
          We check median annotation to skip it because it is already added to the current node.
          */
         if (KP_LIKELY([annotation.annotation isEqual:n.annotation] == NO)) {
-            if (MKMapPointGetCoordinateForAxis(& annotation.mapPoint, axis) < splittingCoordinate) {
+            if (MKMapPointGetCoordinateForAxis(annotation.mapPoint, axis) < splittingCoordinate) {
                 leftAnnotationsSortedByComplementraryAxis[leftAnnotationsSortedByComplementaryAxisCount++] = annotation;
             } else {
                 rightAnnotationsSortedByComplementraryAxis[rightAnnotationsSortedByComplementaryAxisCount++] = annotation;
