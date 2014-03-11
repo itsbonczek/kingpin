@@ -285,11 +285,11 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
     kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxis = KPTemporaryAnnotationStorage + medianIdx;
 
 
-    NSUInteger leftAnnotationsSortedByComplementaryAxisCount = 0;
-    NSUInteger rightAnnotationsSortedByComplementaryAxisCount = 0;
+    kp_internal_annotation_t *annotationsSortedByComplementaryAxisIterator       = annotationsSortedByComplementaryAxis;
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxisIterator  = leftAnnotationsSortedByComplementraryAxis;
+    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxisIterator = rightAnnotationsSortedByComplementraryAxis;
 
 
-    kp_internal_annotation_t *iterativeAnnotation = annotationsSortedByComplementaryAxis;
     NSUInteger idx = 0;
     while (idx < count) {
         /*
@@ -297,24 +297,21 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
          
          We check median annotation to skip it because it is already added to the current node.
          */
-        if (KP_LIKELY([iterativeAnnotation->annotation isEqual:n.annotation] == NO)) {
-            if (MKMapPointGetCoordinateForAxis(iterativeAnnotation->mapPoint, axis) < splittingCoordinate) {
-                leftAnnotationsSortedByComplementraryAxis[leftAnnotationsSortedByComplementaryAxisCount++] = *iterativeAnnotation;
+        if (KP_LIKELY([annotationsSortedByComplementaryAxisIterator->annotation isEqual:n.annotation] == NO)) {
+            if (MKMapPointGetCoordinateForAxis(annotationsSortedByComplementaryAxisIterator->mapPoint, axis) < splittingCoordinate) {
+                *(leftAnnotationsSortedByComplementraryAxisIterator++)  = *annotationsSortedByComplementaryAxisIterator;
             } else {
-                rightAnnotationsSortedByComplementraryAxis[rightAnnotationsSortedByComplementaryAxisCount++] = *iterativeAnnotation;
+                *(rightAnnotationsSortedByComplementraryAxisIterator++) = *annotationsSortedByComplementaryAxisIterator;
             }
         }
 
-        iterativeAnnotation++;
+        annotationsSortedByComplementaryAxisIterator++;
         idx++;
     }
 
 
-    // Ensure integrity (development assert, maybe removed in production)
-    #ifdef DEBUG
-    assert(leftAnnotationsSortedByComplementaryAxisCount == medianIdx);
-    assert(rightAnnotationsSortedByComplementaryAxisCount == (count - medianIdx - 1));
-    #endif
+    NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
+    NSUInteger rightAnnotationsSortedByComplementaryAxisCount = count - medianIdx - 1;
 
 
     memcpy(annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementraryAxis, leftAnnotationsSortedByComplementaryAxisCount * sizeof(kp_internal_annotation_t));
@@ -337,7 +334,7 @@ static inline KPTreeNode * buildTree(kp_internal_annotation_t *annotationsSorted
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
 
-    n.left  = buildTree(leftAnnotationsSortedByComplementraryAxis, leftAnnotationsSortedByCurrentAxis, leftAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
+    n.left  = buildTree(leftAnnotationsSortedByComplementraryAxis,  leftAnnotationsSortedByCurrentAxis,  leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
     n.right = buildTree(rightAnnotationsSortedByComplementraryAxis, rightAnnotationsSortedByCurrentAxis, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
 
 
