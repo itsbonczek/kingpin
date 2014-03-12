@@ -18,7 +18,6 @@
 		93BBC0521645A2B2004BC920 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0511645A2B2004BC920 /* Foundation.framework */; };
 		93BBC0541645A2B2004BC920 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0531645A2B2004BC920 /* CoreGraphics.framework */; };
 		93BBC07C1645A387004BC920 /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
-		93BBC07D1645A387004BC920 /* KPTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0441645A1F8004BC920 /* KPTreeNode.m */; };
 		93BBC07E1645A387004BC920 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
 		93BBC0821645A39F004BC920 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0811645A39F004BC920 /* MapKit.framework */; };
 		93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0861645A42A004BC920 /* CoreLocation.framework */; };
@@ -58,8 +57,6 @@
 		9346910616A8F1C200DE59FA /* NSArray+KP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KP.m"; sourceTree = "<group>"; };
 		93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree.h; sourceTree = "<group>"; };
 		93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTree.m; sourceTree = "<group>"; };
-		93BBC0431645A1F8004BC920 /* KPTreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPTreeNode.h; sourceTree = "<group>"; };
-		93BBC0441645A1F8004BC920 /* KPTreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPTreeNode.m; sourceTree = "<group>"; };
 		93BBC0451645A1F8004BC920 /* KPAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotation.h; sourceTree = "<group>"; };
 		93BBC0461645A1F8004BC920 /* KPAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPAnnotation.m; sourceTree = "<group>"; };
 		93BBC04B1645A2B2004BC920 /* kingpinTestApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kingpinTestApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,8 +133,6 @@
 			children = (
 				93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */,
 				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,
-				93BBC0431645A1F8004BC920 /* KPTreeNode.h */,
-				93BBC0441645A1F8004BC920 /* KPTreeNode.m */,
 				93BBC0451645A1F8004BC920 /* KPAnnotation.h */,
 				93BBC0461645A1F8004BC920 /* KPAnnotation.m */,
 				93BBC0881645A68F004BC920 /* KPTreeController.h */,
@@ -335,7 +330,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				93BBC07C1645A387004BC920 /* KPAnnotationTree.m in Sources */,
-				93BBC07D1645A387004BC920 /* KPTreeNode.m in Sources */,
 				93BBC07E1645A387004BC920 /* KPAnnotation.m in Sources */,
 				93BBC08A1645A690004BC920 /* KPTreeController.m in Sources */,
 				93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */,
@@ -573,6 +567,7 @@
 				8641D26418CAF14700B109E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		93BBC0321645A119004BC920 /* Build configuration list for PBXProject "kingpin" */ = {
 			isa = XCConfigurationList;
