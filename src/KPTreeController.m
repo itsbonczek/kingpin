@@ -42,7 +42,6 @@ FOUNDATION_EXPORT uint64_t dispatch_benchmark(size_t count, void (^block)(void))
   --------
  */
 typedef enum {
-    KPClusterDistributionQuadrantNone  = 0,      // Cluster's point equals cell's center point (very rare case)
     KPClusterDistributionQuadrantOne   = 1 << 0, // Cluster's point is distributed in North East direction from cell's center i.e. cluster.x > cellCenter.x && cluster.y < cellCenter.y (given MKMapPoints: 0, 0 is on north-west...)
     KPClusterDistributionQuadrantTwo   = 1 << 1,
     KPClusterDistributionQuadrantThree = 1 << 2,
@@ -120,21 +119,19 @@ typedef struct {
 static inline KPClusterDistributionQuadrant KPClusterDistributionQuadrantForPointInsideMapRect(MKMapRect mapRect, MKMapPoint point) {
     MKMapPoint centerPoint = MKMapPointMake(MKMapRectGetMidX(mapRect), MKMapRectGetMidY(mapRect));
 
-    if (point.x > centerPoint.x) {
-        if (point.y > centerPoint.y) {
+    if (point.x >= centerPoint.x) {
+        if (point.y >= centerPoint.y) {
             return KPClusterDistributionQuadrantFour;
         } else {
             return KPClusterDistributionQuadrantOne;
         }
-    } else if (point.x < centerPoint.x) {
-        if (point.y > centerPoint.y) {
+    } else {
+        if (point.y >= centerPoint.y) {
             return KPClusterDistributionQuadrantThree;
         } else {
             return KPClusterDistributionQuadrantTwo;
         }
     }
-
-    return KPClusterDistributionQuadrantNone;
 }
 
 typedef enum {
@@ -611,7 +608,7 @@ typedef enum {
 
             currentCellCluster = clusterGrid[i][j];
 
-            if (currentCellCluster == NULL || currentCellCluster->merged || currentCellCluster->distributionQuadrant == KPClusterDistributionQuadrantNone) {
+            if (currentCellCluster == NULL || currentCellCluster->merged) {
                 continue;
             }
 
