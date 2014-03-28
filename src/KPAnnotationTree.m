@@ -218,7 +218,7 @@ static MKMapPoint *KPTemporaryPointStorage;
         return NSOrderedSame;
     });
 
-    KPTemporaryAnnotationStorage = malloc(count * sizeof(kp_internal_annotation_t));
+    KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
     self.root = buildTree(self.nodeStorage, annotationsX, annotationsY, count, 0);
 
@@ -272,37 +272,36 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     n->mapPoint = *(annotationsSortedByCurrentAxis[medianIdx].mapPoint);
 
 
-    kp_internal_annotation_t *temporaryAnnotationsSortedByComplementaryAxis = KPTemporaryAnnotationStorage;
-    memcpy(temporaryAnnotationsSortedByComplementaryAxis, annotationsSortedByComplementaryAxis, count * sizeof(kp_internal_annotation_t));
+    kp_internal_annotation_t *temporaryleftAnnotationsSortedByComplementaryAxis = KPTemporaryAnnotationStorage;
+
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxisBackwardIterator  = KPTemporaryAnnotationStorage + (medianIdx - 1);
+    kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
 
 
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxis  = annotationsSortedByComplementaryAxis;
-    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxis = annotationsSortedByComplementaryAxis + medianIdx;
+    kp_internal_annotation_t *annotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
 
 
-    kp_internal_annotation_t *temporaryAnnotationsSortedByComplementaryAxisIterator = temporaryAnnotationsSortedByComplementaryAxis;
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxisIterator     = leftAnnotationsSortedByComplementraryAxis;
-    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxisIterator    = rightAnnotationsSortedByComplementraryAxis;
-
-
-    NSUInteger idx = 0;
-    while (idx < count) {
+    NSInteger idx = count - 1;
+    while (idx >= 0) {
         /*
          KP_LIKELY macros, based on __builtin_expect, is used for branch prediction. The performance gain from this is expected to be very small, but it is still logically good to predict branches which are likely to occur often and often.
          
          We check median annotation to skip it because it is already added to the current node.
          */
-        if (KP_LIKELY([temporaryAnnotationsSortedByComplementaryAxisIterator->annotation isEqual:n->annotation] == NO)) {
-            if (MKMapPointGetCoordinateForAxis(temporaryAnnotationsSortedByComplementaryAxisIterator->mapPoint, axis) < splittingCoordinate) {
-                *(leftAnnotationsSortedByComplementraryAxisIterator++)  = *temporaryAnnotationsSortedByComplementaryAxisIterator;
+        if (KP_LIKELY([annotationsSortedByComplementaryAxisBackwardIterator->annotation isEqual:n->annotation] == NO)) {
+            if (MKMapPointGetCoordinateForAxis(annotationsSortedByComplementaryAxisBackwardIterator->mapPoint, axis) < splittingCoordinate) {
+                *(leftAnnotationsSortedByComplementaryAxisBackwardIterator--)  = *annotationsSortedByComplementaryAxisBackwardIterator;
             } else {
-                *(rightAnnotationsSortedByComplementraryAxisIterator++) = *temporaryAnnotationsSortedByComplementaryAxisIterator;
+                *(rightAnnotationsSortedByComplementaryAxisBackwardIterator--) = *annotationsSortedByComplementaryAxisBackwardIterator;
             }
         }
 
-        temporaryAnnotationsSortedByComplementaryAxisIterator++;
-        idx++;
+        annotationsSortedByComplementaryAxisBackwardIterator--;
+        idx--;
     }
+
+
+    memcpy(annotationsSortedByComplementaryAxis, temporaryleftAnnotationsSortedByComplementaryAxis, medianIdx * sizeof(kp_internal_annotation_t));
 
 
     NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
@@ -318,15 +317,15 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
      On each level of depth we derive only one couple of arrays, the second couple is passed as is just using this C pointer arithmetic.
      */
 
-    leftAnnotationsSortedByComplementraryAxis  = annotationsSortedByComplementaryAxis;
-    rightAnnotationsSortedByComplementraryAxis = annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount;
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxis  = annotationsSortedByComplementaryAxis;
+    kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxis = annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount + 1; // + 1 to skip element with medianIdx index
 
     kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = annotationsSortedByCurrentAxis;
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
 
-    n->left  = buildTree(nodeStorage, leftAnnotationsSortedByComplementraryAxis,  leftAnnotationsSortedByCurrentAxis,  leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
-    n->right = buildTree(nodeStorage, rightAnnotationsSortedByComplementraryAxis, rightAnnotationsSortedByCurrentAxis, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
+    n->left  = buildTree(nodeStorage, leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis,  leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
+    n->right = buildTree(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
 
 
     return n;
