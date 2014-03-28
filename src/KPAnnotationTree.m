@@ -74,7 +74,7 @@ static MKMapPoint *KPTemporaryPointStorage;
                   curNode:(kp_treenode_t *)curNode
                  curLevel:(NSInteger)level {
     
-    if(curNode == nil){
+    if (curNode == NULL) {
         return;
     }
     
@@ -234,7 +234,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 
 static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, const NSUInteger count, const NSInteger curLevel) {
     if (count == 0) {
-        return nil;
+        return NULL;
     }
 
     kp_treenode_t *n = nodeStorage->nodes + (nodeStorage->freeIdx++);
@@ -272,13 +272,17 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     n->mapPoint = *(annotationsSortedByCurrentAxis[medianIdx].mapPoint);
 
 
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxis  = KPTemporaryAnnotationStorage;
-    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxis = KPTemporaryAnnotationStorage + medianIdx;
+    kp_internal_annotation_t *temporaryAnnotationsSortedByComplementaryAxis = KPTemporaryAnnotationStorage;
+    memcpy(temporaryAnnotationsSortedByComplementaryAxis, annotationsSortedByComplementaryAxis, count * sizeof(kp_internal_annotation_t));
 
 
-    kp_internal_annotation_t *annotationsSortedByComplementaryAxisIterator       = annotationsSortedByComplementaryAxis;
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxisIterator  = leftAnnotationsSortedByComplementraryAxis;
-    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxisIterator = rightAnnotationsSortedByComplementraryAxis;
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxis  = annotationsSortedByComplementaryAxis;
+    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxis = annotationsSortedByComplementaryAxis + medianIdx;
+
+
+    kp_internal_annotation_t *temporaryAnnotationsSortedByComplementaryAxisIterator = temporaryAnnotationsSortedByComplementaryAxis;
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementraryAxisIterator     = leftAnnotationsSortedByComplementraryAxis;
+    kp_internal_annotation_t *rightAnnotationsSortedByComplementraryAxisIterator    = rightAnnotationsSortedByComplementraryAxis;
 
 
     NSUInteger idx = 0;
@@ -288,25 +292,21 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
          
          We check median annotation to skip it because it is already added to the current node.
          */
-        if (KP_LIKELY([annotationsSortedByComplementaryAxisIterator->annotation isEqual:n->annotation] == NO)) {
-            if (MKMapPointGetCoordinateForAxis(annotationsSortedByComplementaryAxisIterator->mapPoint, axis) < splittingCoordinate) {
-                *(leftAnnotationsSortedByComplementraryAxisIterator++)  = *annotationsSortedByComplementaryAxisIterator;
+        if (KP_LIKELY([temporaryAnnotationsSortedByComplementaryAxisIterator->annotation isEqual:n->annotation] == NO)) {
+            if (MKMapPointGetCoordinateForAxis(temporaryAnnotationsSortedByComplementaryAxisIterator->mapPoint, axis) < splittingCoordinate) {
+                *(leftAnnotationsSortedByComplementraryAxisIterator++)  = *temporaryAnnotationsSortedByComplementaryAxisIterator;
             } else {
-                *(rightAnnotationsSortedByComplementraryAxisIterator++) = *annotationsSortedByComplementaryAxisIterator;
+                *(rightAnnotationsSortedByComplementraryAxisIterator++) = *temporaryAnnotationsSortedByComplementaryAxisIterator;
             }
         }
 
-        annotationsSortedByComplementaryAxisIterator++;
+        temporaryAnnotationsSortedByComplementaryAxisIterator++;
         idx++;
     }
 
 
     NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
     NSUInteger rightAnnotationsSortedByComplementaryAxisCount = count - medianIdx - 1;
-
-
-    memcpy(annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementraryAxis, leftAnnotationsSortedByComplementaryAxisCount * sizeof(kp_internal_annotation_t));
-    memcpy(annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount, rightAnnotationsSortedByComplementraryAxis, rightAnnotationsSortedByComplementaryAxisCount * sizeof(kp_internal_annotation_t));
 
 
     /*
