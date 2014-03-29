@@ -4,7 +4,7 @@
 namespace :submodules do
   desc "update submodules"
   task :update do
-    exec 'git submodules update --recursive'
+    exec 'git submodule update --recursive'
   end
 end
 
