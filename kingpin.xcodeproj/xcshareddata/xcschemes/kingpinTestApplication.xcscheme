@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8641D25118CAF14700B109E4"
-               BuildableName = "kingpinTests.octest"
+               BlueprintIdentifier = "9189259818E7732900812296"
+               BuildableName = "kingpinTests.xctest"
                BlueprintName = "kingpinTests"
                ReferencedContainer = "container:kingpin.xcodeproj">
             </BuildableReference>

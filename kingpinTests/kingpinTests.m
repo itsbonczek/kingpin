@@ -6,7 +6,7 @@
 //
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 #import <MapKit/MapKit.h>
 
@@ -34,7 +34,7 @@ static inline double randomWithinRange(double min, double max) {
 }
 
 
-@interface kingpinTests : SenTestCase
+@interface kingpinTests : XCTestCase
 @end
 
 static NSUInteger const kNumberOfTestAnnotations = 50000;
@@ -98,9 +98,9 @@ static NSUInteger const kNumberOfTestAnnotations = 50000;
 
         if (node->left) {
             if (XorY) {
-                STAssertTrue(node->left->mapPoint.x < node->mapPoint.x, nil);
+                XCTAssertTrue(node->left->mapPoint.x < node->mapPoint.x, @"");
             } else {
-                STAssertTrue(node->left->mapPoint.y < node->mapPoint.y, nil);
+                XCTAssertTrue(node->left->mapPoint.y < node->mapPoint.y, @"");
             }
 
             weakRecursiveTraversalBlock(node->left, levelOfDepth + 1);
@@ -108,9 +108,9 @@ static NSUInteger const kNumberOfTestAnnotations = 50000;
 
         if (node->right) {
             if (XorY) {
-                STAssertTrue(node->mapPoint.x <= node->right->mapPoint.x, nil);
+                XCTAssertTrue(node->mapPoint.x <= node->right->mapPoint.x, @"");
             } else {
-                STAssertTrue(node->mapPoint.y <= node->right->mapPoint.y, nil);
+                XCTAssertTrue(node->mapPoint.y <= node->right->mapPoint.y, @"");
             }
 
             weakRecursiveTraversalBlock(node->right, levelOfDepth + 1);
@@ -119,9 +119,9 @@ static NSUInteger const kNumberOfTestAnnotations = 50000;
 
     recursiveTraversalBlock(annotationTree.root, 0);
 
-    STAssertTrue(kNumberOfTestAnnotations == annotations.count, nil);
-    STAssertTrue(kNumberOfTestAnnotations == annotationsBySearch.count, nil);
-    STAssertTrue(kNumberOfTestAnnotations == numberOfNodes, nil);
+    XCTAssertTrue(kNumberOfTestAnnotations == annotations.count, @"");
+    XCTAssertTrue(kNumberOfTestAnnotations == annotationsBySearch.count, @"");
+    XCTAssertTrue(kNumberOfTestAnnotations == numberOfNodes, @"");
 }
 
 - (void)testEquivalenceOfAnnotationTrees
@@ -174,9 +174,9 @@ static NSUInteger const kNumberOfTestAnnotations = 50000;
     NSSet *annotationSetBySearch1 = [NSSet setWithArray:annotationsBySearch1];
     NSSet *annotationSetBySearch2 = [NSSet setWithArray:annotationsBySearch2];
 
-    STAssertTrue([annotationSetBySearch1 isEqual:annotationSetBySearch2], nil);
-    STAssertTrue([annotationSetBySearch1 isEqual:annotationSet], nil);
-    STAssertTrue(annotationsBySearch1.count == kNumberOfTestAnnotations, nil);
+    XCTAssertTrue([annotationSetBySearch1 isEqual:annotationSetBySearch2], @"");
+    XCTAssertTrue([annotationSetBySearch1 isEqual:annotationSet], @"");
+    XCTAssertTrue(annotationsBySearch1.count == kNumberOfTestAnnotations, @"");
 
     // Create random rect
     double randomWidth = randomWithinRange(0, MKMapRectWorld.size.width);
@@ -194,7 +194,7 @@ static NSUInteger const kNumberOfTestAnnotations = 50000;
     annotationSetBySearch1 = [NSSet setWithArray:annotationsBySearch1];
     annotationSetBySearch2 = [NSSet setWithArray:annotationsBySearch2];
 
-    STAssertTrue([annotationSetBySearch1 isEqual:annotationSetBySearch2], nil);
+    XCTAssertTrue([annotationSetBySearch1 isEqual:annotationSetBySearch2], @"");
 }
 
 @end

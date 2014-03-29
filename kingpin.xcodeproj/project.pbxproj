@@ -7,17 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8641D25418CAF14700B109E4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641D25318CAF14700B109E4 /* SenTestingKit.framework */; };
-		8641D25518CAF14700B109E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0511645A2B2004BC920 /* Foundation.framework */; };
-		8641D25618CAF14700B109E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
-		8641D25C18CAF14700B109E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8641D25A18CAF14700B109E4 /* InfoPlist.strings */; };
-		8641D25E18CAF14700B109E4 /* kingpinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8641D25D18CAF14700B109E4 /* kingpinTests.m */; };
-		91E9B69018E74FED00EFE22C /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
-		91E9B69118E74FED00EFE22C /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
-		91E9B69218E74FED00EFE22C /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
-		91E9B69318E74FED00EFE22C /* KPTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPTreeController.m */; };
-		91E9B69418E7500300EFE22C /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */; };
-		91E9B69618E7509300EFE22C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
+		9189259B18E7732900812296 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9189259A18E7732900812296 /* XCTest.framework */; };
+		9189259C18E7732900812296 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0511645A2B2004BC920 /* Foundation.framework */; };
+		9189259D18E7732900812296 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
+		918925A318E7732900812296 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 918925A118E7732900812296 /* InfoPlist.strings */; };
+		918925A518E7732900812296 /* kingpinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 918925A418E7732900812296 /* kingpinTests.m */; };
+		91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
+		91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
+		91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
+		91E4FC2718E773F300AC8444 /* KPTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPTreeController.m */; };
+		91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */; };
 		9346910116A8EC8400DE59FA /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910016A8EC8400DE59FA /* MyAnnotation.m */; };
 		9346910716A8F1C200DE59FA /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
 		93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
@@ -40,13 +39,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8641D25218CAF14700B109E4 /* kingpinTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kingpinTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		8641D25918CAF14700B109E4 /* kingpinTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "kingpinTests-Info.plist"; sourceTree = "<group>"; };
-		8641D25B18CAF14700B109E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8641D25D18CAF14700B109E4 /* kingpinTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = kingpinTests.m; sourceTree = "<group>"; };
-		8641D25F18CAF14700B109E4 /* kingpinTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpinTests-Prefix.pch"; sourceTree = "<group>"; };
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
+		9189259918E7732900812296 /* kingpinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kingpinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9189259A18E7732900812296 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		918925A018E7732900812296 /* kingpinTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "kingpinTests-Info.plist"; sourceTree = "<group>"; };
+		918925A218E7732900812296 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		918925A418E7732900812296 /* kingpinTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = kingpinTests.m; sourceTree = "<group>"; };
+		918925A618E7732900812296 /* kingpinTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpinTests-Prefix.pch"; sourceTree = "<group>"; };
 		91E9B69518E7509300EFE22C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		934690FF16A8EC8400DE59FA /* MyAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
 		9346910016A8EC8400DE59FA /* MyAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
@@ -81,14 +81,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8641D24F18CAF14700B109E4 /* Frameworks */ = {
+		9189259618E7732900812296 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91E9B69618E7509300EFE22C /* MapKit.framework in Frameworks */,
-				8641D25418CAF14700B109E4 /* SenTestingKit.framework in Frameworks */,
-				8641D25618CAF14700B109E4 /* UIKit.framework in Frameworks */,
-				8641D25518CAF14700B109E4 /* Foundation.framework in Frameworks */,
+				9189259B18E7732900812296 /* XCTest.framework in Frameworks */,
+				9189259D18E7732900812296 /* UIKit.framework in Frameworks */,
+				9189259C18E7732900812296 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,21 +106,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8641D25718CAF14700B109E4 /* kingpinTests */ = {
+		9189259E18E7732900812296 /* kingpinTests */ = {
 			isa = PBXGroup;
 			children = (
-				8641D25D18CAF14700B109E4 /* kingpinTests.m */,
-				8641D25818CAF14700B109E4 /* Supporting Files */,
+				918925A418E7732900812296 /* kingpinTests.m */,
+				9189259F18E7732900812296 /* Supporting Files */,
 			);
 			path = kingpinTests;
 			sourceTree = "<group>";
 		};
-		8641D25818CAF14700B109E4 /* Supporting Files */ = {
+		9189259F18E7732900812296 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8641D25918CAF14700B109E4 /* kingpinTests-Info.plist */,
-				8641D25A18CAF14700B109E4 /* InfoPlist.strings */,
-				8641D25F18CAF14700B109E4 /* kingpinTests-Prefix.pch */,
+				918925A018E7732900812296 /* kingpinTests-Info.plist */,
+				918925A118E7732900812296 /* InfoPlist.strings */,
+				918925A618E7732900812296 /* kingpinTests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -154,7 +153,7 @@
 			children = (
 				93BBC03A1645A16D004BC920 /* kingpin */,
 				93BBC0901645B78C004BC920 /* tester */,
-				8641D25718CAF14700B109E4 /* kingpinTests */,
+				9189259E18E7732900812296 /* kingpinTests */,
 				93BBC04E1645A2B2004BC920 /* Frameworks */,
 				93BBC04C1645A2B2004BC920 /* Products */,
 			);
@@ -181,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				93BBC04B1645A2B2004BC920 /* kingpinTestApplication.app */,
-				8641D25218CAF14700B109E4 /* kingpinTests.octest */,
+				9189259918E7732900812296 /* kingpinTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,6 +195,7 @@
 				93BBC0511645A2B2004BC920 /* Foundation.framework */,
 				93BBC0531645A2B2004BC920 /* CoreGraphics.framework */,
 				8641D25318CAF14700B109E4 /* SenTestingKit.framework */,
+				9189259A18E7732900812296 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -226,13 +226,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8641D25118CAF14700B109E4 /* kingpinTests */ = {
+		9189259818E7732900812296 /* kingpinTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8641D26218CAF14700B109E4 /* Build configuration list for PBXNativeTarget "kingpinTests" */;
+			buildConfigurationList = 918925A718E7732900812296 /* Build configuration list for PBXNativeTarget "kingpinTests" */;
 			buildPhases = (
-				8641D24E18CAF14700B109E4 /* Sources */,
-				8641D24F18CAF14700B109E4 /* Frameworks */,
-				8641D25018CAF14700B109E4 /* Resources */,
+				9189259518E7732900812296 /* Sources */,
+				9189259618E7732900812296 /* Frameworks */,
+				9189259718E7732900812296 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -240,8 +240,8 @@
 			);
 			name = kingpinTests;
 			productName = kingpinTests;
-			productReference = 8641D25218CAF14700B109E4 /* kingpinTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 9189259918E7732900812296 /* kingpinTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		93BBC04A1645A2B2004BC920 /* kingpinTestApplication */ = {
 			isa = PBXNativeTarget;
@@ -281,17 +281,17 @@
 			projectRoot = "";
 			targets = (
 				93BBC04A1645A2B2004BC920 /* kingpinTestApplication */,
-				8641D25118CAF14700B109E4 /* kingpinTests */,
+				9189259818E7732900812296 /* kingpinTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8641D25018CAF14700B109E4 /* Resources */ = {
+		9189259718E7732900812296 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8641D25C18CAF14700B109E4 /* InfoPlist.strings in Resources */,
+				918925A318E7732900812296 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,16 +310,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8641D24E18CAF14700B109E4 /* Sources */ = {
+		9189259518E7732900812296 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91E9B69318E74FED00EFE22C /* KPTreeController.m in Sources */,
-				91E9B69418E7500300EFE22C /* TestAnnotation.m in Sources */,
-				91E9B69018E74FED00EFE22C /* NSArray+KP.m in Sources */,
-				91E9B69118E74FED00EFE22C /* KPAnnotationTree.m in Sources */,
-				91E9B69218E74FED00EFE22C /* KPAnnotation.m in Sources */,
-				8641D25E18CAF14700B109E4 /* kingpinTests.m in Sources */,
+				91E4FC2718E773F300AC8444 /* KPTreeController.m in Sources */,
+				918925A518E7732900812296 /* kingpinTests.m in Sources */,
+				91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */,
+				91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */,
+				91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */,
+				91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,10 +342,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8641D25A18CAF14700B109E4 /* InfoPlist.strings */ = {
+		918925A118E7732900812296 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8641D25B18CAF14700B109E4 /* en */,
+				918925A218E7732900812296 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -369,7 +369,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		8641D26318CAF14700B109E4 /* Debug */ = {
+		918925A818E7732900812296 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -413,11 +413,11 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
-		8641D26418CAF14700B109E4 /* Release */ = {
+		918925A918E7732900812296 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -455,7 +455,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -546,11 +546,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8641D26218CAF14700B109E4 /* Build configuration list for PBXNativeTarget "kingpinTests" */ = {
+		918925A718E7732900812296 /* Build configuration list for PBXNativeTarget "kingpinTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8641D26318CAF14700B109E4 /* Debug */,
-				8641D26418CAF14700B109E4 /* Release */,
+				918925A818E7732900812296 /* Debug */,
+				918925A918E7732900812296 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
