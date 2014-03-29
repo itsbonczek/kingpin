@@ -1,6 +1,8 @@
 kingpin
 =======
 
+[![Build Status](https://travis-ci.org/itsbonczek/kingpin.svg?branch=master)](https://travis-ci.org/itsbonczek/kingpin)
+
 ### A drop-in MKAnnotation clustering library for iOS
 
 
