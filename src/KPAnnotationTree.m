@@ -220,7 +220,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 
     KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
-    self.root = buildTree(self.nodeStorage, annotationsX, annotationsY, count, 0);
+    self.root = buildTree(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
 
     free(annotationsX);
     free(annotationsY);
@@ -232,7 +232,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 @end
 
 
-static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, const NSUInteger count, const NSInteger curLevel) {
+static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel) {
     if (count == 0) {
         return NULL;
     }
@@ -245,6 +245,7 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
 
 
     NSUInteger medianIdx = count / 2;
+
 
     kp_internal_annotation_t medianAnnotation = annotationsSortedByCurrentAxis[medianIdx];
 
@@ -272,9 +273,25 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     n->mapPoint = *(annotationsSortedByCurrentAxis[medianIdx].mapPoint);
 
 
-    kp_internal_annotation_t *temporaryleftAnnotationsSortedByComplementaryAxis = KPTemporaryAnnotationStorage;
+    /*
+     The following strings take heavy use of C pointer <s>gymnastics</s> arithmetics: 
+     
+     a[i] = *(a + i)
 
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxisBackwardIterator  = KPTemporaryAnnotationStorage + (medianIdx - 1);
+     (a + i) gives us pointer (not value!) to ith element so we can pass this pointer downstream, to the buildTree() of next level of depth.
+
+     This allows reduce a number of allocations of temporary X and Y arrays by a factor of 2:
+     On each level of depth we derive only one couple of arrays, the second couple is passed as is just using this C pointer arithmetic.
+     */
+
+
+    /* 
+     We accumulate "left" annotations  (i.e. whose coordinates are  < than splitting coordinate) in current temporary storage.
+     We accumulate "right" annotations (i.e. whose coordinates are >= than splitting coordinate) in right portion of annotationsSortedByComplementaryAxis.
+     Unused left portion of annotationsSortedByComplementaryAxis is reused as 'new' temporary storage when passed downstream when building left leaves
+     */
+
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxisBackwardIterator  = temporaryAnnotationStorage + (medianIdx - 1);
     kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
 
 
@@ -301,31 +318,20 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     }
 
 
-    memcpy(annotationsSortedByComplementaryAxis, temporaryleftAnnotationsSortedByComplementaryAxis, medianIdx * sizeof(kp_internal_annotation_t));
-
-
     NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
     NSUInteger rightAnnotationsSortedByComplementaryAxisCount = count - medianIdx - 1;
 
 
-    /*
-     The following strings use C pointer <s>gymnastics</s> arithmetics a[i] = *(a + i):
-
-     (a + i) gives us pointer (not value!) to ith element so we can pass this pointer downstream, to the buildTree() of next level of depth.
-
-     This allows reduce a number of allocations of temporary X and Y arrays by a factor of 2:
-     On each level of depth we derive only one couple of arrays, the second couple is passed as is just using this C pointer arithmetic.
-     */
-
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxis  = annotationsSortedByComplementaryAxis;
+    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxis  = temporaryAnnotationStorage;
     kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxis = annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount + 1; // + 1 to skip element with medianIdx index
+
 
     kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = annotationsSortedByCurrentAxis;
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
 
-    n->left  = buildTree(nodeStorage, leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis,  leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
-    n->right = buildTree(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
+    n->left  = buildTree(nodeStorage,  leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis, annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
+    n->right = buildTree(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, temporaryAnnotationStorage, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
 
 
     return n;
