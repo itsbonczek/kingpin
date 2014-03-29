@@ -84,34 +84,34 @@ static NSUInteger const kNumberOfTestAnnotations = 50000;
 
     NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:MKMapRectWorld];
 
-    __block __weak void (^weakRecursiveTraversalBlock)(KPTreeNode *node, NSUInteger levelOfDepth);
-    void (^recursiveTraversalBlock)(KPTreeNode *node, NSUInteger levelOfDepth);
+    __block __weak void (^weakRecursiveTraversalBlock)(kp_treenode_t *node, NSUInteger levelOfDepth);
+    void (^recursiveTraversalBlock)(kp_treenode_t *node, NSUInteger levelOfDepth);
 
     __block NSUInteger numberOfNodes = 0;
 
-    weakRecursiveTraversalBlock = recursiveTraversalBlock = ^(KPTreeNode *node, NSUInteger levelOfDepth) {
+    weakRecursiveTraversalBlock = recursiveTraversalBlock = ^(kp_treenode_t *node, NSUInteger levelOfDepth) {
         numberOfNodes++;
 
         NSUInteger XorY = (levelOfDepth % 2) == 0;
 
-        if (node.left) {
+        if (node->left) {
             if (XorY) {
-                STAssertTrue(node.left.mapPoint.x < node.mapPoint.x, nil);
+                STAssertTrue(node->left->mapPoint.x < node->mapPoint.x, nil);
             } else {
-                STAssertTrue(node.left.mapPoint.y < node.mapPoint.y, nil);
+                STAssertTrue(node->left->mapPoint.y < node->mapPoint.y, nil);
             }
 
-            weakRecursiveTraversalBlock(node.left, levelOfDepth + 1);
+            weakRecursiveTraversalBlock(node->left, levelOfDepth + 1);
         }
 
-        if (node.right) {
+        if (node->right) {
             if (XorY) {
-                STAssertTrue(node.mapPoint.x <= node.right.mapPoint.x, nil);
+                STAssertTrue(node->mapPoint.x <= node->right->mapPoint.x, nil);
             } else {
-                STAssertTrue(node.mapPoint.y <= node.right.mapPoint.y, nil);
+                STAssertTrue(node->mapPoint.y <= node->right->mapPoint.y, nil);
             }
 
-            weakRecursiveTraversalBlock(node.right, levelOfDepth + 1);
+            weakRecursiveTraversalBlock(node->right, levelOfDepth + 1);
         }
     };
 

@@ -23,7 +23,6 @@
 @property (nonatomic, readonly) NSSet *annotations;
 
 - (id)initWithAnnotations:(NSArray *)annotations;
-
 - (NSArray *)annotationsInMapRect:(MKMapRect)rect;
 
 @end
