@@ -1,0 +1,4 @@
+language: objective-c
+xcode_project: kingpin.xcodeproj
+xcode_scheme: kingpinTests
+xcode_sdk: iphonesimulator7.0
