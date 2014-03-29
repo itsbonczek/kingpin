@@ -28,7 +28,7 @@ NSArray *arrayShuffle(NSArray *array) {
 
 
 static inline double randomWithinRange(double min, double max) {
-    return min + (max - min) * (double)arc4random_uniform(NSUIntegerMax) / (NSUIntegerMax - 1);
+    return min + (max - min) * (double)arc4random_uniform(UINT32_MAX) / (UINT32_MAX - 1);
 }
 
 
