@@ -8,6 +8,8 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
+#import <MapKit/MapKit.h>
+
 #import "KPAnnotationTree.h"
 #import "KPAnnotationTree_Private.h"
 

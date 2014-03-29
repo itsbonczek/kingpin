@@ -12,6 +12,12 @@
 		8641D25618CAF14700B109E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
 		8641D25C18CAF14700B109E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8641D25A18CAF14700B109E4 /* InfoPlist.strings */; };
 		8641D25E18CAF14700B109E4 /* kingpinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8641D25D18CAF14700B109E4 /* kingpinTests.m */; };
+		91E9B69018E74FED00EFE22C /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
+		91E9B69118E74FED00EFE22C /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
+		91E9B69218E74FED00EFE22C /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
+		91E9B69318E74FED00EFE22C /* KPTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPTreeController.m */; };
+		91E9B69418E7500300EFE22C /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */; };
+		91E9B69618E7509300EFE22C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
 		9346910116A8EC8400DE59FA /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910016A8EC8400DE59FA /* MyAnnotation.m */; };
 		9346910716A8F1C200DE59FA /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
 		93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
@@ -33,16 +39,6 @@
 		93BBC0AF1645CAE5004BC920 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		8641D26018CAF14700B109E4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 93BBC04A1645A2B2004BC920;
-			remoteInfo = kingpinTestApplication;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		8641D25218CAF14700B109E4 /* kingpinTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kingpinTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -51,6 +47,7 @@
 		8641D25D18CAF14700B109E4 /* kingpinTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = kingpinTests.m; sourceTree = "<group>"; };
 		8641D25F18CAF14700B109E4 /* kingpinTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpinTests-Prefix.pch"; sourceTree = "<group>"; };
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
+		91E9B69518E7509300EFE22C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		934690FF16A8EC8400DE59FA /* MyAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
 		9346910016A8EC8400DE59FA /* MyAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
 		9346910516A8F1C200DE59FA /* NSArray+KP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+KP.h"; sourceTree = "<group>"; };
@@ -88,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91E9B69618E7509300EFE22C /* MapKit.framework in Frameworks */,
 				8641D25418CAF14700B109E4 /* SenTestingKit.framework in Frameworks */,
 				8641D25618CAF14700B109E4 /* UIKit.framework in Frameworks */,
 				8641D25518CAF14700B109E4 /* Foundation.framework in Frameworks */,
@@ -191,6 +189,7 @@
 		93BBC04E1645A2B2004BC920 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91E9B69518E7509300EFE22C /* MapKit.framework */,
 				93BBC0861645A42A004BC920 /* CoreLocation.framework */,
 				93BBC0811645A39F004BC920 /* MapKit.framework */,
 				93BBC04F1645A2B2004BC920 /* UIKit.framework */,
@@ -238,7 +237,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				8641D26118CAF14700B109E4 /* PBXTargetDependency */,
 			);
 			name = kingpinTests;
 			productName = kingpinTests;
@@ -269,11 +267,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
-				TargetAttributes = {
-					8641D25118CAF14700B109E4 = {
-						TestTargetID = 93BBC04A1645A2B2004BC920;
-					};
-				};
 			};
 			buildConfigurationList = 93BBC0321645A119004BC920 /* Build configuration list for PBXProject "kingpin" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -321,6 +314,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91E9B69318E74FED00EFE22C /* KPTreeController.m in Sources */,
+				91E9B69418E7500300EFE22C /* TestAnnotation.m in Sources */,
+				91E9B69018E74FED00EFE22C /* NSArray+KP.m in Sources */,
+				91E9B69118E74FED00EFE22C /* KPAnnotationTree.m in Sources */,
+				91E9B69218E74FED00EFE22C /* KPAnnotation.m in Sources */,
 				8641D25E18CAF14700B109E4 /* kingpinTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,14 +340,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8641D26118CAF14700B109E4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 93BBC04A1645A2B2004BC920 /* kingpinTestApplication */;
-			targetProxy = 8641D26018CAF14700B109E4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8641D25A18CAF14700B109E4 /* InfoPlist.strings */ = {
@@ -384,7 +374,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/kingpinTestApplication.app/kingpinTestApplication";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -424,7 +413,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -434,7 +422,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/kingpinTestApplication.app/kingpinTestApplication";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -467,7 +454,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = octest;
 			};

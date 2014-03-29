@@ -1,0 +1,3 @@
+[submodule "lib/xctool"]
+	path = lib/xctool
+	url = git@github.com:facebook/xctool.git

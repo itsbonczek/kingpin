@@ -8,8 +8,6 @@
 
 #import "KPAnnotationTree.h"
 
-#import <MapKit/MapKit.h>
-
 #define KP_LIKELY(x) __builtin_expect(!!(x), 1)
 
 static const size_t MKMapPointXOffset = offsetof(MKMapPoint, x);
