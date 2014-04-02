@@ -178,7 +178,7 @@ static const int kNumberOfTestAnnotations = 20000;
 #pragma mark - KPTreeControllerDelegate
 
 - (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation {
-    annotation.title = [NSString stringWithFormat:@"%i custom annotations", annotation.annotations.count];
+    annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
     annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
 }
 
