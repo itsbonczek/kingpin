@@ -55,6 +55,13 @@
         return;
     }
 
+    if (count == 1) {
+        self.radius = 0;
+        self.coordinate = [[[self annotations] anyObject] coordinate];
+
+        return;
+    }
+
     CLLocationDegrees minLat = NSIntegerMax;
     CLLocationDegrees minLng = NSIntegerMax;
     CLLocationDegrees maxLat = NSIntegerMin;

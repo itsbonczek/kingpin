@@ -6,40 +6,20 @@
 //
 //
 
-#import <XCTest/XCTest.h>
-
-#import <MapKit/MapKit.h>
+#import "TestHelpers.h"
 
 #import "KPAnnotationTree.h"
 #import "KPAnnotationTree_Private.h"
 
 #import "TestAnnotation.h"
 
-// https://github.com/EvgenyKarkan/EKAlgorithms/blob/master/EKAlgorithms/NSArray%2BEKStuff.m
-NSArray *arrayShuffle(NSArray *array) {
-    NSUInteger i = array.count;
-    NSMutableArray *shuffledArray = [array mutableCopy];
 
-    while (i) {
-        NSUInteger randomIndex = arc4random_uniform((u_int32_t)i);
-        [shuffledArray exchangeObjectAtIndex:randomIndex withObjectAtIndex:--i];
-    }
-
-    return [shuffledArray copy];
-}
-
-
-static inline double randomWithinRange(double min, double max) {
-    return min + (max - min) * (double)arc4random_uniform(UINT32_MAX) / (UINT32_MAX - 1);
-}
-
-
-@interface kingpinTests : XCTestCase
+@interface KPAnnotationTreeTests : XCTestCase
 @end
 
 static NSUInteger const kNumberOfTestAnnotations = 50000;
 
-@implementation kingpinTests
+@implementation KPAnnotationTreeTests
 
 - (void)setUp
 {
@@ -65,7 +45,7 @@ static NSUInteger const kNumberOfTestAnnotations = 50000;
     CLLocationCoordinate2D nycCoord = NYCoord;
     CLLocationCoordinate2D sfCoord = SFCoord;
 
-    for (int i=0; i < kNumberOfTestAnnotations / 2; i++) {
+    for (int i = 0; i < kNumberOfTestAnnotations / 2; i++) {
 
         CLLocationDegrees latAdj = ((random() % 100) / 1000.f);
         CLLocationDegrees lngAdj = ((random() % 100) / 1000.f);
