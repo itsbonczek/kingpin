@@ -23,15 +23,6 @@
 
 #import "NSArray+KP.h"
 
-#import <dispatch/dispatch.h>
-
-FOUNDATION_EXPORT uint64_t dispatch_benchmark(size_t count, void (^block)(void));
-
-#define Benchmark(n, block) \
-    do { \
-        float time = (float)dispatch_benchmark(n, block); \
-        printf("The block have been run %d times. Average time is: %f milliseconds\n",  n, (time / 1000000)); \
-    } while (0);
 
 /*
  Cell of cluster grid
@@ -174,13 +165,6 @@ typedef enum {
 
 - (void)setAnnotations:(NSArray *)annotations {
     [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
-
-
-    /*
-    Benchmark(5, ^{
-        self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
-    });
-     */
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
@@ -395,10 +379,7 @@ typedef enum {
     }
 
     if (self.clusteringEnabled) {
-        // Good to check performance, remove later
-        Benchmark(1, ^{
-            newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
-        });
+        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
     }
 
 
