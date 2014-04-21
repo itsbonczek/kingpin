@@ -30,7 +30,7 @@
 #import "NSArray+KP.h"
 
 
-static KPTreeControllerReworkConfiguration KPTreeControllerReworkDefaultConfiguration = (KPTreeControllerReworkConfiguration) {
+static KPTreeControllerReworkConfiguration KPTreeControllerReworkDefaultConfiguration = (KPTreeControllerReworkConfiguration){
     .gridSize = (CGSize){60.f, 60.f},
     .annotationSize = (CGSize){60.f, 60.f},
     .annotationCenterOffset = (CGPoint){30.f, 30.f},
@@ -148,13 +148,21 @@ typedef enum {
     mapRect.size.width  = MIN(mapRect.size.width, MKMapRectWorld.size.width);
     mapRect.size.height = MIN(mapRect.size.height, MKMapRectWorld.size.height);
 
+    
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
 
     
     NSArray *newClusters;
 
-    if (self.configuration.clusteringEnabled) {
+
+    BOOL clusteringEnabled = self.configuration.clusteringEnabled;
+
+    if ([self.delegate respondsToSelector:@selector(treeControllerShouldClusterAnnotations:)]) {
+        clusteringEnabled = [self.delegate treeControllerShouldClusterAnnotations:self];
+    }
+
+    if (clusteringEnabled) {
         newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect cellSize:cellSize annotationTree:self.annotationTree];
     } else {
         NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];

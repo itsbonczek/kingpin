@@ -101,6 +101,18 @@ typedef struct {
 } kp_cluster_t;
 
 
+static inline void KPClusterGridValidateNULLMargin(kp_cluster_t ***clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
+    for (int row = 0; row < (gridSizeX + 2); row++) {
+        assert(clusterGrid[0][row] == NULL);
+        assert(clusterGrid[gridSizeY + 1][row] == NULL);
+    }
+    for (int col = 0; col < (gridSizeY + 2); col++) {
+        assert(clusterGrid[col][0] == NULL);
+        assert(clusterGrid[col][gridSizeX + 1] == NULL);
+    }
+}
+
+
 static inline KPClusterDistributionQuadrant KPClusterDistributionQuadrantForPointInsideMapRect(MKMapRect mapRect, MKMapPoint point) {
     MKMapPoint centerPoint = MKMapPointMake(MKMapRectGetMidX(mapRect), MKMapRectGetMidY(mapRect));
 
@@ -166,19 +178,11 @@ typedef enum {
     memset(clusterGrid[0],             0, (gridSizeX + 2) * sizeof(kp_cluster_t *));
     memset(clusterGrid[gridSizeY + 1], 0, (gridSizeX + 2) * sizeof(kp_cluster_t *));
 
-    /* Validation (Debug, remove later) */
-    for (int row = 0; row < (gridSizeX + 2); row++) {
-        assert(clusterGrid[0][row] == NULL);
-        assert(clusterGrid[gridSizeY + 1][row] == NULL);
-    }
-    for (int col = 0; col < (gridSizeY + 2); col++) {
-        assert(clusterGrid[col][0] == NULL);
-        assert(clusterGrid[col][gridSizeX + 1] == NULL);
-    }
+#if DEBUG
+    KPClusterGridValidateNULLMargin(clusterGrid, gridSizeX, gridSizeY);
+#endif
 
     NSUInteger clusterIndex = 0;
-
-    NSLog(@"Grid: (X, Y) => (%d, %d)", gridSizeX, gridSizeY);
 
     NSUInteger annotationCounter = 0;
     NSUInteger counter = 0;
@@ -211,24 +215,6 @@ typedef enum {
                 annotationCounter += newAnnotations.count;
             } else {
                 clusterGrid[col][row] = NULL;
-            }
-        }
-    }
-
-    NSLog(@"AnnotationCounter %lu", (unsigned long)annotationCounter);
-    
-    /* Validation (Debug, remove later) */
-    assert(counter == (gridSizeX * gridSizeY));
-
-    /* Validation (Debug, remove later) */
-    for(int col = 0; col < (gridSizeY + 2); col++){
-        for(int row = 0; row < (gridSizeX + 2); row++){
-            kp_cluster_t *cluster = clusterGrid[col][row];
-
-            if (cluster) {
-                assert(cluster->merged == NO);
-                assert(cluster->annotationIndex >= 0);
-                assert(cluster->annotationIndex < gridSizeX * gridSizeY);
             }
         }
     }

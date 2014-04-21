@@ -52,6 +52,8 @@ typedef struct {
 
 @optional
 
+- (BOOL)treeControllerShouldClusterAnnotations:(KPTreeControllerRework *)tree;
+
 - (void)treeController:(KPTreeControllerRework *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation;
 - (void)treeController:(KPTreeControllerRework *)tree willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
 - (void)treeController:(KPTreeControllerRework *)tree didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
