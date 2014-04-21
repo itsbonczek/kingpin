@@ -9,7 +9,6 @@
 #import "ViewController.h"
 
 #import "KPTreeController.h"
-#import "KPTreeControllerRework.h"
 
 #import "MyAnnotation.h"
 #import "TestAnnotation.h"
@@ -20,10 +19,10 @@
 
 static const int kNumberOfTestAnnotations = 20000;
 
-@interface ViewController () <KPTreeControllerDelegate, KPTreeControllerReworkDelegate>
+@interface ViewController () <KPTreeControllerDelegate, KPTreeControllerDelegate>
 
 @property (nonatomic, strong) KPTreeController *treeController;
-@property (nonatomic, strong) KPTreeControllerRework *treeController2;
+@property (nonatomic, strong) KPTreeController *treeController2;
 
 @end
 
@@ -43,12 +42,10 @@ static const int kNumberOfTestAnnotations = 20000;
     [self.treeController setAnnotations:[self annotations]];
      */
 
-    self.treeController2 = [[KPTreeControllerRework alloc] initWithMapView:self.mapView];
+    self.treeController2 = [[KPTreeController alloc] initWithMapView:self.mapView];
     self.treeController2.delegate = self;
 
-    KPTreeControllerReworkConfiguration configuration = self.treeController2.configuration;
-    configuration.animationOptions = UIViewAnimationOptionCurveEaseOut;
-    self.treeController2.configuration = configuration;
+    self.treeController2.configuration.animationOptions = UIViewAnimationOptionCurveEaseOut;
 
     [self.treeController2 setAnnotations:[self annotations]];
     
@@ -190,12 +187,12 @@ static const int kNumberOfTestAnnotations = 20000;
 
 #pragma mark - <KPTreeControllerDelegate>
 
-- (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation {
+- (void)treeController:(KPTreeController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation {
     annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
     annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
 }
 
-- (BOOL)treeControllerShouldClusterAnnotations:(KPTreeControllerRework *)tree {
+- (BOOL)treeControllerShouldClusterAnnotations:(KPTreeController *)treeController {
     return YES;
 }
 

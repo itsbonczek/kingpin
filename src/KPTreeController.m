@@ -14,9 +14,15 @@
 // limitations under the License.
 //
 
-#import <objc/runtime.h>
+
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+
 
 #import "KPTreeController.h"
+
+#import "KPGridClusteringAlgorithm.h"
+#import "KPGeometry.h"
 
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
@@ -24,47 +30,63 @@
 #import "NSArray+KP.h"
 
 
+typedef enum {
+    KPTreeControllerMapViewportNoChange,
+    KPTreeControllerMapViewportPan,
+    KPTreeControllerMapViewportZoom
+} KPTreeControllerMapViewportChangeState;
+
+
 @interface KPTreeController()
 
-@property (nonatomic) MKMapView *mapView;
-@property (nonatomic) KPAnnotationTree *annotationTree;
+@property (strong, nonatomic) KPConfiguration *configuration;
+
+@property (nonatomic, strong) MKMapView *mapView;
+@property (nonatomic, strong) KPAnnotationTree *annotationTree;
+@property (nonatomic, strong) KPGridClusteringAlgorithm *clusteringAlgorithm;
+
 @property (nonatomic) MKMapRect lastRefreshedMapRect;
 @property (nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
-@property (nonatomic) CGRect mapFrame;
-@property (nonatomic, readwrite) NSArray *gridPolylines;
-
+@property (readonly, nonatomic) KPTreeControllerMapViewportChangeState mapViewportChangeState;
 @end
 
 @implementation KPTreeController
 
 - (id)initWithMapView:(MKMapView *)mapView {
-
-    self = [super init];
-
-    if (self) {
-        self.mapView = mapView;
-        self.mapFrame = self.mapView.frame;
-        self.gridSize = CGSizeMake(60.f, 60.f);
-        self.annotationSize = CGSizeMake(60, 60);
-        self.annotationCenterOffset = CGPointMake(30.f, 30.f);
-        self.animationDuration = 0.5f;
-        self.clusteringEnabled = YES;
+    
+    self = [self init];
+    
+    if (self == nil) {
+        return nil;
     }
 
-    return self;
+    self.mapView = mapView;
 
+    self.lastRefreshedMapRect = self.mapView.visibleMapRect;
+    self.lastRefreshedMapRegion = self.mapView.region;
+
+    self.configuration = [[KPConfiguration alloc] init];
+    
+    self.clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
+    self.clusteringAlgorithm.delegate = self;
+
+    return self;
 }
 
 - (void)setAnnotations:(NSArray *)annotations {
     [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
+
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
+
     [self _updateVisibileMapAnnotationsOnMapView:NO];
 }
 
 - (void)refresh:(BOOL)animated {
+    KPTreeControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
-    if(MKMapRectIsNull(self.lastRefreshedMapRect) || [self _mapWasZoomed] || [self _mapWasPannedSignificantly]){
-        [self _updateVisibileMapAnnotationsOnMapView:animated && [self _mapWasZoomed]];
+    if (mapViewportChangeState != KPTreeControllerMapViewportNoChange) {
+        [self _updateVisibileMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPTreeControllerMapViewportPan)];
+
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
     }
@@ -73,120 +95,85 @@
 // only refresh if:
 // - the map has been zoomed
 // - the map has been panned significantly
+- (KPTreeControllerMapViewportChangeState)mapViewportChangeState {
+    if (MKMapRectEqualToRect(self.mapView.visibleMapRect, self.lastRefreshedMapRect)) {
+        return KPTreeControllerMapViewportNoChange;
+    }
 
-- (BOOL)_mapWasZoomed {
-    return (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > 0.1f);
-}
+    if (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > 0.1f) {
+        return KPTreeControllerMapViewportZoom;
+    }
 
-- (BOOL)_mapWasPannedSignificantly {
     CGPoint lastPoint = [self.mapView convertCoordinate:self.lastRefreshedMapRegion.center
                                           toPointToView:self.mapView];
 
     CGPoint currentPoint = [self.mapView convertCoordinate:self.mapView.region.center
                                              toPointToView:self.mapView];
 
+    if ((fabs(lastPoint.x - currentPoint.x) > self.mapView.frame.size.width) ||
+        (fabs(lastPoint.y - currentPoint.y) > self.mapView.frame.size.height)) {
+        return KPTreeControllerMapViewportPan;
+    }
 
-    return
-    (fabs(lastPoint.x - currentPoint.x) > self.mapFrame.size.width) ||
-    (fabs(lastPoint.y - currentPoint.y) > self.mapFrame.size.height);
+    return KPTreeControllerMapViewportNoChange;
 }
 
+#pragma mark
+#pragma mark Private
 
-#pragma mark - Private
-
-- (void)_updateVisibileMapAnnotationsOnMapView:(BOOL)animated
-{
-
+- (void)_updateVisibileMapAnnotationsOnMapView:(BOOL)animated {
     NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
 
-    // we initialize with a rough estimate for size, as to minimize allocations
-    NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:visibleAnnotations.count * 2];
+    // Calculate the grid size in terms of MKMapPoints.
+    double widthPercentage = self.configuration.gridSize.width / CGRectGetWidth(self.mapView.frame);
+    double heightPercentage = self.configuration.gridSize.height / CGRectGetHeight(self.mapView.frame);
 
-    // updates visible map rect plus a map view's worth of padding around it
-    MKMapRect bigRect = MKMapRectInset(self.mapView.visibleMapRect,
-                                       -self.mapView.visibleMapRect.size.width,
-                                       -self.mapView.visibleMapRect.size.height);
+    MKMapSize cellSize = MKMapSizeMake(
+        ceil(widthPercentage * self.mapView.visibleMapRect.size.width),
+        ceil(heightPercentage * self.mapView.visibleMapRect.size.height)
+    );
 
-    if (MKMapRectGetHeight(bigRect) > MKMapRectGetHeight(MKMapRectWorld) ||
-        MKMapRectGetWidth(bigRect) > MKMapRectGetWidth(MKMapRectWorld)) {
-        bigRect = MKMapRectWorld;
+    MKMapRect mapRect = self.mapView.visibleMapRect;
+
+    mapRect = MKMapRectInset(self.mapView.visibleMapRect,
+                             -self.mapView.visibleMapRect.size.width,
+                             -self.mapView.visibleMapRect.size.height);
+
+    mapRect.size.width  = MIN(mapRect.size.width, MKMapRectWorld.size.width);
+    mapRect.size.height = MIN(mapRect.size.height, MKMapRectWorld.size.height);
+
+    
+    // Normalize grid to a cell size.
+    mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
+
+    
+    NSArray *newClusters;
+
+
+    BOOL clusteringEnabled = self.configuration.clusteringEnabled;
+
+    if ([self.delegate respondsToSelector:@selector(treeControllerShouldClusterAnnotations:)]) {
+        clusteringEnabled = [self.delegate treeControllerShouldClusterAnnotations:self];
     }
 
+    if (clusteringEnabled) {
+        newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect cellSize:cellSize annotationTree:self.annotationTree];
+    } else {
+        NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
 
-    // calculate the grid size in terms of MKMapPoints
-    double widthPercentage = self.gridSize.width / CGRectGetWidth(self.mapView.frame);
-    double heightPercentage = self.gridSize.height / CGRectGetHeight(self.mapView.frame);
-
-    double widthInterval = ceil(widthPercentage * self.mapView.visibleMapRect.size.width);
-    double heightInterval = ceil(heightPercentage * self.mapView.visibleMapRect.size.height);
-
-    NSMutableArray *polylines = nil;
-
-    if (self.debuggingEnabled) {
-        polylines = [NSMutableArray new];
+        newClusters = [newAnnotations kp_map:^id(id annotation) {
+            return [[KPAnnotation alloc] initWithAnnotations:@[ annotation ]];
+        }];
     }
 
-    for(int x = bigRect.origin.x; x < bigRect.origin.x + bigRect.size.width; x += widthInterval){
-
-        for(int y = bigRect.origin.y; y < bigRect.origin.y + bigRect.size.height; y += heightInterval){
-
-            MKMapRect gridRect = MKMapRectMake(x, y, widthInterval, heightInterval);
-
-            NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:gridRect];
-
-            // cluster annotations in this grid piece, if there are annotations to be clustered
-            if(newAnnotations.count){
-
-                // if clustring is disabled, add each annotation individually
-
-                NSMutableArray *clustersToAdd = [NSMutableArray new];
-
-                if (self.clusteringEnabled) {
-                    KPAnnotation *a = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
-                    [clustersToAdd addObject:a];
-                }
-                else {
-                    [clustersToAdd addObjectsFromArray:[newAnnotations kp_map:^KPAnnotation *(id<MKAnnotation> a) {
-                        return [[KPAnnotation alloc] initWithAnnotations:@[a]];
-                    }]];
-                }
-
-                for (KPAnnotation *a in clustersToAdd){
-
-                    if([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]){
-                        [self.delegate treeController:self configureAnnotationForDisplay:a];
-                    }
-
-                    [newClusters addObject:a];
-                }
-            }
-
-            if (self.debuggingEnabled) {
-
-                MKMapPoint points[5];
-                points[0] = MKMapPointMake(x, y);
-                points[1] = MKMapPointMake(x + widthInterval, y);
-                points[2] = MKMapPointMake(x + widthInterval, y + heightInterval);
-                points[3] = MKMapPointMake(x, y + heightInterval);
-                points[4] = MKMapPointMake(x, y);
-
-                [polylines addObject:[MKPolyline polylineWithPoints:points count:5]];
-
-            }
+    if ([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]) {
+        for (KPAnnotation *annotation in newClusters) {
+            [self.delegate treeController:self configureAnnotationForDisplay:annotation];
         }
     }
 
-    if (self.debuggingEnabled) {
-        self.gridPolylines = polylines;
-    }
-
-    if (self.clusteringEnabled) {
-        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters];
-    }
-
-    NSArray *oldClusters = [[[self.mapView annotationsInMapRect:bigRect] allObjects] kp_filter:^BOOL(id annotation) {
-
-        if([annotation isKindOfClass:[KPAnnotation class]]){
+    NSArray *oldClusters = [self.mapView.annotations kp_filter:^BOOL(id annotation) {
+        if ([annotation isKindOfClass:[KPAnnotation class]]) {
             return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
         }
         else {
@@ -194,7 +181,7 @@
         }
     }];
 
-    if(animated){
+    if (animated) {
 
         for(KPAnnotation *newCluster in newClusters){
 
@@ -210,9 +197,9 @@
 
                     if([visibleAnnotations member:oldCluster] && shouldAnimate){
                         [self _animateCluster:newCluster
-                               fromAnnotation:oldCluster
-                                 toAnnotation:newCluster
-                                   completion:nil];
+                                          fromAnnotation:oldCluster
+                                            toAnnotation:newCluster
+                                              completion:nil];
                     }
 
                     [self.mapView removeAnnotation:oldCluster];
@@ -226,26 +213,27 @@
                     if(MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate)) && shouldAnimate){
 
                         [self _animateCluster:oldCluster
-                               fromAnnotation:oldCluster
-                                 toAnnotation:newCluster
-                                   completion:^(BOOL finished) {
-                                       [self.mapView removeAnnotation:oldCluster];
-                                   }];
+                                          fromAnnotation:oldCluster
+                                            toAnnotation:newCluster
+                                              completion:^(BOOL finished) {
+                                                  [self.mapView removeAnnotation:oldCluster];
+                                              }];
                     }
                     else {
                         [self.mapView removeAnnotation:oldCluster];
                     }
-
+                    
                 }
             }
         }
-
+        
     }
     else {
         [self.mapView removeAnnotations:oldClusters];
         [self.mapView addAnnotations:newClusters];
     }
 
+    
 }
 
 - (void)_animateCluster:(KPAnnotation *)cluster
@@ -253,114 +241,75 @@
            toAnnotation:(KPAnnotation *)toAnnotation
              completion:(void (^)(BOOL finished))completion
 {
-
+    
     CLLocationCoordinate2D fromCoord = fromAnnotation.coordinate;
     CLLocationCoordinate2D toCoord = toAnnotation.coordinate;
-
+    
     cluster.coordinate = fromCoord;
-
+    
     if ([self.delegate respondsToSelector:@selector(treeController:willAnimateAnnotation:fromAnnotation:toAnnotation:)]) {
         [self.delegate treeController:self willAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
     }
-
+    
     void (^completionDelegate)() = ^ {
         if ([self.delegate respondsToSelector:@selector(treeController:didAnimateAnnotation:fromAnnotation:toAnnotation:)]) {
             [self.delegate treeController:self didAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
         }
     };
-
+    
     void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
 
         completionDelegate();
-
+        
         if (completion) {
             completion(finished);
         }
     };
-
-    [UIView animateWithDuration:self.animationDuration
+    
+    [UIView animateWithDuration:self.configuration.animationDuration
                           delay:0.f
-                        options:self.animationOptions
+                        options:self.configuration.animationOptions
                      animations:^{
                          cluster.coordinate = toCoord;
                      }
                      completion:completionBlock];
-
+    
 }
 
-// a modified single-linkage cluster algorithm to merge any annotations that visually overlap
-// http://en.wikipedia.org/wiki/Single-linkage_clustering
-// TODO: The runtime can properly be analyzed by figuring out the maximum number of possible overlaps.
 
-- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters {
+#pragma mark 
+#pragma mark <KPGridClusteringAlgorithmDelegate>
 
-    NSMutableArray *mutableClusters = [NSMutableArray arrayWithArray:clusters];
+- (BOOL)clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
+    // calculate CGRects for each annotation, memoizing the coord -> point conversion as we go
+    // if the two views overlap, merge them
 
-    BOOL hasOverlaps;
+    if (clusterAnnotation._annotationPointInMapView == nil) {
+        clusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:clusterAnnotation.coordinate toPointToView:self.mapView]];
+    }
 
-    do {
+    if (anotherClusterAnnotation._annotationPointInMapView == nil) {
+        anotherClusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:anotherClusterAnnotation.coordinate toPointToView:self.mapView]];
+    }
 
-        hasOverlaps = NO;
+    CGPoint p1 = [clusterAnnotation._annotationPointInMapView CGPointValue];
+    CGPoint p2 = [anotherClusterAnnotation._annotationPointInMapView CGPointValue];
 
-        for (int i = 0; i < mutableClusters.count; i++) {
-            for (int j = 0; j < mutableClusters.count; j++) {
+    CGRect r1 = CGRectMake(
+        p1.x - self.configuration.annotationSize.width + self.configuration.annotationCenterOffset.x,
+        p1.y - self.configuration.annotationSize.height + self.configuration.annotationCenterOffset.y,
+        self.configuration.annotationSize.width,
+        self.configuration.annotationSize.height
+    );
 
-                KPAnnotation *c1 = mutableClusters[i];
-                KPAnnotation *c2 = mutableClusters[j];
+    CGRect r2 = CGRectMake(
+        p2.x - self.configuration.annotationSize.width + self.configuration.annotationCenterOffset.x,
+        p2.y - self.configuration.annotationSize.height + self.configuration.annotationCenterOffset.y,
+        self.configuration.annotationSize.width,
+        self.configuration.annotationSize.height
+    );
 
-                if (c1 == c2) continue;
-
-                // calculate CGRects for each annotation, memoizing the coord -> point coversion as we go
-                // if the two views overlap, merge them
-
-                if (!c1._annotationPointInMapView) {
-                    c1._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:c1.coordinate
-                                                                                               toPointToView:self.mapView]];
-                }
-
-                if (!c2._annotationPointInMapView) {
-                    c2._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:c2.coordinate
-                                                                                               toPointToView:self.mapView]];
-                }
-
-                CGPoint p1 = [c1._annotationPointInMapView CGPointValue];
-                CGPoint p2 = [c2._annotationPointInMapView CGPointValue];
-
-                CGRect r1 = CGRectMake(p1.x - self.annotationSize.width + self.annotationCenterOffset.x,
-                                       p1.y - self.annotationSize.height + self.annotationCenterOffset.y,
-                                       self.annotationSize.width,
-                                       self.annotationSize.height);
-
-                CGRect r2 = CGRectMake(p2.x - self.annotationSize.width + self.annotationCenterOffset.x,
-                                       p2.y - self.annotationSize.height + self.annotationCenterOffset.y,
-                                       self.annotationSize.width,
-                                       self.annotationSize.height);
-
-                if (CGRectIntersectsRect(r1, r2)) {
-
-                    NSMutableSet *combinedSet = [NSMutableSet setWithSet:c1.annotations];
-                    [combinedSet unionSet:c2.annotations];
-
-                    KPAnnotation *newAnnotation = [[KPAnnotation alloc] initWithAnnotationSet:combinedSet];
-
-                    [mutableClusters removeObject:c1];
-                    [mutableClusters removeObject:c2];
-                    [mutableClusters addObject:newAnnotation];
-
-                    hasOverlaps = YES;
-
-                    break;
-                }
-
-                if (hasOverlaps) {
-                    break;
-                }
-            }
-        }
-
-    } while(hasOverlaps);
-    
-    return mutableClusters;
+    return CGRectIntersectsRect(r1, r2);
 }
 
 

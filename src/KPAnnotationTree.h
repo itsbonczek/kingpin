@@ -14,8 +14,7 @@
 // limitations under the License.
 //
 
-
-#import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
 @interface KPAnnotationTree : NSObject

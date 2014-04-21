@@ -16,7 +16,9 @@
 
 #import "KPAnnotationTree.h"
 
+
 #define KP_LIKELY(x) __builtin_expect(!!(x), 1)
+
 
 static const size_t MKMapPointXOffset = offsetof(MKMapPoint, x);
 static const size_t MKMapPointYOffset = offsetof(MKMapPoint, y);
@@ -59,7 +61,7 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
 
 @interface KPAnnotationTree ()
 
-@property (nonatomic, readwrite) NSSet *annotations;
+@property (strong, nonatomic, readwrite) NSSet *annotations;
 
 @property (nonatomic) kp_treenode_t *root;
 @property (nonatomic) kp_treenode_storage_t *nodeStorage;
