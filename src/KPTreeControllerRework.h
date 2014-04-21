@@ -17,25 +17,19 @@
 
 #import <Foundation/Foundation.h>
 
+#import "KPConfiguration.h"
+
 #import "KPGridClusteringAlgorithmDelegate.h"
 
-@class KPAnnotation, KPGridClusteringAlgorithm;
+@class KPAnnotation, KPConfiguration, KPGridClusteringAlgorithm;
 
 @protocol KPTreeControllerReworkDelegate, KPGridClusteringAlgorithmDelegate;
 
-typedef struct {
-    CGSize gridSize;
-    CGSize annotationSize;
-    CGPoint annotationCenterOffset;
-    CGFloat animationDuration;
-    UIViewAnimationOptions animationOptions;
-    BOOL clusteringEnabled;
-} KPTreeControllerReworkConfiguration;
-
 @interface KPTreeControllerRework : NSObject <KPGridClusteringAlgorithmDelegate>
 
-@property (nonatomic, weak) id <KPTreeControllerReworkDelegate> delegate;
-@property (nonatomic, assign) KPTreeControllerReworkConfiguration configuration;
+@property (readonly) KPConfiguration *configuration;
+
+@property (weak, nonatomic) id <KPTreeControllerReworkDelegate> delegate;
 
 - (id)initWithMapView:(MKMapView *)mapView;
 - (void)setAnnotations:(NSArray *)annoations;

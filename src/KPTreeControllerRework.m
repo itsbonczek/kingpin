@@ -18,25 +18,16 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-#import "KPGeometry.h"
 
 #import "KPTreeControllerRework.h"
 
 #import "KPGridClusteringAlgorithm.h"
+#import "KPGeometry.h"
 
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
 
 #import "NSArray+KP.h"
-
-
-static KPTreeControllerReworkConfiguration KPTreeControllerReworkDefaultConfiguration = (KPTreeControllerReworkConfiguration){
-    .gridSize = (CGSize){60.f, 60.f},
-    .annotationSize = (CGSize){60.f, 60.f},
-    .annotationCenterOffset = (CGPoint){30.f, 30.f},
-    .animationDuration = 0.5f,
-    .clusteringEnabled = YES,
-};
 
 
 typedef enum {
@@ -47,6 +38,8 @@ typedef enum {
 
 
 @interface KPTreeControllerRework()
+
+@property (strong, nonatomic) KPConfiguration *configuration;
 
 @property (nonatomic, strong) MKMapView *mapView;
 @property (nonatomic, strong) KPAnnotationTree *annotationTree;
@@ -72,7 +65,8 @@ typedef enum {
     self.lastRefreshedMapRect = self.mapView.visibleMapRect;
     self.lastRefreshedMapRegion = self.mapView.region;
 
-    self.configuration = KPTreeControllerReworkDefaultConfiguration;
+    self.configuration = [[KPConfiguration alloc] init];
+    
     self.clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
     self.clusteringAlgorithm.delegate = self;
 
