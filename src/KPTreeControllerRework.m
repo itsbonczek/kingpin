@@ -151,9 +151,18 @@ typedef enum {
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
 
+    
+    NSArray *newClusters;
 
-    NSArray *newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect cellSize:cellSize annotationTree:self.annotationTree];
+    if (self.configuration.clusteringEnabled) {
+        newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect cellSize:cellSize annotationTree:self.annotationTree];
+    } else {
+        NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
 
+        newClusters = [newAnnotations kp_map:^id(id annotation) {
+            return [[KPAnnotation alloc] initWithAnnotations:@[ annotation ]];
+        }];
+    }
 
     if ([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]) {
         for (KPAnnotation *annotation in newClusters) {
