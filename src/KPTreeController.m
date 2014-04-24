@@ -22,7 +22,6 @@
 #import "KPTreeController.h"
 
 #import "KPGridClusteringAlgorithm.h"
-#import "KPGeometry.h"
 
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
@@ -37,9 +36,26 @@ typedef enum {
 } KPTreeControllerMapViewportChangeState;
 
 
+@implementation KPTreeControllerConfiguration
+
+- (id)init {
+    self = [super init];
+
+    if (self == nil) return nil;
+
+    self.annotationSize = (CGSize){60.f, 60.f};
+    self.annotationCenterOffset = (CGPoint){30.f, 30.f};
+    self.animationDuration = 0.5f;
+
+    return self;
+}
+
+@end
+
+
 @interface KPTreeController()
 
-@property (strong, nonatomic) KPConfiguration *configuration;
+@property (strong, nonatomic) KPTreeControllerConfiguration *configuration;
 
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) KPAnnotationTree *annotationTree;
@@ -71,7 +87,7 @@ typedef enum {
     self.lastRefreshedMapRect = self.mapView.visibleMapRect;
     self.lastRefreshedMapRegion = self.mapView.region;
 
-    self.configuration = [[KPConfiguration alloc] init];
+    self.configuration = [[KPTreeControllerConfiguration alloc] init];
     
     self.clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
     self.clusteringAlgorithm.delegate = self;
@@ -128,17 +144,6 @@ typedef enum {
 #pragma mark Private
 
 - (void)_updateVisibileMapAnnotationsOnMapView:(BOOL)animated {
-    NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
-
-    // Calculate the grid size in terms of MKMapPoints.
-    double widthPercentage = self.configuration.gridSize.width / CGRectGetWidth(self.mapView.frame);
-    double heightPercentage = self.configuration.gridSize.height / CGRectGetHeight(self.mapView.frame);
-
-    MKMapSize cellSize = MKMapSizeMake(
-        ceil(widthPercentage * self.mapView.visibleMapRect.size.width),
-        ceil(heightPercentage * self.mapView.visibleMapRect.size.height)
-    );
-
     MKMapRect mapRect = self.mapView.visibleMapRect;
 
     mapRect = MKMapRectInset(self.mapView.visibleMapRect,
@@ -149,21 +154,17 @@ typedef enum {
     mapRect.size.height = MIN(mapRect.size.height, MKMapRectWorld.size.height);
 
     
-    // Normalize grid to a cell size.
-    mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
-
-    
     NSArray *newClusters;
 
 
-    BOOL clusteringEnabled = self.configuration.clusteringEnabled;
+    BOOL clusteringEnabled = YES;
 
     if ([self.delegate respondsToSelector:@selector(treeControllerShouldClusterAnnotations:)]) {
         clusteringEnabled = [self.delegate treeControllerShouldClusterAnnotations:self];
     }
 
     if (clusteringEnabled) {
-        newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect cellSize:cellSize annotationTree:self.annotationTree];
+        newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect mapView:self.mapView annotationTree:self.annotationTree];
     } else {
         NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
 
@@ -188,6 +189,7 @@ typedef enum {
     }];
 
     if (animated) {
+        NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
 
         for(KPAnnotation *newCluster in newClusters){
 

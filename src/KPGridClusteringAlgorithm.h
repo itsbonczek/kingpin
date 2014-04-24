@@ -23,10 +23,20 @@
 @protocol KPGridClusteringAlgorithmDelegate;
 
 
+@interface KPGridClusteringAlgorithmConfiguration : NSObject
+
+@property (assign, nonatomic) CGSize gridSize;
+
+@end
+
+
+
 @interface KPGridClusteringAlgorithm : NSObject
+
+@property (strong, readonly, nonatomic) KPGridClusteringAlgorithmConfiguration *configuration;
 
 @property (weak, nonatomic) id <KPGridClusteringAlgorithmDelegate> delegate;
 
-- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect cellSize:(MKMapSize)cellSize annotationTree:(KPAnnotationTree *)annotationTree;
+- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect mapView:(MKMapView *)mapView annotationTree:(KPAnnotationTree *)annotationTree;
 
 @end

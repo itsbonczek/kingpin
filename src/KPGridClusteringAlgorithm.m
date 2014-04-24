@@ -22,6 +22,8 @@
 #import "KPAnnotationTree.h"
 #import "KPAnnotation.h"
 
+#import "KPGeometry.h"
+
 #import "NSArray+KP.h"
 
 
@@ -146,9 +148,53 @@ typedef enum {
 } kp_cluster_merge_result_t;
 
 
+
+@implementation KPGridClusteringAlgorithmConfiguration
+
+- (id)init {
+    self = [super init];
+
+    if (self == nil) return nil;
+
+    self.gridSize = (CGSize){60.f, 60.f};
+
+    return self;
+}
+
+@end
+
+@interface KPGridClusteringAlgorithm ()
+@property (strong, readwrite, nonatomic) KPGridClusteringAlgorithmConfiguration *configuration;
+@end
+
 @implementation KPGridClusteringAlgorithm
 
-- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect cellSize:(MKMapSize)cellSize annotationTree:(KPAnnotationTree *)annotationTree {
+- (id)init {
+    self = [super init];
+
+    if (self == nil) return nil;
+
+    self.configuration = [[KPGridClusteringAlgorithmConfiguration alloc] init];
+    
+    return self;
+}
+
+- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect mapView:(MKMapView *)mapView  annotationTree:(KPAnnotationTree *)annotationTree {
+
+    // Calculate the grid size in terms of MKMapPoints.
+    double widthPercentage = self.configuration.gridSize.width / CGRectGetWidth(mapView.frame);
+    double heightPercentage = self.configuration.gridSize.height / CGRectGetHeight(mapView.frame);
+
+    MKMapSize cellSize = MKMapSizeMake(
+                                       ceil(widthPercentage  * mapView.visibleMapRect.size.width),
+                                       ceil(heightPercentage * mapView.visibleMapRect.size.height)
+                                       );
+
+
+    // Normalize grid to a cell size.
+    mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
+
+
     assert(((uint32_t)mapRect.size.width  % (uint32_t)cellSize.width)  == 0);
     assert(((uint32_t)mapRect.size.height % (uint32_t)cellSize.height) == 0);
 

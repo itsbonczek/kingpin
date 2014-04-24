@@ -16,22 +16,28 @@
 
 #import <Foundation/Foundation.h>
 
-#import "KPConfiguration.h"
-
 #import "KPGridClusteringAlgorithmDelegate.h"
 
 
 @class KPAnnotation,
-       KPConfiguration,
        KPGridClusteringAlgorithm;
 
 @protocol KPTreeControllerDelegate,
           KPGridClusteringAlgorithmDelegate;
 
 
+@interface KPTreeControllerConfiguration : NSObject
+
+@property (assign, nonatomic) CGSize annotationSize;
+@property (assign, nonatomic) CGPoint annotationCenterOffset;
+@property (assign, nonatomic) CGFloat animationDuration;
+@property (assign, nonatomic) UIViewAnimationOptions animationOptions;
+
+@end
+
 @interface KPTreeController : NSObject <KPGridClusteringAlgorithmDelegate>
 
-@property (strong, readonly, nonatomic) KPConfiguration *configuration;
+@property (strong, readonly, nonatomic) KPTreeControllerConfiguration *configuration;
 
 @property (weak, nonatomic) id <KPTreeControllerDelegate> delegate;
 
