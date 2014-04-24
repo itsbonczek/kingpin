@@ -20,7 +20,6 @@
 #import "KPAnnotation.h"
 
 #import <assert.h>
-#import <stddef.h>
 
 
 static kp_internal_annotation_t *KPTemporaryAnnotationStorage;

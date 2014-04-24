@@ -110,11 +110,11 @@ typedef struct {
 
 
 static inline void KPClusterGridValidateNULLMargin(kp_cluster_t ***clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
-    for (int row = 0; row < (gridSizeX + 2); row++) {
+    for (NSUInteger row = 0; row < (gridSizeX + 2); row++) {
         assert(clusterGrid[0][row] == NULL);
         assert(clusterGrid[gridSizeY + 1][row] == NULL);
     }
-    for (int col = 0; col < (gridSizeY + 2); col++) {
+    for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
         assert(clusterGrid[col][0] == NULL);
         assert(clusterGrid[col][gridSizeX + 1] == NULL);
     }
@@ -241,7 +241,7 @@ typedef enum {
 }
 
 
-- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_t ***)clusterGrid gridSizeX:(int)gridSizeX gridSizeY:(int)gridSizeY {
+- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_t ***)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY {
     __block NSMutableArray *mutableClusters = [NSMutableArray arrayWithArray:clusters];
     __block NSMutableIndexSet *indexesOfClustersToBeRemovedAsMerged = [NSMutableIndexSet indexSet];
 
@@ -304,8 +304,8 @@ typedef enum {
     kp_cluster_merge_result_t mergeResult;
 
 
-    for (int16_t col = 1; col < (gridSizeY + 2); col++) {
-        for (int16_t row = 1; row < (gridSizeX + 2); row++) {
+    for (uint16_t col = 1; col < (gridSizeY + 2); col++) {
+        for (uint16_t row = 1; row < (gridSizeX + 2); row++) {
         loop_with_explicit_col_and_row:
 
             assert(col > 0);
@@ -337,7 +337,7 @@ typedef enum {
                     // The case when other cluster did adsorb current cluster into itself. This means that we must not continue looking for adjacent clusters because we don't have a current cell now.
                     if (mergeResult == KPClusterMergeResultOther) {
                         // If this other cluster lies upstream (behind current i,j cell), we revert back to its [i,j] coordinate and continue looping
-                        if (*(int32_t *)(&currentClusterCoordinate) > *(int32_t *)(&adjacentClusterCoordinate)) {
+                        if (*(uint32_t *)(&currentClusterCoordinate) > *(uint32_t *)(&adjacentClusterCoordinate)) {
 
                             col = adjacentClusterCoordinate.col;
                             row = adjacentClusterCoordinate.row;

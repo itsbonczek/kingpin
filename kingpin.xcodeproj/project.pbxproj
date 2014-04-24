@@ -545,6 +545,12 @@
 				PRODUCT_NAME = kingpinTestApplication;
 				PROVISIONING_PROFILE = "0992FBE4-A430-4594-9D7C-0369CC910FA2";
 				SDKROOT = iphoneos;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wpedantic",
+					"-Wno-gnu",
+					"-Wno-variadic-macros",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -578,6 +584,12 @@
 				PROVISIONING_PROFILE = "0992FBE4-A430-4594-9D7C-0369CC910FA2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wpedantic",
+					"-Wno-gnu",
+					"-Wno-variadic-macros",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -16,6 +16,8 @@
 
 #import "KPAnnotationTree.h"
 
+#import <stddef.h>
+
 
 #define KP_LIKELY(x) __builtin_expect(!!(x), 1)
 
@@ -25,7 +27,7 @@ static const size_t MKMapPointYOffset = offsetof(MKMapPoint, y);
 static const size_t MKMapPointOffsets[] = { MKMapPointXOffset, MKMapPointYOffset };
 
 static inline double MKMapPointGetCoordinateForAxis(MKMapPoint *point, int axis) {
-    return *(double *)((char *)point + MKMapPointOffsets[axis]);
+    return *(double *)((uintptr_t)point + MKMapPointOffsets[axis]);
 }
 
 
