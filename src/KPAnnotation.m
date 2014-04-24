@@ -18,8 +18,8 @@
 
 @interface KPAnnotation ()
 
-@property (nonatomic, readwrite) NSSet *annotations;
-@property (nonatomic, readwrite) float radius;
+@property (strong, readwrite, nonatomic) NSSet *annotations;
+@property (assign, readwrite, nonatomic) float radius;
 
 @end
 

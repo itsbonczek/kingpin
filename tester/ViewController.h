@@ -12,8 +12,8 @@
 
 @interface ViewController : UIViewController <MKMapViewDelegate>
  
-@property (nonatomic, strong) IBOutlet MKMapView *mapView;
-@property (nonatomic) IBOutlet UISwitch *animationSwitch;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet UISwitch *animationSwitch;
 
 - (IBAction)resetAnnotations:(id)sender;
 

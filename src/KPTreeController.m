@@ -41,13 +41,14 @@ typedef enum {
 
 @property (strong, nonatomic) KPConfiguration *configuration;
 
-@property (nonatomic, strong) MKMapView *mapView;
-@property (nonatomic, strong) KPAnnotationTree *annotationTree;
-@property (nonatomic, strong) KPGridClusteringAlgorithm *clusteringAlgorithm;
+@property (strong, nonatomic) MKMapView *mapView;
+@property (strong, nonatomic) KPAnnotationTree *annotationTree;
+@property (strong, nonatomic) KPGridClusteringAlgorithm *clusteringAlgorithm;
 
-@property (nonatomic) MKMapRect lastRefreshedMapRect;
-@property (nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
-@property (readonly, nonatomic) KPTreeControllerMapViewportChangeState mapViewportChangeState;
+@property (assign, nonatomic) MKMapRect lastRefreshedMapRect;
+@property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
+@property (assign, readonly, nonatomic) KPTreeControllerMapViewportChangeState mapViewportChangeState;
+
 @end
 
 @implementation KPTreeController

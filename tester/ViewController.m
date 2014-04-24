@@ -21,8 +21,8 @@ static const int kNumberOfTestAnnotations = 20000;
 
 @interface ViewController () <KPTreeControllerDelegate, KPTreeControllerDelegate>
 
-@property (nonatomic, strong) KPTreeController *treeController;
-@property (nonatomic, strong) KPTreeController *treeController2;
+@property (strong, nonatomic) KPTreeController *treeController;
+@property (strong, nonatomic) KPTreeController *treeController2;
 
 @end
 

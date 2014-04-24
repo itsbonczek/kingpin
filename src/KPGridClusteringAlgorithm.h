@@ -24,6 +24,7 @@
 
 
 @interface KPGridClusteringAlgorithm : NSObject
+
 @property (weak, nonatomic) id <KPGridClusteringAlgorithmDelegate> delegate;
 
 - (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect cellSize:(MKMapSize)cellSize annotationTree:(KPAnnotationTree *)annotationTree;

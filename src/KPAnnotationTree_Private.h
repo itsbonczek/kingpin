@@ -63,8 +63,8 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
 
 @property (strong, nonatomic, readwrite) NSSet *annotations;
 
-@property (nonatomic) kp_treenode_t *root;
-@property (nonatomic) kp_treenode_storage_t *nodeStorage;
+@property (assign, nonatomic) kp_treenode_t *root;
+@property (assign, nonatomic) kp_treenode_storage_t *nodeStorage;
 
 @end
 

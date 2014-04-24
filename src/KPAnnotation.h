@@ -19,13 +19,13 @@
 
 @interface KPAnnotation : NSObject <MKAnnotation>
 
-@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
-@property (nonatomic, readwrite, copy) NSString *title;
-@property (nonatomic, readwrite, copy) NSString *subtitle;
+@property (assign, nonatomic) CLLocationCoordinate2D coordinate;
+@property (assign, readonly, nonatomic) float radius;
 
-@property (nonatomic, readonly) float radius;
-@property (nonatomic, readonly) NSSet *annotations;
+@property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *subtitle;
 
+@property (strong, readonly, nonatomic) NSSet *annotations;
 
 - (id)initWithAnnotations:(NSArray *)annotations;
 - (id)initWithAnnotationSet:(NSSet *)set;
@@ -36,6 +36,6 @@
 
 
 // Private (used by the internal clustering algorithm)
-@property (nonatomic) NSValue *_annotationPointInMapView;
+@property (strong, nonatomic) NSValue *_annotationPointInMapView;
 
 @end

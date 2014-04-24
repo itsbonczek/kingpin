@@ -31,7 +31,7 @@
 
 @interface KPTreeController : NSObject <KPGridClusteringAlgorithmDelegate>
 
-@property (readonly) KPConfiguration *configuration;
+@property (strong, readonly, nonatomic) KPConfiguration *configuration;
 
 @property (weak, nonatomic) id <KPTreeControllerDelegate> delegate;
 
