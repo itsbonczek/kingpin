@@ -49,6 +49,11 @@ typedef enum {
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
 @property (assign, readonly, nonatomic) KPTreeControllerMapViewportChangeState mapViewportChangeState;
 
+- (void)_animateCluster:(KPAnnotation *)cluster
+         fromAnnotation:(KPAnnotation *)fromAnnotation
+           toAnnotation:(KPAnnotation *)toAnnotation
+             completion:(void (^)(BOOL finished))completion;
+
 @end
 
 @implementation KPTreeController

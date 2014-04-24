@@ -39,11 +39,6 @@
 - (void)setAnnotations:(NSArray *)annoations;
 - (void)refresh:(BOOL)animated;
 
-- (void)_animateCluster:(KPAnnotation *)cluster
-         fromAnnotation:(KPAnnotation *)fromAnnotation
-           toAnnotation:(KPAnnotation *)toAnnotation
-             completion:(void (^)(BOOL finished))completion;
-
 @end
 
 @protocol KPTreeControllerDelegate <NSObject>
