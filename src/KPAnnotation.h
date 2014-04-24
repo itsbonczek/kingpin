@@ -15,7 +15,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 #import <MapKit/MKAnnotation.h>
 
 @interface KPAnnotation : NSObject <MKAnnotation>
@@ -31,7 +30,6 @@
 - (id)initWithAnnotations:(NSArray *)annotations;
 - (id)initWithAnnotationSet:(NSSet *)set;
 
-// Helpers
 
 // returns NO if the KPAnnotation only contains one annotation
 - (BOOL)isCluster;

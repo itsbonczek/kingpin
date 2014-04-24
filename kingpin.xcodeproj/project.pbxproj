@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		8605864618EC13400026144F /* KPAnnotationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8605864518EC13400026144F /* KPAnnotationTests.m */; };
+		860B21091905873000C18660 /* KPConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 860B21081905873000C18660 /* KPConfiguration.m */; };
+		860B210A1905873200C18660 /* KPConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 860B21081905873000C18660 /* KPConfiguration.m */; };
+		86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
+		86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
+		86174DCF18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */; };
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
 		9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
@@ -45,6 +50,13 @@
 /* Begin PBXFileReference section */
 		8605864518EC13400026144F /* KPAnnotationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTests.m; sourceTree = "<group>"; };
 		8605864718EC1F090026144F /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
+		860B21071905873000C18660 /* KPConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPConfiguration.h; path = ../../../../../stanislaw/Work/Pods/kingpin/src/KPConfiguration.h; sourceTree = "<group>"; };
+		860B21081905873000C18660 /* KPConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPConfiguration.m; path = ../../../../../stanislaw/Work/Pods/kingpin/src/KPConfiguration.m; sourceTree = "<group>"; };
+		86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm.h; sourceTree = "<group>"; };
+		86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithm.m; sourceTree = "<group>"; };
+		86174DC918F9BF7D00014C48 /* KPGridClusteringAlgorithmDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithmDelegate.h; sourceTree = "<group>"; };
+		86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithmTests.m; sourceTree = "<group>"; };
+		86174DD018F9D7CF00014C48 /* KPGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KPGeometry.h; path = ../../../../../stanislaw/Work/Pods/kingpin/src/KPGeometry.h; sourceTree = "<group>"; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
 		9122C06318E77A9E00356A3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
@@ -124,6 +136,7 @@
 				9189259F18E7732900812296 /* Supporting Files */,
 				8605864518EC13400026144F /* KPAnnotationTests.m */,
 				8605864718EC1F090026144F /* TestHelpers.h */,
+				86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */,
 			);
 			path = kingpinTests;
 			sourceTree = "<group>";
@@ -141,13 +154,19 @@
 		9346910316A8F17D00DE59FA /* kp */ = {
 			isa = PBXGroup;
 			children = (
+				8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */,
 				93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */,
 				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,
 				93BBC0451645A1F8004BC920 /* KPAnnotation.h */,
 				93BBC0461645A1F8004BC920 /* KPAnnotation.m */,
 				93BBC0881645A68F004BC920 /* KPTreeController.h */,
 				93BBC0891645A68F004BC920 /* KPTreeController.m */,
-				8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */,
+				86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */,
+				86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */,
+				86174DC918F9BF7D00014C48 /* KPGridClusteringAlgorithmDelegate.h */,
+				86174DD018F9D7CF00014C48 /* KPGeometry.h */,
+				860B21071905873000C18660 /* KPConfiguration.h */,
+				860B21081905873000C18660 /* KPConfiguration.m */,
 			);
 			name = kp;
 			sourceTree = "<group>";
@@ -335,7 +354,10 @@
 				91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */,
 				91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */,
 				91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */,
+				86174DCF18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m in Sources */,
+				86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */,
 				91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */,
+				860B210A1905873200C18660 /* KPConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +371,8 @@
 				93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */,
 				93BBC0A61645B78C004BC920 /* main.m in Sources */,
 				93BBC0A71645B78C004BC920 /* ViewController.m in Sources */,
+				860B21091905873000C18660 /* KPConfiguration.m in Sources */,
+				86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */,
 				93BBC0AF1645CAE5004BC920 /* TestAnnotation.m in Sources */,
 				9346910116A8EC8400DE59FA /* MyAnnotation.m in Sources */,
 				9346910716A8F1C200DE59FA /* NSArray+KP.m in Sources */,

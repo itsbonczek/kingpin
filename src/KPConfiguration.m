@@ -14,14 +14,22 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import <MapKit/MapKit.h>
+#import "KPConfiguration.h"
 
-@interface KPAnnotationTree : NSObject
+@implementation KPConfiguration
 
-@property (nonatomic, readonly) NSSet *annotations;
+- (id)init {
+    self = [super init];
 
-- (id)initWithAnnotations:(NSArray *)annotations;
-- (NSArray *)annotationsInMapRect:(MKMapRect)rect;
+    if (self == nil) return nil;
+
+    self.gridSize = (CGSize){60.f, 60.f};
+    self.annotationSize = (CGSize){60.f, 60.f};
+    self.annotationCenterOffset = (CGPoint){30.f, 30.f};
+    self.animationDuration = 0.5f;
+    self.clusteringEnabled = YES;
+
+    return self;
+}
 
 @end

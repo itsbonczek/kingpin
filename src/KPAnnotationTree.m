@@ -22,12 +22,6 @@
 #import <assert.h>
 #import <stddef.h>
 
-#if 0
-#define BBTreeLog(...) NSLog(__VA_ARGS__)
-#else
-#define BBTreeLog(...) ((void) 0)
-#endif
-
 
 static kp_internal_annotation_t *KPTemporaryAnnotationStorage;
 static MKMapPoint *KPTemporaryPointStorage;
@@ -77,49 +71,46 @@ static MKMapPoint *KPTemporaryPointStorage;
     if (curNode == NULL) {
         return;
     }
-    
+
     MKMapPoint mapPoint = curNode->mapPoint;
-   
-    BBTreeLog(@"Testing (%f, %f)...", [curNode.annotation coordinate].latitude, [curNode.annotation coordinate].longitude);
-    
-    if(MKMapRectContainsPoint(mapRect, mapPoint)){
-        BBTreeLog(@"YES");
+
+    if (MKMapRectContainsPoint(mapRect, mapPoint)) {
         [annotations addObject:curNode->annotation];
-    }
-    else {
-        BBTreeLog(@"RECT: NO");
     }
 
     KPAnnotationTreeAxis axis = (level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
 
     double val, minVal, maxVal;
 
+    
     if (axis == KPAnnotationTreeAxisX) {
         val    = mapPoint.x;
         minVal = mapRect.origin.x;
         maxVal = mapRect.origin.x + mapRect.size.width;
-    } else {
+    }
+
+    else {
         val    = mapPoint.y;
         minVal = mapRect.origin.y;
         maxVal = mapRect.origin.y + mapRect.size.height;
     }
 
-    if(maxVal < val){
-        
+
+    if (maxVal < val){
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
                         curNode:curNode->left
                        curLevel:(level + 1)];
     }
-    else if(minVal >= val){
-        
+
+    else if (minVal >= val){
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
                         curNode:curNode->right
                        curLevel:(level + 1)];
     }
+
     else {
-        
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
                         curNode:curNode->left

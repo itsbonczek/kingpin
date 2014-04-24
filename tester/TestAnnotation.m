@@ -15,7 +15,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@: (%f, %f)", [super description], self.coordinate.longitude, self.coordinate.latitude];
+    return [NSString stringWithFormat:@"%@: (%f, %f)", [super description], self.coordinate.latitude, self.coordinate.longitude];
 }
 
 @end

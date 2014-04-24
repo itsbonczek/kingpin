@@ -25,7 +25,6 @@
 
 @implementation KPAnnotation
 
-
 - (id)initWithAnnotations:(NSArray *)annotations {
     return [self initWithAnnotationSet:[NSSet setWithArray:annotations]];
 }
