@@ -23,7 +23,7 @@
 
 @implementation KPGridClusteringAlgorithmDelegateClass
 
-- (MKMapSize)gridClusteringAlgorithmObtainGridCellSize:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm forMapRect:(MKMapRect)mapRect {
+- (MKMapSize)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm obtainGridCellSizeForMapRect:(MKMapRect)mapRect {
     return MKMapSizeMake(round(mapRect.size.width / 10), round(mapRect.size.height / 10));
 }
 
@@ -61,7 +61,7 @@
 
     __strong KPGridClusteringAlgorithmDelegateClass *clusteringAlgorithmDelegate = [[KPGridClusteringAlgorithmDelegateClass alloc] init];
 
-    MKMapSize cellSize = [clusteringAlgorithmDelegate gridClusteringAlgorithmObtainGridCellSize:clusteringAlgorithm forMapRect:randomRect];
+    MKMapSize cellSize = [clusteringAlgorithmDelegate gridClusteringAlgorithm:clusteringAlgorithm obtainGridCellSizeForMapRect:randomRect];
 
     MKMapRect normalizedMapRect = MKMapRectNormalizeToCellSize(randomRect, cellSize);
 

@@ -181,7 +181,7 @@ typedef enum {
 
 - (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree {
 
-    MKMapSize cellSize = [self.delegate gridClusteringAlgorithmObtainGridCellSize:self forMapRect:mapRect];
+    MKMapSize cellSize = [self.delegate gridClusteringAlgorithm:self obtainGridCellSizeForMapRect:mapRect];
 
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);

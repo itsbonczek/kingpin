@@ -287,7 +287,7 @@ typedef enum {
 #pragma mark 
 #pragma mark <KPGridClusteringAlgorithmDelegate>
 
-- (MKMapSize)gridClusteringAlgorithmObtainGridCellSize:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm forMapRect:(MKMapRect)mapRect {
+- (MKMapSize)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm obtainGridCellSizeForMapRect:(MKMapRect)mapRect {
     // Calculate the grid size in terms of MKMapPoints.
     double widthPercentage =  gridClusteringAlgorithm.configuration.gridSize.width / CGRectGetWidth(self.mapView.frame);
     double heightPercentage = gridClusteringAlgorithm.configuration.gridSize.height / CGRectGetHeight(self.mapView.frame);
