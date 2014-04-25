@@ -16,6 +16,8 @@
 
 #import "KPAnnotation.h"
 
+#import "KPGeometry.h"
+
 @interface KPAnnotation ()
 
 @property (strong, readwrite, nonatomic) NSSet *annotations;
@@ -141,10 +143,7 @@
     self.coordinate = CLLocationCoordinate2DMake(totalLat / self.annotations.count,
                                                  totalLng / self.annotations.count);
     
-    self.radius = [[[CLLocation alloc] initWithLatitude:minLat
-                                              longitude:minLng]
-                   distanceFromLocation:[[CLLocation alloc] initWithLatitude:maxLat
-                                                                   longitude:maxLng]] / 2.f;
+    self.radius = CLLocationCoordinate2DDistanceToCoordinate(CLLocationCoordinate2DMake(minLat, minLng), CLLocationCoordinate2DMake(maxLat, maxLng)) / 2.f;
 }
 
 

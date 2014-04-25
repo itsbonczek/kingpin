@@ -16,6 +16,8 @@
 
 #import <stddef.h>
 
+#import <MapKit/MKGeometry.h>
+
 
 static inline MKMapRect MKMapRectNormalizeToCellSize(MKMapRect mapRect, MKMapSize cellSize) {
     MKMapRect normalizedRect = mapRect;
@@ -41,3 +43,16 @@ static inline double MKMapPointGetCoordinateForAxis(MKMapPoint *point, int axis)
     return *(double *)((uintptr_t)point + MKMapPointOffsets[axis]);
 }
 
+
+// http://stackoverflow.com/questions/21241700/what-code-is-written-behind-cllocation-distancefromlocation-or-mkmetersbetwe
+static inline CLLocationDistance CLLocationCoordinate2DDistanceToCoordinate(CLLocationCoordinate2D a, CLLocationCoordinate2D b) {
+    static const CLLocationDistance EarthRadiusInMeters = 6372797.560856;
+    static const double DegreeesToRad = 0.017453292519943295769236907684886;
+
+    CLLocationDegrees dtheta = (a.latitude - b.latitude) * DegreeesToRad;
+    CLLocationDegrees dlambda = (a.longitude - b.longitude) * DegreeesToRad;
+    CLLocationDegrees mean_t = (a.latitude + b.latitude) * DegreeesToRad / 2.0;
+    CLLocationDegrees cos_meant = cos(mean_t);
+
+    return EarthRadiusInMeters * sqrt(dtheta * dtheta + cos_meant * cos_meant * dlambda * dlambda);
+}
