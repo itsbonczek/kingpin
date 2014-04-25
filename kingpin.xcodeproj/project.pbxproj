@@ -11,6 +11,7 @@
 		86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
 		86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
 		86174DCF18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */; };
+		866335991909E70E009E638D /* KPGeometryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 866335981909E70E009E638D /* KPGeometryTests.m */; };
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
 		9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
@@ -55,6 +56,7 @@
 		86174DD018F9D7CF00014C48 /* KPGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGeometry.h; sourceTree = "<group>"; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
+		866335981909E70E009E638D /* KPGeometryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGeometryTests.m; sourceTree = "<group>"; };
 		9122C06318E77A9E00356A3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		9122C06518E77AAA00356A3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		9189259918E7732900812296 /* kingpinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kingpinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 				8605864518EC13400026144F /* KPAnnotationTests.m */,
 				8605864718EC1F090026144F /* TestHelpers.h */,
 				86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */,
+				866335981909E70E009E638D /* KPGeometryTests.m */,
 			);
 			path = kingpinTests;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				918925A518E7732900812296 /* KPAnnotationTreeTests.m in Sources */,
 				8605864618EC13400026144F /* KPAnnotationTests.m in Sources */,
 				91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */,
+				866335991909E70E009E638D /* KPGeometryTests.m in Sources */,
 				91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */,
 				91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */,
 				86174DCF18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m in Sources */,
@@ -528,6 +532,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -566,6 +571,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tester/kingpinTestApplication-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

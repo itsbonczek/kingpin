@@ -14,6 +14,9 @@
 // limitations under the License.
 //
 
+#import <stddef.h>
+
+
 static inline MKMapRect MKMapRectNormalizeToCellSize(MKMapRect mapRect, MKMapSize cellSize) {
     MKMapRect normalizedRect = mapRect;
 
@@ -28,3 +31,13 @@ static inline MKMapRect MKMapRectNormalizeToCellSize(MKMapRect mapRect, MKMapSiz
 
     return normalizedRect;
 }
+
+
+static const size_t MKMapPointXOffset = offsetof(MKMapPoint, x);
+static const size_t MKMapPointYOffset = offsetof(MKMapPoint, y);
+static const size_t MKMapPointOffsets[] = { MKMapPointXOffset, MKMapPointYOffset };
+
+static inline double MKMapPointGetCoordinateForAxis(MKMapPoint *point, int axis) {
+    return *(double *)((uintptr_t)point + MKMapPointOffsets[axis]);
+}
+
