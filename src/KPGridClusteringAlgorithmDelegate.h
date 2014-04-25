@@ -16,8 +16,16 @@
 
 #import <Foundation/Foundation.h>
 
-@class KPAnnotation;
+@class KPGridClusteringAlgorithm,
+       KPAnnotation;
 
 @protocol KPGridClusteringAlgorithmDelegate <NSObject>
-- (BOOL)clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation;
+
+@required
+- (MKMapSize)gridClusteringAlgorithmObtainGridCellSize:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm forMapRect:(MKMapRect)mapRect;
+
+@optional
+- (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation;
+
+
 @end

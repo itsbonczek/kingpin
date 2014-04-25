@@ -15,7 +15,6 @@
 //
 
 
-#import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
 
@@ -164,7 +163,7 @@ typedef enum {
     }
 
     if (clusteringEnabled) {
-        newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect mapView:self.mapView annotationTree:self.annotationTree];
+        newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect annotationTree:self.annotationTree];
     } else {
         NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
 
@@ -288,7 +287,20 @@ typedef enum {
 #pragma mark 
 #pragma mark <KPGridClusteringAlgorithmDelegate>
 
-- (BOOL)clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
+- (MKMapSize)gridClusteringAlgorithmObtainGridCellSize:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm forMapRect:(MKMapRect)mapRect {
+    // Calculate the grid size in terms of MKMapPoints.
+    double widthPercentage =  gridClusteringAlgorithm.configuration.gridSize.width / CGRectGetWidth(self.mapView.frame);
+    double heightPercentage = gridClusteringAlgorithm.configuration.gridSize.height / CGRectGetHeight(self.mapView.frame);
+
+    MKMapSize cellSize = MKMapSizeMake(
+        ceil(widthPercentage  * self.mapView.visibleMapRect.size.width),
+        ceil(heightPercentage * self.mapView.visibleMapRect.size.height)
+    );
+
+    return cellSize;
+}
+
+- (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
     // calculate CGRects for each annotation, memoizing the coord -> point conversion as we go
     // if the two views overlap, merge them
 

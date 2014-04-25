@@ -179,17 +179,9 @@ typedef enum {
     return self;
 }
 
-- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect mapView:(MKMapView *)mapView  annotationTree:(KPAnnotationTree *)annotationTree {
+- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree {
 
-    // Calculate the grid size in terms of MKMapPoints.
-    double widthPercentage = self.configuration.gridSize.width / CGRectGetWidth(mapView.frame);
-    double heightPercentage = self.configuration.gridSize.height / CGRectGetHeight(mapView.frame);
-
-    MKMapSize cellSize = MKMapSizeMake(
-                                       ceil(widthPercentage  * mapView.visibleMapRect.size.width),
-                                       ceil(heightPercentage * mapView.visibleMapRect.size.height)
-                                       );
-
+    MKMapSize cellSize = [self.delegate gridClusteringAlgorithmObtainGridCellSize:self forMapRect:mapRect];
 
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
@@ -273,7 +265,9 @@ typedef enum {
         }
     }
 
-    newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+    if ([self.delegate respondsToSelector:@selector(gridClusteringAlgorithm:clusterIntersects:anotherCluster:)]) {
+        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+    }
 
 
     for (int col = 0; col < (gridSizeY + 2); col++) {
@@ -303,7 +297,7 @@ typedef enum {
         KPAnnotation *cluster1 = [mutableClusters objectAtIndex:cl1->annotationIndex];
         KPAnnotation *cluster2 = [mutableClusters objectAtIndex:cl2->annotationIndex];
 
-        BOOL clustersIntersect = [self.delegate clusterIntersects:cluster1 anotherCluster:cluster2];
+        BOOL clustersIntersect = [self.delegate gridClusteringAlgorithm:self clusterIntersects:cluster1 anotherCluster:cluster2];
 
         if (clustersIntersect) {
             NSMutableSet *combinedSet = [NSMutableSet setWithSet:cluster1.annotations];

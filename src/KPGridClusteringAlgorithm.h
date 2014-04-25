@@ -37,6 +37,6 @@
 
 @property (weak, nonatomic) id <KPGridClusteringAlgorithmDelegate> delegate;
 
-- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect mapView:(MKMapView *)mapView annotationTree:(KPAnnotationTree *)annotationTree;
+- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree;
 
 @end

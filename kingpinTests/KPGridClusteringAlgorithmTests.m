@@ -9,6 +9,7 @@
 #import "TestHelpers.h"
 
 #import "KPGridClusteringAlgorithm.h"
+#import "KPGridClusteringAlgorithmDelegate.h"
 
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
@@ -16,6 +17,17 @@
 #import "KPGeometry.h"
 
 #import "TestAnnotation.h"
+
+@interface KPGridClusteringAlgorithmDelegateClass : NSObject <KPGridClusteringAlgorithmDelegate>
+@end
+
+@implementation KPGridClusteringAlgorithmDelegateClass
+
+- (MKMapSize)gridClusteringAlgorithmObtainGridCellSize:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm forMapRect:(MKMapRect)mapRect {
+    return MKMapSizeMake(round(mapRect.size.width / 10), round(mapRect.size.height / 10));
+}
+
+@end
 
 @interface KPGridClusteringAlgorithmTests : XCTestCase
 @end
@@ -47,14 +59,18 @@
 
     KPGridClusteringAlgorithm *clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
 
-    MKMapSize cellSize = MKMapSizeMake(round(randomRect.size.width / 10), round(randomRect.size.height / 10));
+    __strong KPGridClusteringAlgorithmDelegateClass *clusteringAlgorithmDelegate = [[KPGridClusteringAlgorithmDelegateClass alloc] init];
 
-    randomRect = MKMapRectNormalizeToCellSize(randomRect, cellSize);
+    MKMapSize cellSize = [clusteringAlgorithmDelegate gridClusteringAlgorithmObtainGridCellSize:clusteringAlgorithm forMapRect:randomRect];
 
-    NSArray *clusters = [clusteringAlgorithm performClusteringOfAnnotationsInMapRect:randomRect cellSize:cellSize annotationTree:annotationTree];
+    MKMapRect normalizedMapRect = MKMapRectNormalizeToCellSize(randomRect, cellSize);
+
+    clusteringAlgorithm.delegate = clusteringAlgorithmDelegate;
+
+    NSArray *clusters = [clusteringAlgorithm performClusteringOfAnnotationsInMapRect:randomRect annotationTree:annotationTree];
 
     NSMutableArray *annotationsCollectedFromClusters = [NSMutableArray array];
-    NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:randomRect];
+    NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:normalizedMapRect];
 
     [clusters enumerateObjectsUsingBlock:^(KPAnnotation *clusterAnnotation, NSUInteger idx, BOOL *stop) {
         [annotationsCollectedFromClusters addObjectsFromArray:clusterAnnotation.annotations.allObjects];
