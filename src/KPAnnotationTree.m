@@ -210,7 +210,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 
     KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
-    self.root = buildTree(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
+    self.root = kp_tree_build(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
 
     free(annotationsX);
     free(annotationsY);
@@ -222,7 +222,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 @end
 
 
-static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel) {
+static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel) {
     if (count == 0) {
         return NULL;
     }
@@ -320,8 +320,8 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
 
-    n->left  = buildTree(nodeStorage,  leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis, annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
-    n->right = buildTree(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, temporaryAnnotationStorage, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
+    n->left  = kp_tree_build(nodeStorage,  leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis, annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
+    n->right = kp_tree_build(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, temporaryAnnotationStorage, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
 
 
     return n;
