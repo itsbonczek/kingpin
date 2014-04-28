@@ -35,11 +35,13 @@ static const int kNumberOfTestAnnotations = 20000;
     self.treeController.delegate = self;
     self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
     [self.treeController setAnnotations:[self annotations]];
-    
+
+    /*
     self.treeController2 = [[KPTreeController alloc] initWithMapView:self.mapView];
     self.treeController2.delegate = self;
     self.treeController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
     [self.treeController2 setAnnotations:[self annotations]];
+     */
     
     self.mapView.showsUserLocation = YES;
     
@@ -150,6 +152,8 @@ static const int kNumberOfTestAnnotations = 20000;
             }
             
             v.pinColor = MKPinAnnotationColorPurple;
+
+            v.image = [UIImage imageNamed:@"blue"];
         }
         else {
             
@@ -161,16 +165,20 @@ static const int kNumberOfTestAnnotations = 20000;
             }
             
             v.pinColor = MKPinAnnotationColorRed;
+
+            v.image = [UIImage imageNamed:@"green"];
         }
-        
+
         v.canShowCallout = YES;
         
     }
     else if([annotation isKindOfClass:[MyAnnotation class]]) {
         v = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
         v.pinColor = MKPinAnnotationColorGreen;
+
+        v.image = [UIImage imageNamed:@"green"];
     }
-    
+
     return v;
     
 }
