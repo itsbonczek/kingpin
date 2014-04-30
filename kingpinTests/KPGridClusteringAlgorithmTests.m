@@ -37,7 +37,7 @@
 
 @implementation KPGridClusteringAlgorithmTests
 
-- (void)testGridClusteringAlgorithmIntegrity
+- (void)test_GridClusteringAlgorithmIntegrity
 {
     NSMutableArray *annotations = [NSMutableArray array];
 
@@ -107,8 +107,17 @@
             clusterWhichIsBelowPosition.row = row;
             clusterWhichIsBelowPosition.col = col + 1;
 
+            XCTAssertTrue(KPClusterGridCellPositionCompareWithPosition(&clusterPosition, &clusterPosition) == NSOrderedSame);
+            
             XCTAssertTrue(KPClusterGridCellPositionCompareWithPosition(&clusterPosition, &clusterWhichIsToTheRightPosition) == NSOrderedAscending);
             XCTAssertTrue(KPClusterGridCellPositionCompareWithPosition(&clusterPosition, &clusterWhichIsBelowPosition) == NSOrderedAscending);
+
+            uint32_t clusterPositionAbsoluteOffset = *((uint32_t *)&clusterPosition);
+            uint32_t clusterWhichIsToTheRightPositionAbsoluteOffset = *((uint32_t *)&clusterWhichIsToTheRightPosition);
+            uint32_t clusterWhichIsBelowPositionAbsoluteOffset = *((uint32_t *)&clusterWhichIsBelowPosition);
+
+            XCTAssertTrue((clusterWhichIsToTheRightPositionAbsoluteOffset - clusterPositionAbsoluteOffset) == 1);
+            XCTAssertTrue((clusterWhichIsBelowPositionAbsoluteOffset - clusterPositionAbsoluteOffset) == 65536);
         }
     }
 }

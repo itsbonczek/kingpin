@@ -187,14 +187,14 @@ typedef struct {
 
 
 static inline NSComparisonResult KPClusterGridCellPositionCompareWithPosition(kp_cluster_grid_cell_position_t *position, kp_cluster_grid_cell_position_t *anotherPosition) {
-    if (*(uint32_t *)(position) < *(uint32_t *)(&anotherPosition)) {
+    if (*((uint32_t *)position) < *((uint32_t *)anotherPosition)) {
         return NSOrderedAscending;
     }
 
-    if (*(uint32_t *)(position) > *(uint32_t *)(&anotherPosition)) {
+    if (*((uint32_t *)position) > *((uint32_t *)anotherPosition)) {
         return NSOrderedDescending;
     }
-
+    
     return NSOrderedSame;
 }
 
