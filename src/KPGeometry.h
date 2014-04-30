@@ -28,6 +28,7 @@ static inline MKMapRect MKMapRectNormalizeToCellSize(MKMapRect mapRect, MKMapSiz
     normalizedRect.size.width  += ceil((cellSize.width  - fmod(normalizedRect.size.width, cellSize.width)));
     normalizedRect.size.height += ceil((cellSize.height - fmod(normalizedRect.size.height, cellSize.height)));
 
+    // Guard validation
     assert(((uint32_t)normalizedRect.size.width  % (uint32_t)cellSize.width)  == 0);
     assert(((uint32_t)normalizedRect.size.height % (uint32_t)cellSize.height) == 0);
 
@@ -56,3 +57,4 @@ static inline CLLocationDistance CLLocationCoordinate2DDistanceToCoordinate(CLLo
 
     return EarthRadiusInMeters * sqrt(dtheta * dtheta + cos_meant * cos_meant * dlambda * dlambda);
 }
+
