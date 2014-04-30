@@ -95,7 +95,8 @@
                 KPAnnotation *annotation = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
                 [newClusters addObject:annotation];
 
-                kp_cluster_t *cluster = clusterGrid->storage + clusterIndex;
+                kp_cluster_t *cluster = KPClusterGridCellCreate(clusterGrid);
+                
                 cluster->mapRect = gridRect;
                 cluster->annotationIndex = clusterIndex;
                 cluster->merged = NO;
