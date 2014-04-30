@@ -64,12 +64,12 @@
     MKMapSize cellSize = [self.delegate gridClusteringAlgorithm:self obtainGridCellSizeForMapRect:mapRect];
 
 
-    int gridSizeX = mapRect.size.width / cellSize.width;
-    int gridSizeY = mapRect.size.height / cellSize.height;
-
-
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
+
+
+    int gridSizeX = mapRect.size.width / cellSize.width;
+    int gridSizeY = mapRect.size.height / cellSize.height;
 
 
     __block NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:(gridSizeX * gridSizeY)];
