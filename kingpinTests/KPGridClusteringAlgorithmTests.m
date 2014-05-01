@@ -29,6 +29,10 @@
     return MKMapSizeMake(round(mapRect.size.width / 10), round(mapRect.size.height / 10));
 }
 
+- (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
+    return YES;
+}
+
 @end
 
 @interface KPGridClusteringAlgorithmTests : XCTestCase
@@ -37,7 +41,7 @@
 
 @implementation KPGridClusteringAlgorithmTests
 
-- (void)test_GridClusteringAlgorithmIntegrity
+- (void)tesdridClusteringAlgorithmIntegrity
 {
     NSMutableArray *annotations = [NSMutableArray array];
 
@@ -120,6 +124,124 @@
             XCTAssertTrue((clusterWhichIsBelowPositionAbsoluteOffset - clusterPositionAbsoluteOffset) == 65536);
         }
     }
+}
+
+- (void)test_mergeOverlappingClusters {
+    KPGridClusteringAlgorithm *clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
+    __strong KPGridClusteringAlgorithmDelegateClass *clusteringAlgorithmDelegate = [KPGridClusteringAlgorithmDelegateClass new];
+
+    clusteringAlgorithm.delegate = clusteringAlgorithmDelegate;
+
+    {
+        NSUInteger gridSizeX = 2;
+        NSUInteger gridSizeY = 2;
+
+        TestAnnotation *annotation11 = [[TestAnnotation alloc] init];
+        annotation11.coordinate = CLLocationCoordinate2DMake(0, 0);
+
+        TestAnnotation *annotation12 = [[TestAnnotation alloc] init];
+        annotation12.coordinate = CLLocationCoordinate2DMake(0, 1);
+
+        MKMapPoint annotationMapPoint11 = MKMapPointForCoordinate(annotation11.coordinate);
+        MKMapPoint annotationMapPoint12 = MKMapPointForCoordinate(annotation12.coordinate);
+
+        MKMapSize cellSize = (MKMapSize){
+            annotationMapPoint12.x - annotationMapPoint11.x,
+            annotationMapPoint12.y - annotationMapPoint11.y,
+        };
+
+        MKMapRect mapRect11 = (MKMapRect) {
+            annotationMapPoint11.x - cellSize.width / 2,
+            annotationMapPoint11.y - cellSize.height / 2,
+        };
+
+        MKMapRect mapRect12 = (MKMapRect) {
+            annotationMapPoint12.x - cellSize.width / 2,
+            annotationMapPoint12.y - cellSize.height / 2,
+        };
+
+        KPAnnotation *clusterAnnotation11 = [[KPAnnotation alloc] initWithAnnotations:@[ annotation11 ]];
+        KPAnnotation *clusterAnnotation12 = [[KPAnnotation alloc] initWithAnnotations:@[ annotation12 ]];
+
+
+#pragma mark Two complementary annotations on positions {1, 1} and {1, 2}
+
+        {
+            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+
+            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
+
+            clusterCell11->annotationIndex = 0;
+            clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantOne;
+            clusterCell11->merged = NO;
+            clusterCell11->mapRect = mapRect11;
+
+            clusterCell12->annotationIndex = 1;
+            clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantTwo;
+            clusterCell12->merged = NO;
+            clusterCell12->mapRect = mapRect12;
+
+            clusterGrid->grid[1][1] = clusterCell11;
+            clusterGrid->grid[1][2] = clusterCell12;
+
+            clusterGrid->grid[2][1] = NULL;
+            clusterGrid->grid[2][2] = NULL;
+
+            NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12 ];
+
+            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+
+            XCTAssertTrue(clusters.count == 1);
+
+            KPAnnotation *firstCluster = clusters.firstObject;
+
+            XCTAssertTrue(CLLocationCoordinates2DEqual(firstCluster.coordinate, CLLocationCoordinate2DMake(0, 0.5)));
+            
+            KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
+        }
+
+
+#pragma mark Two non-complementary annotations on positions {1, 1} and {1, 2}
+
+        {
+            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+
+            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
+
+            clusterCell11->annotationIndex = 0;
+            clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantTwo;
+            clusterCell11->merged = NO;
+            clusterCell11->mapRect = mapRect11;
+
+            clusterCell12->annotationIndex = 1;
+            clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantOne;
+            clusterCell12->merged = NO;
+            clusterCell12->mapRect = mapRect12;
+
+            clusterGrid->grid[1][1] = clusterCell11;
+            clusterGrid->grid[1][2] = clusterCell12;
+
+            clusterGrid->grid[2][1] = NULL;
+            clusterGrid->grid[2][2] = NULL;
+
+            NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12 ];
+
+            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+
+            XCTAssertTrue(clusters.count == 2);
+
+            KPAnnotation *firstCluster = clusters.firstObject;
+            KPAnnotation *lastCluster = clusters.lastObject;
+
+            XCTAssertTrue(CLLocationCoordinates2DEqual(firstCluster.coordinate, CLLocationCoordinate2DMake(0, 0)));
+            XCTAssertTrue(CLLocationCoordinates2DEqual(lastCluster.coordinate, CLLocationCoordinate2DMake(0, 1)));
+
+            KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
+        }
+    }
+
 }
 
 @end

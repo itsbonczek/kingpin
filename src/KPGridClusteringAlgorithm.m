@@ -127,8 +127,9 @@
 - (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_grid_t *)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY {
     __block NSMutableArray *mutableClusters = [NSMutableArray arrayWithArray:clusters];
     __block NSMutableIndexSet *indexesOfClustersToBeRemovedAsMerged = [NSMutableIndexSet indexSet];
+    
+    kp_cluster_merge_block_t checkClustersAndMergeIfNeeded = ^(kp_cluster_t *cl1, kp_cluster_t *cl2) {
 
-    kp_cluster_merge_result_t (^checkClustersAndMergeIfNeeded)(kp_cluster_t *cl1, kp_cluster_t *cl2) = ^(kp_cluster_t *cl1, kp_cluster_t *cl2) {
         /* Debug checks (remove later) */
         assert(cl1 && cl1->merged == NO);
         assert(cl2 && cl2->merged == NO);
@@ -232,6 +233,7 @@
             }
         }
     }
+
     
     // We remove all the indexes of merged clusters that were accumulated by checkClustersAndMergeIfNeeded()
     [mutableClusters removeObjectsAtIndexes:indexesOfClustersToBeRemovedAsMerged];

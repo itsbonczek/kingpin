@@ -34,11 +34,13 @@
 - (id)initWithAnnotationSet:(NSSet *)set {
     self = [super init];
     
-    if(self){
-        self.annotations = set;
-        self.title = [NSString stringWithFormat:@"%lu things", (unsigned long)[self.annotations count]];;
-        [self calculateValues];
+    if (self == nil) {
+        return nil;
     }
+
+    self.annotations = set;
+    self.title = [NSString stringWithFormat:@"%lu things", (unsigned long)[self.annotations count]];;
+    [self calculateValues];
     
     return self;
 }
@@ -146,6 +148,8 @@
     self.radius = CLLocationCoordinate2DDistanceToCoordinate(CLLocationCoordinate2DMake(minLat, minLng), CLLocationCoordinate2DMake(maxLat, maxLng)) / 2.f;
 }
 
-
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ (%f, %f)", [super description], self.coordinate.latitude, self.coordinate.longitude];
+}
 
 @end
