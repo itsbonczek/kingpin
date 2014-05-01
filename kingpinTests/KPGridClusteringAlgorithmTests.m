@@ -137,13 +137,21 @@
         NSUInteger gridSizeY = 2;
 
         TestAnnotation *annotation11 = [[TestAnnotation alloc] init];
-        annotation11.coordinate = CLLocationCoordinate2DMake(0, 0);
+        annotation11.coordinate = CLLocationCoordinate2DMake(1, 0);
 
         TestAnnotation *annotation12 = [[TestAnnotation alloc] init];
-        annotation12.coordinate = CLLocationCoordinate2DMake(0, 1);
+        annotation12.coordinate = CLLocationCoordinate2DMake(1, 1);
 
-        MKMapPoint annotationMapPoint11 = MKMapPointForCoordinate(annotation11.coordinate);
-        MKMapPoint annotationMapPoint12 = MKMapPointForCoordinate(annotation12.coordinate);
+        TestAnnotation *annotation21 = [[TestAnnotation alloc] init];
+        annotation21.coordinate = CLLocationCoordinate2DMake(0, 0);
+
+        TestAnnotation *annotation22 = [[TestAnnotation alloc] init];
+        annotation22.coordinate = CLLocationCoordinate2DMake(0, 1);
+
+        MKMapPoint annotationMapPoint11 = MKMapPointForCoordinate(CLLocationCoordinate2DMake(1, 0));
+        MKMapPoint annotationMapPoint12 = MKMapPointForCoordinate(CLLocationCoordinate2DMake(1, 1));
+        MKMapPoint annotationMapPoint21 = MKMapPointForCoordinate(CLLocationCoordinate2DMake(0, 0));
+        MKMapPoint annotationMapPoint22 = MKMapPointForCoordinate(CLLocationCoordinate2DMake(0, 1));
 
         MKMapSize cellSize = (MKMapSize){
             annotationMapPoint12.x - annotationMapPoint11.x,
@@ -160,8 +168,20 @@
             annotationMapPoint12.y - cellSize.height / 2,
         };
 
+        MKMapRect mapRect21 = (MKMapRect) {
+            annotationMapPoint21.x - cellSize.width / 2,
+            annotationMapPoint21.y - cellSize.height / 2,
+        };
+
+        MKMapRect mapRect22 = (MKMapRect) {
+            annotationMapPoint22.x - cellSize.width / 2,
+            annotationMapPoint22.y - cellSize.height / 2,
+        };
+
         KPAnnotation *clusterAnnotation11 = [[KPAnnotation alloc] initWithAnnotations:@[ annotation11 ]];
         KPAnnotation *clusterAnnotation12 = [[KPAnnotation alloc] initWithAnnotations:@[ annotation12 ]];
+        KPAnnotation *clusterAnnotation21 = [[KPAnnotation alloc] initWithAnnotations:@[ annotation21 ]];
+        KPAnnotation *clusterAnnotation22 = [[KPAnnotation alloc] initWithAnnotations:@[ annotation22 ]];
 
 
 #pragma mark Two complementary annotations on positions {1, 1} and {1, 2}
@@ -196,7 +216,7 @@
 
             KPAnnotation *firstCluster = clusters.firstObject;
 
-            XCTAssertTrue(CLLocationCoordinates2DEqual(firstCluster.coordinate, CLLocationCoordinate2DMake(0, 0.5)));
+            XCTAssertTrue(CLLocationCoordinates2DEqual(firstCluster.coordinate, CLLocationCoordinate2DMake(1, 0.5)));
             
             KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
         }
@@ -235,11 +255,62 @@
             KPAnnotation *firstCluster = clusters.firstObject;
             KPAnnotation *lastCluster = clusters.lastObject;
 
-            XCTAssertTrue(CLLocationCoordinates2DEqual(firstCluster.coordinate, CLLocationCoordinate2DMake(0, 0)));
-            XCTAssertTrue(CLLocationCoordinates2DEqual(lastCluster.coordinate, CLLocationCoordinate2DMake(0, 1)));
+            XCTAssertTrue(CLLocationCoordinates2DEqual(firstCluster.coordinate, CLLocationCoordinate2DMake(1, 0)));
+            XCTAssertTrue(CLLocationCoordinates2DEqual(lastCluster.coordinate, CLLocationCoordinate2DMake(1, 1)));
 
             KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
         }
+
+
+#pragma mark Four complementary annotations on positions {1, 1}, {1, 2}, {2, 1}, {2, 2}
+
+
+        {
+            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+
+            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell21 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell22 = KPClusterGridCellCreate(clusterGrid);
+
+            clusterCell11->annotationIndex = 0;
+            clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantFour;
+            clusterCell11->merged = NO;
+            clusterCell11->mapRect = mapRect11;
+
+            clusterCell12->annotationIndex = 1;
+            clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantThree;
+            clusterCell12->merged = NO;
+            clusterCell12->mapRect = mapRect12;
+
+            clusterCell21->annotationIndex = 2;
+            clusterCell21->distributionQuadrant = KPClusterDistributionQuadrantOne;
+            clusterCell21->merged = NO;
+            clusterCell21->mapRect = mapRect21;
+
+            clusterCell22->annotationIndex = 3;
+            clusterCell22->distributionQuadrant = KPClusterDistributionQuadrantTwo;
+            clusterCell22->merged = NO;
+            clusterCell22->mapRect = mapRect22;
+
+            clusterGrid->grid[1][1] = clusterCell11;
+            clusterGrid->grid[1][2] = clusterCell12;
+            clusterGrid->grid[2][1] = clusterCell21;
+            clusterGrid->grid[2][2] = clusterCell22;
+
+            NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12, clusterAnnotation21, clusterAnnotation22 ];
+
+            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+
+            XCTAssertTrue(clusters.count == 1);
+
+            KPAnnotation *firstCluster = clusters.firstObject;
+
+            XCTAssertTrue(CLLocationCoordinates2DEqual(firstCluster.coordinate, CLLocationCoordinate2DMake(0.5, 0.5)));
+            
+            KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
+        }
+
     }
 
 }

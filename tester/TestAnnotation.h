@@ -11,7 +11,6 @@
 
 @interface TestAnnotation : NSObject <MKAnnotation>
 
-@property (nonatomic, assign) NSInteger level;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
 @end

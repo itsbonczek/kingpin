@@ -149,7 +149,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ (%f, %f)", [super description], self.coordinate.latitude, self.coordinate.longitude];
+    return [NSString stringWithFormat:@"<%@: %p; coordinate = (%f, %f); annotations = %@>", NSStringFromClass(self.class), self, self.coordinate.latitude, self.coordinate.longitude, self.annotations];
 }
 
 @end
