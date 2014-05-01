@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
 		86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
+		8621639D1912202600724CEF /* KPAnnotationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8605864518EC13400026144F /* KPAnnotationTests.m */; };
+		8621639E1912202B00724CEF /* KPAnnotationTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 918925A418E7732900812296 /* KPAnnotationTreeTests.m */; };
+		8621639F1912202B00724CEF /* KPGeometryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 866335981909E70E009E638D /* KPGeometryTests.m */; };
 		867A7EAF1911B0BD00778F7B /* KPGridClusteringAlgorithmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */; };
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
@@ -347,10 +350,13 @@
 				91E4FC2718E773F300AC8444 /* KPTreeController.m in Sources */,
 				91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */,
 				867A7EAF1911B0BD00778F7B /* KPGridClusteringAlgorithmTests.m in Sources */,
+				8621639E1912202B00724CEF /* KPAnnotationTreeTests.m in Sources */,
+				8621639F1912202B00724CEF /* KPGeometryTests.m in Sources */,
 				91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */,
 				91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */,
 				86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */,
 				91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */,
+				8621639D1912202600724CEF /* KPAnnotationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

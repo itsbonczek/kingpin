@@ -42,6 +42,12 @@ static inline double randomWithinRange(double min, double max) {
 static inline MKMapRect MKMapRectRandom() {
     double randomWidth = round(randomWithinRange(0, MKMapRectWorld.size.width));
     double randomHeight = round(randomWithinRange(0, MKMapRectWorld.size.height));
+
+    if (randomWidth  < (MKMapSizeWorld.width  / 10) ||
+        randomHeight < (MKMapSizeWorld.height / 10)) {
+        return MKMapRectRandom();
+    }
+    
     double randomX = round(randomWithinRange(0, MKMapRectWorld.size.width - randomWidth));
     double randomY = round(randomWithinRange(0, MKMapRectWorld.size.height - randomHeight));
 

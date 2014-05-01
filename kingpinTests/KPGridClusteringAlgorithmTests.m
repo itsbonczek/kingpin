@@ -41,7 +41,7 @@
 
 @implementation KPGridClusteringAlgorithmTests
 
-- (void)tesdridClusteringAlgorithmIntegrity
+- (void)test_gridClusteringAlgorithmIntegrity
 {
     NSMutableArray *annotations = [NSMutableArray array];
 
