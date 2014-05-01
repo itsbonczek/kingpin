@@ -311,6 +311,54 @@
             KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
         }
 
+
+#pragma mark Four non-complementary annotations on positions {1, 1}, {1, 2}, {2, 1}, {2, 2}
+
+
+        {
+            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+
+            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell21 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell22 = KPClusterGridCellCreate(clusterGrid);
+
+            clusterCell11->annotationIndex = 0;
+            clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantTwo;
+            clusterCell11->merged = NO;
+            clusterCell11->mapRect = mapRect11;
+
+            clusterCell12->annotationIndex = 1;
+            clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantOne;
+            clusterCell12->merged = NO;
+            clusterCell12->mapRect = mapRect12;
+
+            clusterCell21->annotationIndex = 2;
+            clusterCell21->distributionQuadrant = KPClusterDistributionQuadrantThree;
+            clusterCell21->merged = NO;
+            clusterCell21->mapRect = mapRect21;
+
+            clusterCell22->annotationIndex = 3;
+            clusterCell22->distributionQuadrant = KPClusterDistributionQuadrantFour;
+            clusterCell22->merged = NO;
+            clusterCell22->mapRect = mapRect22;
+
+            clusterGrid->grid[1][1] = clusterCell11;
+            clusterGrid->grid[1][2] = clusterCell12;
+            clusterGrid->grid[2][1] = clusterCell21;
+            clusterGrid->grid[2][2] = clusterCell22;
+
+            NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12, clusterAnnotation21, clusterAnnotation22 ];
+
+            NSArray *clustersAfterMerge = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+
+            XCTAssertTrue(clusters.count == 4);
+
+            XCTAssertTrue([clustersAfterMerge isEqual:clusters]);
+            KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
+        }
+
+
     }
 
 }
