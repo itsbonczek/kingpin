@@ -15,13 +15,28 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MapKit.h>
 
-@interface KPAnnotationTree : NSObject
 
-@property (strong, readonly, nonatomic) NSSet *annotations;
+@class KPAnnotation,
+       KPAnnotationTree;
 
-- (id)initWithAnnotations:(NSArray *)annotations;
-- (NSArray *)annotationsInMapRect:(MKMapRect)rect;
+@protocol KPGridClusteringAlgorithmDelegate;
+
+
+@interface KPGridClusteringAlgorithmConfiguration : NSObject
+
+@property (assign, nonatomic) CGSize gridSize;
+
+@end
+
+
+
+@interface KPGridClusteringAlgorithm : NSObject
+
+@property (strong, readonly, nonatomic) KPGridClusteringAlgorithmConfiguration *configuration;
+
+@property (weak, nonatomic) id <KPGridClusteringAlgorithmDelegate> delegate;
+
+- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree;
 
 @end
