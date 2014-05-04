@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8605864618EC13400026144F /* KPAnnotationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8605864518EC13400026144F /* KPAnnotationTests.m */; };
+		86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
+		86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
+		8621639D1912202600724CEF /* KPAnnotationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8605864518EC13400026144F /* KPAnnotationTests.m */; };
+		8621639E1912202B00724CEF /* KPAnnotationTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 918925A418E7732900812296 /* KPAnnotationTreeTests.m */; };
+		8621639F1912202B00724CEF /* KPGeometryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 866335981909E70E009E638D /* KPGeometryTests.m */; };
+		867A7EAF1911B0BD00778F7B /* KPGridClusteringAlgorithmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */; };
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
 		9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
@@ -15,7 +20,6 @@
 		9189259C18E7732900812296 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0511645A2B2004BC920 /* Foundation.framework */; };
 		9189259D18E7732900812296 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
 		918925A318E7732900812296 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 918925A118E7732900812296 /* InfoPlist.strings */; };
-		918925A518E7732900812296 /* KPAnnotationTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 918925A418E7732900812296 /* KPAnnotationTreeTests.m */; };
 		91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
 		91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
 		91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
@@ -45,8 +49,15 @@
 /* Begin PBXFileReference section */
 		8605864518EC13400026144F /* KPAnnotationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTests.m; sourceTree = "<group>"; };
 		8605864718EC1F090026144F /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
+		86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm.h; sourceTree = "<group>"; };
+		86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithm.m; sourceTree = "<group>"; };
+		86174DC918F9BF7D00014C48 /* KPGridClusteringAlgorithmDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithmDelegate.h; sourceTree = "<group>"; };
+		86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithmTests.m; sourceTree = "<group>"; };
+		86174DD018F9D7CF00014C48 /* KPGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGeometry.h; sourceTree = "<group>"; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
+		866335981909E70E009E638D /* KPGeometryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGeometryTests.m; sourceTree = "<group>"; };
+		867A7EAE1911A0AE00778F7B /* KPGridClusteringAlgorithm_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm_Private.h; sourceTree = "<group>"; };
 		9122C06318E77A9E00356A3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		9122C06518E77AAA00356A3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		9189259918E7732900812296 /* kingpinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kingpinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +135,8 @@
 				9189259F18E7732900812296 /* Supporting Files */,
 				8605864518EC13400026144F /* KPAnnotationTests.m */,
 				8605864718EC1F090026144F /* TestHelpers.h */,
+				86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */,
+				866335981909E70E009E638D /* KPGeometryTests.m */,
 			);
 			path = kingpinTests;
 			sourceTree = "<group>";
@@ -141,13 +154,18 @@
 		9346910316A8F17D00DE59FA /* kp */ = {
 			isa = PBXGroup;
 			children = (
+				8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */,
 				93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */,
 				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,
 				93BBC0451645A1F8004BC920 /* KPAnnotation.h */,
 				93BBC0461645A1F8004BC920 /* KPAnnotation.m */,
 				93BBC0881645A68F004BC920 /* KPTreeController.h */,
 				93BBC0891645A68F004BC920 /* KPTreeController.m */,
-				8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */,
+				86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */,
+				86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */,
+				86174DC918F9BF7D00014C48 /* KPGridClusteringAlgorithmDelegate.h */,
+				86174DD018F9D7CF00014C48 /* KPGeometry.h */,
+				867A7EAE1911A0AE00778F7B /* KPGridClusteringAlgorithm_Private.h */,
 			);
 			name = kp;
 			sourceTree = "<group>";
@@ -330,12 +348,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				91E4FC2718E773F300AC8444 /* KPTreeController.m in Sources */,
-				918925A518E7732900812296 /* KPAnnotationTreeTests.m in Sources */,
-				8605864618EC13400026144F /* KPAnnotationTests.m in Sources */,
 				91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */,
+				867A7EAF1911B0BD00778F7B /* KPGridClusteringAlgorithmTests.m in Sources */,
+				8621639E1912202B00724CEF /* KPAnnotationTreeTests.m in Sources */,
+				8621639F1912202B00724CEF /* KPGeometryTests.m in Sources */,
 				91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */,
 				91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */,
+				86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */,
 				91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */,
+				8621639D1912202600724CEF /* KPAnnotationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +370,7 @@
 				93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */,
 				93BBC0A61645B78C004BC920 /* main.m in Sources */,
 				93BBC0A71645B78C004BC920 /* ViewController.m in Sources */,
+				86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */,
 				93BBC0AF1645CAE5004BC920 /* TestAnnotation.m in Sources */,
 				9346910116A8EC8400DE59FA /* MyAnnotation.m in Sources */,
 				9346910716A8F1C200DE59FA /* NSArray+KP.m in Sources */,
@@ -512,6 +534,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -521,6 +544,12 @@
 				PRODUCT_NAME = kingpinTestApplication;
 				PROVISIONING_PROFILE = "0992FBE4-A430-4594-9D7C-0369CC910FA2";
 				SDKROOT = iphoneos;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wpedantic",
+					"-Wno-gnu",
+					"-Wno-variadic-macros",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -544,6 +573,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tester/kingpinTestApplication-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -554,6 +584,12 @@
 				PROVISIONING_PROFILE = "0992FBE4-A430-4594-9D7C-0369CC910FA2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wpedantic",
+					"-Wno-gnu",
+					"-Wno-variadic-macros",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

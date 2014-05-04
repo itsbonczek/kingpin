@@ -14,30 +14,32 @@
 // limitations under the License.
 //
 
-
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
-#import <MapKit/MapKit.h>
 
-@class KPAnnotation;
+#import "KPGridClusteringAlgorithmDelegate.h"
 
-@protocol KPTreeControllerDelegate;
 
-@interface KPTreeController : NSObject
+@class KPAnnotation,
+       KPGridClusteringAlgorithm;
 
-@property (nonatomic, weak) id<KPTreeControllerDelegate> delegate;
-@property (nonatomic) CGSize gridSize;
-@property (nonatomic) CGSize annotationSize;
-@property (nonatomic) CGPoint annotationCenterOffset;
-@property (nonatomic) CGFloat animationDuration;
-@property (nonatomic) UIViewAnimationOptions animationOptions;
-@property (nonatomic) BOOL clusteringEnabled;
-@property (nonatomic) BOOL debuggingEnabled;
+@protocol KPTreeControllerDelegate,
+          KPGridClusteringAlgorithmDelegate;
 
-/**
- If debuggingEnabled is YES, returns a list of polylines for the grid to be shown on the map
- */
-@property (nonatomic, readonly) NSArray *gridPolylines;
+
+@interface KPTreeControllerConfiguration : NSObject
+
+@property (assign, nonatomic) CGSize annotationSize;
+@property (assign, nonatomic) CGPoint annotationCenterOffset;
+@property (assign, nonatomic) CGFloat animationDuration;
+@property (assign, nonatomic) UIViewAnimationOptions animationOptions;
+
+@end
+
+@interface KPTreeController : NSObject <KPGridClusteringAlgorithmDelegate>
+
+@property (strong, readonly, nonatomic) KPTreeControllerConfiguration *configuration;
+
+@property (weak, nonatomic) id <KPTreeControllerDelegate> delegate;
 
 - (id)initWithMapView:(MKMapView *)mapView;
 - (void)setAnnotations:(NSArray *)annoations;
@@ -45,13 +47,14 @@
 
 @end
 
-
-@protocol KPTreeControllerDelegate<NSObject>
+@protocol KPTreeControllerDelegate <NSObject>
 
 @optional
 
-- (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation;
-- (void)treeController:(KPTreeController *)tree willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
-- (void)treeController:(KPTreeController *)tree didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+- (BOOL)treeControllerShouldClusterAnnotations:(KPTreeController *)treeController;
+
+- (void)treeController:(KPTreeController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation;
+- (void)treeController:(KPTreeController *)treeController willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+- (void)treeController:(KPTreeController *)treeController didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
 
 @end

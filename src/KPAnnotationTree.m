@@ -20,13 +20,6 @@
 #import "KPAnnotation.h"
 
 #import <assert.h>
-#import <stddef.h>
-
-#if 0
-#define BBTreeLog(...) NSLog(__VA_ARGS__)
-#else
-#define BBTreeLog(...) ((void) 0)
-#endif
 
 
 static kp_internal_annotation_t *KPTemporaryAnnotationStorage;
@@ -77,49 +70,46 @@ static MKMapPoint *KPTemporaryPointStorage;
     if (curNode == NULL) {
         return;
     }
-    
+
     MKMapPoint mapPoint = curNode->mapPoint;
-   
-    BBTreeLog(@"Testing (%f, %f)...", [curNode.annotation coordinate].latitude, [curNode.annotation coordinate].longitude);
-    
-    if(MKMapRectContainsPoint(mapRect, mapPoint)){
-        BBTreeLog(@"YES");
+
+    if (MKMapRectContainsPoint(mapRect, mapPoint)) {
         [annotations addObject:curNode->annotation];
-    }
-    else {
-        BBTreeLog(@"RECT: NO");
     }
 
     KPAnnotationTreeAxis axis = (level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
 
     double val, minVal, maxVal;
 
+    
     if (axis == KPAnnotationTreeAxisX) {
         val    = mapPoint.x;
         minVal = mapRect.origin.x;
         maxVal = mapRect.origin.x + mapRect.size.width;
-    } else {
+    }
+
+    else {
         val    = mapPoint.y;
         minVal = mapRect.origin.y;
         maxVal = mapRect.origin.y + mapRect.size.height;
     }
 
-    if(maxVal < val){
-        
+
+    if (maxVal < val){
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
                         curNode:curNode->left
                        curLevel:(level + 1)];
     }
-    else if(minVal >= val){
-        
+
+    else if (minVal >= val){
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
                         curNode:curNode->right
                        curLevel:(level + 1)];
     }
+
     else {
-        
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
                         curNode:curNode->left
@@ -220,7 +210,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 
     KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
-    self.root = buildTree(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
+    self.root = kp_tree_build(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
 
     free(annotationsX);
     free(annotationsY);
@@ -232,7 +222,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 @end
 
 
-static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel) {
+static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel) {
     if (count == 0) {
         return NULL;
     }
@@ -330,8 +320,8 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
 
-    n->left  = buildTree(nodeStorage,  leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis, annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
-    n->right = buildTree(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, temporaryAnnotationStorage, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
+    n->left  = kp_tree_build(nodeStorage,  leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis, annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
+    n->right = kp_tree_build(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, temporaryAnnotationStorage, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
 
 
     return n;
