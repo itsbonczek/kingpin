@@ -83,8 +83,8 @@
     for(int col = 1; col < (gridSizeY + 1); col++) {
         for(int row = 1; row < (gridSizeX + 1); row++){
 
-            int x = mapRect.origin.x + (row - 1) * cellSize.width;
-            int y = mapRect.origin.y + (col - 1) * cellSize.height;
+            double x = mapRect.origin.x + (row - 1) * cellSize.width;
+            double y = mapRect.origin.y + (col - 1) * cellSize.height;
 
             MKMapRect gridRect = MKMapRectMake(x, y, cellSize.width, cellSize.height);
 

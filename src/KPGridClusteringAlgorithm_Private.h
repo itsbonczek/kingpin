@@ -164,7 +164,7 @@ static inline kp_cluster_grid_t *KPClusterGridCreate(NSUInteger gridSizeX, NSUIn
 
 
 static inline void KPClusterGridFree(kp_cluster_grid_t *clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
-    for (int col = 0; col < (gridSizeY + 2); col++) {
+    for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
         free(clusterGrid->grid[col]);
     }
     free(clusterGrid->grid);
