@@ -40,6 +40,8 @@ static const size_t MKMapPointXOffset = offsetof(MKMapPoint, x);
 static const size_t MKMapPointYOffset = offsetof(MKMapPoint, y);
 static const size_t MKMapPointOffsets[] = { MKMapPointXOffset, MKMapPointYOffset };
 
+// 64-Bit Transition Guide for Cocoa Touch - Do Not Cast Pointers to Integers
+// (https://developer.apple.com/Library/ios/documentation/General/Conceptual/CocoaTouch64BitGuide/ConvertingYourAppto64-Bit/ConvertingYourAppto64-Bit.html
 static inline double MKMapPointGetCoordinateForAxis(MKMapPoint *point, int axis) {
     return *(double *)((uintptr_t)point + MKMapPointOffsets[axis]);
 }
