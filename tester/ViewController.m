@@ -179,7 +179,6 @@ static const int kNumberOfTestAnnotations = 20000;
         }
         
         v.canShowCallout = YES;
-        
     }
     else if([annotation isKindOfClass:[MyAnnotation class]]) {
         v = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
