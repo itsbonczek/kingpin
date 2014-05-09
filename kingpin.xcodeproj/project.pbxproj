@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8605864618EC13400026144F /* KPAnnotationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8605864518EC13400026144F /* KPAnnotationTests.m */; };
+		86BF4F36191D6B7A006F0BE7 /* blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86BF4F34191D6B7A006F0BE7 /* blue@2x.png */; };
+		86BF4F37191D6B7A006F0BE7 /* green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86BF4F35191D6B7A006F0BE7 /* green@2x.png */; };
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
 		9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
@@ -47,6 +49,8 @@
 		8605864718EC1F090026144F /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
+		86BF4F34191D6B7A006F0BE7 /* blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue@2x.png"; sourceTree = "<group>"; };
+		86BF4F35191D6B7A006F0BE7 /* green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green@2x.png"; sourceTree = "<group>"; };
 		9122C06318E77A9E00356A3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		9122C06518E77AAA00356A3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		9189259918E7732900812296 /* kingpinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kingpinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +222,8 @@
 		93BBC0901645B78C004BC920 /* tester */ = {
 			isa = PBXGroup;
 			children = (
+				86BF4F34191D6B7A006F0BE7 /* blue@2x.png */,
+				86BF4F35191D6B7A006F0BE7 /* green@2x.png */,
 				93BBC0911645B78C004BC920 /* AppDelegate.h */,
 				93BBC0921645B78C004BC920 /* AppDelegate.m */,
 				93BBC0931645B78C004BC920 /* Default-568h@2x.png */,
@@ -314,7 +320,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86BF4F36191D6B7A006F0BE7 /* blue@2x.png in Resources */,
 				93BBC0A01645B78C004BC920 /* Default-568h@2x.png in Resources */,
+				86BF4F37191D6B7A006F0BE7 /* green@2x.png in Resources */,
 				93BBC0A11645B78C004BC920 /* Default.png in Resources */,
 				93BBC0A21645B78C004BC920 /* Default@2x.png in Resources */,
 				93BBC0A31645B78C004BC920 /* InfoPlist.strings in Resources */,
