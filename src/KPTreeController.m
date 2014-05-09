@@ -165,10 +165,16 @@ typedef enum {
 
 - (void)setAnnotations:(NSArray *)annotations {
     NSArray *mapAnnotations = self.mapView.annotations;
-    NSIndexSet *removeIndexes = [mapAnnotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        return [obj isKindOfClass: [KPAnnotation class]];
+
+    NSIndexSet *removeIndexes = [mapAnnotations indexesOfObjectsPassingTest:^BOOL(id annotation, NSUInteger idx, BOOL *stop) {
+        if ([annotation isKindOfClass:[KPAnnotation class]]) {
+            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation *)annotation annotations] anyObject]]);
+        } else {
+            return NO;
+        }
     }];
-    [self.mapView removeAnnotations: [mapAnnotations objectsAtIndexes: removeIndexes]];
+
+    [self.mapView removeAnnotations:[mapAnnotations objectsAtIndexes:removeIndexes]];
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
@@ -393,11 +399,10 @@ typedef enum {
     free(clusterGrid);
     free(clusterStorage);
 
-    NSArray *oldClusters = [[[self.mapView annotationsInMapRect:bigRect] allObjects] kp_filter:^BOOL(id annotation) {
-        if([annotation isKindOfClass:[KPAnnotation class]]){
-            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
-        }
-        else {
+    NSArray *oldClusters = [self.mapView.annotations kp_filter:^BOOL(id annotation) {
+        if ([annotation isKindOfClass:[KPAnnotation class]]) {
+            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation *)annotation annotations] anyObject]]);
+        } else {
             return NO;
         }
     }];
