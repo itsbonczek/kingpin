@@ -164,7 +164,11 @@ typedef enum {
 }
 
 - (void)setAnnotations:(NSArray *)annotations {
-    [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
+    NSArray *mapAnnotations = self.mapView.annotations;
+    NSIndexSet *removeIndexes = [mapAnnotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return [obj isKindOfClass: [KPAnnotation class]];
+    }];
+    [self.mapView removeAnnotations: [mapAnnotations objectsAtIndexes: removeIndexes]];
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
