@@ -293,8 +293,6 @@ typedef enum {
 
     NSUInteger clusterIndex = 0;
 
-    NSLog(@"Grid: (X, Y) => (%d, %d)", gridSizeX, gridSizeY);
-
     NSUInteger counter = 0;
     for(int i = 1; i < (gridSizeX + 1); i++) {
         for(int j = 1; j < (gridSizeY + 1); j++){
