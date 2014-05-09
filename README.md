@@ -16,7 +16,9 @@ A drop-in MKAnnotation clustering library for iOS
 
 Create an instance of a KPTreeController:
 
-`self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView]`
+```objective-c
+self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView]
+```
 
 Set the controller's annotations:
 
@@ -28,20 +30,33 @@ Handle the clusters:
 
 ```objective-c
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    MKPinAnnotationView *annotationView = nil;
     
-    KPAnnotation *a = (KPAnnotation *)annotation;
-    
-    MKPinAnnotationView *v = 
-      (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-    
-    if(!v){
-        v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"pin"];
+    if ([annotation isKindOfClass:[KPAnnotation class]]) {
+        KPAnnotation *kingpinAnnotation = (KPAnnotation *)annotation;
+        
+        if ([kingpinAnnotation isCluster]) {
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+            
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:kingpinAnnotation reuseIdentifier:@"cluster"];
+            }
+            
+            annotationView.pinColor = MKPinAnnotationColorPurple;
+        } else {
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+            
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:[kingpinAnnotation.annotations anyObject] reuseIdentifier:@"pin"];
+            }
+            
+            annotationView.pinColor = MKPinAnnotationColorRed;
+        }
+        
+        annotationView.canShowCallout = YES;
     }
     
-    v.pinColor = (a.annotations.count > 1 ? MKPinAnnotationColorPurple : MKPinAnnotationColorRed);
-    
-    return v;
-    
+    return annotationView;
 }
 ```
 

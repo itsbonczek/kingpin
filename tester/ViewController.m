@@ -154,7 +154,6 @@ static const int kNumberOfTestAnnotations = 20000;
         }
         
         annotationView.canShowCallout = YES;
-        
     }
 
     else if ([annotation isKindOfClass:[MyAnnotation class]]) {
