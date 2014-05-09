@@ -1,6 +1,6 @@
 # kingpin
 
-A drop-in MKAnnotation clustering library for iOS
+A drop-in MKAnnotation clustering library for iOS.
 
 [![Build Status](https://travis-ci.org/itsbonczek/kingpin.svg?branch=master)](https://travis-ci.org/itsbonczek/kingpin)
 
@@ -60,7 +60,9 @@ Handle the clusters:
 }
 ```
 
-Note: You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
+Also, see example on how to use kingpin with your own custom annotations in [Wiki/Examples](https://github.com/itsbonczek/kingpin/wiki/Examples).
+
+__Note:__ You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
 
 Refresh visible annotations as needed:
 
