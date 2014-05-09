@@ -129,50 +129,47 @@ static const int kNumberOfTestAnnotations = 20000;
     
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {    
+    MKPinAnnotationView *annotationView = nil;
     
-    MKPinAnnotationView *v = nil;
+    if ([annotation isKindOfClass:[KPAnnotation class]]) {
     
-    if([annotation isKindOfClass:[KPAnnotation class]]){
-    
-        KPAnnotation *a = (KPAnnotation *)annotation;
+        KPAnnotation *kingpinAnnotation = (KPAnnotation *)annotation;
         
-        if([annotation isKindOfClass:[MKUserLocation class]]){
+        if ([annotation isKindOfClass:[MKUserLocation class]]) {
             return nil;
         }
         
-        if([a isCluster]){
-           
-            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+        if ([kingpinAnnotation isCluster]) {
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
             
-            if(!v){
-                v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:kingpinAnnotation reuseIdentifier:@"cluster"];
             }
             
-            v.pinColor = MKPinAnnotationColorPurple;
+            annotationView.pinColor = MKPinAnnotationColorPurple;
         }
+
         else {
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
             
-            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-            
-            if(!v){
-                v = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
-                                                    reuseIdentifier:@"pin"];
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:[kingpinAnnotation.annotations anyObject] reuseIdentifier:@"pin"];
             }
             
-            v.pinColor = MKPinAnnotationColorRed;
+            annotationView.pinColor = MKPinAnnotationColorRed;
         }
         
-        v.canShowCallout = YES;
+        annotationView.canShowCallout = YES;
         
     }
-    else if([annotation isKindOfClass:[MyAnnotation class]]) {
-        v = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
-        v.pinColor = MKPinAnnotationColorGreen;
+
+    else if ([annotation isKindOfClass:[MyAnnotation class]]) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
+        annotationView.pinColor = MKPinAnnotationColorGreen;
     }
     
-    return v;
-    
+    return annotationView;
 }
 
 #pragma mark - KPTreeControllerDelegate
