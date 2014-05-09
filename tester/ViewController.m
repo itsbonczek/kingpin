@@ -133,12 +133,7 @@ static const int kNumberOfTestAnnotations = 20000;
     MKPinAnnotationView *annotationView = nil;
     
     if ([annotation isKindOfClass:[KPAnnotation class]]) {
-    
         KPAnnotation *kingpinAnnotation = (KPAnnotation *)annotation;
-        
-        if ([annotation isKindOfClass:[MKUserLocation class]]) {
-            return nil;
-        }
         
         if ([kingpinAnnotation isCluster]) {
             annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
@@ -148,9 +143,7 @@ static const int kNumberOfTestAnnotations = 20000;
             }
             
             annotationView.pinColor = MKPinAnnotationColorPurple;
-        }
-
-        else {
+        } else {
             annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
             
             if (annotationView == nil) {
