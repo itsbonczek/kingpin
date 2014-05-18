@@ -45,6 +45,7 @@ typedef enum {
     self.annotationSize = (CGSize){60.f, 60.f};
     self.annotationCenterOffset = (CGPoint){30.f, 30.f};
     self.animationDuration = 0.5f;
+    self.gridSize = (CGSize){60.f, 60.f};
 
     return self;
 }
@@ -286,8 +287,8 @@ typedef enum {
 
 - (MKMapSize)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm obtainGridCellSizeForMapRect:(MKMapRect)mapRect {
     // Calculate the grid size in terms of MKMapPoints.
-    double widthPercentage =  gridClusteringAlgorithm.configuration.gridSize.width / CGRectGetWidth(self.mapView.frame);
-    double heightPercentage = gridClusteringAlgorithm.configuration.gridSize.height / CGRectGetHeight(self.mapView.frame);
+    double widthPercentage =  self.configuration.gridSize.width / CGRectGetWidth(self.mapView.frame);
+    double heightPercentage = self.configuration.gridSize.height / CGRectGetHeight(self.mapView.frame);
 
     MKMapSize cellSize = MKMapSizeMake(
         ceil(widthPercentage  * self.mapView.visibleMapRect.size.width),

@@ -23,17 +23,7 @@
 @protocol KPGridClusteringAlgorithmDelegate;
 
 
-@interface KPGridClusteringAlgorithmConfiguration : NSObject
-
-@property (assign, nonatomic) CGSize gridSize;
-
-@end
-
-
-
 @interface KPGridClusteringAlgorithm : NSObject
-
-@property (strong, readonly, nonatomic) KPGridClusteringAlgorithmConfiguration *configuration;
 
 @property (weak, nonatomic) id <KPGridClusteringAlgorithmDelegate> delegate;
 

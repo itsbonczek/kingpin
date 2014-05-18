@@ -29,35 +29,7 @@
 #import "NSArray+KP.h"
 
 
-@implementation KPGridClusteringAlgorithmConfiguration
-
-- (id)init {
-    self = [super init];
-
-    if (self == nil) return nil;
-
-    self.gridSize = (CGSize){60.f, 60.f};
-
-    return self;
-}
-
-@end
-
-@interface KPGridClusteringAlgorithm ()
-@property (strong, readwrite, nonatomic) KPGridClusteringAlgorithmConfiguration *configuration;
-@end
-
 @implementation KPGridClusteringAlgorithm
-
-- (id)init {
-    self = [super init];
-
-    if (self == nil) return nil;
-
-    self.configuration = [[KPGridClusteringAlgorithmConfiguration alloc] init];
-    
-    return self;
-}
 
 - (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree {
 
