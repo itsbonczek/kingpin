@@ -28,6 +28,7 @@
 
 @interface KPTreeControllerConfiguration : NSObject
 
+@property (nonatomic, weak, readwrite) Class annotationClass;
 @property (assign, nonatomic) CGSize gridSize;
 @property (assign, nonatomic) CGSize annotationSize;
 @property (assign, nonatomic) CGPoint annotationCenterOffset;

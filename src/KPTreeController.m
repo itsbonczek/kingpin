@@ -46,6 +46,7 @@ typedef enum {
     self.annotationCenterOffset = (CGPoint){30.f, 30.f};
     self.animationDuration = 0.5f;
     self.gridSize = (CGSize){60.f, 60.f};
+    self.annotationClass = [KPAnnotation class];
 
     return self;
 }
@@ -299,7 +300,9 @@ typedef enum {
 }
 
 - (id)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterAnnotationForAnnotations:(NSArray *)annotations inClusterGridRect:(MKMapRect)gridRect {
-    return [[KPAnnotation alloc] initWithAnnotations:annotations];
+    Class annotationClass = self.configuration.annotationClass;
+
+    return [[annotationClass alloc] initWithAnnotations:annotations];
 }
 
 - (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
