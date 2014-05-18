@@ -297,6 +297,10 @@ typedef enum {
     return cellSize;
 }
 
+- (id)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterAnnotationForAnnotations:(NSArray *)annotations inClusterGridRect:(MKMapRect)gridRect {
+    return [[KPAnnotation alloc] initWithAnnotations:annotations];
+}
+
 - (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
     // calculate CGRects for each annotation, memoizing the coord -> point conversion as we go
     // if the two views overlap, merge them

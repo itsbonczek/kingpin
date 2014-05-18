@@ -29,6 +29,10 @@
     return MKMapSizeMake(round(mapRect.size.width / 10), round(mapRect.size.height / 10));
 }
 
+- (id)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterAnnotationForAnnotations:(NSArray *)annotations inClusterGridRect:(MKMapRect)gridRect {
+    return [[KPAnnotation alloc] initWithAnnotations:annotations];
+}
+
 - (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
     return YES;
 }

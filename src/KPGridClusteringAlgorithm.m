@@ -92,7 +92,8 @@
 
             // cluster annotations in this grid piece, if there are annotations to be clustered
             if (newAnnotations.count > 0) {
-                KPAnnotation *annotation = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
+                id annotation = [self.delegate gridClusteringAlgorithm:self clusterAnnotationForAnnotations:newAnnotations inClusterGridRect:gridRect];
+                    
                 [newClusters addObject:annotation];
 
                 kp_cluster_t *cluster = KPClusterGridCellCreate(clusterGrid);
@@ -101,7 +102,7 @@
                 cluster->annotationIndex = clusterIndex;
                 cluster->merged = NO;
 
-                cluster->distributionQuadrant = KPClusterDistributionQuadrantForPointInsideMapRect(gridRect, MKMapPointForCoordinate(annotation.coordinate));
+                cluster->distributionQuadrant = KPClusterDistributionQuadrantForPointInsideMapRect(gridRect, MKMapPointForCoordinate([annotation coordinate]));
 
                 clusterGrid->grid[col][row] = cluster;
 
