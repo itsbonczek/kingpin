@@ -76,17 +76,7 @@ This is typically done in `-mapView:regionDidChangeAnimated:`
 
 ## Versions
 
-
-All versions are tagged accordingly
-
-0.1.1
-
-* support for multiple tree controllers
-
-0.1.2
-
-* support for 3D maps
-
+See [CHANGELOG](https://github.com/itsbonczek/kingpin/blob/master/CHANGELOG.md) for details. All versions are tagged accordingly.
 
 ## Demo
 
@@ -95,3 +85,4 @@ Check out the **tester** target in *kingpin.xcodeproj*
 ## Licence
 
 Apache 2.0
+
