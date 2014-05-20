@@ -391,7 +391,7 @@ typedef enum {
     }
 
 
-    for (int i = 0; i < gridSizeX; i++) {
+    for (int i = 0; i < (gridSizeX + 2); i++) {
         free(clusterGrid[i]);
     }
     free(clusterGrid);
