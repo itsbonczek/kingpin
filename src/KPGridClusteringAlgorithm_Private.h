@@ -169,6 +169,7 @@ static inline void KPClusterGridFree(kp_cluster_grid_t *clusterGrid, NSUInteger 
     }
     free(clusterGrid->grid);
     free(clusterGrid->storage);
+    free(clusterGrid);
 }
 
 
