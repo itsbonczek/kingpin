@@ -97,17 +97,17 @@ static const uint16_t KPAdjacentClusterPositionDeltas[8][2] = {
 
 
 typedef struct {
-    MKMapRect mapRect;
-    NSUInteger annotationIndex;
-    BOOL merged;
-    KPClusterDistributionQuadrant distributionQuadrant; // One of 0, 1, 2, 4, 8
+    MKMapRect mapRect; // 32
+    NSUInteger annotationIndex:32; // 4
+    BOOL merged:1;
+    KPClusterDistributionQuadrant distributionQuadrant:31; // One of 0, 1, 2, 4, 8
 } kp_cluster_t;
 
 
 typedef struct {
     kp_cluster_t ***grid;
     kp_cluster_t *storage;
-    uint16_t used; // number of clusters the storage holds
+    kp_cluster_t *next;
 } kp_cluster_grid_t;
 
 
@@ -137,9 +137,8 @@ static inline void KPClusterGridValidateNULLMargin(kp_cluster_grid_t *clusterGri
 static inline kp_cluster_grid_t *KPClusterGridCreate(NSUInteger gridSizeX, NSUInteger gridSizeY) {
     kp_cluster_grid_t *clusterGrid = malloc(sizeof(kp_cluster_grid_t));
 
-    clusterGrid->used = 0;
-    
     clusterGrid->storage = malloc((gridSizeX * gridSizeY) * sizeof(kp_cluster_t));
+    clusterGrid->next = clusterGrid->storage;
 
     clusterGrid->grid = malloc((gridSizeY + 2) * sizeof(kp_cluster_t **));
 
@@ -174,7 +173,7 @@ static inline void KPClusterGridFree(kp_cluster_grid_t *clusterGrid, NSUInteger 
 
 
 static inline kp_cluster_t *KPClusterGridCellCreate(kp_cluster_grid_t *clusterGrid) {
-    return clusterGrid->storage + clusterGrid->used++;
+    return clusterGrid->next++;
 }
 
 
