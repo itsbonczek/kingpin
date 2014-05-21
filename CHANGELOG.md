@@ -4,6 +4,14 @@
 
 Nothing yet in master...
 
+## Version 0.1.4
+
+Release date: May 21, 2014
+
+### Fixed
+
+* Fixed issue with cluster grid not freed correctly (thanks @walsht)
+
 ## Version 0.1.3
 
 Release date: May 18, 2014
