@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = 'kingpin'
-  s.version      = '0.1.3'
+  s.version      = '0.1.4'
   s.summary      = 'A drop-in MapKit/MKAnnotation pin clustering library for MKMapView on iOS.'
   s.homepage     = 'http://itsbonczek.github.com/kingpin'
   s.author       = { 'Bryan Bonczek' => 'bonczek@gmail.com' }
