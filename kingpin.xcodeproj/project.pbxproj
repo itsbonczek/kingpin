@@ -547,8 +547,10 @@
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wpedantic",
+					"-Weverything",
 					"-Wno-gnu",
 					"-Wno-variadic-macros",
+					"-Wno-objc-missing-property-synthesis",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -587,8 +589,10 @@
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wpedantic",
+					"-Weverything",
 					"-Wno-gnu",
 					"-Wno-variadic-macros",
+					"-Wno-objc-missing-property-synthesis",
 				);
 				WRAPPER_EXTENSION = app;
 			};
