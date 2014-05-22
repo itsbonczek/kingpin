@@ -47,7 +47,7 @@
     __block NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:(gridSizeX * gridSizeY)];
 
 
-    kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+    kp_cluster_t **clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
 
 
     NSUInteger clusterIndex = 0;
@@ -68,19 +68,17 @@
                     
                 [newClusters addObject:annotation];
 
-                kp_cluster_t *cluster = KPClusterGridCellCreate(clusterGrid);
+                kp_cluster_t *cluster = clusterGrid[col] + row;
                 
                 cluster->mapRect = gridRect;
                 cluster->annotationIndex = clusterIndex;
-                cluster->merged = NO;
+                cluster->state = KPClusterStateHasData;
 
                 cluster->distributionQuadrant = KPClusterDistributionQuadrantForPointInsideMapRect(gridRect, MKMapPointForCoordinate([annotation coordinate]));
 
-                clusterGrid->grid[col][row] = cluster;
-
                 clusterIndex++;
             } else {
-                clusterGrid->grid[col][row] = NULL;
+                clusterGrid[col][row].state = KPClusterStateEmpty;
             }
         }
     }
@@ -97,15 +95,15 @@
 }
 
 
-- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_grid_t *)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY {
+- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_t **)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY {
     __block NSMutableArray *mutableClusters = [NSMutableArray arrayWithArray:clusters];
     __block NSMutableIndexSet *indexesOfClustersToBeRemovedAsMerged = [NSMutableIndexSet indexSet];
     
     kp_cluster_merge_block_t checkClustersAndMergeIfNeeded = ^(kp_cluster_t *cl1, kp_cluster_t *cl2) {
 
         /* Debug checks (remove later) */
-        assert(cl1 && cl1->merged == NO);
-        assert(cl2 && cl2->merged == NO);
+        assert(cl1 && cl1->state == KPClusterStateHasData);
+        assert(cl2 && cl2->state == KPClusterStateHasData);
 
         assert(cl1->annotationIndex >= 0 && cl1->annotationIndex < gridSizeX * gridSizeY);
         assert(cl2->annotationIndex >= 0 && cl2->annotationIndex < gridSizeX * gridSizeY);
@@ -126,7 +124,7 @@
 
             if (MKMapRectContainsPoint(cl1->mapRect, newClusterMapPoint)) {
                 [indexesOfClustersToBeRemovedAsMerged addIndex:cl2->annotationIndex];
-                cl2->merged = YES;
+                cl2->state = KPClusterStateMerged;
 
                 mutableClusters[cl1->annotationIndex] = newAnnotation;
 
@@ -135,7 +133,7 @@
                 return KPClusterMergeResultCurrent;
             } else {
                 [indexesOfClustersToBeRemovedAsMerged addIndex:cl1->annotationIndex];
-                cl1->merged = YES;
+                cl1->state = KPClusterStateMerged;
 
                 mutableClusters[cl2->annotationIndex] = newAnnotation;
 
@@ -168,9 +166,9 @@
             currentClusterPosition.col = col;
             currentClusterPosition.row = row;
 
-            currentCellCluster = clusterGrid->grid[col][row];
+            currentCellCluster = clusterGrid[col] + row;
 
-            if (currentCellCluster == NULL || currentCellCluster->merged) {
+            if (currentCellCluster->state != KPClusterStateHasData) {
                 continue;
             }
 
@@ -183,10 +181,10 @@
                 adjacentClusterPosition.col = currentClusterPosition.col + KPAdjacentClusterPositionDeltas[adjacentClusterLocation][0];
                 adjacentClusterPosition.row = currentClusterPosition.row + KPAdjacentClusterPositionDeltas[adjacentClusterLocation][1];
 
-                adjacentCellCluster = clusterGrid->grid[adjacentClusterPosition.col][adjacentClusterPosition.row];
+                adjacentCellCluster = clusterGrid[adjacentClusterPosition.col] + adjacentClusterPosition.row;
 
                 // In third condition we use bitwise AND ('&') to check if adjacent cell has distribution of its cluster point which is _complementary_ to a one of the current cell. If it is so, than it worth to make a merge check.
-                if (adjacentCellCluster != NULL && adjacentCellCluster->merged == NO && (KPClusterConformityTable[adjacentClusterLocation] & adjacentCellCluster->distributionQuadrant) != 0) {
+                if (adjacentCellCluster->state == KPClusterStateHasData && (KPClusterConformityTable[adjacentClusterLocation] & adjacentCellCluster->distributionQuadrant) != 0) {
                     mergeResult = checkClustersAndMergeIfNeeded(currentCellCluster, adjacentCellCluster);
 
                     // The case when other cluster did adsorb current cluster into itself. This means that we must not continue looking for adjacent clusters because we don't have a current cell now.

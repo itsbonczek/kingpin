@@ -191,26 +191,26 @@
 #pragma mark Two complementary annotations on positions {1, 1} and {1, 2}
 
         {
-            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+            kp_cluster_t **clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
 
-            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell11 = malloc(sizeof(kp_cluster_t));
+            kp_cluster_t *clusterCell12 = malloc(sizeof(kp_cluster_t));
 
             clusterCell11->annotationIndex = 0;
             clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantOne;
-            clusterCell11->merged = NO;
+            clusterCell11->state = KPClusterStateHasData;
             clusterCell11->mapRect = mapRect11;
 
             clusterCell12->annotationIndex = 1;
             clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantTwo;
-            clusterCell12->merged = NO;
+            clusterCell12->state = KPClusterStateHasData;
             clusterCell12->mapRect = mapRect12;
 
-            clusterGrid->grid[1][1] = clusterCell11;
-            clusterGrid->grid[1][2] = clusterCell12;
+            clusterGrid[1][1] = *clusterCell11;
+            clusterGrid[1][2] = *clusterCell12;
 
-            clusterGrid->grid[2][1] = NULL;
-            clusterGrid->grid[2][2] = NULL;
+            clusterGrid[2][1].state = KPClusterStateEmpty;
+            clusterGrid[2][2].state = KPClusterStateEmpty;
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12 ];
 
@@ -229,26 +229,26 @@
 #pragma mark Two non-complementary annotations on positions {1, 1} and {1, 2}
 
         {
-            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+            kp_cluster_t **clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
 
-            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t clusterCell11;
+            kp_cluster_t clusterCell12;
 
-            clusterCell11->annotationIndex = 0;
-            clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantTwo;
-            clusterCell11->merged = NO;
-            clusterCell11->mapRect = mapRect11;
+            clusterCell11.annotationIndex = 0;
+            clusterCell11.distributionQuadrant = KPClusterDistributionQuadrantTwo;
+            clusterCell11.state = KPClusterStateHasData;
+            clusterCell11.mapRect = mapRect11;
 
-            clusterCell12->annotationIndex = 1;
-            clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantOne;
-            clusterCell12->merged = NO;
-            clusterCell12->mapRect = mapRect12;
+            clusterCell12.annotationIndex = 1;
+            clusterCell12.distributionQuadrant = KPClusterDistributionQuadrantOne;
+            clusterCell12.state = KPClusterStateHasData;
+            clusterCell12.mapRect = mapRect12;
 
-            clusterGrid->grid[1][1] = clusterCell11;
-            clusterGrid->grid[1][2] = clusterCell12;
+            clusterGrid[1][1] = clusterCell11;
+            clusterGrid[1][2] = clusterCell12;
 
-            clusterGrid->grid[2][1] = NULL;
-            clusterGrid->grid[2][2] = NULL;
+            clusterGrid[2][1].state = KPClusterStateEmpty;
+            clusterGrid[2][2].state = KPClusterStateEmpty;
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12 ];
 
@@ -270,37 +270,37 @@
 
 
         {
-            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+            kp_cluster_t **clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
 
-            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell21 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell22 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t *clusterCell11 = malloc(sizeof(kp_cluster_t));
+            kp_cluster_t *clusterCell12 = malloc(sizeof(kp_cluster_t));
+            kp_cluster_t *clusterCell21 = malloc(sizeof(kp_cluster_t));
+            kp_cluster_t *clusterCell22 = malloc(sizeof(kp_cluster_t));
 
             clusterCell11->annotationIndex = 0;
             clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantFour;
-            clusterCell11->merged = NO;
+            clusterCell11->state = KPClusterStateHasData;
             clusterCell11->mapRect = mapRect11;
 
             clusterCell12->annotationIndex = 1;
             clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantThree;
-            clusterCell12->merged = NO;
+            clusterCell12->state = KPClusterStateHasData;
             clusterCell12->mapRect = mapRect12;
 
             clusterCell21->annotationIndex = 2;
             clusterCell21->distributionQuadrant = KPClusterDistributionQuadrantOne;
-            clusterCell21->merged = NO;
+            clusterCell21->state = KPClusterStateHasData;
             clusterCell21->mapRect = mapRect21;
 
             clusterCell22->annotationIndex = 3;
             clusterCell22->distributionQuadrant = KPClusterDistributionQuadrantTwo;
-            clusterCell22->merged = NO;
+            clusterCell22->state = KPClusterStateHasData;
             clusterCell22->mapRect = mapRect22;
 
-            clusterGrid->grid[1][1] = clusterCell11;
-            clusterGrid->grid[1][2] = clusterCell12;
-            clusterGrid->grid[2][1] = clusterCell21;
-            clusterGrid->grid[2][2] = clusterCell22;
+            clusterGrid[1][1] = *clusterCell11;
+            clusterGrid[1][2] = *clusterCell12;
+            clusterGrid[2][1] = *clusterCell21;
+            clusterGrid[2][2] = *clusterCell22;
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12, clusterAnnotation21, clusterAnnotation22 ];
 
@@ -320,37 +320,37 @@
 
 
         {
-            kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
+            kp_cluster_t **clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
 
-            kp_cluster_t *clusterCell11 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell12 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell21 = KPClusterGridCellCreate(clusterGrid);
-            kp_cluster_t *clusterCell22 = KPClusterGridCellCreate(clusterGrid);
+            kp_cluster_t clusterCell11;
+            kp_cluster_t clusterCell12;
+            kp_cluster_t clusterCell21;
+            kp_cluster_t clusterCell22;
 
-            clusterCell11->annotationIndex = 0;
-            clusterCell11->distributionQuadrant = KPClusterDistributionQuadrantTwo;
-            clusterCell11->merged = NO;
-            clusterCell11->mapRect = mapRect11;
+            clusterCell11.annotationIndex = 0;
+            clusterCell11.distributionQuadrant = KPClusterDistributionQuadrantTwo;
+            clusterCell11.state = KPClusterStateHasData;
+            clusterCell11.mapRect = mapRect11;
 
-            clusterCell12->annotationIndex = 1;
-            clusterCell12->distributionQuadrant = KPClusterDistributionQuadrantOne;
-            clusterCell12->merged = NO;
-            clusterCell12->mapRect = mapRect12;
+            clusterCell12.annotationIndex = 1;
+            clusterCell12.distributionQuadrant = KPClusterDistributionQuadrantOne;
+            clusterCell12.state = KPClusterStateHasData;
+            clusterCell12.mapRect = mapRect12;
 
-            clusterCell21->annotationIndex = 2;
-            clusterCell21->distributionQuadrant = KPClusterDistributionQuadrantThree;
-            clusterCell21->merged = NO;
-            clusterCell21->mapRect = mapRect21;
+            clusterCell21.annotationIndex = 2;
+            clusterCell21.distributionQuadrant = KPClusterDistributionQuadrantThree;
+            clusterCell21.state = KPClusterStateHasData;
+            clusterCell21.mapRect = mapRect21;
 
-            clusterCell22->annotationIndex = 3;
-            clusterCell22->distributionQuadrant = KPClusterDistributionQuadrantFour;
-            clusterCell22->merged = NO;
-            clusterCell22->mapRect = mapRect22;
+            clusterCell22.annotationIndex = 3;
+            clusterCell22.distributionQuadrant = KPClusterDistributionQuadrantFour;
+            clusterCell22.state = KPClusterStateHasData;
+            clusterCell22.mapRect = mapRect22;
 
-            clusterGrid->grid[1][1] = clusterCell11;
-            clusterGrid->grid[1][2] = clusterCell12;
-            clusterGrid->grid[2][1] = clusterCell21;
-            clusterGrid->grid[2][2] = clusterCell22;
+            clusterGrid[1][1] = clusterCell11;
+            clusterGrid[1][2] = clusterCell12;
+            clusterGrid[2][1] = clusterCell21;
+            clusterGrid[2][2] = clusterCell22;
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12, clusterAnnotation21, clusterAnnotation22 ];
 

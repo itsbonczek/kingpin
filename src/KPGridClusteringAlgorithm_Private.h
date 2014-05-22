@@ -96,63 +96,45 @@ static const uint16_t KPAdjacentClusterPositionDeltas[8][2] = {
 };
 
 
+typedef enum {
+    KPClusterStateEmpty   =  0,
+    KPClusterStateHasData =  1,
+    KPClusterStateMerged  = -1,
+} kp_cluster_state_t;
+
+
 typedef struct {
     MKMapRect mapRect; // 32
     NSUInteger annotationIndex:32; // 4
-    BOOL merged:1;
-    KPClusterDistributionQuadrant distributionQuadrant:31; // One of 0, 1, 2, 4, 8
+    kp_cluster_state_t state:2;
+    KPClusterDistributionQuadrant distributionQuadrant:30; // One of 0, 1, 2, 4, 8
 } kp_cluster_t;
 
 
-typedef struct {
-    kp_cluster_t ***grid;
-    kp_cluster_t *storage;
-    kp_cluster_t *next;
-} kp_cluster_grid_t;
-
-
-static inline void KPClusterGridValidateNULLMargin(kp_cluster_grid_t *clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
+static inline void KPClusterGridValidateNULLMargin(kp_cluster_t **clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
     for (NSUInteger row = 0; row < (gridSizeX + 2); row++) {
-        assert(clusterGrid->grid[0][row] == NULL);
-        assert(clusterGrid->grid[gridSizeY + 1][row] == NULL);
+        assert(clusterGrid[0][row].state == KPClusterStateEmpty);
+        assert(clusterGrid[gridSizeY + 1][row].state == KPClusterStateEmpty);
     }
     for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
-        assert(clusterGrid->grid[col][0] == NULL);
-        assert(clusterGrid->grid[col][gridSizeX + 1] == NULL);
+        assert(clusterGrid[col][0].state == KPClusterStateEmpty);
+        assert(clusterGrid[col][gridSizeX + 1].state == KPClusterStateEmpty);
     }
 }
 
 
-/*
- We create grid of size (gridSizeX + 2) * (gridSizeY + 2) which looks like
-
- NULL NULL NULL .... NULL NULL NULL
- NULL    real cluster grid     NULL
- ...         of size           ...
- NULL  (gridSizeX, gridSizeY)  NULL
- NULL NULL NULL .... NULL NULL NULL
-
- We will use this NULL margin in -mergeOverlappingClusters method to avoid four- or even eight-fold branching when checking boundaries of i and j coordinates
- */
-static inline kp_cluster_grid_t *KPClusterGridCreate(NSUInteger gridSizeX, NSUInteger gridSizeY) {
-    kp_cluster_grid_t *clusterGrid = malloc(sizeof(kp_cluster_grid_t));
-
-    clusterGrid->storage = malloc((gridSizeX * gridSizeY) * sizeof(kp_cluster_t));
-    clusterGrid->next = clusterGrid->storage;
-
-    clusterGrid->grid = malloc((gridSizeY + 2) * sizeof(kp_cluster_t **));
+static inline kp_cluster_t **KPClusterGridCreate(NSUInteger gridSizeX, NSUInteger gridSizeY) {
+    kp_cluster_t **clusterGrid = malloc((gridSizeY + 2) * sizeof(kp_cluster_t *));
 
     for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
-        clusterGrid->grid[col] = malloc((gridSizeX + 2) * sizeof(kp_cluster_t *));
+        clusterGrid[col] = malloc((gridSizeX + 2) * sizeof(kp_cluster_t));
 
-        // First and last elements are marginal NULL
-        clusterGrid->grid[col][0] = NULL;
-        clusterGrid->grid[col][gridSizeX + 1] = NULL;
+        clusterGrid[col][0].state             = KPClusterStateEmpty;
+        clusterGrid[col][gridSizeX + 1].state = KPClusterStateEmpty;
     }
 
-    // memset() is the fastest way to NULLify marginal first and last rows of clusterGrid.
-    memset(clusterGrid->grid[0],             0, (gridSizeX + 2) * sizeof(kp_cluster_t *));
-    memset(clusterGrid->grid[gridSizeY + 1], 0, (gridSizeX + 2) * sizeof(kp_cluster_t *));
+    memset(clusterGrid[0], 0, (gridSizeX + 2) * sizeof(kp_cluster_t));
+    memset(clusterGrid[gridSizeY + 1], 0, (gridSizeX + 2) * sizeof(kp_cluster_t));
 
 #if DEBUG
     KPClusterGridValidateNULLMargin(clusterGrid, gridSizeX, gridSizeY);
@@ -162,18 +144,11 @@ static inline kp_cluster_grid_t *KPClusterGridCreate(NSUInteger gridSizeX, NSUIn
 }
 
 
-static inline void KPClusterGridFree(kp_cluster_grid_t *clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
+static inline void KPClusterGridFree(kp_cluster_t **clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
     for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
-        free(clusterGrid->grid[col]);
+        free(clusterGrid[col]);
     }
-    free(clusterGrid->grid);
-    free(clusterGrid->storage);
     free(clusterGrid);
-}
-
-
-static inline kp_cluster_t *KPClusterGridCellCreate(kp_cluster_grid_t *clusterGrid) {
-    return clusterGrid->next++;
 }
 
 
@@ -229,6 +204,6 @@ typedef enum {
 typedef kp_cluster_merge_result_t(^kp_cluster_merge_block_t)(kp_cluster_t *, kp_cluster_t *);
 
 @interface KPGridClusteringAlgorithm ()
-- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_grid_t *)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY;
+- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_t **)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY;
 @end
 

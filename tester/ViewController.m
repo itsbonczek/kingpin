@@ -34,15 +34,6 @@ static const int kNumberOfTestAnnotations = 20000;
 
     [super viewDidLoad];
 
-    /*
-    MKMapRect mapRect;
-    NSUInteger annotationIndex;
-    BOOL merged;
-    KPClusterDistributionQuadrant distributionQuadrant; // One of 0, 1, 2, 4, 8
-     */
-
-    printf("%ld %ld %ld %ld %ld\n", sizeof(kp_cluster_t), sizeof(MKMapRect), sizeof(NSUInteger), sizeof(BOOL), sizeof(KPClusterDistributionQuadrant));
-
     self.mapView.delegate = self;
 
     /*
