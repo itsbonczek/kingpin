@@ -324,10 +324,6 @@ typedef enum {
                     clusterGrid[i][j] = cluster;
 
                     clusterIndex++;
-
-                    if([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]){
-                        [self.delegate treeController:self configureAnnotationForDisplay:annotation];
-                    }
                 }
                 else {
                     NSMutableArray *clustersToAdd = [NSMutableArray new];
@@ -335,13 +331,6 @@ typedef enum {
                     [clustersToAdd addObjectsFromArray:[newAnnotations kp_map:^KPAnnotation *(id<MKAnnotation> a) {
                         return [[KPAnnotation alloc] initWithAnnotations:@[a]];
                     }]];
-
-                    for (KPAnnotation *a in clustersToAdd){
-
-                        if([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]){
-                            [self.delegate treeController:self configureAnnotationForDisplay:a];
-                        }
-                    }
 
                     [newClusters addObjectsFromArray:clustersToAdd];
                 }
@@ -390,6 +379,11 @@ typedef enum {
         newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
     }
 
+    if ([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]) {
+        for (KPAnnotation *annotation in newClusters){
+                [self.delegate treeController:self configureAnnotationForDisplay:annotation];
+        }
+    }
 
     for (int i = 0; i < (gridSizeX + 2); i++) {
         free(clusterGrid[i]);

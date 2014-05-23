@@ -2,7 +2,9 @@
 
 ## Master
 
-Nothing yet in master...
+### Fixed
+
+* Fixed issue with configureAnnotationForDisplay (as reported in #19)
 
 ## Version 0.1.4
 
