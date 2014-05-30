@@ -35,25 +35,21 @@
 
     MKMapSize cellSize = [self.delegate gridClusteringAlgorithm:self obtainGridCellSizeForMapRect:mapRect];
 
-
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
-
 
     int gridSizeX = mapRect.size.width / cellSize.width;
     int gridSizeY = mapRect.size.height / cellSize.height;
 
-
     __block NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:(gridSizeX * gridSizeY)];
 
-
     kp_cluster_grid_t *clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
-
 
     NSUInteger clusterIndex = 0;
 
     for(int col = 1; col < (gridSizeY + 1); col++) {
-        for(int row = 1; row < (gridSizeX + 1); row++){
+        
+        for(int row = 1; row < (gridSizeX + 1); row++) {
 
             double x = mapRect.origin.x + (row - 1) * cellSize.width;
             double y = mapRect.origin.y + (col - 1) * cellSize.height;
@@ -64,7 +60,9 @@
 
             // cluster annotations in this grid piece, if there are annotations to be clustered
             if (newAnnotations.count > 0) {
-                id annotation = [self.delegate gridClusteringAlgorithm:self clusterAnnotationForAnnotations:newAnnotations inClusterGridRect:gridRect];
+                id annotation = [self.delegate gridClusteringAlgorithm:self
+                                       clusterAnnotationForAnnotations:newAnnotations
+                                                     inClusterGridRect:gridRect];
                     
                 [newClusters addObject:annotation];
 
@@ -86,7 +84,10 @@
     }
 
     if ([self.delegate respondsToSelector:@selector(gridClusteringAlgorithm:clusterIntersects:anotherCluster:)]) {
-        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters
+                                                          inClusterGrid:clusterGrid
+                                                              gridSizeX:gridSizeX
+                                                              gridSizeY:gridSizeY];
     }
 
 
@@ -114,7 +115,9 @@
         KPAnnotation *cluster1 = [mutableClusters objectAtIndex:cl1->annotationIndex];
         KPAnnotation *cluster2 = [mutableClusters objectAtIndex:cl2->annotationIndex];
 
-        BOOL clustersIntersect = [self.delegate gridClusteringAlgorithm:self clusterIntersects:cluster1 anotherCluster:cluster2];
+        BOOL clustersIntersect = [self.delegate gridClusteringAlgorithm:self
+                                                      clusterIntersects:cluster1
+                                                         anotherCluster:cluster2];
 
         if (clustersIntersect) {
             NSMutableSet *combinedSet = [NSMutableSet setWithSet:cluster1.annotations];
@@ -173,8 +176,10 @@
             if (currentCellCluster == NULL || currentCellCluster->merged) {
                 continue;
             }
-
-            int lookupIndexForCurrentCellQuadrant = log2f(currentCellCluster->distributionQuadrant); // we take log2f, because we need to transform KPClusterDistributionQuadrant which is one of the 1, 2, 4, 8 into array index: 0, 1, 2, 3, which we will use for lookups on the next step
+            
+            // we take log2f, because we need to transform KPClusterDistributionQuadrant which is one of the
+            // 1, 2, 4, 8 into array index: 0, 1, 2, 3, which we will use for lookups on the next step
+            int lookupIndexForCurrentCellQuadrant = log2f(currentCellCluster->distributionQuadrant);
 
             // Checking adjacent clusters
             for (int adjacentClustersPositionIndex = 0; adjacentClustersPositionIndex < 3; adjacentClustersPositionIndex++) {
@@ -186,7 +191,10 @@
                 adjacentCellCluster = clusterGrid->grid[adjacentClusterPosition.col][adjacentClusterPosition.row];
 
                 // In third condition we use bitwise AND ('&') to check if adjacent cell has distribution of its cluster point which is _complementary_ to a one of the current cell. If it is so, than it worth to make a merge check.
-                if (adjacentCellCluster != NULL && adjacentCellCluster->merged == NO && (KPClusterConformityTable[adjacentClusterLocation] & adjacentCellCluster->distributionQuadrant) != 0) {
+                if (adjacentCellCluster != NULL &&
+                    adjacentCellCluster->merged == NO &&
+                    (KPClusterConformityTable[adjacentClusterLocation] & adjacentCellCluster->distributionQuadrant) != 0)
+                {
                     mergeResult = checkClustersAndMergeIfNeeded(currentCellCluster, adjacentCellCluster);
 
                     // The case when other cluster did adsorb current cluster into itself. This means that we must not continue looking for adjacent clusters because we don't have a current cell now.

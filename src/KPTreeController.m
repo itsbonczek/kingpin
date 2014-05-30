@@ -187,6 +187,7 @@ typedef enum {
     }];
 
     if (animated) {
+        
         NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
 
         for(KPAnnotation *newCluster in newClusters){
