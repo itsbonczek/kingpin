@@ -30,10 +30,8 @@
 - (id)initWithAnnotations:(NSArray *)annotations;
 - (id)initWithAnnotationSet:(NSSet *)set;
 
-
 // returns NO if the KPAnnotation only contains one annotation
 - (BOOL)isCluster;
-
 
 // Private (used by the internal clustering algorithm)
 @property (strong, nonatomic) NSValue *_annotationPointInMapView;

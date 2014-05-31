@@ -18,13 +18,11 @@
 
 #import "KPGridClusteringAlgorithmDelegate.h"
 
-
 @class KPAnnotation,
        KPGridClusteringAlgorithm;
 
 @protocol KPTreeControllerDelegate,
           KPGridClusteringAlgorithmDelegate;
-
 
 @interface KPTreeControllerConfiguration : NSObject
 

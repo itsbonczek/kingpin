@@ -14,9 +14,7 @@
 // limitations under the License.
 //
 
-
 #import <MapKit/MapKit.h>
-
 
 #import "KPTreeController.h"
 
@@ -27,20 +25,20 @@
 
 #import "NSArray+KP.h"
 
-
 typedef enum {
     KPTreeControllerMapViewportNoChange,
     KPTreeControllerMapViewportPan,
     KPTreeControllerMapViewportZoom
 } KPTreeControllerMapViewportChangeState;
 
-
 @implementation KPTreeControllerConfiguration
 
 - (id)init {
     self = [super init];
 
-    if (self == nil) return nil;
+    if (self == nil) {
+        return nil;
+    }
 
     self.annotationSize = (CGSize){60.f, 60.f};
     self.annotationCenterOffset = (CGPoint){30.f, 30.f};
@@ -52,7 +50,6 @@ typedef enum {
 }
 
 @end
-
 
 @interface KPTreeController()
 
@@ -76,7 +73,6 @@ typedef enum {
 @implementation KPTreeController
 
 - (id)initWithMapView:(MKMapView *)mapView {
-    
     self = [self init];
     
     if (self == nil) {
@@ -151,9 +147,7 @@ typedef enum {
                              -self.mapView.visibleMapRect.size.width,
                              -self.mapView.visibleMapRect.size.height);
 
-    
     NSArray *newClusters;
-
 
     BOOL clusteringEnabled = YES;
 
@@ -194,14 +188,11 @@ typedef enum {
             [self.mapView addAnnotation:newCluster];
 
             // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
-
-            for(KPAnnotation *oldCluster in oldClusters){
-
+            for (KPAnnotation *oldCluster in oldClusters){
                 BOOL shouldAnimate = ![oldCluster.annotations isEqualToSet:newCluster.annotations];
 
-                if([oldCluster.annotations member:[newCluster.annotations anyObject]]){
-
-                    if([visibleAnnotations member:oldCluster] && shouldAnimate){
+                if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
+                    if ([visibleAnnotations member:oldCluster] && shouldAnimate) {
                         [self _animateCluster:newCluster
                                           fromAnnotation:oldCluster
                                             toAnnotation:newCluster
@@ -214,9 +205,8 @@ typedef enum {
                 // if the new cluster had old annotations, then animate the old annotations to the new one, and remove it
                 // (collapsing animation)
 
-                else if([newCluster.annotations member:[oldCluster.annotations anyObject]]){
-
-                    if(MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate)) && shouldAnimate){
+                else if ([newCluster.annotations member:[oldCluster.annotations anyObject]]) {
+                    if (MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate)) && shouldAnimate) {
 
                         [self _animateCluster:oldCluster
                                           fromAnnotation:oldCluster
@@ -225,29 +215,26 @@ typedef enum {
                                                   [self.mapView removeAnnotation:oldCluster];
                                               }];
                     }
+
                     else {
                         [self.mapView removeAnnotation:oldCluster];
                     }
-                    
                 }
             }
         }
-        
     }
+
     else {
         [self.mapView removeAnnotations:oldClusters];
         [self.mapView addAnnotations:newClusters];
     }
-
-    
 }
 
 - (void)_animateCluster:(KPAnnotation *)cluster
          fromAnnotation:(KPAnnotation *)fromAnnotation
            toAnnotation:(KPAnnotation *)toAnnotation
-             completion:(void (^)(BOOL finished))completion
-{
-    
+             completion:(void (^)(BOOL finished))completion {
+
     CLLocationCoordinate2D fromCoord = fromAnnotation.coordinate;
     CLLocationCoordinate2D toCoord = toAnnotation.coordinate;
     
@@ -257,14 +244,13 @@ typedef enum {
         [self.delegate treeController:self willAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
     }
     
-    void (^completionDelegate)() = ^ {
+    void (^completionDelegate)() = ^{
         if ([self.delegate respondsToSelector:@selector(treeController:didAnimateAnnotation:fromAnnotation:toAnnotation:)]) {
             [self.delegate treeController:self didAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
         }
     };
     
     void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
-
         completionDelegate();
         
         if (completion) {
@@ -279,7 +265,6 @@ typedef enum {
                          cluster.coordinate = toCoord;
                      }
                      completion:completionBlock];
-    
 }
 
 
@@ -336,6 +321,5 @@ typedef enum {
 
     return CGRectIntersectsRect(r1, r2);
 }
-
 
 @end

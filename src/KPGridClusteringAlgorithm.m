@@ -28,33 +28,26 @@
 
 #import "NSArray+KP.h"
 
-
 @implementation KPGridClusteringAlgorithm
 
 - (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree {
 
     MKMapSize cellSize = [self.delegate gridClusteringAlgorithm:self obtainGridCellSizeForMapRect:mapRect];
 
-
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
-
 
     int gridSizeX = mapRect.size.width / cellSize.width;
     int gridSizeY = mapRect.size.height / cellSize.height;
 
-
     __block NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:(gridSizeX * gridSizeY)];
-
 
     kp_cluster_t **clusterGrid = KPClusterGridCreate(gridSizeX, gridSizeY);
 
-
     NSUInteger clusterIndex = 0;
 
-    for(int col = 1; col < (gridSizeY + 1); col++) {
-        for(int row = 1; row < (gridSizeX + 1); row++){
-
+    for (int col = 1; col < (gridSizeY + 1); col++) {
+        for (int row = 1; row < (gridSizeX + 1); row++) {
             double x = mapRect.origin.x + (row - 1) * cellSize.width;
             double y = mapRect.origin.y + (col - 1) * cellSize.height;
 
@@ -87,10 +80,8 @@
         newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
     }
 
-
     KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
 
-    
     return newClusters;
 }
 
@@ -100,14 +91,11 @@
     __block NSMutableIndexSet *indexesOfClustersToBeRemovedAsMerged = [NSMutableIndexSet indexSet];
     
     kp_cluster_merge_block_t checkClustersAndMergeIfNeeded = ^(kp_cluster_t *cl1, kp_cluster_t *cl2) {
-
-        /* Debug checks (remove later) */
         assert(cl1 && cl1->state == KPClusterStateHasData);
         assert(cl2 && cl2->state == KPClusterStateHasData);
 
         assert(cl1->annotationIndex >= 0 && cl1->annotationIndex < gridSizeX * gridSizeY);
         assert(cl2->annotationIndex >= 0 && cl2->annotationIndex < gridSizeX * gridSizeY);
-
 
         KPAnnotation *cluster1 = [mutableClusters objectAtIndex:cl1->annotationIndex];
         KPAnnotation *cluster2 = [mutableClusters objectAtIndex:cl2->annotationIndex];
@@ -146,7 +134,6 @@
         return KPClusterMergeResultNone;
     };
 
-
     kp_cluster_grid_cell_position_t currentClusterPosition;
     kp_cluster_grid_cell_position_t adjacentClusterPosition;
 
@@ -154,7 +141,6 @@
     kp_cluster_t *adjacentCellCluster;
 
     kp_cluster_merge_result_t mergeResult;
-
 
     for (uint16_t col = 1; col < (gridSizeY + 2); col++) {
         for (uint16_t row = 1; row < (gridSizeX + 2); row++) {
@@ -204,7 +190,6 @@
             }
         }
     }
-
     
     // We remove all the indexes of merged clusters that were accumulated by checkClustersAndMergeIfNeeded()
     [mutableClusters removeObjectsAtIndexes:indexesOfClustersToBeRemovedAsMerged];

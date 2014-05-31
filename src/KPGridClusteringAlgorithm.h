@@ -16,12 +16,10 @@
 
 #import <Foundation/Foundation.h>
 
-
 @class KPAnnotation,
        KPAnnotationTree;
 
 @protocol KPGridClusteringAlgorithmDelegate;
-
 
 @interface KPGridClusteringAlgorithm : NSObject
 
