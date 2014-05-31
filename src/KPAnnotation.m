@@ -145,7 +145,8 @@
     self.coordinate = CLLocationCoordinate2DMake(totalLat / self.annotations.count,
                                                  totalLng / self.annotations.count);
     
-    self.radius = CLLocationCoordinate2DDistanceToCoordinate(CLLocationCoordinate2DMake(minLat, minLng), CLLocationCoordinate2DMake(maxLat, maxLng)) / 2.f;
+    self.radius = MKMetersBetweenMapPoints(MKMapPointForCoordinate(CLLocationCoordinate2DMake(minLat, minLng)),
+                                           MKMapPointForCoordinate(CLLocationCoordinate2DMake(maxLat, maxLng))) / 2.f;
 }
 
 - (NSString *)description {
