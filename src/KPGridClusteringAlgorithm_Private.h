@@ -136,10 +136,6 @@ static inline kp_cluster_t **KPClusterGridCreate(NSUInteger gridSizeX, NSUIntege
     memset(clusterGrid[0], 0, (gridSizeX + 2) * sizeof(kp_cluster_t));
     memset(clusterGrid[gridSizeY + 1], 0, (gridSizeX + 2) * sizeof(kp_cluster_t));
 
-#if DEBUG
-    KPClusterGridValidateNULLMargin(clusterGrid, gridSizeX, gridSizeY);
-#endif
-
     return clusterGrid;
 }
 
