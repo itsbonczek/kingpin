@@ -22,7 +22,6 @@
 @protocol KPGridClusteringAlgorithmDelegate <NSObject>
 
 @required
-
 - (MKMapSize)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm obtainGridCellSizeForMapRect:(MKMapRect)mapRect;
 
 - (id)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterAnnotationForAnnotations:(NSArray *)annotations inClusterGridRect:(MKMapRect)gridRect;

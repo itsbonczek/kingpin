@@ -31,7 +31,6 @@
 @implementation KPGridClusteringAlgorithm
 
 - (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree {
-
     MKMapSize cellSize = [self.delegate gridClusteringAlgorithm:self obtainGridCellSizeForMapRect:mapRect];
 
     // Normalize grid to a cell size.
@@ -205,7 +204,5 @@
     
     return mutableClusters;
 }
-
-
 
 @end
