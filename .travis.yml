@@ -1,2 +1,4 @@
+before_install:
+  - gem install cocoapods -v '0.32.1'
 language: objective-c
 script: ./kingpinTests/run-tests.sh
