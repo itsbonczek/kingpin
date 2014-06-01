@@ -16,36 +16,26 @@
 
 #import <Foundation/Foundation.h>
 
-#import "KPGridClusteringAlgorithmDelegate.h"
+#import "KPClusteringAlgorithm.h"
 
-@class KPAnnotation,
-       KPGridClusteringAlgorithm;
+@class KPAnnotation;
 
-@protocol KPTreeControllerDelegate,
-          KPGridClusteringAlgorithmDelegate;
+@protocol KPTreeControllerDelegate;
 
-@interface KPTreeControllerConfiguration : NSObject
+@interface KPTreeController : NSObject
 
-@property (nonatomic, assign, readwrite) Class annotationClass;
-@property (assign, nonatomic) CGSize gridSize;
-@property (assign, nonatomic) CGSize annotationSize;
-@property (assign, nonatomic) CGPoint annotationCenterOffset;
 @property (assign, nonatomic) CGFloat animationDuration;
 @property (assign, nonatomic) UIViewAnimationOptions animationOptions;
-
-@end
-
-@interface KPTreeController : NSObject <KPGridClusteringAlgorithmDelegate>
-
-@property (strong, readonly, nonatomic) KPTreeControllerConfiguration *configuration;
 
 @property (weak, nonatomic) id <KPTreeControllerDelegate> delegate;
 
 - (id)initWithMapView:(MKMapView *)mapView;
+- (id)initWithMapView:(MKMapView *)mapView clusteringAlgorithm:(id<KPClusteringAlgorithm>)algorithm;
 - (void)setAnnotations:(NSArray *)annoations;
 - (void)refresh:(BOOL)animated;
 
 @end
+
 
 @protocol KPTreeControllerDelegate <NSObject>
 

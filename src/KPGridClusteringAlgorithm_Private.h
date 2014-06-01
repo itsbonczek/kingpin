@@ -185,6 +185,12 @@ typedef enum {
 
 typedef kp_cluster_merge_result_t(^kp_cluster_merge_block_t)(kp_cluster_t *, kp_cluster_t *);
 
-@interface KPGridClusteringAlgorithm ()
-- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_t **)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY;
+@interface KPGridClusteringAlgorithm (Private)
+
+- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters
+                             inMapView:(MKMapView *)mapView
+                           clusterGrid:(kp_cluster_t **)clusterGrid
+                             gridSizeX:(NSUInteger)gridSizeX
+                             gridSizeY:(NSUInteger)gridSizeY;
+
 @end

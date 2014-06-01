@@ -18,10 +18,9 @@
 
 #import "KPTreeController.h"
 
-#import "KPGridClusteringAlgorithm.h"
-
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
+#import "KPGridClusteringAlgorithm.h"
 
 #import "NSArray+KP.h"
 
@@ -31,33 +30,12 @@ typedef enum {
     KPTreeControllerMapViewportZoom
 } KPTreeControllerMapViewportChangeState;
 
-@implementation KPTreeControllerConfiguration
-
-- (id)init {
-    self = [super init];
-
-    if (self == nil) {
-        return nil;
-    }
-
-    self.annotationSize = (CGSize){60.f, 60.f};
-    self.annotationCenterOffset = (CGPoint){30.f, 30.f};
-    self.animationDuration = 0.5f;
-    self.gridSize = (CGSize){60.f, 60.f};
-    self.annotationClass = [KPAnnotation class];
-
-    return self;
-}
-
-@end
 
 @interface KPTreeController()
 
-@property (strong, nonatomic) KPTreeControllerConfiguration *configuration;
-
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) KPAnnotationTree *annotationTree;
-@property (strong, nonatomic) KPGridClusteringAlgorithm *clusteringAlgorithm;
+@property (strong, nonatomic) id<KPClusteringAlgorithm> clusteringAlgorithm;
 
 @property (assign, nonatomic) MKMapRect lastRefreshedMapRect;
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
@@ -73,6 +51,13 @@ typedef enum {
 @implementation KPTreeController
 
 - (id)initWithMapView:(MKMapView *)mapView {
+    return [self initWithMapView:mapView
+             clusteringAlgorithm:[[KPGridClusteringAlgorithm alloc] init]];
+            
+}
+
+- (id)initWithMapView:(MKMapView *)mapView clusteringAlgorithm:(id<KPClusteringAlgorithm>)algorithm {
+    
     self = [self init];
     
     if (self == nil) {
@@ -84,10 +69,10 @@ typedef enum {
     self.lastRefreshedMapRect = self.mapView.visibleMapRect;
     self.lastRefreshedMapRegion = self.mapView.region;
 
-    self.configuration = [[KPTreeControllerConfiguration alloc] init];
+    self.animationDuration = 0.5f;
+    self.animationOptions = UIViewAnimationOptionCurveEaseOut;
     
-    self.clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
-    self.clusteringAlgorithm.delegate = self;
+    self.clusteringAlgorithm = algorithm;
 
     return self;
 }
@@ -115,6 +100,7 @@ typedef enum {
 // - the map has been zoomed
 // - the map has been panned significantly
 - (KPTreeControllerMapViewportChangeState)mapViewportChangeState {
+    
     if (MKMapRectEqualToRect(self.mapView.visibleMapRect, self.lastRefreshedMapRect)) {
         return KPTreeControllerMapViewportNoChange;
     }
@@ -141,6 +127,7 @@ typedef enum {
 #pragma mark Private
 
 - (void)_updateVisibileMapAnnotationsOnMapView:(BOOL)animated {
+    
     MKMapRect mapRect = self.mapView.visibleMapRect;
 
     mapRect = MKMapRectInset(self.mapView.visibleMapRect,
@@ -156,7 +143,9 @@ typedef enum {
     }
 
     if (clusteringEnabled) {
-        newClusters = [self.clusteringAlgorithm performClusteringOfAnnotationsInMapRect:mapRect annotationTree:self.annotationTree];
+        newClusters = [self.clusteringAlgorithm clusterAnnotationsInMapRect:mapRect
+                                                              parentMapView:self.mapView
+                                                             annotationTree:self.annotationTree];
     } else {
         NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
 
@@ -241,13 +230,27 @@ typedef enum {
     
     cluster.coordinate = fromCoord;
     
-    if ([self.delegate respondsToSelector:@selector(treeController:willAnimateAnnotation:fromAnnotation:toAnnotation:)]) {
-        [self.delegate treeController:self willAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
+    if ([self.delegate respondsToSelector:@selector(treeController:
+                                                    willAnimateAnnotation:
+                                                    fromAnnotation:
+                                                    toAnnotation:)])
+    {
+        [self.delegate treeController:self
+                willAnimateAnnotation:cluster
+                       fromAnnotation:fromAnnotation
+                         toAnnotation:toAnnotation];
     }
     
-    void (^completionDelegate)() = ^{
-        if ([self.delegate respondsToSelector:@selector(treeController:didAnimateAnnotation:fromAnnotation:toAnnotation:)]) {
-            [self.delegate treeController:self didAnimateAnnotation:cluster fromAnnotation:fromAnnotation toAnnotation:toAnnotation];
+    void (^completionDelegate)() = ^ {
+        if ([self.delegate respondsToSelector:@selector(treeController:
+                                                        didAnimateAnnotation:
+                                                        fromAnnotation:
+                                                        toAnnotation:)])
+        {
+            [self.delegate treeController:self
+                     didAnimateAnnotation:cluster
+                           fromAnnotation:fromAnnotation
+                             toAnnotation:toAnnotation];
         }
     };
     
@@ -259,68 +262,13 @@ typedef enum {
         }
     };
     
-    [UIView animateWithDuration:self.configuration.animationDuration
+    [UIView animateWithDuration:self.animationDuration
                           delay:0.f
-                        options:self.configuration.animationOptions
+                        options:self.animationOptions
                      animations:^{
                          cluster.coordinate = toCoord;
                      }
                      completion:completionBlock];
-}
-
-
-#pragma mark 
-#pragma mark <KPGridClusteringAlgorithmDelegate>
-
-- (MKMapSize)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm obtainGridCellSizeForMapRect:(MKMapRect)mapRect {
-    // Calculate the grid size in terms of MKMapPoints.
-    double widthPercentage =  self.configuration.gridSize.width / CGRectGetWidth(self.mapView.frame);
-    double heightPercentage = self.configuration.gridSize.height / CGRectGetHeight(self.mapView.frame);
-
-    MKMapSize cellSize = MKMapSizeMake(
-        ceil(widthPercentage  * self.mapView.visibleMapRect.size.width),
-        ceil(heightPercentage * self.mapView.visibleMapRect.size.height)
-    );
-
-    return cellSize;
-}
-
-- (id)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterAnnotationForAnnotations:(NSArray *)annotations inClusterGridRect:(MKMapRect)gridRect {
-    Class annotationClass = self.configuration.annotationClass;
-
-    return [[annotationClass alloc] initWithAnnotations:annotations];
-}
-
-- (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
-    // calculate CGRects for each annotation, memoizing the coord -> point conversion as we go
-    // if the two views overlap, merge them
-
-    if (clusterAnnotation._annotationPointInMapView == nil) {
-        clusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:clusterAnnotation.coordinate toPointToView:self.mapView]];
-    }
-
-    if (anotherClusterAnnotation._annotationPointInMapView == nil) {
-        anotherClusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:anotherClusterAnnotation.coordinate toPointToView:self.mapView]];
-    }
-
-    CGPoint p1 = [clusterAnnotation._annotationPointInMapView CGPointValue];
-    CGPoint p2 = [anotherClusterAnnotation._annotationPointInMapView CGPointValue];
-
-    CGRect r1 = CGRectMake(
-        p1.x - self.configuration.annotationSize.width + self.configuration.annotationCenterOffset.x,
-        p1.y - self.configuration.annotationSize.height + self.configuration.annotationCenterOffset.y,
-        self.configuration.annotationSize.width,
-        self.configuration.annotationSize.height
-    );
-
-    CGRect r2 = CGRectMake(
-        p2.x - self.configuration.annotationSize.width + self.configuration.annotationCenterOffset.x,
-        p2.y - self.configuration.annotationSize.height + self.configuration.annotationCenterOffset.y,
-        self.configuration.annotationSize.width,
-        self.configuration.annotationSize.height
-    );
-
-    return CGRectIntersectsRect(r1, r2);
 }
 
 @end

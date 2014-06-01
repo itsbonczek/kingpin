@@ -19,8 +19,6 @@
 #import "KPGridClusteringAlgorithm.h"
 #import "KPGridClusteringAlgorithm_Private.h"
 
-#import "KPGridClusteringAlgorithmDelegate.h"
-
 #import "KPAnnotationTree.h"
 #import "KPAnnotation.h"
 
@@ -30,14 +28,31 @@
 
 @implementation KPGridClusteringAlgorithm
 
-- (NSArray *)performClusteringOfAnnotationsInMapRect:(MKMapRect)mapRect annotationTree:(KPAnnotationTree *)annotationTree {
-    MKMapSize cellSize = [self.delegate gridClusteringAlgorithm:self obtainGridCellSizeForMapRect:mapRect];
+- (id)init {
+    
+    if ((self = [super init])) {
+        self.clusteringStrategy = KPGridClusteringAlgorithmStrategyBasic;
+        self.gridSize = CGSizeMake(60.f, 60.f);
+    }
+    
+    return self;
+}
+
+#pragma mark - KPGridClusteringAlgorithm
+
+- (NSArray *)clusterAnnotationsInMapRect:(MKMapRect)mapRect
+                           parentMapView:(MKMapView *)mapView
+                          annotationTree:(KPAnnotationTree *)annotationTree
+{
+    [self _ensureStrategyIntegrity];
+    
+    MKMapSize mapCellSize = [self mapCellSizeForGridSize:self.gridSize inMapView:mapView];
 
     // Normalize grid to a cell size.
-    mapRect = MKMapRectNormalizeToCellSize(mapRect, cellSize);
+    mapRect = MKMapRectNormalizeToCellSize(mapRect, mapCellSize);
 
-    int gridSizeX = mapRect.size.width / cellSize.width;
-    int gridSizeY = mapRect.size.height / cellSize.height;
+    int gridSizeX = mapRect.size.width / mapCellSize.width;
+    int gridSizeY = mapRect.size.height / mapCellSize.height;
 
     __block NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:(gridSizeX * gridSizeY)];
 
@@ -45,21 +60,19 @@
 
     NSUInteger clusterIndex = 0;
 
-    for (int col = 1; col < (gridSizeY + 1); col++) {
-        for (int row = 1; row < (gridSizeX + 1); row++) {
-            double x = mapRect.origin.x + (row - 1) * cellSize.width;
-            double y = mapRect.origin.y + (col - 1) * cellSize.height;
+    for(int col = 1; col < (gridSizeY + 1); col++) {
+        for(int row = 1; row < (gridSizeX + 1); row++) {
+            double x = mapRect.origin.x + (row - 1) * mapCellSize.width;
+            double y = mapRect.origin.y + (col - 1) * mapCellSize.height;
 
-            MKMapRect gridRect = MKMapRectMake(x, y, cellSize.width, cellSize.height);
+            MKMapRect gridRect = MKMapRectMake(x, y, mapCellSize.width, mapCellSize.height);
 
             NSArray *newAnnotations = [annotationTree annotationsInMapRect:gridRect];
 
             // cluster annotations in this grid piece, if there are annotations to be clustered
             if (newAnnotations.count > 0) {
-                id annotation = [self.delegate gridClusteringAlgorithm:self
-                                       clusterAnnotationForAnnotations:newAnnotations
-                                                     inClusterGridRect:gridRect];
-                    
+                
+                id annotation = [[KPAnnotation alloc] initWithAnnotations:newAnnotations];
                 [newClusters addObject:annotation];
 
                 kp_cluster_t *cluster = clusterGrid[col] + row;
@@ -76,25 +89,57 @@
             }
         }
     }
-
-    if ([self.delegate respondsToSelector:@selector(gridClusteringAlgorithm:clusterIntersects:anotherCluster:)]) {
+    
+    if (self.clusteringStrategy == KPGridClusteringAlgorithmStrategyTwoPhase) {
+        
         newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters
-                                                          inClusterGrid:clusterGrid
+                                                              inMapView:mapView
+                                                            clusterGrid:clusterGrid
                                                               gridSizeX:gridSizeX
                                                               gridSizeY:gridSizeY];
     }
 
     KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
-
     return newClusters;
 }
 
+- (MKMapSize)mapCellSizeForGridSize:(CGSize)gridSize inMapView:(MKMapView *)mapView {
+    // Calculate the grid size in terms of MKMapPoints.
+    double widthPercentage =  gridSize.width / CGRectGetWidth(mapView.frame);
+    double heightPercentage = gridSize.height / CGRectGetHeight(mapView.frame);
+    
+    MKMapSize cellSize = MKMapSizeMake(
+                                       ceil(widthPercentage  * mapView.visibleMapRect.size.width),
+                                       ceil(heightPercentage * mapView.visibleMapRect.size.height)
+                                       );
+    
+    return cellSize;
+}
 
-- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters inClusterGrid:(kp_cluster_t **)clusterGrid gridSizeX:(NSUInteger)gridSizeX gridSizeY:(NSUInteger)gridSizeY {
+#pragma mark - Private
+
+- (void)_ensureStrategyIntegrity {
+    if (self.clusteringStrategy == KPGridClusteringAlgorithmStrategyTwoPhase &&
+        CGSizeEqualToSize(self.annotationSize, CGSizeZero))
+    {
+        [NSException raise:@"annotationSize must be set when using two phase strategy"
+                    format:nil];
+    }
+}
+
+- (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters
+                             inMapView:(MKMapView *)mapView
+                           clusterGrid:(kp_cluster_t **)clusterGrid
+                             gridSizeX:(NSUInteger)gridSizeX
+                             gridSizeY:(NSUInteger)gridSizeY
+
+{
+    
     __block NSMutableArray *mutableClusters = [NSMutableArray arrayWithArray:clusters];
     __block NSMutableIndexSet *indexesOfClustersToBeRemovedAsMerged = [NSMutableIndexSet indexSet];
     
     kp_cluster_merge_block_t checkClustersAndMergeIfNeeded = ^(kp_cluster_t *cl1, kp_cluster_t *cl2) {
+
         assert(cl1 && cl1->state == KPClusterStateHasData);
         assert(cl2 && cl2->state == KPClusterStateHasData);
 
@@ -103,58 +148,57 @@
 
         KPAnnotation *cluster1 = [mutableClusters objectAtIndex:cl1->annotationIndex];
         KPAnnotation *cluster2 = [mutableClusters objectAtIndex:cl2->annotationIndex];
-
-        BOOL clustersIntersect = [self.delegate gridClusteringAlgorithm:self
-                                                      clusterIntersects:cluster1
-                                                         anotherCluster:cluster2];
-
+        
+        BOOL clustersIntersect = [self clusterIntersects:cluster1 anotherCluster:cluster2 inMapView:mapView];
+        
         if (clustersIntersect) {
             NSMutableSet *combinedSet = [NSMutableSet setWithSet:cluster1.annotations];
             [combinedSet unionSet:cluster2.annotations];
-
+            
             KPAnnotation *newAnnotation = [[KPAnnotation alloc] initWithAnnotationSet:combinedSet];
-
+            
             MKMapPoint newClusterMapPoint = MKMapPointForCoordinate(newAnnotation.coordinate);
-
+            
             if (MKMapRectContainsPoint(cl1->mapRect, newClusterMapPoint)) {
                 [indexesOfClustersToBeRemovedAsMerged addIndex:cl2->annotationIndex];
+
                 cl2->state = KPClusterStateMerged;
 
                 mutableClusters[cl1->annotationIndex] = newAnnotation;
-
+                
                 cl1->distributionQuadrant = KPClusterDistributionQuadrantForPointInsideMapRect(cl1->mapRect, newClusterMapPoint);
-
+                
                 return KPClusterMergeResultCurrent;
             } else {
                 [indexesOfClustersToBeRemovedAsMerged addIndex:cl1->annotationIndex];
                 cl1->state = KPClusterStateMerged;
 
                 mutableClusters[cl2->annotationIndex] = newAnnotation;
-
+                
                 cl2->distributionQuadrant = KPClusterDistributionQuadrantForPointInsideMapRect(cl2->mapRect, newClusterMapPoint);
-
+                
                 return KPClusterMergeResultOther;
             }
         }
-
+        
         return KPClusterMergeResultNone;
     };
 
     kp_cluster_grid_cell_position_t currentClusterPosition;
     kp_cluster_grid_cell_position_t adjacentClusterPosition;
-
+    
     kp_cluster_t *currentCellCluster;
     kp_cluster_t *adjacentCellCluster;
-
+    
     kp_cluster_merge_result_t mergeResult;
 
     for (uint16_t col = 1; col < (gridSizeY + 2); col++) {
         for (uint16_t row = 1; row < (gridSizeX + 2); row++) {
-            loop_with_explicit_col_and_row:
-
+        loop_with_explicit_col_and_row:
+            
             assert(col > 0);
             assert(row > 0);
-
+            
             currentClusterPosition.col = col;
             currentClusterPosition.row = row;
 
@@ -167,11 +211,11 @@
             // we take log2f, because we need to transform KPClusterDistributionQuadrant which is one of the
             // 1, 2, 4, 8 into array index: 0, 1, 2, 3, which we will use for lookups on the next step
             int lookupIndexForCurrentCellQuadrant = log2f(currentCellCluster->distributionQuadrant);
-
+            
             // Checking adjacent clusters
             for (int adjacentClustersPositionIndex = 0; adjacentClustersPositionIndex < 3; adjacentClustersPositionIndex++) {
                 int adjacentClusterLocation = KPClusterAdjacentClusterLocationsTable[lookupIndexForCurrentCellQuadrant][adjacentClustersPositionIndex];
-
+                
                 adjacentClusterPosition.col = currentClusterPosition.col + KPAdjacentClusterPositionDeltas[adjacentClusterLocation][0];
                 adjacentClusterPosition.row = currentClusterPosition.row + KPAdjacentClusterPositionDeltas[adjacentClusterLocation][1];
 
@@ -180,18 +224,18 @@
                 // In third condition we use bitwise AND ('&') to check if adjacent cell has distribution of its cluster point which is _complementary_ to a one of the current cell. If it is so, than it worth to make a merge check.
                 if (adjacentCellCluster->state == KPClusterStateHasData && (KPClusterConformityTable[adjacentClusterLocation] & adjacentCellCluster->distributionQuadrant) != 0) {
                     mergeResult = checkClustersAndMergeIfNeeded(currentCellCluster, adjacentCellCluster);
-
+                    
                     // The case when other cluster did adsorb current cluster into itself. This means that we must not continue looking for adjacent clusters because we don't have a current cell now.
                     if (mergeResult == KPClusterMergeResultOther) {
                         // If this other cluster lies upstream (behind current i,j cell), we revert back to its [i,j] coordinate and continue looping
                         if (KPClusterGridCellPositionCompareWithPosition(&currentClusterPosition, &adjacentClusterPosition) == NSOrderedDescending) {
-
+                            
                             col = adjacentClusterPosition.col;
                             row = adjacentClusterPosition.row;
-
+                            
                             goto loop_with_explicit_col_and_row;
                         }
-
+                        
                         break; // This breaks from "Checking adjacent clusters"
                     }
                 }
@@ -203,6 +247,44 @@
     [mutableClusters removeObjectsAtIndexes:indexesOfClustersToBeRemovedAsMerged];
     
     return mutableClusters;
+}
+
+- (BOOL)clusterIntersects:(KPAnnotation *)clusterAnnotation
+           anotherCluster:(KPAnnotation *)anotherClusterAnnotation
+                inMapView:(MKMapView *)mapView
+{
+    
+    // calculate CGRects for each annotation, memoizing the coord -> point conversion as we go
+    // if the two views overlap, merge them
+    
+    if (clusterAnnotation._annotationPointInMapView == nil) {
+        clusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[mapView convertCoordinate:clusterAnnotation.coordinate
+                                                                                             toPointToView:mapView]];
+    }
+    
+    if (anotherClusterAnnotation._annotationPointInMapView == nil) {
+        anotherClusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[mapView convertCoordinate:anotherClusterAnnotation.coordinate
+                                                                                                    toPointToView:mapView]];
+    }
+    
+    CGPoint p1 = [clusterAnnotation._annotationPointInMapView CGPointValue];
+    CGPoint p2 = [anotherClusterAnnotation._annotationPointInMapView CGPointValue];
+    
+    CGRect r1 = CGRectMake(
+                           p1.x - self.annotationSize.width + self.annotationCenterOffset.x,
+                           p1.y - self.annotationSize.height + self.annotationCenterOffset.y,
+                           self.annotationSize.width,
+                           self.annotationSize.height
+                           );
+    
+    CGRect r2 = CGRectMake(
+                           p2.x - self.annotationSize.width + self.annotationCenterOffset.x,
+                           p2.y - self.annotationSize.height + self.annotationCenterOffset.y,
+                           self.annotationSize.width,
+                           self.annotationSize.height
+                           );
+    
+    return CGRectIntersectsRect(r1, r2);
 }
 
 @end

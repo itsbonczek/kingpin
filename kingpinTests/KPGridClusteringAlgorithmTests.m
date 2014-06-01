@@ -10,34 +10,17 @@
 
 #import "KPGridClusteringAlgorithm.h"
 #import "KPGridClusteringAlgorithm_Private.h"
-
-#import "KPGridClusteringAlgorithmDelegate.h"
-
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
-
 #import "KPGeometry.h"
-
+#import "MockMapView.h"
 #import "TestAnnotation.h"
 
-@interface KPGridClusteringAlgorithmDelegateClass : NSObject <KPGridClusteringAlgorithmDelegate>
-@end
+#define HC_SHORTHAND
+#import <OCHamcrest/OCHamcrest.h>
 
-@implementation KPGridClusteringAlgorithmDelegateClass
-
-- (MKMapSize)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm obtainGridCellSizeForMapRect:(MKMapRect)mapRect {
-    return MKMapSizeMake(round(mapRect.size.width / 10), round(mapRect.size.height / 10));
-}
-
-- (id)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterAnnotationForAnnotations:(NSArray *)annotations inClusterGridRect:(MKMapRect)gridRect {
-    return [[KPAnnotation alloc] initWithAnnotations:annotations];
-}
-
-- (BOOL)gridClusteringAlgorithm:(KPGridClusteringAlgorithm *)gridClusteringAlgorithm clusterIntersects:(KPAnnotation *)clusterAnnotation anotherCluster:(KPAnnotation *)anotherClusterAnnotation {
-    return YES;
-}
-
-@end
+#define MOCKITO_SHORTHAND
+#import <OCMockito/OCMockito.h>
 
 @interface KPGridClusteringAlgorithmTests : XCTestCase
 @end
@@ -66,18 +49,17 @@
     KPAnnotationTree *annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
     MKMapRect randomRect = MKMapRectRandom();
+    MockMapView *mockMapView = [[MockMapView alloc] init];
+    mockMapView.mockVisibleMapRect = randomRect;
 
     KPGridClusteringAlgorithm *clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
-
-    __strong KPGridClusteringAlgorithmDelegateClass *clusteringAlgorithmDelegate = [[KPGridClusteringAlgorithmDelegateClass alloc] init];
-
-    MKMapSize cellSize = [clusteringAlgorithmDelegate gridClusteringAlgorithm:clusteringAlgorithm obtainGridCellSizeForMapRect:randomRect];
+    MKMapSize cellSize = [clusteringAlgorithm mapCellSizeForGridSize:clusteringAlgorithm.gridSize inMapView:mockMapView];
 
     MKMapRect normalizedMapRect = MKMapRectNormalizeToCellSize(randomRect, cellSize);
 
-    clusteringAlgorithm.delegate = clusteringAlgorithmDelegate;
-
-    NSArray *clusters = [clusteringAlgorithm performClusteringOfAnnotationsInMapRect:randomRect annotationTree:annotationTree];
+    NSArray *clusters = [clusteringAlgorithm clusterAnnotationsInMapRect:randomRect
+                                                           parentMapView:mockMapView
+                                                          annotationTree:annotationTree];
 
     NSMutableArray *annotationsCollectedFromClusters = [NSMutableArray array];
     NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:normalizedMapRect];
@@ -131,10 +113,9 @@
 }
 
 - (void)test_mergeOverlappingClusters {
+    
     KPGridClusteringAlgorithm *clusteringAlgorithm = [[KPGridClusteringAlgorithm alloc] init];
-    __strong KPGridClusteringAlgorithmDelegateClass *clusteringAlgorithmDelegate = [KPGridClusteringAlgorithmDelegateClass new];
-
-    clusteringAlgorithm.delegate = clusteringAlgorithmDelegate;
+    clusteringAlgorithm.annotationSize = CGSizeMake(40.f, 40.f);
 
     {
         NSUInteger gridSizeX = 2;
@@ -214,7 +195,11 @@
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12 ];
 
-            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters
+                                                            inMapView:[self configuredMockMapView]
+                                                          clusterGrid:clusterGrid
+                                                            gridSizeX:gridSizeX
+                                                            gridSizeY:gridSizeY];
 
             XCTAssertTrue(clusters.count == 1);
 
@@ -252,7 +237,12 @@
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12 ];
 
-            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters
+                                                            inMapView:[self configuredMockMapView]
+                                                          clusterGrid:clusterGrid
+                                                            gridSizeX:gridSizeX
+                                                            gridSizeY:gridSizeY];
+
 
             XCTAssertTrue(clusters.count == 2);
 
@@ -304,7 +294,12 @@
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12, clusterAnnotation21, clusterAnnotation22 ];
 
-            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+            clusters = [clusteringAlgorithm _mergeOverlappingClusters:clusters
+                                                            inMapView:[self configuredMockMapView]
+                                                          clusterGrid:clusterGrid
+                                                            gridSizeX:gridSizeX
+                                                            gridSizeY:gridSizeY];
+
 
             XCTAssertTrue(clusters.count == 1);
 
@@ -354,7 +349,11 @@
 
             NSArray *clusters = @[ clusterAnnotation11, clusterAnnotation12, clusterAnnotation21, clusterAnnotation22 ];
 
-            NSArray *clustersAfterMerge = [clusteringAlgorithm _mergeOverlappingClusters:clusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+            NSArray *clustersAfterMerge = [clusteringAlgorithm _mergeOverlappingClusters:clusters
+                                                                               inMapView:[self configuredMockMapView]
+                                                                             clusterGrid:clusterGrid
+                                                                               gridSizeX:gridSizeX
+                                                                               gridSizeY:gridSizeY];
 
             XCTAssertTrue(clusters.count == 4);
 
@@ -365,6 +364,29 @@
 
     }
 
+}
+
+- (void)testGridSizeHasDefaultValue {
+    KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
+    XCTAssert(!CGSizeEqualToSize(algorithm.gridSize, CGSizeZero), @"gridSize should have an initial value");
+}
+
+- (void)testAlgorithmThrowsOnTwoPhaseWhenNoAnnotationSizeIsSet {
+    KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
+    algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
+    XCTAssertThrows([algorithm clusterAnnotationsInMapRect:MKMapRectRandom()
+                                             parentMapView:[self configuredMockMapView]
+                                            annotationTree:mock([KPAnnotationTree class])],
+                     @"algorithm should throw");
+}
+
+
+#pragma mark - Private
+
+- (MockMapView *)configuredMockMapView {
+    MockMapView *mockMapView = [MockMapView new];
+    mockMapView.mockVisibleMapRect = MKMapRectRandom();
+    return mockMapView;
 }
 
 @end

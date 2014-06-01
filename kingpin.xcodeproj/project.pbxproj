@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F2DFDB8DB8F4D86BF604E35 /* libPods-kingpinTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB9F34F56DF40CBB9AA70B3 /* libPods-kingpinTests.a */; };
 		86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
 		86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
 		8621639D1912202600724CEF /* KPAnnotationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8605864518EC13400026144F /* KPAnnotationTests.m */; };
@@ -16,6 +17,7 @@
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
 		9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
+		91437BE2193B9FE200436C88 /* MockMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91437BE1193B9FE200436C88 /* MockMapView.m */; };
 		9189259B18E7732900812296 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9189259A18E7732900812296 /* XCTest.framework */; };
 		9189259C18E7732900812296 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0511645A2B2004BC920 /* Foundation.framework */; };
 		9189259D18E7732900812296 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC04F1645A2B2004BC920 /* UIKit.framework */; };
@@ -47,11 +49,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kingpinTests.xcconfig"; path = "Pods/Pods-kingpinTests.xcconfig"; sourceTree = "<group>"; };
 		8605864518EC13400026144F /* KPAnnotationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTests.m; sourceTree = "<group>"; };
 		8605864718EC1F090026144F /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
 		86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm.h; sourceTree = "<group>"; };
 		86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithm.m; sourceTree = "<group>"; };
-		86174DC918F9BF7D00014C48 /* KPGridClusteringAlgorithmDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithmDelegate.h; sourceTree = "<group>"; };
 		86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithmTests.m; sourceTree = "<group>"; };
 		86174DD018F9D7CF00014C48 /* KPGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGeometry.h; sourceTree = "<group>"; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -60,6 +62,8 @@
 		867A7EAE1911A0AE00778F7B /* KPGridClusteringAlgorithm_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm_Private.h; sourceTree = "<group>"; };
 		9122C06318E77A9E00356A3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		9122C06518E77AAA00356A3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
+		91437BE0193B9FE200436C88 /* MockMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockMapView.h; sourceTree = "<group>"; };
+		91437BE1193B9FE200436C88 /* MockMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockMapView.m; sourceTree = "<group>"; };
 		9189259918E7732900812296 /* kingpinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kingpinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9189259A18E7732900812296 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		918925A018E7732900812296 /* kingpinTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "kingpinTests-Info.plist"; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 		918925A418E7732900812296 /* KPAnnotationTreeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTreeTests.m; sourceTree = "<group>"; };
 		918925A618E7732900812296 /* kingpinTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpinTests-Prefix.pch"; sourceTree = "<group>"; };
 		91E9B69518E7509300EFE22C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
+		91F1B6B3193B762500A2E144 /* KPClusteringAlgorithm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPClusteringAlgorithm.h; sourceTree = "<group>"; };
 		934690FF16A8EC8400DE59FA /* MyAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
 		9346910016A8EC8400DE59FA /* MyAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
 		9346910516A8F1C200DE59FA /* NSArray+KP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+KP.h"; sourceTree = "<group>"; };
@@ -97,6 +102,7 @@
 		93BBC09E1645B78C004BC920 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		93BBC0AD1645CAE5004BC920 /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
 		93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAnnotation.m; sourceTree = "<group>"; };
+		9DB9F34F56DF40CBB9AA70B3 /* libPods-kingpinTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-kingpinTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,7 @@
 				9189259B18E7732900812296 /* XCTest.framework in Frameworks */,
 				9189259D18E7732900812296 /* UIKit.framework in Frameworks */,
 				9189259C18E7732900812296 /* Foundation.framework in Frameworks */,
+				5F2DFDB8DB8F4D86BF604E35 /* libPods-kingpinTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +144,8 @@
 				8605864718EC1F090026144F /* TestHelpers.h */,
 				86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */,
 				866335981909E70E009E638D /* KPGeometryTests.m */,
+				91437BE0193B9FE200436C88 /* MockMapView.h */,
+				91437BE1193B9FE200436C88 /* MockMapView.m */,
 			);
 			path = kingpinTests;
 			sourceTree = "<group>";
@@ -163,9 +172,9 @@
 				93BBC0891645A68F004BC920 /* KPTreeController.m */,
 				86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */,
 				86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */,
-				86174DC918F9BF7D00014C48 /* KPGridClusteringAlgorithmDelegate.h */,
 				86174DD018F9D7CF00014C48 /* KPGeometry.h */,
 				867A7EAE1911A0AE00778F7B /* KPGridClusteringAlgorithm_Private.h */,
+				91F1B6B3193B762500A2E144 /* KPClusteringAlgorithm.h */,
 			);
 			name = kp;
 			sourceTree = "<group>";
@@ -187,6 +196,7 @@
 				9189259E18E7732900812296 /* kingpinTests */,
 				93BBC04E1645A2B2004BC920 /* Frameworks */,
 				93BBC04C1645A2B2004BC920 /* Products */,
+				53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -229,6 +239,7 @@
 				93BBC0531645A2B2004BC920 /* CoreGraphics.framework */,
 				8641D25318CAF14700B109E4 /* SenTestingKit.framework */,
 				9189259A18E7732900812296 /* XCTest.framework */,
+				9DB9F34F56DF40CBB9AA70B3 /* libPods-kingpinTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -263,9 +274,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 918925A718E7732900812296 /* Build configuration list for PBXNativeTarget "kingpinTests" */;
 			buildPhases = (
+				EC22EB4CCAFA497491C104EC /* Check Pods Manifest.lock */,
 				9189259518E7732900812296 /* Sources */,
 				9189259618E7732900812296 /* Frameworks */,
 				9189259718E7732900812296 /* Resources */,
+				E57420E1AD034B8695DCDD51 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -342,6 +355,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E57420E1AD034B8695DCDD51 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-kingpinTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EC22EB4CCAFA497491C104EC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9189259518E7732900812296 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -353,6 +399,7 @@
 				8621639E1912202B00724CEF /* KPAnnotationTreeTests.m in Sources */,
 				8621639F1912202B00724CEF /* KPGeometryTests.m in Sources */,
 				91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */,
+				91437BE2193B9FE200436C88 /* MockMapView.m in Sources */,
 				91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */,
 				86174DC818F9AB5A00014C48 /* KPGridClusteringAlgorithm.m in Sources */,
 				91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */,
@@ -409,6 +456,7 @@
 /* Begin XCBuildConfiguration section */
 		918925A818E7732900812296 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -447,6 +495,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "kingpinTests/kingpinTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/kingpinTests",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -456,6 +508,7 @@
 		};
 		918925A918E7732900812296 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -488,6 +541,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "kingpinTests/kingpinTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/kingpinTests",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

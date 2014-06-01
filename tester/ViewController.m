@@ -8,13 +8,11 @@
 
 #import "ViewController.h"
 
+#import "KPAnnotation.h"
+#import "KPGridClusteringAlgorithm.h"
 #import "KPTreeController.h"
-
 #import "MyAnnotation.h"
 #import "TestAnnotation.h"
-
-#import "KPAnnotation.h"
-
 #import "TestHelpers.h"
 
 #import "KPGridClusteringAlgorithm_Private.h"
@@ -43,11 +41,16 @@ static const int kNumberOfTestAnnotations = 20000;
     self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
     [self.treeController setAnnotations:[self annotations]];
      */
+    
+    KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
+    algorithm.annotationSize = CGSizeMake(25, 50);
+    //algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
 
-    self.treeController2 = [[KPTreeController alloc] initWithMapView:self.mapView];
+    self.treeController2 = [[KPTreeController alloc] initWithMapView:self.mapView
+                                                 clusteringAlgorithm:algorithm];
     self.treeController2.delegate = self;
 
-    self.treeController2.configuration.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    self.treeController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
 
     [self.treeController2 setAnnotations:[self annotations]];
     

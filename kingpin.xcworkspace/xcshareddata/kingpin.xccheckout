@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F3D2B749-C9D9-4661-B4FC-068128623CCB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>kingpin</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</key>
+		<string>ssh://github.com/itsbonczek/kingpin.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>kingpin.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/itsbonczek/kingpin.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</string>
+			<key>IDESourceControlWCCName</key>
+			<string>kingpin</string>
+		</dict>
+	</array>
+</dict>
+</plist>
