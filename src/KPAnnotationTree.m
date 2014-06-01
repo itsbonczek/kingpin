@@ -83,7 +83,6 @@ static MKMapPoint *KPTemporaryPointStorage;
         minVal = mapRect.origin.x;
         maxVal = mapRect.origin.x + mapRect.size.width;
     }
-
     else {
         val    = mapPoint.y;
         minVal = mapRect.origin.y;
@@ -97,14 +96,12 @@ static MKMapPoint *KPTemporaryPointStorage;
                         curNode:curNode->left
                        curLevel:(level + 1)];
     }
-
     else if (minVal >= val){
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
                         curNode:curNode->right
                        curLevel:(level + 1)];
     }
-
     else {
         [self doSearchInMapRect:mapRect
              mutableAnnotations:annotations
@@ -125,6 +122,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 
 
 - (void)buildTree:(NSArray *)annotations {
+    
     NSUInteger count = annotations.count;
 
     /*
@@ -215,7 +213,13 @@ static MKMapPoint *KPTemporaryPointStorage;
 @end
 
 
-static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel) {
+static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
+                                            kp_internal_annotation_t *annotationsSortedByCurrentAxis,
+                                            kp_internal_annotation_t *annotationsSortedByComplementaryAxis,
+                                            kp_internal_annotation_t *temporaryAnnotationStorage,
+                                            const NSUInteger count,
+                                            const NSInteger curLevel)
+{
     if (count == 0) {
         return NULL;
     }
@@ -271,6 +275,7 @@ static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, 
     kp_internal_annotation_t *annotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
 
     NSInteger idx = count - 1;
+
     while (idx >= 0) {
         /*
          KP_LIKELY macros, based on __builtin_expect, is used for branch prediction. The performance gain from this is expected to be very small, but it is still logically good to predict branches which are likely to occur often and often.
@@ -298,8 +303,19 @@ static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, 
     kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = annotationsSortedByCurrentAxis;
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
-    n->left  = kp_tree_build(nodeStorage,  leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis, annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
-    n->right = kp_tree_build(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, temporaryAnnotationStorage, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
+    n->left  = kp_tree_build(nodeStorage,
+                             leftAnnotationsSortedByComplementaryAxis,
+                             leftAnnotationsSortedByCurrentAxis,
+                             annotationsSortedByComplementaryAxis,
+                             leftAnnotationsSortedByComplementaryAxisCount,
+                             curLevel + 1);
+
+    n->right = kp_tree_build(nodeStorage,
+                             rightAnnotationsSortedByComplementaryAxis,
+                             rightAnnotationsSortedByCurrentAxis,
+                             temporaryAnnotationStorage,
+                             rightAnnotationsSortedByComplementaryAxisCount,
+                             curLevel + 1);
 
     return n;
 }

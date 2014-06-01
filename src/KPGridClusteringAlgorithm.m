@@ -57,7 +57,9 @@
 
             // cluster annotations in this grid piece, if there are annotations to be clustered
             if (newAnnotations.count > 0) {
-                id annotation = [self.delegate gridClusteringAlgorithm:self clusterAnnotationForAnnotations:newAnnotations inClusterGridRect:gridRect];
+                id annotation = [self.delegate gridClusteringAlgorithm:self
+                                       clusterAnnotationForAnnotations:newAnnotations
+                                                     inClusterGridRect:gridRect];
                     
                 [newClusters addObject:annotation];
 
@@ -77,7 +79,10 @@
     }
 
     if ([self.delegate respondsToSelector:@selector(gridClusteringAlgorithm:clusterIntersects:anotherCluster:)]) {
-        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters inClusterGrid:clusterGrid gridSizeX:gridSizeX gridSizeY:gridSizeY];
+        newClusters = (NSMutableArray *)[self _mergeOverlappingClusters:newClusters
+                                                          inClusterGrid:clusterGrid
+                                                              gridSizeX:gridSizeX
+                                                              gridSizeY:gridSizeY];
     }
 
     KPClusterGridFree(clusterGrid, gridSizeX, gridSizeY);
@@ -100,7 +105,9 @@
         KPAnnotation *cluster1 = [mutableClusters objectAtIndex:cl1->annotationIndex];
         KPAnnotation *cluster2 = [mutableClusters objectAtIndex:cl2->annotationIndex];
 
-        BOOL clustersIntersect = [self.delegate gridClusteringAlgorithm:self clusterIntersects:cluster1 anotherCluster:cluster2];
+        BOOL clustersIntersect = [self.delegate gridClusteringAlgorithm:self
+                                                      clusterIntersects:cluster1
+                                                         anotherCluster:cluster2];
 
         if (clustersIntersect) {
             NSMutableSet *combinedSet = [NSMutableSet setWithSet:cluster1.annotations];
@@ -157,8 +164,10 @@
             if (currentCellCluster->state != KPClusterStateHasData) {
                 continue;
             }
-
-            int lookupIndexForCurrentCellQuadrant = log2f(currentCellCluster->distributionQuadrant); // we take log2f, because we need to transform KPClusterDistributionQuadrant which is one of the 1, 2, 4, 8 into array index: 0, 1, 2, 3, which we will use for lookups on the next step
+            
+            // we take log2f, because we need to transform KPClusterDistributionQuadrant which is one of the
+            // 1, 2, 4, 8 into array index: 0, 1, 2, 3, which we will use for lookups on the next step
+            int lookupIndexForCurrentCellQuadrant = log2f(currentCellCluster->distributionQuadrant);
 
             // Checking adjacent clusters
             for (int adjacentClustersPositionIndex = 0; adjacentClustersPositionIndex < 3; adjacentClustersPositionIndex++) {
