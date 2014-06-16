@@ -1,0 +1,2 @@
+language: objective-c
+script: ./kingpinTests/run-tests.sh

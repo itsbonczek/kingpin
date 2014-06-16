@@ -11,7 +11,7 @@
 @implementation TestAnnotation
 
 - (NSString *)title {
-    return [NSString stringWithFormat:@"%i", self.level];
+    return [NSString stringWithFormat:@"%li", (long)self.level];
 }
 
 - (NSString *)description {

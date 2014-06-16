@@ -34,12 +34,12 @@ static const int kNumberOfTestAnnotations = 20000;
     self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView];
     self.treeController.delegate = self;
     self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
-    [self.treeController setAnnotations:[self annotations]];
-    
+
     self.treeController2 = [[KPTreeController alloc] initWithMapView:self.mapView];
     self.treeController2.delegate = self;
     self.treeController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
-    [self.treeController2 setAnnotations:[self annotations]];
+
+    [self resetAnnotations:nil];
     
     self.mapView.showsUserLocation = YES;
     
@@ -62,35 +62,25 @@ static const int kNumberOfTestAnnotations = 20000;
 }
 
 - (IBAction)resetAnnotations:(id)sender {
-    [self.treeController setAnnotations:[self annotations]];
-    [self.treeController2 setAnnotations:[self annotations]];
+    [self.treeController setAnnotations:[self randomAnnotationsForCoordinate:[self sfCoord]]];
+    [self.treeController2 setAnnotations:[self randomAnnotationsForCoordinate:[self nycCoord]]];
 }
 
 
-- (NSArray *)annotations {
-    
-    // build an NYC and SF cluster
-    
+- (NSArray *)randomAnnotationsForCoordinate:(CLLocationCoordinate2D)coordinate {
+
     NSMutableArray *annotations = [NSMutableArray array];
     
-    CLLocationCoordinate2D nycCoord = [self nycCoord];
-    CLLocationCoordinate2D sfCoord = [self sfCoord];
-    
-    for (int i=0; i< kNumberOfTestAnnotations / 2; i++) {
+    for (int i = 0; i < kNumberOfTestAnnotations; i++) {
         
         float latAdj = ((random() % 100) / 1000.f);
         float lngAdj = ((random() % 100) / 1000.f);
         
-        TestAnnotation *a1 = [[TestAnnotation alloc] init];
-        a1.coordinate = CLLocationCoordinate2DMake(nycCoord.latitude + latAdj, 
-                                                   nycCoord.longitude + lngAdj);
-        [annotations addObject:a1];
-        
-        TestAnnotation *a2 = [[TestAnnotation alloc] init];
-        a2.coordinate = CLLocationCoordinate2DMake(sfCoord.latitude + latAdj,
-                                                   sfCoord.longitude + lngAdj);
-        [annotations addObject:a2];
+        TestAnnotation *annotation = [[TestAnnotation alloc] init];
+        annotation.coordinate = CLLocationCoordinate2DMake(coordinate.latitude + latAdj,
+                                                   coordinate.longitude + lngAdj);
 
+        [annotations addObject:annotation];
     }
     
     return annotations;
@@ -129,56 +119,45 @@ static const int kNumberOfTestAnnotations = 20000;
     
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {    
+    MKPinAnnotationView *annotationView = nil;
     
-    MKPinAnnotationView *v = nil;
-    
-    if([annotation isKindOfClass:[KPAnnotation class]]){
-    
-        KPAnnotation *a = (KPAnnotation *)annotation;
+    if ([annotation isKindOfClass:[KPAnnotation class]]) {
+        KPAnnotation *kingpinAnnotation = (KPAnnotation *)annotation;
         
-        if([annotation isKindOfClass:[MKUserLocation class]]){
-            return nil;
-        }
-        
-        if([a isCluster]){
-           
-            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+        if ([kingpinAnnotation isCluster]) {
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
             
-            if(!v){
-                v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:kingpinAnnotation reuseIdentifier:@"cluster"];
             }
             
-            v.pinColor = MKPinAnnotationColorPurple;
-        }
-        else {
+            annotationView.pinColor = MKPinAnnotationColorPurple;
+        } else {
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
             
-            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-            
-            if(!v){
-                v = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
-                                                    reuseIdentifier:@"pin"];
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:[kingpinAnnotation.annotations anyObject] reuseIdentifier:@"pin"];
             }
             
-            v.pinColor = MKPinAnnotationColorRed;
+            annotationView.pinColor = MKPinAnnotationColorRed;
         }
         
-        v.canShowCallout = YES;
-        
+        annotationView.canShowCallout = YES;
     }
-    else if([annotation isKindOfClass:[MyAnnotation class]]) {
-        v = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
-        v.pinColor = MKPinAnnotationColorGreen;
+
+    else if ([annotation isKindOfClass:[MyAnnotation class]]) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
+        annotationView.pinColor = MKPinAnnotationColorGreen;
     }
     
-    return v;
-    
+    return annotationView;
 }
 
 #pragma mark - KPTreeControllerDelegate
 
 - (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation {
-    annotation.title = [NSString stringWithFormat:@"%i custom annotations", annotation.annotations.count];
+    annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
     annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
 }
 
