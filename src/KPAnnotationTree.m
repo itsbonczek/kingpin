@@ -19,6 +19,8 @@
 
 #import "KPAnnotation.h"
 
+#import "KPGeometry.h"
+
 #import <assert.h>
 
 static kp_internal_annotation_t *KPTemporaryAnnotationStorage;
@@ -49,70 +51,67 @@ static MKMapPoint *KPTemporaryPointStorage;
 
 - (NSArray *)annotationsInMapRect:(MKMapRect)rect {
     NSMutableArray *result = [NSMutableArray array];
-    
-    [self doSearchInMapRect:rect
-         mutableAnnotations:result
-                    curNode:self.root
-                   curLevel:0];
-    
+
+    MKMapPoint minPoint = rect.origin;
+    MKMapPoint maxPoint = MKMapPointMake(MKMapRectGetMaxX(rect), MKMapRectGetMaxY(rect));
+
+    [self doSearchInMapRectMinPoint:&minPoint
+                           maxPoint:&maxPoint
+                 mutableAnnotations:result
+                            curNode:self.root
+                               axis:KPAnnotationTreeAxisX];
+
     return result;
 }
 
-- (void)doSearchInMapRect:(MKMapRect)mapRect 
-       mutableAnnotations:(NSMutableArray *)annotations 
-                  curNode:(kp_treenode_t *)curNode
-                 curLevel:(NSInteger)level {
-    
+- (void)doSearchInMapRectMinPoint:(MKMapPoint *)minPoint
+                         maxPoint:(MKMapPoint *)maxPoint
+               mutableAnnotations:(NSMutableArray *)annotations
+                          curNode:(kp_treenode_t *)curNode
+                             axis:(KPAnnotationTreeAxis)axis {
     if (curNode == NULL) {
         return;
     }
 
-    MKMapPoint mapPoint = curNode->mapPoint;
-
-    if (MKMapRectContainsPoint(mapRect, mapPoint)) {
+    if (minPoint->x <= curNode->mapPoint.x &&
+        minPoint->y <= curNode->mapPoint.y &&
+        curNode->mapPoint.x <= maxPoint->x &&
+        curNode->mapPoint.y <= maxPoint->y) {
         [annotations addObject:curNode->annotation];
     }
 
-    KPAnnotationTreeAxis axis = (level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
+    double val = MKMapPointGetCoordinateForAxis(&curNode->mapPoint, axis);
 
-    double val, minVal, maxVal;
-    
-    if (axis == KPAnnotationTreeAxisX) {
-        val    = mapPoint.x;
-        minVal = mapRect.origin.x;
-        maxVal = mapRect.origin.x + mapRect.size.width;
+    KPAnnotationTreeAxis complementaryAxis = axis ^ 1;
+
+    if (MKMapPointGetCoordinateForAxis(maxPoint, axis) < val) {
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
+                     mutableAnnotations:annotations
+                                curNode:curNode->left
+                                   axis:complementaryAxis];
+    }
+
+    else if (MKMapPointGetCoordinateForAxis(minPoint, axis) >= val){
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
+                     mutableAnnotations:annotations
+                                curNode:curNode->right
+                                   axis:complementaryAxis];
     }
 
     else {
-        val    = mapPoint.y;
-        minVal = mapRect.origin.y;
-        maxVal = mapRect.origin.y + mapRect.size.height;
-    }
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
+                     mutableAnnotations:annotations
+                                curNode:curNode->left
+                                   axis:complementaryAxis];
 
-    if (maxVal < val) {
-        [self doSearchInMapRect:mapRect
-             mutableAnnotations:annotations
-                        curNode:curNode->left
-                       curLevel:(level + 1)];
-    }
-
-    else if (minVal >= val){
-        [self doSearchInMapRect:mapRect
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
              mutableAnnotations:annotations
                         curNode:curNode->right
-                       curLevel:(level + 1)];
-    }
-
-    else {
-        [self doSearchInMapRect:mapRect
-             mutableAnnotations:annotations
-                        curNode:curNode->left
-                       curLevel:(level + 1)];
-        
-        [self doSearchInMapRect:mapRect
-             mutableAnnotations:annotations
-                        curNode:curNode->right
-                       curLevel:(level + 1)];
+                                   axis:complementaryAxis];
     }
 }
 
