@@ -140,11 +140,11 @@
     
     kp_cluster_merge_block_t checkClustersAndMergeIfNeeded = ^(kp_cluster_t *cl1, kp_cluster_t *cl2) {
 
-        assert(cl1 && cl1->state == KPClusterStateHasData);
-        assert(cl2 && cl2->state == KPClusterStateHasData);
+        NSCAssert(cl1 && cl1->state == KPClusterStateHasData, nil);
+        NSCAssert(cl2 && cl2->state == KPClusterStateHasData, nil);
 
-        assert(cl1->annotationIndex >= 0 && cl1->annotationIndex < gridSizeX * gridSizeY);
-        assert(cl2->annotationIndex >= 0 && cl2->annotationIndex < gridSizeX * gridSizeY);
+        NSCAssert(cl1->annotationIndex >= 0 && cl1->annotationIndex < gridSizeX * gridSizeY, nil);
+        NSCAssert(cl2->annotationIndex >= 0 && cl2->annotationIndex < gridSizeX * gridSizeY, nil);
 
         KPAnnotation *cluster1 = [mutableClusters objectAtIndex:cl1->annotationIndex];
         KPAnnotation *cluster2 = [mutableClusters objectAtIndex:cl2->annotationIndex];
@@ -196,8 +196,8 @@
         for (uint16_t row = 1; row < (gridSizeX + 2); row++) {
         loop_with_explicit_col_and_row:
             
-            assert(col > 0);
-            assert(row > 0);
+            NSCAssert(col > 0, nil);
+            NSCAssert(row > 0, nil);
             
             currentClusterPosition.col = col;
             currentClusterPosition.row = row;

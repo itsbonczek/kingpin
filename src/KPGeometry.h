@@ -28,8 +28,8 @@ static inline MKMapRect MKMapRectNormalizeToCellSize(MKMapRect mapRect, MKMapSiz
     normalizedRect.size.height += ceil((cellSize.height - fmod(normalizedRect.size.height, cellSize.height)));
 
     // Guard validation
-    assert(((uint32_t)normalizedRect.size.width  % (uint32_t)cellSize.width)  == 0);
-    assert(((uint32_t)normalizedRect.size.height % (uint32_t)cellSize.height) == 0);
+    NSCAssert(((uint32_t)normalizedRect.size.width  % (uint32_t)cellSize.width)  == 0, nil);
+    NSCAssert(((uint32_t)normalizedRect.size.height % (uint32_t)cellSize.height) == 0, nil);
 
     return normalizedRect;
 }

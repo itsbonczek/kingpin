@@ -106,12 +106,12 @@ typedef struct {
 
 static inline void KPClusterGridValidateNULLMargin(kp_cluster_t **clusterGrid, NSUInteger gridSizeX, NSUInteger gridSizeY) {
     for (NSUInteger row = 0; row < (gridSizeX + 2); row++) {
-        assert(clusterGrid[0][row].state == KPClusterStateEmpty);
-        assert(clusterGrid[gridSizeY + 1][row].state == KPClusterStateEmpty);
+        NSCAssert(clusterGrid[0][row].state == KPClusterStateEmpty, nil);
+        NSCAssert(clusterGrid[gridSizeY + 1][row].state == KPClusterStateEmpty, nil);
     }
     for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
-        assert(clusterGrid[col][0].state == KPClusterStateEmpty);
-        assert(clusterGrid[col][gridSizeX + 1].state == KPClusterStateEmpty);
+        NSCAssert(clusterGrid[col][0].state == KPClusterStateEmpty, nil);
+        NSCAssert(clusterGrid[col][gridSizeX + 1].state == KPClusterStateEmpty, nil);
     }
 }
 
