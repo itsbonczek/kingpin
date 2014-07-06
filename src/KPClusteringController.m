@@ -16,7 +16,7 @@
 
 #import <MapKit/MapKit.h>
 
-#import "KPTreeController.h"
+#import "KPClusteringController.h"
 
 #import "KPAnnotation.h"
 #import "KPAnnotationTree.h"
@@ -25,13 +25,13 @@
 #import "NSArray+KP.h"
 
 typedef enum {
-    KPTreeControllerMapViewportNoChange,
-    KPTreeControllerMapViewportPan,
-    KPTreeControllerMapViewportZoom
-} KPTreeControllerMapViewportChangeState;
+    KPClusteringControllerMapViewportNoChange,
+    KPClusteringControllerMapViewportPan,
+    KPClusteringControllerMapViewportZoom
+} KPClusteringControllerMapViewportChangeState;
 
 
-@interface KPTreeController()
+@interface KPClusteringController()
 
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) KPAnnotationTree *annotationTree;
@@ -39,7 +39,7 @@ typedef enum {
 
 @property (assign, nonatomic) MKMapRect lastRefreshedMapRect;
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
-@property (assign, readonly, nonatomic) KPTreeControllerMapViewportChangeState mapViewportChangeState;
+@property (assign, readonly, nonatomic) KPClusteringControllerMapViewportChangeState mapViewportChangeState;
 
 - (void)_animateCluster:(KPAnnotation *)cluster
          fromAnnotation:(KPAnnotation *)fromAnnotation
@@ -48,7 +48,7 @@ typedef enum {
 
 @end
 
-@implementation KPTreeController
+@implementation KPClusteringController
 
 - (id)initWithMapView:(MKMapView *)mapView {
     return [self initWithMapView:mapView
@@ -86,10 +86,10 @@ typedef enum {
 }
 
 - (void)refresh:(BOOL)animated {
-    KPTreeControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
+    KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
-    if (mapViewportChangeState != KPTreeControllerMapViewportNoChange) {
-        [self _updateVisibileMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPTreeControllerMapViewportPan)];
+    if (mapViewportChangeState != KPClusteringControllerMapViewportNoChange) {
+        [self _updateVisibileMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
 
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
@@ -99,14 +99,14 @@ typedef enum {
 // only refresh if:
 // - the map has been zoomed
 // - the map has been panned significantly
-- (KPTreeControllerMapViewportChangeState)mapViewportChangeState {
+- (KPClusteringControllerMapViewportChangeState)mapViewportChangeState {
     
     if (MKMapRectEqualToRect(self.mapView.visibleMapRect, self.lastRefreshedMapRect)) {
-        return KPTreeControllerMapViewportNoChange;
+        return KPClusteringControllerMapViewportNoChange;
     }
 
     if (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > 0.1f) {
-        return KPTreeControllerMapViewportZoom;
+        return KPClusteringControllerMapViewportZoom;
     }
 
     CGPoint lastPoint = [self.mapView convertCoordinate:self.lastRefreshedMapRegion.center
@@ -117,10 +117,10 @@ typedef enum {
 
     if ((fabs(lastPoint.x - currentPoint.x) > self.mapView.frame.size.width) ||
         (fabs(lastPoint.y - currentPoint.y) > self.mapView.frame.size.height)) {
-        return KPTreeControllerMapViewportPan;
+        return KPClusteringControllerMapViewportPan;
     }
 
-    return KPTreeControllerMapViewportNoChange;
+    return KPClusteringControllerMapViewportNoChange;
 }
 
 #pragma mark

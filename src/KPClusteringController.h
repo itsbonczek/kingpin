@@ -20,14 +20,14 @@
 
 @class KPAnnotation;
 
-@protocol KPTreeControllerDelegate;
+@protocol KPClusteringControllerDelegate;
 
-@interface KPTreeController : NSObject
+@interface KPClusteringController : NSObject
 
 @property (assign, nonatomic) CGFloat animationDuration;
 @property (assign, nonatomic) UIViewAnimationOptions animationOptions;
 
-@property (weak, nonatomic) id <KPTreeControllerDelegate> delegate;
+@property (weak, nonatomic) id <KPClusteringControllerDelegate> delegate;
 
 - (id)initWithMapView:(MKMapView *)mapView;
 - (id)initWithMapView:(MKMapView *)mapView clusteringAlgorithm:(id<KPClusteringAlgorithm>)algorithm;
@@ -37,14 +37,14 @@
 @end
 
 
-@protocol KPTreeControllerDelegate <NSObject>
+@protocol KPClusteringControllerDelegate <NSObject>
 
 @optional
 
-- (BOOL)treeControllerShouldClusterAnnotations:(KPTreeController *)treeController;
+- (BOOL)treeControllerShouldClusterAnnotations:(KPClusteringController *)treeController;
 
-- (void)treeController:(KPTreeController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation;
-- (void)treeController:(KPTreeController *)treeController willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
-- (void)treeController:(KPTreeController *)treeController didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+- (void)treeController:(KPClusteringController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation;
+- (void)treeController:(KPClusteringController *)treeController willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+- (void)treeController:(KPClusteringController *)treeController didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
 
 @end

@@ -10,7 +10,7 @@
 
 #import "KPAnnotation.h"
 #import "KPGridClusteringAlgorithm.h"
-#import "KPTreeController.h"
+#import "KPClusteringController.h"
 #import "MyAnnotation.h"
 #import "TestAnnotation.h"
 #import "TestHelpers.h"
@@ -19,10 +19,10 @@
 
 static const int kNumberOfTestAnnotations = 20000;
 
-@interface ViewController () <KPTreeControllerDelegate, KPTreeControllerDelegate>
+@interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
 
-@property (strong, nonatomic) KPTreeController *treeController;
-@property (strong, nonatomic) KPTreeController *treeController2;
+@property (strong, nonatomic) KPClusteringController *treeController;
+@property (strong, nonatomic) KPClusteringController *treeController2;
 
 @end
 
@@ -36,7 +36,7 @@ static const int kNumberOfTestAnnotations = 20000;
 
     /*
      Disable old tree controller for now
-    self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView];
+    self.treeController = [[KPClusteringController alloc] initWithMapView:self.mapView];
     self.treeController.delegate = self;
     self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
     [self.treeController setAnnotations:[self annotations]];
@@ -46,7 +46,7 @@ static const int kNumberOfTestAnnotations = 20000;
     algorithm.annotationSize = CGSizeMake(25, 50);
     //algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
 
-    self.treeController2 = [[KPTreeController alloc] initWithMapView:self.mapView
+    self.treeController2 = [[KPClusteringController alloc] initWithMapView:self.mapView
                                                  clusteringAlgorithm:algorithm];
     self.treeController2.delegate = self;
 
@@ -189,14 +189,14 @@ static const int kNumberOfTestAnnotations = 20000;
     
 }
 
-#pragma mark - <KPTreeControllerDelegate>
+#pragma mark - <KPClusteringControllerDelegate>
 
-- (void)treeController:(KPTreeController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation {
+- (void)treeController:(KPClusteringController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation {
     annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
     annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
 }
 
-- (BOOL)treeControllerShouldClusterAnnotations:(KPTreeController *)treeController {
+- (BOOL)treeControllerShouldClusterAnnotations:(KPClusteringController *)treeController {
     return YES;
 }
 

@@ -25,7 +25,7 @@
 		91E4FC2418E773F300AC8444 /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
 		91E4FC2518E773F300AC8444 /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
 		91E4FC2618E773F300AC8444 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
-		91E4FC2718E773F300AC8444 /* KPTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPTreeController.m */; };
+		91E4FC2718E773F300AC8444 /* KPClusteringController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPClusteringController.m */; };
 		91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0AE1645CAE5004BC920 /* TestAnnotation.m */; };
 		9346910116A8EC8400DE59FA /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910016A8EC8400DE59FA /* MyAnnotation.m */; };
 		9346910716A8F1C200DE59FA /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
@@ -36,7 +36,7 @@
 		93BBC07E1645A387004BC920 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
 		93BBC0821645A39F004BC920 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0811645A39F004BC920 /* MapKit.framework */; };
 		93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0861645A42A004BC920 /* CoreLocation.framework */; };
-		93BBC08A1645A690004BC920 /* KPTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPTreeController.m */; };
+		93BBC08A1645A690004BC920 /* KPClusteringController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPClusteringController.m */; };
 		93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0921645B78C004BC920 /* AppDelegate.m */; };
 		93BBC0A01645B78C004BC920 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0931645B78C004BC920 /* Default-568h@2x.png */; };
 		93BBC0A11645B78C004BC920 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BBC0941645B78C004BC920 /* Default.png */; };
@@ -86,8 +86,8 @@
 		93BBC0531645A2B2004BC920 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		93BBC0811645A39F004BC920 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		93BBC0861645A42A004BC920 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
-		93BBC0881645A68F004BC920 /* KPTreeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPTreeController.h; sourceTree = "<group>"; };
-		93BBC0891645A68F004BC920 /* KPTreeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPTreeController.m; sourceTree = "<group>"; };
+		93BBC0881645A68F004BC920 /* KPClusteringController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPClusteringController.h; sourceTree = "<group>"; };
+		93BBC0891645A68F004BC920 /* KPClusteringController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPClusteringController.m; sourceTree = "<group>"; };
 		93BBC0911645B78C004BC920 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		93BBC0921645B78C004BC920 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		93BBC0931645B78C004BC920 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -168,8 +168,8 @@
 				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,
 				93BBC0451645A1F8004BC920 /* KPAnnotation.h */,
 				93BBC0461645A1F8004BC920 /* KPAnnotation.m */,
-				93BBC0881645A68F004BC920 /* KPTreeController.h */,
-				93BBC0891645A68F004BC920 /* KPTreeController.m */,
+				93BBC0881645A68F004BC920 /* KPClusteringController.h */,
+				93BBC0891645A68F004BC920 /* KPClusteringController.m */,
 				86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */,
 				86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */,
 				86174DD018F9D7CF00014C48 /* KPGeometry.h */,
@@ -393,7 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91E4FC2718E773F300AC8444 /* KPTreeController.m in Sources */,
+				91E4FC2718E773F300AC8444 /* KPClusteringController.m in Sources */,
 				91E4FC2818E773F300AC8444 /* TestAnnotation.m in Sources */,
 				867A7EAF1911B0BD00778F7B /* KPGridClusteringAlgorithmTests.m in Sources */,
 				8621639E1912202B00724CEF /* KPAnnotationTreeTests.m in Sources */,
@@ -413,7 +413,7 @@
 			files = (
 				93BBC07C1645A387004BC920 /* KPAnnotationTree.m in Sources */,
 				93BBC07E1645A387004BC920 /* KPAnnotation.m in Sources */,
-				93BBC08A1645A690004BC920 /* KPTreeController.m in Sources */,
+				93BBC08A1645A690004BC920 /* KPClusteringController.m in Sources */,
 				93BBC09F1645B78C004BC920 /* AppDelegate.m in Sources */,
 				93BBC0A61645B78C004BC920 /* main.m in Sources */,
 				93BBC0A71645B78C004BC920 /* ViewController.m in Sources */,
