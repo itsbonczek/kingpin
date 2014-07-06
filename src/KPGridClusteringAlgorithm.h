@@ -36,6 +36,4 @@ typedef enum {
 @property (assign, nonatomic) CGSize annotationSize;
 @property (assign, nonatomic) CGPoint annotationCenterOffset;
 
-- (MKMapSize)mapCellSizeForGridSize:(CGSize)gridSize inMapView:(MKMapView *)mapView;
-
 @end

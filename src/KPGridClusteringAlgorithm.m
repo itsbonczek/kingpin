@@ -103,20 +103,20 @@
     return newClusters;
 }
 
+#pragma mark - Private
+
 - (MKMapSize)mapCellSizeForGridSize:(CGSize)gridSize inMapView:(MKMapView *)mapView {
     // Calculate the grid size in terms of MKMapPoints.
     double widthPercentage =  gridSize.width / CGRectGetWidth(mapView.frame);
     double heightPercentage = gridSize.height / CGRectGetHeight(mapView.frame);
-    
+
     MKMapSize cellSize = MKMapSizeMake(
                                        ceil(widthPercentage  * mapView.visibleMapRect.size.width),
                                        ceil(heightPercentage * mapView.visibleMapRect.size.height)
                                        );
-    
+
     return cellSize;
 }
-
-#pragma mark - Private
 
 - (void)_ensureStrategyIntegrity {
     if (self.clusteringStrategy == KPGridClusteringAlgorithmStrategyTwoPhase &&

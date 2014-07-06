@@ -187,6 +187,8 @@ typedef kp_cluster_merge_result_t(^kp_cluster_merge_block_t)(kp_cluster_t *, kp_
 
 @interface KPGridClusteringAlgorithm (Private)
 
+- (MKMapSize)mapCellSizeForGridSize:(CGSize)gridSize inMapView:(MKMapView *)mapView;
+
 - (NSArray *)_mergeOverlappingClusters:(NSArray *)clusters
                              inMapView:(MKMapView *)mapView
                            clusterGrid:(kp_cluster_t **)clusterGrid
