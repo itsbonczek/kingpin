@@ -4,26 +4,41 @@ A drop-in MKAnnotation clustering library for iOS.
 
 [![Build Status](https://travis-ci.org/itsbonczek/kingpin.svg?branch=master)](https://travis-ci.org/itsbonczek/kingpin)
 
+__Update July 6, 2014__
+
+The current master branch contains the newest kingpin which is backward-incompatible with the latest stable version of kingpin: [0.1.4](https://github.com/itsbonczek/kingpin/releases). We are planning 0.2 release very soon.
 
 ## Features
-
 
 * Uses a [2-d tree](http://en.wikipedia.org/wiki/K-d_tree) under the hood for maximum performance.
 * No subclassing required, making the library easy to integrate with existing projects.
 
+## Installation
 
-## Usage
+Install via CocoaPods. In your `Podfile` add:
 
-Create an instance of a KPTreeController:
+```ruby
+pod 'kingpin'
+```
+
+then run 
+
+```bash
+pod install
+```
+
+## Basic usage
+
+Create an instance of a KPClusteringController. The most likely you want to do this inside a view controller which has map view.
 
 ```objective-c
-self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView]
+self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView]
 ```
 
 Set the controller's annotations:
 
 ```objective-c
-[self.treeController setAnnotations:[self annotations]];
+[self.clusteringController setAnnotations:[self annotations]];
 ```
 
 Handle the clusters:
@@ -68,11 +83,36 @@ Refresh visible annotations as needed:
 
 ```objective-c
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [self.treeController refresh:self.animationSwitch.on];
+    [self.clusteringController refresh:self.animationSwitch.on];
 }
 ```
 
 This is typically done in `-mapView:regionDidChangeAnimated:`
+
+## Configuration
+
+To perform configuration of clustering algorithm create an instance of KPGridClusteringAlgorithm and use it to instantiate KPClusteringController:
+
+```objective-c
+KPGridClusteringAlgorithm *algoritm = [KPGridClusteringAlgorithm new];
+
+algorithm.gridSize = CGSizeMake(50, 50); // cluster grid cell size
+algorithm.annotationSize = CGSizeMake(25, 50); // annotation view size
+algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
+
+KPClusteringController *clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView clusteringAlgorithm:algorithm];
+```
+
+## Clustering algorithm
+
+Currently kingpin uses simple grid-based clustering algorithm backed by k-d tree.
+
+The good demonstration of this algorithm can be found in WWDC Session 2011: ["Visualizing Information Geographically with MapKit"](https://developer.apple.com/videos/wwdc/2011/).
+
+Kingpin's algorithm works in two steps: 
+
+1. At the first step it produces a cluster grid.
+2. At the second step algorithm performs a merger of the clusters in this cluster grid that visually overlap.
 
 ## Versions
 

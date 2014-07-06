@@ -44,7 +44,7 @@ static const int kNumberOfTestAnnotations = 20000;
     
     KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
     algorithm.annotationSize = CGSizeMake(25, 50);
-    //algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
+    algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
 
     self.treeController2 = [[KPClusteringController alloc] initWithMapView:self.mapView
                                                  clusteringAlgorithm:algorithm];
