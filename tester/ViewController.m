@@ -21,8 +21,8 @@ static const int kNumberOfTestAnnotations = 20000;
 
 @interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
 
-@property (strong, nonatomic) KPClusteringController *treeController;
-@property (strong, nonatomic) KPClusteringController *treeController2;
+@property (strong, nonatomic) KPClusteringController *clusteringController;
+@property (strong, nonatomic) KPClusteringController *clusteringController2;
 
 @end
 
@@ -36,23 +36,23 @@ static const int kNumberOfTestAnnotations = 20000;
 
     /*
      Disable old tree controller for now
-    self.treeController = [[KPClusteringController alloc] initWithMapView:self.mapView];
-    self.treeController.delegate = self;
-    self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
-    [self.treeController setAnnotations:[self annotations]];
+    self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView];
+    self.clusteringController.delegate = self;
+    self.clusteringController.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    [self.clusteringController setAnnotations:[self annotations]];
      */
     
     KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
     algorithm.annotationSize = CGSizeMake(25, 50);
     algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
 
-    self.treeController2 = [[KPClusteringController alloc] initWithMapView:self.mapView
+    self.clusteringController2 = [[KPClusteringController alloc] initWithMapView:self.mapView
                                                  clusteringAlgorithm:algorithm];
-    self.treeController2.delegate = self;
+    self.clusteringController2.delegate = self;
 
-    self.treeController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    self.clusteringController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
 
-    [self.treeController2 setAnnotations:[self annotations]];
+    [self.clusteringController2 setAnnotations:[self annotations]];
     
     self.mapView.showsUserLocation = YES;
     
@@ -75,8 +75,8 @@ static const int kNumberOfTestAnnotations = 20000;
 }
 
 - (IBAction)resetAnnotations:(id)sender {
-    //[self.treeController setAnnotations:[self annotations]];
-    [self.treeController2 setAnnotations:[self annotations]];
+    //[self.clusteringController setAnnotations:[self annotations]];
+    [self.clusteringController2 setAnnotations:[self annotations]];
 }
 
 
@@ -121,9 +121,9 @@ static const int kNumberOfTestAnnotations = 20000;
 #pragma mark - MKMapView
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    //[self.treeController refresh:self.animationSwitch.on];
+    //[self.clusteringController refresh:self.animationSwitch.on];
     Benchmark(1, ^{
-        [self.treeController2 refresh:self.animationSwitch.on];
+        [self.clusteringController2 refresh:self.animationSwitch.on];
     });
 }
 
@@ -191,12 +191,12 @@ static const int kNumberOfTestAnnotations = 20000;
 
 #pragma mark - <KPClusteringControllerDelegate>
 
-- (void)treeController:(KPClusteringController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation {
+- (void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation {
     annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
     annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
 }
 
-- (BOOL)treeControllerShouldClusterAnnotations:(KPClusteringController *)treeController {
+- (BOOL)clusteringControllerShouldClusterAnnotations:(KPClusteringController *)clusteringController {
     return YES;
 }
 

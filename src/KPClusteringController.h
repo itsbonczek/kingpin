@@ -41,10 +41,10 @@
 
 @optional
 
-- (BOOL)treeControllerShouldClusterAnnotations:(KPClusteringController *)treeController;
+- (BOOL)clusteringControllerShouldClusterAnnotations:(KPClusteringController *)clusteringController;
 
-- (void)treeController:(KPClusteringController *)treeController configureAnnotationForDisplay:(KPAnnotation *)annotation;
-- (void)treeController:(KPClusteringController *)treeController willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
-- (void)treeController:(KPClusteringController *)treeController didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+- (void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation;
+- (void)clusteringController:(KPClusteringController *)clusteringController willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+- (void)clusteringController:(KPClusteringController *)clusteringController didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
 
 @end

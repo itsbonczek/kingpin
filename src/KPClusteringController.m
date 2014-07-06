@@ -138,8 +138,8 @@ typedef enum {
 
     BOOL clusteringEnabled = YES;
 
-    if ([self.delegate respondsToSelector:@selector(treeControllerShouldClusterAnnotations:)]) {
-        clusteringEnabled = [self.delegate treeControllerShouldClusterAnnotations:self];
+    if ([self.delegate respondsToSelector:@selector(clusteringControllerShouldClusterAnnotations:)]) {
+        clusteringEnabled = [self.delegate clusteringControllerShouldClusterAnnotations:self];
     }
 
     if (clusteringEnabled) {
@@ -154,9 +154,9 @@ typedef enum {
         }];
     }
 
-    if ([self.delegate respondsToSelector:@selector(treeController:configureAnnotationForDisplay:)]) {
+    if ([self.delegate respondsToSelector:@selector(clusteringController:configureAnnotationForDisplay:)]) {
         for (KPAnnotation *annotation in newClusters) {
-            [self.delegate treeController:self configureAnnotationForDisplay:annotation];
+            [self.delegate clusteringController:self configureAnnotationForDisplay:annotation];
         }
     }
 
@@ -230,24 +230,24 @@ typedef enum {
     
     cluster.coordinate = fromCoord;
     
-    if ([self.delegate respondsToSelector:@selector(treeController:
+    if ([self.delegate respondsToSelector:@selector(clusteringController:
                                                     willAnimateAnnotation:
                                                     fromAnnotation:
                                                     toAnnotation:)])
     {
-        [self.delegate treeController:self
+        [self.delegate clusteringController:self
                 willAnimateAnnotation:cluster
                        fromAnnotation:fromAnnotation
                          toAnnotation:toAnnotation];
     }
     
     void (^completionDelegate)() = ^ {
-        if ([self.delegate respondsToSelector:@selector(treeController:
+        if ([self.delegate respondsToSelector:@selector(clusteringController:
                                                         didAnimateAnnotation:
                                                         fromAnnotation:
                                                         toAnnotation:)])
         {
-            [self.delegate treeController:self
+            [self.delegate clusteringController:self
                      didAnimateAnnotation:cluster
                            fromAnnotation:fromAnnotation
                              toAnnotation:toAnnotation];
