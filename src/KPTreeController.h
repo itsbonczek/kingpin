@@ -53,5 +53,6 @@
 - (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation;
 - (void)treeController:(KPTreeController *)tree willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
 - (void)treeController:(KPTreeController *)tree didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+- (void)treeController:(KPTreeController *)tree didUpdateVisibleMapAnnotations:(NSSet *)annotations;
 
 @end

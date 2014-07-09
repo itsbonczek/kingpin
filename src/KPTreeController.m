@@ -178,13 +178,13 @@ typedef enum {
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
-    [self _updateVisibileMapAnnotationsOnMapView:NO];
+    [self _updateVisibleMapAnnotationsOnMapView:NO];
 }
 
 - (void)refresh:(BOOL)animated {
     
     if(MKMapRectIsNull(self.lastRefreshedMapRect) || [self _mapWasZoomed] || [self _mapWasPannedSignificantly]){
-        [self _updateVisibileMapAnnotationsOnMapView:animated && [self _mapWasZoomed]];
+        [self _updateVisibleMapAnnotationsOnMapView:animated && [self _mapWasZoomed]];
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
     }
@@ -213,7 +213,7 @@ typedef enum {
 
 #pragma mark - Private
 
-- (void)_updateVisibileMapAnnotationsOnMapView:(BOOL)animated
+- (void)_updateVisibleMapAnnotationsOnMapView:(BOOL)animated
 {
     NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
     
@@ -401,6 +401,9 @@ typedef enum {
 
     if (animated) {
         
+        // dispatch group to fire off callback after mapView has been updated with all new annotations
+        dispatch_group_t group = dispatch_group_create();
+        
         for(KPAnnotation *newCluster in newClusters){
             
             [self.mapView addAnnotation:newCluster];
@@ -430,11 +433,15 @@ typedef enum {
                     
                     if(MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate)) && shouldAnimate){
                         
+                        dispatch_group_enter(group);
+                        
                         [self _animateCluster:oldCluster
                                fromAnnotation:oldCluster
                                  toAnnotation:newCluster
                                    completion:^(BOOL finished) {
                                        [self.mapView removeAnnotation:oldCluster];
+                                       
+                                       dispatch_group_leave(group);
                                    }];
                     }
                     else {
@@ -444,11 +451,21 @@ typedef enum {
                 }
             }
         }
+        
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            if ([self.delegate respondsToSelector:@selector(treeController:didUpdateVisibleMapAnnotations:)]) {
+                [self.delegate treeController:self didUpdateVisibleMapAnnotations:visibleAnnotations];
+            }
+        });
 
     }
     else {
         [self.mapView removeAnnotations:oldClusters];
         [self.mapView addAnnotations:newClusters];
+        
+        if ([self.delegate respondsToSelector:@selector(treeController:didUpdateVisibleMapAnnotations:)]) {
+            [self.delegate treeController:self didUpdateVisibleMapAnnotations:visibleAnnotations];
+        }
     }
         
 }
