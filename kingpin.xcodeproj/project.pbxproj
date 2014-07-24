@@ -608,6 +608,8 @@
 					"-Wno-gnu",
 					"-Wno-variadic-macros",
 					"-Wno-objc-missing-property-synthesis",
+					"-Wno-bad-function-cast",
+					"-Wno-float-equal",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -650,6 +652,8 @@
 					"-Wno-gnu",
 					"-Wno-variadic-macros",
 					"-Wno-objc-missing-property-synthesis",
+					"-Wno-bad-function-cast",
+					"-Wno-float-equal",
 				);
 				WRAPPER_EXTENSION = app;
 			};
