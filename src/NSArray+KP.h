@@ -24,7 +24,7 @@
 
 @interface NSArray (KP)
 
-- (NSArray *)kp_filter:(BOOL (^)(id))block;
-- (NSArray *)kp_map:(id (^)(id))block;
+- (NSArray *)kp_filterUsingConcurrentEnumeration:(BOOL (^)(id))block;
+- (NSArray *)kp_mapUsingConcurrentEnumeration:(id (^)(id))block;
 
 @end

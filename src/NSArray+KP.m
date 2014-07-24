@@ -23,32 +23,26 @@
 
 @implementation NSArray (KP)
 
-- (NSArray *)kp_map:(id (^)(id))block {
-    
+- (NSArray *)kp_mapUsingConcurrentEnumeration:(id (^)(id))block {
     __block NSMutableArray *array = [NSMutableArray array];
     
-    [self foreach:^(id obj) { 
+    [self enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [array addObject:block(obj)];
     }];
     
     return array;
 }
 
-- (NSArray *)kp_filter:(BOOL (^)(id))block {
-
+- (NSArray *)kp_filterUsingConcurrentEnumeration:(BOOL (^)(id))block {
     __block NSMutableArray *array = [NSMutableArray array];
     
-    [self foreach:^(id obj) { 
+    [self enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if(block(obj)) {
             [array addObject:obj];
         }
     }];
-    
-    return array;
-}
 
-- (void)foreach:(void (^)(id))block {
-    for(id obj in self) block(obj);
+    return array;
 }
 
 @end
