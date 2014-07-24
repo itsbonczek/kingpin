@@ -4,9 +4,10 @@ A drop-in MKAnnotation clustering library for iOS.
 
 [![Build Status](https://travis-ci.org/itsbonczek/kingpin.svg?branch=master)](https://travis-ci.org/itsbonczek/kingpin)
 
-__Update July 6, 2014__
+__Update July 24, 2014__
 
-The current master branch contains the newest kingpin which is backward-incompatible with the latest stable version of kingpin: [0.1.4](https://github.com/itsbonczek/kingpin/releases). We are planning 0.2 release very soon.
+The current master branch contains the newest kingpin which is backward-incompatible with the latest stable version: [0.1.4](https://github.com/itsbonczek/kingpin/releases). We are planning
+0.2 release very soon. If you feel adventurous enough you may obtain the latest edge version from the master branch (see Installation).
 
 ## Features
 
@@ -15,7 +16,7 @@ The current master branch contains the newest kingpin which is backward-incompat
 
 ## Installation
 
-Install via CocoaPods. In your `Podfile` add:
+Install via CocoaPods. To get stable release in your `Podfile` add:
 
 ```ruby
 pod 'kingpin'
@@ -27,9 +28,15 @@ then run
 pod install
 ```
 
+If you want to use the latest version from kingpin's master point your Podfile to the git:
+
+```
+pod 'kingpin', :git => 'https://github.com/itsbonczek/kingpin'
+```
+
 ## Basic usage
 
-Create an instance of a KPClusteringController. The most likely you want to do this inside a view controller which has map view.
+Create an instance of `KPClusteringController`. The most likely you want to do this inside a view controller which has a map view.
 
 ```objective-c
 self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView]
@@ -109,7 +116,7 @@ Currently kingpin uses simple grid-based clustering algorithm backed by k-d tree
 
 The good demonstration of this algorithm can be found in WWDC Session 2011: ["Visualizing Information Geographically with MapKit"](https://developer.apple.com/videos/wwdc/2011/).
 
-Kingpin's algorithm works in two steps: 
+Kingpin's algorithm works in two steps (phases): 
 
 1. At the first step it produces a cluster grid.
 2. At the second step algorithm performs a merger of the clusters in this cluster grid that visually overlap.
