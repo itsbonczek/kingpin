@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>F3D2B749-C9D9-4661-B4FC-068128623CCB</string>
+	<string>23F9891C-941D-49BC-AF15-907FCDFD42AF</string>
 	<key>IDESourceControlProjectName</key>
 	<string>kingpin</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</key>
-		<string>ssh://github.com/itsbonczek/kingpin.git</string>
+		<key>32770503-2BE3-42AE-B552-C002AFAD5FAE</key>
+		<string>ssh://github.com/stanislaw/kingpin.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>kingpin.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</key>
+		<key>32770503-2BE3-42AE-B552-C002AFAD5FAE</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/itsbonczek/kingpin.git</string>
+	<string>ssh://github.com/stanislaw/kingpin.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</string>
+	<string>32770503-2BE3-42AE-B552-C002AFAD5FAE</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>0DED6D00-2D4B-4FF3-A3DB-3F45AA009C04</string>
+			<string>32770503-2BE3-42AE-B552-C002AFAD5FAE</string>
 			<key>IDESourceControlWCCName</key>
 			<string>kingpin</string>
 		</dict>

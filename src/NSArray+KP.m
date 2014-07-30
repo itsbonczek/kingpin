@@ -33,10 +33,10 @@
     return array;
 }
 
-- (NSArray *)kp_filterUsingConcurrentEnumeration:(BOOL (^)(id))block {
+- (NSArray *)kp_filter:(BOOL (^)(id))block {
     __block NSMutableArray *array = [NSMutableArray array];
     
-    [self enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self enumerateObjectsWithOptions:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if(block(obj)) {
             [array addObject:obj];
         }

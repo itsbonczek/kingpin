@@ -160,7 +160,7 @@ typedef enum {
         }
     }
 
-    NSArray *oldClusters = [self.mapView.annotations kp_filterUsingConcurrentEnumeration:^BOOL(id annotation) {
+    NSArray *oldClusters = [self.mapView.annotations kp_filter:^BOOL(id annotation) {
         if ([annotation isKindOfClass:[KPAnnotation class]]) {
             return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
         }

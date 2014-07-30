@@ -79,4 +79,3 @@ FOUNDATION_EXPORT uint64_t dispatch_benchmark(size_t count, void (^block)(void))
 void BenchmarkReentrant(NSUInteger benchmarkNumber, void (^block)(void));
 void BenchmarkReentrantPrintResults(void);
 void BenchmarkReentrantResetResults(void);
-
