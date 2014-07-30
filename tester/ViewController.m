@@ -17,6 +17,8 @@
 
 #import "KPGridClusteringAlgorithm_Private.h"
 
+#import "Datasets.h"
+
 static const int kNumberOfTestAnnotations = 20000;
 
 @interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
@@ -81,7 +83,8 @@ static const int kNumberOfTestAnnotations = 20000;
 
 
 - (NSArray *)annotations {
-    
+
+    // return dataset1_8000_Moscow();
     // build an NYC and SF cluster
     
     NSMutableArray *annotations = [NSMutableArray array];
