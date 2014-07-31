@@ -83,8 +83,6 @@ static const int kNumberOfTestAnnotations = 20000;
 
 
 - (NSArray *)annotations {
-
-    // return dataset1_8000_Moscow();
     // build an NYC and SF cluster
     
     NSMutableArray *annotations = [NSMutableArray array];

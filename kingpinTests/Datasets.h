@@ -8,6 +8,7 @@
 
 #import "TestAnnotation.h"
 
+/*
 static NSArray *dataset1_8000_Moscow() {
 
     // build an NYC and SF cluster
@@ -34,8 +35,9 @@ static NSArray *dataset1_8000_Moscow() {
     
     return annotations;
 }
+ */
 
-static NSArray *dataset2_random_NY_and_SF() {
+static inline NSArray *dataset2_random_NY_and_SF() {
     // build an NYC and SF cluster
 
     CLLocationCoordinate2D NYCoord = CLLocationCoordinate2DMake(40.77, -73.98);
