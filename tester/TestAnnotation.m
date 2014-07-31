@@ -11,11 +11,11 @@
 @implementation TestAnnotation
 
 - (NSString *)title {
-    return [NSString stringWithFormat:@"%li", (long)self.level];
+    return [NSString stringWithFormat:@"Single Annotation"];
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@: (%f, %f)", [super description], self.coordinate.longitude, self.coordinate.latitude];
+    return [NSString stringWithFormat:@"<%@: %p; coordinate = (%f, %f)>", NSStringFromClass(self.class), self, self.coordinate.latitude, self.coordinate.longitude];
 }
 
 @end

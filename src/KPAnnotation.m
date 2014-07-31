@@ -16,15 +16,16 @@
 
 #import "KPAnnotation.h"
 
+#import "KPGeometry.h"
+
 @interface KPAnnotation ()
 
-@property (nonatomic, readwrite) NSSet *annotations;
-@property (nonatomic, readwrite) float radius;
+@property (strong, readwrite, nonatomic) NSSet *annotations;
+@property (assign, readwrite, nonatomic) float radius;
 
 @end
 
 @implementation KPAnnotation
-
 
 - (id)initWithAnnotations:(NSArray *)annotations {
     return [self initWithAnnotationSet:[NSSet setWithArray:annotations]];
@@ -33,11 +34,13 @@
 - (id)initWithAnnotationSet:(NSSet *)set {
     self = [super init];
     
-    if(self){
-        self.annotations = set;
-        self.title = [NSString stringWithFormat:@"%lu things", (unsigned long)[self.annotations count]];;
-        [self calculateValues];
+    if (self == nil) {
+        return nil;
     }
+
+    self.annotations = set;
+    self.title = [NSString stringWithFormat:@"%lu things", (unsigned long)[self.annotations count]];;
+    [self calculateValues];
     
     return self;
 }
@@ -141,13 +144,13 @@
 
     self.coordinate = CLLocationCoordinate2DMake(totalLat / self.annotations.count,
                                                  totalLng / self.annotations.count);
-    
-    self.radius = [[[CLLocation alloc] initWithLatitude:minLat
-                                              longitude:minLng]
-                   distanceFromLocation:[[CLLocation alloc] initWithLatitude:maxLat
-                                                                   longitude:maxLng]] / 2.f;
+
+    self.radius = MKMetersBetweenMapPoints(MKMapPointForCoordinate(CLLocationCoordinate2DMake(minLat, minLng)),
+                                           MKMapPointForCoordinate(CLLocationCoordinate2DMake(maxLat, maxLng))) / 2.f;
 }
 
-
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: %p; coordinate = (%f, %f); annotations = %@>", NSStringFromClass(self.class), self, self.coordinate.latitude, self.coordinate.longitude, self.annotations];
+}
 
 @end

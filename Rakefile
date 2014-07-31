@@ -11,7 +11,7 @@ end
 namespace :tests do
   desc "run tests"
   task :run  do
-    exec 'lib/xctool/xctool.sh -project ./kingpin.xcodeproj -scheme kingpinTests test -sdk iphonesimulator7.1'
+    exec 'lib/xctool/xctool.sh -workspace ./kingpin.xcworkspace -scheme kingpinTests test -sdk iphonesimulator7.1'
   end
   
 end

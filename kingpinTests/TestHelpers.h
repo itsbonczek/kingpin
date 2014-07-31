@@ -2,7 +2,6 @@
 #import <XCTest/XCTest.h>
 
 #import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
 
 // https://github.com/EvgenyKarkan/EKAlgorithms/blob/master/EKAlgorithms/NSArray%2BEKStuff.m
 static inline NSArray *arrayShuffle(NSArray *array) {
@@ -18,10 +17,44 @@ static inline NSArray *arrayShuffle(NSArray *array) {
 }
 
 
-static inline double randomWithinRange(double min, double max) {
-    return min + (max - min) * (double)arc4random_uniform(UINT32_MAX) / (UINT32_MAX - 1);
+static inline BOOL NSArrayHasDuplicates(NSArray *array) {
+    NSMutableDictionary *registry = [[NSMutableDictionary alloc] initWithCapacity:array.count];
+
+    for (id element in array) {
+        NSNumber *elementHash = @([element hash]);
+
+        if (registry[elementHash] == nil) {
+            registry[elementHash] = element;
+        } else {
+            NSLog(@"NSArrayHasDuplicates() found duplicate elements: %@ and %@", registry[elementHash], element);
+            return YES;
+        }
+    }
+
+    return NO;
 }
 
+static inline double randomWithinRange(double min, double max) {
+    return (min + (max - min) * ((double)arc4random_uniform(UINT32_MAX)) / (UINT32_MAX - 1));
+}
+
+
+static inline MKMapRect MKMapRectRandom() {
+    double randomWidth = round(randomWithinRange(0, MKMapRectWorld.size.width));
+    double randomHeight = round(randomWithinRange(0, MKMapRectWorld.size.height));
+
+    if (randomWidth  < (MKMapSizeWorld.width  / 10) ||
+        randomHeight < (MKMapSizeWorld.height / 10)) {
+        return MKMapRectRandom();
+    }
+    
+    double randomX = round(randomWithinRange(0, MKMapRectWorld.size.width - randomWidth));
+    double randomY = round(randomWithinRange(0, MKMapRectWorld.size.height - randomHeight));
+
+    MKMapRect randomRect = MKMapRectMake(randomX, randomY, randomWidth, randomHeight);
+
+    return randomRect;
+}
 
 static inline BOOL CLLocationCoordinates2DEqual(CLLocationCoordinate2D coordinate, CLLocationCoordinate2D otherCoordinate) {
     static const double precision = 0.00000000001;
@@ -42,3 +75,7 @@ FOUNDATION_EXPORT uint64_t dispatch_benchmark(size_t count, void (^block)(void))
         printf("The block have been run %d times. Average time is: %f milliseconds\n",  n, (time / 1000000)); \
     } while (0);
 
+
+void BenchmarkReentrant(NSUInteger benchmarkNumber, void (^block)(void));
+void BenchmarkReentrantPrintResults(void);
+void BenchmarkReentrantResetResults(void);

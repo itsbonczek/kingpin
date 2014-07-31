@@ -2,28 +2,21 @@
 
 ## Master
 
-### Fixed
-
-* Fixed issue with configureAnnotationForDisplay (as reported in #19)
-
-## Version 0.1.4
-
-Release date: May 21, 2014
-
-### Fixed
-
-* Fixed issue with cluster grid not freed correctly (thanks @walsht)
-
-## Version 0.1.3
-
-Release date: May 18, 2014
+Pre-0.2 release notes:
 
 ### Changed
 
-* Performance and memory usage improvements for the following three parts of kingpin:
-  * Number of improvements of 2D-tree building algorithm: algorithm optimizations, C-level optimizations.
-  * Performance improvement of the second phase of grid clustering algorithm.
-  * Improvements of -[KPAnnotation calculateValues] flow.
+* Much faster tree building algorithm for KPAnnotationTree is introduced.
+* Clustering algorithm is extracted into separate class KPGridClusteringAlgorithm.
+* Unit-tests are added. The project is now built on Travis.
+
+----
+
+## Version 0.1.3-0.1.4
+
+### Fixed
+
+* Bug with cluster grid not freed correctly (#41)
 
 ## Version 0.1.2
 

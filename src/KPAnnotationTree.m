@@ -19,19 +19,12 @@
 
 #import "KPAnnotation.h"
 
+#import "KPGeometry.h"
+
 #import <assert.h>
-#import <stddef.h>
-
-#if 0
-#define BBTreeLog(...) NSLog(__VA_ARGS__)
-#else
-#define BBTreeLog(...) ((void) 0)
-#endif
-
 
 static kp_internal_annotation_t *KPTemporaryAnnotationStorage;
 static MKMapPoint *KPTemporaryPointStorage;
-
 
 @implementation KPAnnotationTree
 
@@ -39,7 +32,7 @@ static MKMapPoint *KPTemporaryPointStorage;
     
     self = [super init];
     
-    if(self){
+    if (self) {
         self.annotations = [NSSet setWithArray:annotations];
         [self buildTree:annotations];
     }
@@ -57,87 +50,74 @@ static MKMapPoint *KPTemporaryPointStorage;
 #pragma mark - Search
 
 - (NSArray *)annotationsInMapRect:(MKMapRect)rect {
-    
     NSMutableArray *result = [NSMutableArray array];
-    
-    [self doSearchInMapRect:rect
-         mutableAnnotations:result
-                    curNode:self.root
-                   curLevel:0];
-    
+
+    MKMapPoint minPoint = rect.origin;
+    MKMapPoint maxPoint = MKMapPointMake(MKMapRectGetMaxX(rect), MKMapRectGetMaxY(rect));
+
+    [self doSearchInMapRectMinPoint:&minPoint
+                           maxPoint:&maxPoint
+                 mutableAnnotations:result
+                            curNode:self.root
+                               axis:KPAnnotationTreeAxisX];
+
     return result;
 }
 
-
-- (void)doSearchInMapRect:(MKMapRect)mapRect 
-       mutableAnnotations:(NSMutableArray *)annotations 
-                  curNode:(kp_treenode_t *)curNode
-                 curLevel:(NSInteger)level {
-    
+- (void)doSearchInMapRectMinPoint:(MKMapPoint *)minPoint
+                         maxPoint:(MKMapPoint *)maxPoint
+               mutableAnnotations:(NSMutableArray *)annotations
+                          curNode:(kp_treenode_t *)curNode
+                             axis:(KPAnnotationTreeAxis)axis {
     if (curNode == NULL) {
         return;
     }
-    
-    MKMapPoint mapPoint = curNode->mapPoint;
-   
-    BBTreeLog(@"Testing (%f, %f)...", [curNode.annotation coordinate].latitude, [curNode.annotation coordinate].longitude);
-    
-    if(MKMapRectContainsPoint(mapRect, mapPoint)){
-        BBTreeLog(@"YES");
+
+    if (minPoint->x <= curNode->mapPoint.x &&
+        minPoint->y <= curNode->mapPoint.y &&
+        curNode->mapPoint.x <= maxPoint->x &&
+        curNode->mapPoint.y <= maxPoint->y) {
         [annotations addObject:curNode->annotation];
     }
+
+    double val = MKMapPointGetCoordinateForAxis(&curNode->mapPoint, axis);
+
+    KPAnnotationTreeAxis complementaryAxis = axis ^ 1;
+
+    if (MKMapPointGetCoordinateForAxis(maxPoint, axis) < val) {
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
+                     mutableAnnotations:annotations
+                                curNode:curNode->left
+                                   axis:complementaryAxis];
+    }
+
+    else if (MKMapPointGetCoordinateForAxis(minPoint, axis) >= val){
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
+                     mutableAnnotations:annotations
+                                curNode:curNode->right
+                                   axis:complementaryAxis];
+    }
+
     else {
-        BBTreeLog(@"RECT: NO");
-    }
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
+                     mutableAnnotations:annotations
+                                curNode:curNode->left
+                                   axis:complementaryAxis];
 
-    KPAnnotationTreeAxis axis = (level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
-
-    double val, minVal, maxVal;
-
-    if (axis == KPAnnotationTreeAxisX) {
-        val    = mapPoint.x;
-        minVal = mapRect.origin.x;
-        maxVal = mapRect.origin.x + mapRect.size.width;
-    } else {
-        val    = mapPoint.y;
-        minVal = mapRect.origin.y;
-        maxVal = mapRect.origin.y + mapRect.size.height;
-    }
-
-    if(maxVal < val){
-        
-        [self doSearchInMapRect:mapRect
-             mutableAnnotations:annotations
-                        curNode:curNode->left
-                       curLevel:(level + 1)];
-    }
-    else if(minVal >= val){
-        
-        [self doSearchInMapRect:mapRect
+        [self doSearchInMapRectMinPoint:minPoint
+                               maxPoint:maxPoint
              mutableAnnotations:annotations
                         curNode:curNode->right
-                       curLevel:(level + 1)];
+                                   axis:complementaryAxis];
     }
-    else {
-        
-        [self doSearchInMapRect:mapRect
-             mutableAnnotations:annotations
-                        curNode:curNode->left
-                       curLevel:(level + 1)];
-        
-        [self doSearchInMapRect:mapRect
-             mutableAnnotations:annotations
-                        curNode:curNode->right
-                       curLevel:(level + 1)];
-    }
-    
 }
 
 #pragma mark - MKMapView
 
-
 #pragma mark - Tree Building (Private)
-
 
 - (void)buildTree:(NSArray *)annotations {
     NSUInteger count = annotations.count;
@@ -156,7 +136,6 @@ static MKMapPoint *KPTemporaryPointStorage;
        - These structs allow to skip allocations of corresponding containers on every level of depth.
      */
 
-
     kp_treenode_storage_t *nodeStorage = malloc(sizeof(kp_treenode_storage_t));
     nodeStorage->freeIdx = 0;
     nodeStorage->nodes = malloc(count * sizeof(kp_treenode_t));
@@ -168,7 +147,6 @@ static MKMapPoint *KPTemporaryPointStorage;
     kp_internal_annotation_t *annotationsY = malloc(count * sizeof(kp_internal_annotation_t));
 
     KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
-
 
     NSUInteger idx = 0;
     for (id <MKAnnotation> annotation in annotations) {
@@ -220,7 +198,7 @@ static MKMapPoint *KPTemporaryPointStorage;
 
     KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
-    self.root = buildTree(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
+    self.root = kp_tree_build(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
 
     free(annotationsX);
     free(annotationsY);
@@ -231,27 +209,27 @@ static MKMapPoint *KPTemporaryPointStorage;
 
 @end
 
-
-static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel) {
+static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
+                                            kp_internal_annotation_t *annotationsSortedByCurrentAxis,
+                                            kp_internal_annotation_t *annotationsSortedByComplementaryAxis,
+                                            kp_internal_annotation_t *temporaryAnnotationStorage,
+                                            const NSUInteger count,
+                                            const NSInteger curLevel)
+{
     if (count == 0) {
         return NULL;
     }
 
     kp_treenode_t *n = nodeStorage->nodes + (nodeStorage->freeIdx++);
 
-
     // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
     KPAnnotationTreeAxis axis = (curLevel & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
 
-
     NSUInteger medianIdx = count / 2;
-
 
     kp_internal_annotation_t medianAnnotation = annotationsSortedByCurrentAxis[medianIdx];
 
-
     double splittingCoordinate = MKMapPointGetCoordinateForAxis(medianAnnotation.mapPoint, axis);
-
 
     /*
      http://en.wikipedia.org/wiki/K-d_tree#Construction
@@ -272,7 +250,6 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     n->annotation = annotationsSortedByCurrentAxis[medianIdx].annotation;
     n->mapPoint = *(annotationsSortedByCurrentAxis[medianIdx].mapPoint);
 
-
     /*
      The following strings take heavy use of C pointer <s>gymnastics</s> arithmetics: 
      
@@ -282,10 +259,7 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
 
      This allows reduce a number of allocations of temporary X and Y arrays by a factor of 2:
      On each level of depth we derive only one couple of arrays, the second couple is passed as is just using this C pointer arithmetic.
-     */
 
-
-    /* 
      We accumulate "left" annotations  (i.e. whose coordinates are  < than splitting coordinate) in current temporary storage.
      We accumulate "right" annotations (i.e. whose coordinates are >= than splitting coordinate) in right portion of annotationsSortedByComplementaryAxis.
      Unused left portion of annotationsSortedByComplementaryAxis is reused as 'new' temporary storage when passed downstream when building left leaves
@@ -294,11 +268,10 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
     kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxisBackwardIterator  = temporaryAnnotationStorage + (medianIdx - 1);
     kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
 
-
     kp_internal_annotation_t *annotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
 
-
     NSInteger idx = count - 1;
+
     while (idx >= 0) {
         /*
          KP_LIKELY macros, based on __builtin_expect, is used for branch prediction. The performance gain from this is expected to be very small, but it is still logically good to predict branches which are likely to occur often and often.
@@ -317,22 +290,28 @@ static inline kp_treenode_t * buildTree(kp_treenode_storage_t *nodeStorage, kp_i
         idx--;
     }
 
-
     NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
     NSUInteger rightAnnotationsSortedByComplementaryAxisCount = count - medianIdx - 1;
-
 
     kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxis  = temporaryAnnotationStorage;
     kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxis = annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount + 1; // + 1 to skip element with medianIdx index
 
-
     kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = annotationsSortedByCurrentAxis;
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
+    n->left  = kp_tree_build(nodeStorage,
+                             leftAnnotationsSortedByComplementaryAxis,
+                             leftAnnotationsSortedByCurrentAxis,
+                             annotationsSortedByComplementaryAxis,
+                             leftAnnotationsSortedByComplementaryAxisCount,
+                             curLevel + 1);
 
-    n->left  = buildTree(nodeStorage,  leftAnnotationsSortedByComplementaryAxis,  leftAnnotationsSortedByCurrentAxis, annotationsSortedByComplementaryAxis, leftAnnotationsSortedByComplementaryAxisCount,  curLevel + 1);
-    n->right = buildTree(nodeStorage, rightAnnotationsSortedByComplementaryAxis, rightAnnotationsSortedByCurrentAxis, temporaryAnnotationStorage, rightAnnotationsSortedByComplementaryAxisCount, curLevel + 1);
-
+    n->right = kp_tree_build(nodeStorage,
+                             rightAnnotationsSortedByComplementaryAxis,
+                             rightAnnotationsSortedByCurrentAxis,
+                             temporaryAnnotationStorage,
+                             rightAnnotationsSortedByComplementaryAxisCount,
+                             curLevel + 1);
 
     return n;
 }

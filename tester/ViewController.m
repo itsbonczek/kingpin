@@ -8,18 +8,23 @@
 
 #import "ViewController.h"
 
+#import "KPAnnotation.h"
+#import "KPGridClusteringAlgorithm.h"
+#import "KPClusteringController.h"
 #import "MyAnnotation.h"
 #import "TestAnnotation.h"
+#import "TestHelpers.h"
 
-#import "KPAnnotation.h"
-#import "KPTreeController.h"
+#import "KPGridClusteringAlgorithm_Private.h"
+
+#import "Datasets.h"
 
 static const int kNumberOfTestAnnotations = 20000;
 
-@interface ViewController ()
+@interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
 
-@property (nonatomic, strong) KPTreeController *treeController;
-@property (nonatomic, strong) KPTreeController *treeController2;
+@property (strong, nonatomic) KPClusteringController *clusteringController;
+@property (strong, nonatomic) KPClusteringController *clusteringController2;
 
 @end
 
@@ -28,18 +33,28 @@ static const int kNumberOfTestAnnotations = 20000;
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-    
+
     self.mapView.delegate = self;
+
+    /*
+     Disable old tree controller for now
+    self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView];
+    self.clusteringController.delegate = self;
+    self.clusteringController.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    [self.clusteringController setAnnotations:[self annotations]];
+     */
     
-    self.treeController = [[KPTreeController alloc] initWithMapView:self.mapView];
-    self.treeController.delegate = self;
-    self.treeController.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
+    algorithm.annotationSize = CGSizeMake(25, 50);
+    algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
 
-    self.treeController2 = [[KPTreeController alloc] initWithMapView:self.mapView];
-    self.treeController2.delegate = self;
-    self.treeController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    self.clusteringController2 = [[KPClusteringController alloc] initWithMapView:self.mapView
+                                                 clusteringAlgorithm:algorithm];
+    self.clusteringController2.delegate = self;
 
-    [self resetAnnotations:nil];
+    self.clusteringController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
+
+    [self.clusteringController2 setAnnotations:[self annotations]];
     
     self.mapView.showsUserLocation = YES;
     
@@ -62,25 +77,34 @@ static const int kNumberOfTestAnnotations = 20000;
 }
 
 - (IBAction)resetAnnotations:(id)sender {
-    [self.treeController setAnnotations:[self randomAnnotationsForCoordinate:[self sfCoord]]];
-    [self.treeController2 setAnnotations:[self randomAnnotationsForCoordinate:[self nycCoord]]];
+    //[self.clusteringController setAnnotations:[self annotations]];
+    [self.clusteringController2 setAnnotations:[self annotations]];
 }
 
 
-- (NSArray *)randomAnnotationsForCoordinate:(CLLocationCoordinate2D)coordinate {
-
+- (NSArray *)annotations {
+    // build an NYC and SF cluster
+    
     NSMutableArray *annotations = [NSMutableArray array];
     
-    for (int i = 0; i < kNumberOfTestAnnotations; i++) {
+    CLLocationCoordinate2D nycCoord = [self nycCoord];
+    CLLocationCoordinate2D sfCoord = [self sfCoord];
+    
+    for (int i=0; i< kNumberOfTestAnnotations / 2; i++) {
         
-        float latAdj = ((random() % 100) / 1000.f);
-        float lngAdj = ((random() % 100) / 1000.f);
+        float latAdj = ((random() % 1000) / 1000.f);
+        float lngAdj = ((random() % 1000) / 1000.f);
         
-        TestAnnotation *annotation = [[TestAnnotation alloc] init];
-        annotation.coordinate = CLLocationCoordinate2DMake(coordinate.latitude + latAdj,
-                                                   coordinate.longitude + lngAdj);
+        TestAnnotation *a1 = [[TestAnnotation alloc] init];
+        a1.coordinate = CLLocationCoordinate2DMake(nycCoord.latitude + latAdj, 
+                                                   nycCoord.longitude + lngAdj);
+        [annotations addObject:a1];
+        
+        TestAnnotation *a2 = [[TestAnnotation alloc] init];
+        a2.coordinate = CLLocationCoordinate2DMake(sfCoord.latitude + latAdj,
+                                                   sfCoord.longitude + lngAdj);
+        [annotations addObject:a2];
 
-        [annotations addObject:annotation];
     }
     
     return annotations;
@@ -98,8 +122,10 @@ static const int kNumberOfTestAnnotations = 20000;
 #pragma mark - MKMapView
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [self.treeController refresh:self.animationSwitch.on];
-    [self.treeController2 refresh:self.animationSwitch.on];
+    //[self.clusteringController refresh:self.animationSwitch.on];
+    Benchmark(1, ^{
+        [self.clusteringController2 refresh:self.animationSwitch.on];
+    });
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
@@ -119,46 +145,60 @@ static const int kNumberOfTestAnnotations = 20000;
     
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {    
-    MKPinAnnotationView *annotationView = nil;
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     
-    if ([annotation isKindOfClass:[KPAnnotation class]]) {
-        KPAnnotation *kingpinAnnotation = (KPAnnotation *)annotation;
+    MKPinAnnotationView *v = nil;
+    
+    if([annotation isKindOfClass:[KPAnnotation class]]){
+    
+        KPAnnotation *a = (KPAnnotation *)annotation;
         
-        if ([kingpinAnnotation isCluster]) {
-            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
-            
-            if (annotationView == nil) {
-                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:kingpinAnnotation reuseIdentifier:@"cluster"];
-            }
-            
-            annotationView.pinColor = MKPinAnnotationColorPurple;
-        } else {
-            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-            
-            if (annotationView == nil) {
-                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:[kingpinAnnotation.annotations anyObject] reuseIdentifier:@"pin"];
-            }
-            
-            annotationView.pinColor = MKPinAnnotationColorRed;
+        if([annotation isKindOfClass:[MKUserLocation class]]){
+            return nil;
         }
         
-        annotationView.canShowCallout = YES;
+        if([a isCluster]){
+           
+            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+            
+            if(!v){
+                v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+            }
+            
+            v.pinColor = MKPinAnnotationColorPurple;
+        }
+        else {
+            
+            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+            
+            if(!v){
+                v = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
+                                                    reuseIdentifier:@"pin"];
+            }
+            
+            v.pinColor = MKPinAnnotationColorRed;
+        }
+        
+        v.canShowCallout = YES;
     }
-
-    else if ([annotation isKindOfClass:[MyAnnotation class]]) {
-        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
-        annotationView.pinColor = MKPinAnnotationColorGreen;
+    else if([annotation isKindOfClass:[MyAnnotation class]]) {
+        v = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
+        v.pinColor = MKPinAnnotationColorGreen;
     }
     
-    return annotationView;
+    return v;
+    
 }
 
-#pragma mark - KPTreeControllerDelegate
+#pragma mark - <KPClusteringControllerDelegate>
 
-- (void)treeController:(KPTreeController *)tree configureAnnotationForDisplay:(KPAnnotation *)annotation {
+- (void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation {
     annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
     annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
+}
+
+- (BOOL)clusteringControllerShouldClusterAnnotations:(KPClusteringController *)clusteringController {
+    return YES;
 }
 
 @end

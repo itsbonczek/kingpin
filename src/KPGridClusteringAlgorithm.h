@@ -15,13 +15,25 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MapKit.h>
+#import "KPClusteringAlgorithm.h"
 
-@interface KPAnnotationTree : NSObject
+@class KPAnnotation,
+       KPAnnotationTree;
 
-@property (strong, readonly, nonatomic) NSSet *annotations;
 
-- (id)initWithAnnotations:(NSArray *)annotations;
-- (NSArray *)annotationsInMapRect:(MKMapRect)rect;
+typedef enum {
+    KPGridClusteringAlgorithmStrategyBasic = 0,
+    KPGridClusteringAlgorithmStrategyTwoPhase,
+} KPGridClusteringAlgorithmStrategy;
+
+
+@interface KPGridClusteringAlgorithm : NSObject <KPClusteringAlgorithm>
+
+@property (assign, nonatomic) CGSize gridSize;
+@property (assign, nonatomic) KPGridClusteringAlgorithmStrategy clusteringStrategy;
+
+// only used when using KPGridClusteringAlgorithmStrategyTwoPhase
+@property (assign, nonatomic) CGSize annotationSize;
+@property (assign, nonatomic) CGPoint annotationCenterOffset;
 
 @end
