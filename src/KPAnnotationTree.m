@@ -23,9 +23,6 @@
 
 #import <assert.h>
 
-static kp_internal_annotation_t *KPTemporaryAnnotationStorage;
-static MKMapPoint *KPTemporaryPointStorage;
-
 @implementation KPAnnotationTree
 
 - (id)initWithAnnotations:(NSArray *)annotations {
@@ -146,7 +143,8 @@ static MKMapPoint *KPTemporaryPointStorage;
     kp_internal_annotation_t *annotationsX = malloc(count * sizeof(kp_internal_annotation_t));
     kp_internal_annotation_t *annotationsY = malloc(count * sizeof(kp_internal_annotation_t));
 
-    KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
+    MKMapPoint *KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
+    kp_internal_annotation_t *KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
     NSUInteger idx = 0;
     for (id <MKAnnotation> annotation in annotations) {
@@ -195,8 +193,6 @@ static MKMapPoint *KPTemporaryPointStorage;
 
         return NSOrderedSame;
     });
-
-    KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
     self.root = kp_tree_build(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
 
