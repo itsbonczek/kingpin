@@ -43,7 +43,7 @@ typedef struct {
     NSUInteger freeIdx;
 } kp_treenode_storage_t;
 
-static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel);
+static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSUInteger curLevel);
 
 @interface KPAnnotationTree ()
 

@@ -618,6 +618,7 @@
 					"-Wno-objc-missing-property-synthesis",
 					"-Wno-bad-function-cast",
 					"-Wno-float-equal",
+					"-Wno-assign-enum",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -662,6 +663,7 @@
 					"-Wno-objc-missing-property-synthesis",
 					"-Wno-bad-function-cast",
 					"-Wno-float-equal",
+					"-Wno-assign-enum",
 				);
 				WRAPPER_EXTENSION = app;
 			};

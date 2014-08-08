@@ -210,7 +210,7 @@ static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
                                             kp_internal_annotation_t *annotationsSortedByComplementaryAxis,
                                             kp_internal_annotation_t *temporaryAnnotationStorage,
                                             const NSUInteger count,
-                                            const NSInteger curLevel)
+                                            const NSUInteger curLevel)
 {
     if (count == 0) {
         return NULL;
@@ -266,9 +266,11 @@ static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
 
     kp_internal_annotation_t *annotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
 
-    NSInteger idx = count - 1;
+    NSUInteger idx = count;
 
-    while (idx >= 0) {
+    do {
+        idx--;
+
         /*
          KP_LIKELY macros, based on __builtin_expect, is used for branch prediction. The performance gain from this is expected to be very small, but it is still logically good to predict branches which are likely to occur often and often.
          
@@ -283,8 +285,7 @@ static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
         }
 
         annotationsSortedByComplementaryAxisBackwardIterator--;
-        idx--;
-    }
+    } while (idx != 0);
 
     NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
     NSUInteger rightAnnotationsSortedByComplementaryAxisCount = count - medianIdx - 1;

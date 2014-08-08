@@ -8,8 +8,7 @@
 
 #import "TestAnnotation.h"
 
-/*
-static NSArray *dataset1_8000_Moscow() {
+static inline NSArray *dataset1_8000_Moscow() {
 
     // build an NYC and SF cluster
 
@@ -35,7 +34,6 @@ static NSArray *dataset1_8000_Moscow() {
     
     return annotations;
 }
- */
 
 static inline NSArray *dataset2_random_NY_and_SF() {
     // build an NYC and SF cluster
