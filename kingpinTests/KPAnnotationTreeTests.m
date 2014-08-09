@@ -61,7 +61,7 @@ typedef struct {
     };
 
     kp_stack_t stack;
-    stack.nodes = malloc(annotationsCount * sizeof(kp_treenode_t));
+    stack.nodes = malloc(annotationsCount * sizeof(kp_treenode_t *));
     stack.nodes[0] = NULL;
 
     kp_treenode_t **iterator = stack.nodes + 1;
