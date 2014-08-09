@@ -39,7 +39,40 @@ typedef struct kp_treenode_t {
     NSUInteger level;
 } kp_treenode_t;
 
-static inline kp_treenode_t *kp_tree_build(kp_treenode_t **freeNodeIterator, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSUInteger curLevel);
+typedef struct {
+    kp_internal_annotation_t *annotationsSortedByCurrentAxis;
+    kp_internal_annotation_t *annotationsSortedByComplementaryAxis;
+    kp_internal_annotation_t *temporaryAnnotationStorage;
+    NSUInteger count;
+    NSUInteger level;
+    kp_treenode_t *node;
+} kp_stack_info_t;
+
+typedef struct {
+    void **storage;
+    void **top;
+} kp_stack_t;
+
+static inline kp_stack_t kp_stack_create(size_t capacity) {
+    kp_stack_t stack;
+
+    stack.storage = malloc(capacity * sizeof(void *));
+    stack.top = stack.storage;
+
+    return stack;
+}
+
+static inline void kp_stack_push(kp_stack_t *stack, void *el) {
+    *(stack->top++) = el;
+}
+
+static inline void *kp_stack_pop(kp_stack_t *stack) {
+    return *(--stack->top);
+}
+
+static inline kp_stack_info_t *kp_tree_build(kp_treenode_t **freeNodeIterator,
+                                             kp_stack_t *stack,
+                                             kp_stack_info_t *top);
 
 @interface KPAnnotationTree ()
 

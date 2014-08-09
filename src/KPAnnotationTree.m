@@ -188,9 +188,146 @@
     });
 
     kp_treenode_t *nodeIterator = self.nodes;
+    self.root = self.nodes;
 
-    self.root = kp_tree_build(&nodeIterator, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
+    kp_stack_info_t *stack_info = malloc(count * sizeof(kp_stack_info_t));
+    kp_stack_info_t *stack_info_iterator = stack_info;
 
+    kp_stack_t stack = kp_stack_create(count);
+    kp_stack_push(&stack, NULL);
+
+    kp_stack_info_t *top = stack_info_iterator++;
+
+    top->level = 0;
+    top->count = count;
+    top->node  = nodeIterator++;
+    top->annotationsSortedByCurrentAxis       = annotationsX;
+    top->annotationsSortedByComplementaryAxis = annotationsY;
+    top->temporaryAnnotationStorage           = KPTemporaryAnnotationStorage;
+
+    NSUInteger total = 0;
+    while (top != NULL) {
+        total++;
+        printf("olalalala %tu %tu\n", total, top->count);
+
+        // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
+        KPAnnotationTreeAxis axis = (top->level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
+
+        NSUInteger medianIdx = top->count / 2;
+
+        kp_internal_annotation_t medianAnnotation = top->annotationsSortedByCurrentAxis[medianIdx];
+
+        double splittingCoordinate = MKMapPointGetCoordinateForAxis(medianAnnotation.mapPoint, axis);
+
+        /*
+         http://en.wikipedia.org/wiki/K-d_tree#Construction
+
+         Arrays should be split into subarrays that represent "less than" and "greater than or equal to" partitioning.
+         This convention requires that, after choosing the median element of array 0, the element of array 0 that lies immediately below the median element be
+         examined to ensure that this adjacent element references a point whose x-coordinate is less than and not equal to the x-coordinate of the splitting plane.
+         If this adjacent element references a point whose x-coordinate is equal to the x-coordinate of the splitting plane, continue searching towards the beginning
+         of array 0 until the first instance of an array element is found that references a point whose x-coordinate is less than and not equal to the x-coordinate
+         of the splitting plane. When this array element is found, the element that lies immediately above this element is the correct choice for the median element.
+         Apply this method of choosing the median element at each level of recursion.
+         */
+
+        while (medianIdx > 0 && MKMapPointGetCoordinateForAxis(top->annotationsSortedByCurrentAxis[medianIdx - 1].mapPoint, axis) == MKMapPointGetCoordinateForAxis(top->annotationsSortedByCurrentAxis[medianIdx].mapPoint, axis)) {
+            medianIdx--;
+        }
+
+        top->node->annotation = top->annotationsSortedByCurrentAxis[medianIdx].annotation;
+        top->node->mapPoint = *(top->annotationsSortedByCurrentAxis[medianIdx].mapPoint);
+
+        /*
+         The following strings take heavy use of C pointer <s>gymnastics</s> arithmetics:
+
+         a[i] = *(a + i)
+
+         (a + i) gives us pointer (not value!) to ith element so we can pass this pointer downstream, to the buildTree() of next level of depth.
+
+         This allows reduce a number of allocations of temporary X and Y arrays by a factor of 2:
+         On each level of depth we derive only one couple of arrays, the second couple is passed as is just using this C pointer arithmetic.
+
+         We accumulate "left" annotations  (i.e. whose coordinates are  < than splitting coordinate) in current temporary storage.
+         We accumulate "right" annotations (i.e. whose coordinates are >= than splitting coordinate) in right portion of annotationsSortedByComplementaryAxis.
+         Unused left portion of annotationsSortedByComplementaryAxis is reused as 'new' temporary storage when passed downstream when building left leaves
+         */
+
+        kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxisBackwardIterator  = top->temporaryAnnotationStorage + (medianIdx - 1);
+        kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxisBackwardIterator = top->annotationsSortedByComplementaryAxis + (top->count - 1);
+
+        kp_internal_annotation_t *annotationsSortedByComplementaryAxisBackwardIterator = top->annotationsSortedByComplementaryAxis + (top->count - 1);
+
+        NSUInteger idx = top->count;
+
+        do {
+            idx--;
+
+            /*
+             KP_LIKELY macros, based on __builtin_expect, is used for branch prediction. The performance gain from this is expected to be very small, but it is still logically good to predict branches which are likely to occur often and often.
+
+             We check median annotation to skip it because it is already added to the current node.
+             */
+            if (KP_LIKELY([annotationsSortedByComplementaryAxisBackwardIterator->annotation isEqual:top->node->annotation] == NO)) {
+                if (MKMapPointGetCoordinateForAxis(annotationsSortedByComplementaryAxisBackwardIterator->mapPoint, axis) < splittingCoordinate) {
+                    *(leftAnnotationsSortedByComplementaryAxisBackwardIterator--)  = *annotationsSortedByComplementaryAxisBackwardIterator;
+                } else {
+                    *(rightAnnotationsSortedByComplementaryAxisBackwardIterator--) = *annotationsSortedByComplementaryAxisBackwardIterator;
+                }
+            }
+
+            annotationsSortedByComplementaryAxisBackwardIterator--;
+        } while (idx != 0);
+
+        NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
+        NSUInteger rightAnnotationsSortedByComplementaryAxisCount = top->count - medianIdx - 1;
+
+        kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxis  = top->temporaryAnnotationStorage;
+        kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxis = top->annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount + 1; // + 1 to skip element with medianIdx index
+
+        kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = top->annotationsSortedByCurrentAxis;
+        kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = top->annotationsSortedByCurrentAxis + (medianIdx + 1);
+
+        kp_stack_info_t *top_copy = top;
+
+        if (rightAnnotationsSortedByComplementaryAxisCount > 0) {
+            top = stack_info_iterator++;
+
+            top->annotationsSortedByCurrentAxis       = rightAnnotationsSortedByComplementaryAxis;
+            top->annotationsSortedByComplementaryAxis = rightAnnotationsSortedByCurrentAxis;
+            top->temporaryAnnotationStorage           = top_copy->temporaryAnnotationStorage; // ????
+
+            top->count                                = rightAnnotationsSortedByComplementaryAxisCount;
+            top->level                                = top_copy->level + 1;
+
+            top->node = nodeIterator++;
+            top_copy->node->right = top->node;
+
+            kp_stack_push(&stack, top);
+        }
+
+        if (leftAnnotationsSortedByComplementaryAxisCount > 0) {
+            top = stack_info_iterator++;
+
+            top->annotationsSortedByCurrentAxis       = leftAnnotationsSortedByComplementaryAxis;
+            top->annotationsSortedByComplementaryAxis = leftAnnotationsSortedByCurrentAxis;
+            top->temporaryAnnotationStorage           = top_copy->annotationsSortedByComplementaryAxis;
+
+            top->count                                = leftAnnotationsSortedByComplementaryAxisCount;
+            top->level                                = top_copy->level + 1;
+
+            top->node = nodeIterator++;
+            top_copy->node->left = top->node;
+
+            kp_stack_push(&stack, top);
+        }
+
+        top = kp_stack_pop(&stack);
+    }
+
+    free(stack.storage);
+
+    free(stack_info);
     free(annotationsX);
     free(annotationsY);
     
@@ -199,111 +336,3 @@
 }
 
 @end
-
-static inline kp_treenode_t * kp_tree_build(kp_treenode_t **freeNodeIterator,
-                                            kp_internal_annotation_t *annotationsSortedByCurrentAxis,
-                                            kp_internal_annotation_t *annotationsSortedByComplementaryAxis,
-                                            kp_internal_annotation_t *temporaryAnnotationStorage,
-                                            const NSUInteger count,
-                                            const NSUInteger curLevel)
-{
-    if (count == 0) {
-        return NULL;
-    }
-
-    kp_treenode_t *n = (*freeNodeIterator)++;
-
-    // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
-    KPAnnotationTreeAxis axis = (curLevel & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
-
-    NSUInteger medianIdx = count / 2;
-
-    kp_internal_annotation_t medianAnnotation = annotationsSortedByCurrentAxis[medianIdx];
-
-    double splittingCoordinate = MKMapPointGetCoordinateForAxis(medianAnnotation.mapPoint, axis);
-
-    /*
-     http://en.wikipedia.org/wiki/K-d_tree#Construction
-
-     Arrays should be split into subarrays that represent "less than" and "greater than or equal to" partitioning. 
-     This convention requires that, after choosing the median element of array 0, the element of array 0 that lies immediately below the median element be 
-     examined to ensure that this adjacent element references a point whose x-coordinate is less than and not equal to the x-coordinate of the splitting plane. 
-     If this adjacent element references a point whose x-coordinate is equal to the x-coordinate of the splitting plane, continue searching towards the beginning 
-     of array 0 until the first instance of an array element is found that references a point whose x-coordinate is less than and not equal to the x-coordinate 
-     of the splitting plane. When this array element is found, the element that lies immediately above this element is the correct choice for the median element. 
-     Apply this method of choosing the median element at each level of recursion.
-     */
-
-    while (medianIdx > 0 && MKMapPointGetCoordinateForAxis(annotationsSortedByCurrentAxis[medianIdx - 1].mapPoint, axis) == MKMapPointGetCoordinateForAxis(annotationsSortedByCurrentAxis[medianIdx].mapPoint, axis)) {
-        medianIdx--;
-    }
-
-    n->annotation = annotationsSortedByCurrentAxis[medianIdx].annotation;
-    n->mapPoint = *(annotationsSortedByCurrentAxis[medianIdx].mapPoint);
-
-    /*
-     The following strings take heavy use of C pointer <s>gymnastics</s> arithmetics: 
-     
-     a[i] = *(a + i)
-
-     (a + i) gives us pointer (not value!) to ith element so we can pass this pointer downstream, to the buildTree() of next level of depth.
-
-     This allows reduce a number of allocations of temporary X and Y arrays by a factor of 2:
-     On each level of depth we derive only one couple of arrays, the second couple is passed as is just using this C pointer arithmetic.
-
-     We accumulate "left" annotations  (i.e. whose coordinates are  < than splitting coordinate) in current temporary storage.
-     We accumulate "right" annotations (i.e. whose coordinates are >= than splitting coordinate) in right portion of annotationsSortedByComplementaryAxis.
-     Unused left portion of annotationsSortedByComplementaryAxis is reused as 'new' temporary storage when passed downstream when building left leaves
-     */
-
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxisBackwardIterator  = temporaryAnnotationStorage + (medianIdx - 1);
-    kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
-
-    kp_internal_annotation_t *annotationsSortedByComplementaryAxisBackwardIterator = annotationsSortedByComplementaryAxis + (count - 1);
-
-    NSUInteger idx = count;
-
-    do {
-        idx--;
-
-        /*
-         KP_LIKELY macros, based on __builtin_expect, is used for branch prediction. The performance gain from this is expected to be very small, but it is still logically good to predict branches which are likely to occur often and often.
-         
-         We check median annotation to skip it because it is already added to the current node.
-         */
-        if (KP_LIKELY([annotationsSortedByComplementaryAxisBackwardIterator->annotation isEqual:n->annotation] == NO)) {
-            if (MKMapPointGetCoordinateForAxis(annotationsSortedByComplementaryAxisBackwardIterator->mapPoint, axis) < splittingCoordinate) {
-                *(leftAnnotationsSortedByComplementaryAxisBackwardIterator--)  = *annotationsSortedByComplementaryAxisBackwardIterator;
-            } else {
-                *(rightAnnotationsSortedByComplementaryAxisBackwardIterator--) = *annotationsSortedByComplementaryAxisBackwardIterator;
-            }
-        }
-
-        annotationsSortedByComplementaryAxisBackwardIterator--;
-    } while (idx != 0);
-
-    NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
-    NSUInteger rightAnnotationsSortedByComplementaryAxisCount = count - medianIdx - 1;
-
-    kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxis  = temporaryAnnotationStorage;
-    kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxis = annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount + 1; // + 1 to skip element with medianIdx index
-
-    kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = annotationsSortedByCurrentAxis;
-    kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
-
-    n->left  = kp_tree_build(freeNodeIterator,
-                             leftAnnotationsSortedByComplementaryAxis,
-                             leftAnnotationsSortedByCurrentAxis,
-                             annotationsSortedByComplementaryAxis,
-                             leftAnnotationsSortedByComplementaryAxisCount,
-                             curLevel + 1);
-
-    n->right = kp_tree_build(freeNodeIterator,
-                             rightAnnotationsSortedByComplementaryAxis,
-                             rightAnnotationsSortedByCurrentAxis,
-                             temporaryAnnotationStorage,
-                             rightAnnotationsSortedByComplementaryAxisCount,
-                             curLevel + 1);
-
-    return n;
-}
