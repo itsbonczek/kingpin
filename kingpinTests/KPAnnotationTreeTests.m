@@ -41,10 +41,8 @@ typedef struct {
 
     __block NSUInteger numberOfNodes = 0;
 
-    void (^traversalBlock)(kp_treenode_t *node, NSUInteger levelOfDepth) = ^(kp_treenode_t *node, NSUInteger levelOfDepth) {
-        numberOfNodes++;
-
-        NSUInteger XorY = (levelOfDepth % 2) == 0;
+    void (^traversalBlock)(kp_treenode_t *node) = ^(kp_treenode_t *node) {
+        NSUInteger XorY = (node->level % 2) == 0;
 
         if (node->left) {
             if (XorY) {
@@ -69,15 +67,20 @@ typedef struct {
     stack.nodes[stack.top++] = NULL;
 
     kp_treenode_t *top = annotationTree.root;
+    top->level = 0;
 
     while (top != NULL) {
         numberOfNodes++;
 
+        traversalBlock(top);
+
         if (top->right != NULL) {
+            top->right->level = top->level + 1;
             stack.nodes[stack.top++] = top->right;
         }
 
         if (top->left != NULL) {
+            top->left->level = top->level + 1;
             stack.nodes[stack.top++] = top->left;
         }
 

@@ -36,6 +36,7 @@ typedef struct kp_treenode_t {
     struct kp_treenode_t *left;
     struct kp_treenode_t *right;
     MKMapPoint mapPoint;
+    NSUInteger level;
 } kp_treenode_t;
 
 static inline kp_treenode_t *kp_tree_build(kp_treenode_t **freeNodeIterator, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSUInteger curLevel);
