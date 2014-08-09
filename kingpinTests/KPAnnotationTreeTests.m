@@ -64,7 +64,9 @@ typedef struct {
     kp_stack_t stack;
     stack.nodes = malloc(annotationsCount * sizeof(kp_treenode_t));
     stack.top = 0;
-    stack.nodes[stack.top++] = NULL;
+    stack.nodes[0] = NULL;
+
+    kp_treenode_t **iterator = stack.nodes;
 
     kp_treenode_t *top = annotationTree.root;
     top->level = 0;
@@ -76,15 +78,15 @@ typedef struct {
 
         if (top->right != NULL) {
             top->right->level = top->level + 1;
-            stack.nodes[stack.top++] = top->right;
+            *(iterator)++ = top->right;
         }
 
         if (top->left != NULL) {
             top->left->level = top->level + 1;
-            stack.nodes[stack.top++] = top->left;
+            *(iterator)++ = top->left;
         }
 
-        top = stack.nodes[--stack.top];
+        top = *(--iterator);
     }
 
     XCTAssertTrue(annotationsCount == annotations.count, @"");
