@@ -58,6 +58,7 @@
 		86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithm.m; sourceTree = "<group>"; };
 		86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithmTests.m; sourceTree = "<group>"; };
 		86174DD018F9D7CF00014C48 /* KPGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGeometry.h; sourceTree = "<group>"; };
+		862A0F1A1996BD7A000AC903 /* kp_stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kp_stack.h; path = kp_stack.h; sourceTree = "<group>"; };
 		8633BAEF1989A12500EDE193 /* Dataset1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dataset1.txt; sourceTree = "<group>"; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		9346910316A8F17D00DE59FA /* kp */ = {
 			isa = PBXGroup;
 			children = (
+				862A0F1A1996BD7A000AC903 /* kp_stack.h */,
 				8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */,
 				93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */,
 				93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */,

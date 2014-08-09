@@ -15,6 +15,8 @@
 
 #import "Datasets.h"
 
+#import "kp_stack.h"
+
 @interface KPAnnotationTreeTests : XCTestCase
 @end
 
@@ -25,6 +27,26 @@ typedef struct {
 
 
 @implementation KPAnnotationTreeTests
+
+- (void)testStack {
+    kp_stack_t stack = kp_stack_create(10);
+    int a = 1;
+    int b = 2;
+    int c = 3;
+
+    kp_stack_push(&stack, &a);
+    kp_stack_push(&stack, &b);
+    kp_stack_push(&stack, &c);
+
+    int *exp_c = kp_stack_pop(&stack);
+    XCTAssert(*exp_c == c);
+
+    int *exp_b = kp_stack_pop(&stack);
+    XCTAssert(*exp_b == b);
+
+    int *exp_a = kp_stack_pop(&stack);
+    XCTAssert(*exp_a == a);
+}
 
 - (void)testIntegrityOfAnnotationTree {
     NSArray *annotations = dataset2_random_NY_and_SF();
@@ -38,7 +60,6 @@ typedef struct {
     NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:MKMapRectWorld];
 
     XCTAssertTrue(NSArrayHasDuplicates(annotationsBySearch) == NO);
-
 
     __block NSUInteger numberOfNodes = 0;
 
@@ -62,41 +83,54 @@ typedef struct {
         }
     };
 
-    kp_stack_el_t *stack_storage = malloc(annotationsCount * sizeof(kp_stack_el_t));
-    kp_stack_el_t **stack        = malloc(annotationsCount * sizeof(kp_stack_el_t *));
-
-    for (NSUInteger i = 0; i < annotationsCount; i++) {
-        stack_storage[i].idx = i;
-        stack[i] = stack_storage + i;
+    kp_stack_el_t *stack_info_storage = malloc(annotationsCount * sizeof(kp_stack_el_t));
+    for (int i = 0; i < annotationsCount; i++) {
+        stack_info_storage[i].idx = i;
     }
+    kp_stack_el_t *stack_info_iterator = stack_info_storage;
 
-    kp_stack_el_t **top = stack;
-    *(top++) = NULL;
+    kp_stack_t stack = kp_stack_create(annotationsCount);
+    kp_stack_push(&stack, NULL);
 
     annotationTree.root->level = 0;
-    (*top)->node = annotationTree.root;
 
-    while (*top != NULL) {
-        printf("idx %d\n", (*top)->idx);
+    kp_stack_el_t *top = stack_info_iterator;
+    top->node = annotationTree.root;
+
+    while (top != NULL) {
+        printf("idx %d\n", top->idx);
 
         numberOfNodes++;
 
-        kp_treenode_t *node = (*top)->node;
+        kp_treenode_t *node = top->node;
 
         traversalBlock(node);
 
         if (node->right != NULL) {
+            stack_info_iterator++;
+
             node->right->level = node->level + 1;
-            (*(top++))->node = node->right;
+
+            (stack_info_iterator)->node = node->right;
+
+            kp_stack_push(&stack, stack_info_iterator);
         }
 
         if (node->left != NULL) {
+            stack_info_iterator++;
+
             node->left->level = node->level + 1;
-            (*(top++))->node = node->left;
+
+            (stack_info_iterator)->node = node->left;
+
+            kp_stack_push(&stack, stack_info_iterator);
         }
 
-        --top;
+        stack_info_iterator--;
+        top = kp_stack_pop(&stack);
     }
+
+    NSLog(@"numberOfNodes Count: %tu", numberOfNodes);
 
     XCTAssertTrue(annotationsCount == annotations.count, @"");
     XCTAssertTrue(annotationsCount == annotationsBySearch.count, @"");
