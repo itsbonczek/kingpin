@@ -148,11 +148,11 @@
     for (id <MKAnnotation> annotation in annotations) {
         MKMapPoint mapPoint = MKMapPointForCoordinate(annotation.coordinate);
 
-        kp_internal_annotation_t _annotation;
-        _annotation.annotation = annotation;
-
         KPTemporaryPointStorage[idx] = mapPoint;
 
+        kp_internal_annotation_t _annotation;
+
+        _annotation.annotation = annotation;
         _annotation.mapPoint = KPTemporaryPointStorage + idx;
 
         annotationsX[idx] = _annotation;
