@@ -19,8 +19,10 @@
 @end
 
 typedef struct {
-    kp_treenode_t **nodes;
-} kp_stack_t;
+    kp_treenode_t *node;
+    int idx;
+} kp_stack_el_t;
+
 
 @implementation KPAnnotationTreeTests
 
@@ -60,31 +62,40 @@ typedef struct {
         }
     };
 
-    kp_stack_t stack;
-    stack.nodes = malloc(annotationsCount * sizeof(kp_treenode_t *));
-    stack.nodes[0] = NULL;
+    kp_stack_el_t *stack_storage = malloc(annotationsCount * sizeof(kp_stack_el_t));
+    kp_stack_el_t **stack        = malloc(annotationsCount * sizeof(kp_stack_el_t *));
 
-    kp_treenode_t **iterator = stack.nodes + 1;
+    for (NSUInteger i = 0; i < annotationsCount; i++) {
+        stack_storage[i].idx = i;
+        stack[i] = stack_storage + i;
+    }
 
-    kp_treenode_t *top = annotationTree.root;
-    top->level = 0;
+    kp_stack_el_t **top = stack;
+    *(top++) = NULL;
 
-    while (top != NULL) {
+    annotationTree.root->level = 0;
+    (*top)->node = annotationTree.root;
+
+    while (*top != NULL) {
+        printf("idx %d\n", (*top)->idx);
+
         numberOfNodes++;
 
-        traversalBlock(top);
+        kp_treenode_t *node = (*top)->node;
 
-        if (top->right != NULL) {
-            top->right->level = top->level + 1;
-            *(iterator++) = top->right;
+        traversalBlock(node);
+
+        if (node->right != NULL) {
+            node->right->level = node->level + 1;
+            (*(top++))->node = node->right;
         }
 
-        if (top->left != NULL) {
-            top->left->level = top->level + 1;
-            *(iterator++) = top->left;
+        if (node->left != NULL) {
+            node->left->level = node->level + 1;
+            (*(top++))->node = node->left;
         }
 
-        top = *(--iterator);
+        --top;
     }
 
     XCTAssertTrue(annotationsCount == annotations.count, @"");
