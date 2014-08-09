@@ -21,8 +21,6 @@
 
 #import "KPGeometry.h"
 
-#import <assert.h>
-
 @implementation KPAnnotationTree
 
 - (id)initWithAnnotations:(NSArray *)annotations {
