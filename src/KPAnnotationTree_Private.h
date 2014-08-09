@@ -38,18 +38,13 @@ typedef struct kp_treenode_t {
     MKMapPoint mapPoint;
 } kp_treenode_t;
 
-typedef struct {
-    kp_treenode_t *nodes;
-    NSUInteger freeIdx;
-} kp_treenode_storage_t;
-
-static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSUInteger curLevel);
+static inline kp_treenode_t *kp_tree_build(kp_treenode_t **freeNodeIterator, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSUInteger curLevel);
 
 @interface KPAnnotationTree ()
 
 @property (strong, nonatomic, readwrite) NSSet *annotations;
 
 @property (assign, nonatomic) kp_treenode_t *root;
-@property (assign, nonatomic) kp_treenode_storage_t *nodeStorage;
+@property (assign, nonatomic) kp_treenode_t *nodes;
 
 @end

@@ -36,8 +36,7 @@
 }
 
 - (void)dealloc {
-    free(self.nodeStorage->nodes);
-    free(self.nodeStorage);
+    free(self.nodes);
 
     _annotations = nil;
 }
@@ -131,11 +130,7 @@
        - These structs allow to skip allocations of corresponding containers on every level of depth.
      */
 
-    kp_treenode_storage_t *nodeStorage = malloc(sizeof(kp_treenode_storage_t));
-    nodeStorage->freeIdx = 0;
-    nodeStorage->nodes = malloc(count * sizeof(kp_treenode_t));
-
-    self.nodeStorage = nodeStorage;
+    self.nodes = malloc(count * sizeof(kp_treenode_t));
 
     __block
     kp_internal_annotation_t *annotationsX = malloc(count * sizeof(kp_internal_annotation_t));
@@ -192,7 +187,9 @@
         return NSOrderedSame;
     });
 
-    self.root = kp_tree_build(self.nodeStorage, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
+    kp_treenode_t *nodeIterator = self.nodes;
+
+    self.root = kp_tree_build(&nodeIterator, annotationsX, annotationsY, KPTemporaryAnnotationStorage, count, 0);
 
     free(annotationsX);
     free(annotationsY);
@@ -203,7 +200,7 @@
 
 @end
 
-static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
+static inline kp_treenode_t * kp_tree_build(kp_treenode_t **freeNodeIterator,
                                             kp_internal_annotation_t *annotationsSortedByCurrentAxis,
                                             kp_internal_annotation_t *annotationsSortedByComplementaryAxis,
                                             kp_internal_annotation_t *temporaryAnnotationStorage,
@@ -214,7 +211,7 @@ static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
         return NULL;
     }
 
-    kp_treenode_t *n = nodeStorage->nodes + (nodeStorage->freeIdx++);
+    kp_treenode_t *n = (*freeNodeIterator)++;
 
     // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
     KPAnnotationTreeAxis axis = (curLevel & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
@@ -294,14 +291,14 @@ static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage,
     kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = annotationsSortedByCurrentAxis;
     kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = annotationsSortedByCurrentAxis + (medianIdx + 1);
 
-    n->left  = kp_tree_build(nodeStorage,
+    n->left  = kp_tree_build(freeNodeIterator,
                              leftAnnotationsSortedByComplementaryAxis,
                              leftAnnotationsSortedByCurrentAxis,
                              annotationsSortedByComplementaryAxis,
                              leftAnnotationsSortedByComplementaryAxisCount,
                              curLevel + 1);
 
-    n->right = kp_tree_build(nodeStorage,
+    n->right = kp_tree_build(freeNodeIterator,
                              rightAnnotationsSortedByComplementaryAxis,
                              rightAnnotationsSortedByCurrentAxis,
                              temporaryAnnotationStorage,
