@@ -20,7 +20,6 @@
 
 typedef struct {
     kp_treenode_t **nodes;
-    NSUInteger top;
 } kp_stack_t;
 
 @implementation KPAnnotationTreeTests
@@ -63,7 +62,6 @@ typedef struct {
 
     kp_stack_t stack;
     stack.nodes = malloc(annotationsCount * sizeof(kp_treenode_t));
-    stack.top = 0;
     stack.nodes[0] = NULL;
 
     kp_treenode_t **iterator = stack.nodes + 1;
