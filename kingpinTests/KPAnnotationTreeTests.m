@@ -66,7 +66,7 @@ typedef struct {
     stack.top = 0;
     stack.nodes[0] = NULL;
 
-    kp_treenode_t **iterator = stack.nodes;
+    kp_treenode_t **iterator = stack.nodes + 1;
 
     kp_treenode_t *top = annotationTree.root;
     top->level = 0;
@@ -78,12 +78,12 @@ typedef struct {
 
         if (top->right != NULL) {
             top->right->level = top->level + 1;
-            *(iterator)++ = top->right;
+            *(iterator++) = top->right;
         }
 
         if (top->left != NULL) {
             top->left->level = top->level + 1;
-            *(iterator)++ = top->left;
+            *(iterator++) = top->left;
         }
 
         top = *(--iterator);
