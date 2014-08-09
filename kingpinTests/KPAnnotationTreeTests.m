@@ -18,6 +18,11 @@
 @interface KPAnnotationTreeTests : XCTestCase
 @end
 
+typedef struct {
+    kp_treenode_t **nodes;
+    NSUInteger top;
+} kp_stack_t;
+
 @implementation KPAnnotationTreeTests
 
 - (void)testIntegrityOfAnnotationTree {
@@ -25,20 +30,18 @@
 
     NSUInteger annotationsCount = annotations.count;
 
-    NSLog(@"Annotation Count: %zu", annotationsCount);
+    NSLog(@"Annotation Count: %tu", annotationsCount);
 
     KPAnnotationTree *annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
     NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:MKMapRectWorld];
 
     XCTAssertTrue(NSArrayHasDuplicates(annotationsBySearch) == NO);
-    
-    __block __weak void (^weakRecursiveTraversalBlock)(kp_treenode_t *node, NSUInteger levelOfDepth);
-    void (^recursiveTraversalBlock)(kp_treenode_t *node, NSUInteger levelOfDepth);
+
 
     __block NSUInteger numberOfNodes = 0;
 
-    weakRecursiveTraversalBlock = recursiveTraversalBlock = ^(kp_treenode_t *node, NSUInteger levelOfDepth) {
+    void (^traversalBlock)(kp_treenode_t *node, NSUInteger levelOfDepth) = ^(kp_treenode_t *node, NSUInteger levelOfDepth) {
         numberOfNodes++;
 
         NSUInteger XorY = (levelOfDepth % 2) == 0;
@@ -49,8 +52,6 @@
             } else {
                 XCTAssertTrue(node->left->mapPoint.y < node->mapPoint.y, @"");
             }
-
-            weakRecursiveTraversalBlock(node->left, levelOfDepth + 1);
         }
 
         if (node->right) {
@@ -59,12 +60,29 @@
             } else {
                 XCTAssertTrue(node->mapPoint.y <= node->right->mapPoint.y, @"");
             }
-
-            weakRecursiveTraversalBlock(node->right, levelOfDepth + 1);
         }
     };
 
-    recursiveTraversalBlock(annotationTree.root, 0);
+    kp_stack_t stack;
+    stack.nodes = malloc(annotationsCount * sizeof(kp_treenode_t));
+    stack.top = 0;
+    stack.nodes[stack.top++] = NULL;
+
+    kp_treenode_t *top = annotationTree.root;
+
+    while (top != NULL) {
+        numberOfNodes++;
+
+        if (top->right != NULL) {
+            stack.nodes[stack.top++] = top->right;
+        }
+
+        if (top->left != NULL) {
+            stack.nodes[stack.top++] = top->left;
+        }
+
+        top = stack.nodes[--stack.top];
+    }
 
     XCTAssertTrue(annotationsCount == annotations.count, @"");
     XCTAssertTrue(annotationsCount == annotationsBySearch.count, @"");
