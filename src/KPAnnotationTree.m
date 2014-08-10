@@ -277,20 +277,14 @@
         NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
         NSUInteger rightAnnotationsSortedByComplementaryAxisCount = top->count - medianIdx - 1;
 
-        kp_internal_annotation_t *leftAnnotationsSortedByComplementaryAxis  = top->temporaryAnnotationStorage;
-        kp_internal_annotation_t *rightAnnotationsSortedByComplementaryAxis = top->annotationsSortedByComplementaryAxis + leftAnnotationsSortedByComplementaryAxisCount + 1; // + 1 to skip element with medianIdx index
-
-        kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = top->annotationsSortedByCurrentAxis;
-        kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = top->annotationsSortedByCurrentAxis + (medianIdx + 1);
-
         kp_stack_info_t *top_snapshot = top;
 
         if (rightAnnotationsSortedByComplementaryAxisCount > 0) {
             top = stack_info_iterator++;
 
-            top->annotationsSortedByCurrentAxis       = rightAnnotationsSortedByComplementaryAxis;
-            top->annotationsSortedByComplementaryAxis = rightAnnotationsSortedByCurrentAxis;
-            top->temporaryAnnotationStorage           = top_snapshot->temporaryAnnotationStorage; // ????
+            top->annotationsSortedByCurrentAxis       = top_snapshot->annotationsSortedByComplementaryAxis + medianIdx + 1;
+            top->annotationsSortedByComplementaryAxis = top_snapshot->annotationsSortedByCurrentAxis + (medianIdx + 1);;
+            top->temporaryAnnotationStorage           = top_snapshot->temporaryAnnotationStorage;
 
             top->count                                = rightAnnotationsSortedByComplementaryAxisCount;
             top->level                                = top_snapshot->level + 1;
@@ -306,8 +300,8 @@
         if (leftAnnotationsSortedByComplementaryAxisCount > 0) {
             top = stack_info_iterator++;
 
-            top->annotationsSortedByCurrentAxis       = leftAnnotationsSortedByComplementaryAxis;
-            top->annotationsSortedByComplementaryAxis = leftAnnotationsSortedByCurrentAxis;
+            top->annotationsSortedByCurrentAxis       = top_snapshot->temporaryAnnotationStorage;;
+            top->annotationsSortedByComplementaryAxis = top_snapshot->annotationsSortedByCurrentAxis;
             top->temporaryAnnotationStorage           = top_snapshot->annotationsSortedByComplementaryAxis;
 
             top->count                                = leftAnnotationsSortedByComplementaryAxisCount;

@@ -43,8 +43,8 @@ typedef struct {
     kp_internal_annotation_t *annotationsSortedByCurrentAxis;
     kp_internal_annotation_t *annotationsSortedByComplementaryAxis;
     kp_internal_annotation_t *temporaryAnnotationStorage;
-    NSUInteger count;
-    NSUInteger level;
+    uint32_t count;
+    uint32_t level;
     kp_treenode_t *node;
 } kp_stack_info_t;
 
