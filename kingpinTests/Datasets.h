@@ -46,7 +46,7 @@ static inline NSArray *dataset2_random_NY_and_SF() {
     CLLocationCoordinate2D nycCoord = NYCoord;
     CLLocationCoordinate2D sfCoord = SFCoord;
 
-    for (int i = 0; i < 100 / 2; i++) {
+    for (int i = 0; i < 20000 / 2; i++) {
 
         CLLocationDegrees latAdj = ((random() % 100) / 1000.f);
         CLLocationDegrees lngAdj = ((random() % 100) / 1000.f);

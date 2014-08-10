@@ -96,8 +96,6 @@ typedef struct {
     top->node = annotationTree.root;
 
     while (top != NULL) {
-        printf("idx %d\n", top->idx);
-
         numberOfNodes++;
 
         kp_treenode_t *node = top->node;

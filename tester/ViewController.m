@@ -19,7 +19,7 @@
 
 #import "Datasets.h"
 
-static const int kNumberOfTestAnnotations = 20000;
+static const int kNumberOfTestAnnotations = 100000;
 
 @interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
 
@@ -122,10 +122,10 @@ static const int kNumberOfTestAnnotations = 20000;
 #pragma mark - MKMapView
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    //[self.clusteringController refresh:self.animationSwitch.on];
-    Benchmark(1, ^{
-        [self.clusteringController2 refresh:self.animationSwitch.on];
-    });
+//    //[self.clusteringController refresh:self.animationSwitch.on];
+//    Benchmark(1, ^{
+//        [self.clusteringController2 refresh:self.animationSwitch.on];
+//    });
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {

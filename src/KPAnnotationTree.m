@@ -139,7 +139,9 @@
     MKMapPoint *KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
     kp_internal_annotation_t *KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
-    [annotations enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id <MKAnnotation> annotation, NSUInteger idx, BOOL *stop) {
+    dispatch_apply(count, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t idx) {
+        id <MKAnnotation> annotation = annotations[idx];
+
         MKMapPoint mapPoint = MKMapPointForCoordinate(annotation.coordinate);
 
         KPTemporaryPointStorage[idx] = mapPoint;
@@ -150,7 +152,7 @@
         _annotation.mapPoint = KPTemporaryPointStorage + idx;
 
         annotationsX[idx] = _annotation;
-    }];
+    });
 
     qsort_b(annotationsX, count, sizeof(kp_internal_annotation_t), ^int(const void *a1, const void *a2) {
         kp_internal_annotation_t *annotation1 = (kp_internal_annotation_t *)a1;
