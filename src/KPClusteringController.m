@@ -24,8 +24,6 @@
 
 #import "NSArray+KP.h"
 
-#import "TestHelpers.h"
-
 typedef enum {
     KPClusteringControllerMapViewportNoChange,
     KPClusteringControllerMapViewportPan,
@@ -82,9 +80,7 @@ typedef enum {
 - (void)setAnnotations:(NSArray *)annotations {
     [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
 
-    Benchmark(3, ^{
-        self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
-    });
+    self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
     [self _updateVisibileMapAnnotationsOnMapView:NO];
 }
