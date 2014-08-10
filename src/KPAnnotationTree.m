@@ -197,7 +197,6 @@
     kp_stack_push(&stack, NULL);
 
     kp_stack_info_t *top = stack_info_iterator++;
-
     top->level = 0;
     top->count = count;
     top->node  = nodeIterator++;
@@ -208,7 +207,7 @@
     NSUInteger total = 0;
     while (top != NULL) {
         total++;
-        printf("olalalala %tu %tu\n", total, top->count);
+        printf("olala %tu %tu\n", total, top->count);
 
         // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
         KPAnnotationTreeAxis axis = (top->level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
@@ -288,22 +287,24 @@
         kp_internal_annotation_t *leftAnnotationsSortedByCurrentAxis  = top->annotationsSortedByCurrentAxis;
         kp_internal_annotation_t *rightAnnotationsSortedByCurrentAxis = top->annotationsSortedByCurrentAxis + (medianIdx + 1);
 
-        kp_stack_info_t *top_copy = top;
+        kp_stack_info_t *top_snapshot = top;
 
         if (rightAnnotationsSortedByComplementaryAxisCount > 0) {
             top = stack_info_iterator++;
 
             top->annotationsSortedByCurrentAxis       = rightAnnotationsSortedByComplementaryAxis;
             top->annotationsSortedByComplementaryAxis = rightAnnotationsSortedByCurrentAxis;
-            top->temporaryAnnotationStorage           = top_copy->temporaryAnnotationStorage; // ????
+            top->temporaryAnnotationStorage           = top_snapshot->temporaryAnnotationStorage; // ????
 
             top->count                                = rightAnnotationsSortedByComplementaryAxisCount;
-            top->level                                = top_copy->level + 1;
+            top->level                                = top_snapshot->level + 1;
 
             top->node = nodeIterator++;
-            top_copy->node->right = top->node;
+            top_snapshot->node->right = top->node;
 
             kp_stack_push(&stack, top);
+        } else {
+            top_snapshot->node->right = NULL;
         }
 
         if (leftAnnotationsSortedByComplementaryAxisCount > 0) {
@@ -311,15 +312,17 @@
 
             top->annotationsSortedByCurrentAxis       = leftAnnotationsSortedByComplementaryAxis;
             top->annotationsSortedByComplementaryAxis = leftAnnotationsSortedByCurrentAxis;
-            top->temporaryAnnotationStorage           = top_copy->annotationsSortedByComplementaryAxis;
+            top->temporaryAnnotationStorage           = top_snapshot->annotationsSortedByComplementaryAxis;
 
             top->count                                = leftAnnotationsSortedByComplementaryAxisCount;
-            top->level                                = top_copy->level + 1;
+            top->level                                = top_snapshot->level + 1;
 
             top->node = nodeIterator++;
-            top_copy->node->left = top->node;
+            top_snapshot->node->left = top->node;
 
             kp_stack_push(&stack, top);
+        } else {
+            top_snapshot->node->left = NULL;
         }
 
         top = kp_stack_pop(&stack);

@@ -70,10 +70,6 @@ static inline void *kp_stack_pop(kp_stack_t *stack) {
     return *(--stack->top);
 }
 
-static inline kp_stack_info_t *kp_tree_build(kp_treenode_t **freeNodeIterator,
-                                             kp_stack_t *stack,
-                                             kp_stack_info_t *top);
-
 @interface KPAnnotationTree ()
 
 @property (strong, nonatomic, readwrite) NSSet *annotations;
