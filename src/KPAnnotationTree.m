@@ -277,42 +277,36 @@
         NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
         NSUInteger rightAnnotationsSortedByComplementaryAxisCount = top->count - medianIdx - 1;
 
-        kp_stack_info_t *top_snapshot = top;
-
         if (rightAnnotationsSortedByComplementaryAxisCount > 0) {
-            top = stack_info_iterator++;
+            stack_info_iterator->annotationsSortedByCurrentAxis       = top->annotationsSortedByComplementaryAxis + medianIdx + 1;
+            stack_info_iterator->annotationsSortedByComplementaryAxis = top->annotationsSortedByCurrentAxis + (medianIdx + 1);;
+            stack_info_iterator->temporaryAnnotationStorage           = top->temporaryAnnotationStorage;
 
-            top->annotationsSortedByCurrentAxis       = top_snapshot->annotationsSortedByComplementaryAxis + medianIdx + 1;
-            top->annotationsSortedByComplementaryAxis = top_snapshot->annotationsSortedByCurrentAxis + (medianIdx + 1);;
-            top->temporaryAnnotationStorage           = top_snapshot->temporaryAnnotationStorage;
+            stack_info_iterator->count                                = rightAnnotationsSortedByComplementaryAxisCount;
+            stack_info_iterator->level                                = top->level + 1;
 
-            top->count                                = rightAnnotationsSortedByComplementaryAxisCount;
-            top->level                                = top_snapshot->level + 1;
+            stack_info_iterator->node = nodeIterator++;
+            top->node->right = stack_info_iterator->node;
 
-            top->node = nodeIterator++;
-            top_snapshot->node->right = top->node;
-
-            kp_stack_push(&stack, top);
+            kp_stack_push(&stack, stack_info_iterator++);
         } else {
-            top_snapshot->node->right = NULL;
+            top->node->right = NULL;
         }
 
         if (leftAnnotationsSortedByComplementaryAxisCount > 0) {
-            top = stack_info_iterator++;
+            stack_info_iterator->annotationsSortedByCurrentAxis       = top->temporaryAnnotationStorage;;
+            stack_info_iterator->annotationsSortedByComplementaryAxis = top->annotationsSortedByCurrentAxis;
+            stack_info_iterator->temporaryAnnotationStorage           = top->annotationsSortedByComplementaryAxis;
 
-            top->annotationsSortedByCurrentAxis       = top_snapshot->temporaryAnnotationStorage;;
-            top->annotationsSortedByComplementaryAxis = top_snapshot->annotationsSortedByCurrentAxis;
-            top->temporaryAnnotationStorage           = top_snapshot->annotationsSortedByComplementaryAxis;
+            stack_info_iterator->count                                = leftAnnotationsSortedByComplementaryAxisCount;
+            stack_info_iterator->level                                = top->level + 1;
 
-            top->count                                = leftAnnotationsSortedByComplementaryAxisCount;
-            top->level                                = top_snapshot->level + 1;
+            stack_info_iterator->node = nodeIterator++;
+            top->node->left = stack_info_iterator->node;
 
-            top->node = nodeIterator++;
-            top_snapshot->node->left = top->node;
-
-            kp_stack_push(&stack, top);
+            kp_stack_push(&stack, stack_info_iterator++);
         } else {
-            top_snapshot->node->left = NULL;
+            top->node->left = NULL;
         }
 
         top = kp_stack_pop(&stack);
