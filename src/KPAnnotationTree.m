@@ -139,8 +139,7 @@
     MKMapPoint *KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
     kp_internal_annotation_t *KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
-    NSUInteger idx = 0;
-    for (id <MKAnnotation> annotation in annotations) {
+    [annotations enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id <MKAnnotation> annotation, NSUInteger idx, BOOL *stop) {
         MKMapPoint mapPoint = MKMapPointForCoordinate(annotation.coordinate);
 
         KPTemporaryPointStorage[idx] = mapPoint;
@@ -151,9 +150,7 @@
         _annotation.mapPoint = KPTemporaryPointStorage + idx;
 
         annotationsX[idx] = _annotation;
-
-        idx++;
-    };
+    }];
 
     qsort_b(annotationsX, count, sizeof(kp_internal_annotation_t), ^int(const void *a1, const void *a2) {
         kp_internal_annotation_t *annotation1 = (kp_internal_annotation_t *)a1;
@@ -198,7 +195,7 @@
 
     kp_stack_info_t *top = stack_info_iterator++;
     top->level = 0;
-    top->count = count;
+    top->count = (uint32_t)count;
     top->node  = nodeIterator++;
     top->annotationsSortedByCurrentAxis       = annotationsX;
     top->annotationsSortedByComplementaryAxis = annotationsY;
@@ -208,7 +205,7 @@
         // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
         KPAnnotationTreeAxis axis = (top->level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
 
-        NSUInteger medianIdx = top->count / 2;
+        NSUInteger medianIdx = top->count >> 1;
 
         kp_internal_annotation_t medianAnnotation = top->annotationsSortedByCurrentAxis[medianIdx];
 
@@ -282,7 +279,7 @@
             stack_info_iterator->annotationsSortedByComplementaryAxis = top->annotationsSortedByCurrentAxis + (medianIdx + 1);;
             stack_info_iterator->temporaryAnnotationStorage           = top->temporaryAnnotationStorage;
 
-            stack_info_iterator->count                                = rightAnnotationsSortedByComplementaryAxisCount;
+            stack_info_iterator->count                                = (uint32_t)rightAnnotationsSortedByComplementaryAxisCount;
             stack_info_iterator->level                                = top->level + 1;
 
             stack_info_iterator->node = nodeIterator++;
@@ -298,7 +295,7 @@
             stack_info_iterator->annotationsSortedByComplementaryAxis = top->annotationsSortedByCurrentAxis;
             stack_info_iterator->temporaryAnnotationStorage           = top->annotationsSortedByComplementaryAxis;
 
-            stack_info_iterator->count                                = leftAnnotationsSortedByComplementaryAxisCount;
+            stack_info_iterator->count                                = (uint32_t)leftAnnotationsSortedByComplementaryAxisCount;
             stack_info_iterator->level                                = top->level + 1;
 
             stack_info_iterator->node = nodeIterator++;

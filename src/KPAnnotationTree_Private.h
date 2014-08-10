@@ -76,5 +76,6 @@ static inline void *kp_stack_pop(kp_stack_t *stack) {
 
 @property (assign, nonatomic) kp_treenode_t *root;
 @property (assign, nonatomic) kp_treenode_t *nodes;
+@property (assign, nonatomic) kp_stack_t stack;
 
 @end
