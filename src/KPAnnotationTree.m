@@ -204,11 +204,7 @@
     top->annotationsSortedByComplementaryAxis = annotationsY;
     top->temporaryAnnotationStorage           = KPTemporaryAnnotationStorage;
 
-    NSUInteger total = 0;
     while (top != NULL) {
-        total++;
-        printf("olala %tu %tu\n", total, top->count);
-
         // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
         KPAnnotationTreeAxis axis = (top->level & 1) == 0 ? KPAnnotationTreeAxisX : KPAnnotationTreeAxisY;
 
