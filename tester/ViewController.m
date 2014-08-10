@@ -19,7 +19,7 @@
 
 #import "Datasets.h"
 
-static const int kNumberOfTestAnnotations = 100000;
+static const int kNumberOfTestAnnotations = 30000;
 
 @interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
 
