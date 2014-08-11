@@ -149,7 +149,7 @@ typedef enum {
     } else {
         NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
 
-        newClusters = [newAnnotations kp_mapUsingConcurrentEnumeration:^id(id annotation) {
+        newClusters = [newAnnotations kp_map:^id(id annotation) {
             return [[KPAnnotation alloc] initWithAnnotations:@[ annotation ]];
         }];
     }
