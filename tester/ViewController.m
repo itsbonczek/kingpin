@@ -24,7 +24,6 @@ static const int kNumberOfTestAnnotations = 30000;
 @interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
 
 @property (strong, nonatomic) KPClusteringController *clusteringController;
-@property (strong, nonatomic) KPClusteringController *clusteringController2;
 
 @end
 
@@ -35,26 +34,18 @@ static const int kNumberOfTestAnnotations = 30000;
     [super viewDidLoad];
 
     self.mapView.delegate = self;
-
-    /*
-     Disable old tree controller for now
-    self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView];
-    self.clusteringController.delegate = self;
-    self.clusteringController.animationOptions = UIViewAnimationOptionCurveEaseOut;
-    [self.clusteringController setAnnotations:[self annotations]];
-     */
     
     KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
     algorithm.annotationSize = CGSizeMake(25, 50);
     algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
 
-    self.clusteringController2 = [[KPClusteringController alloc] initWithMapView:self.mapView
+    self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView
                                                  clusteringAlgorithm:algorithm];
-    self.clusteringController2.delegate = self;
+    self.clusteringController.delegate = self;
 
-    self.clusteringController2.animationOptions = UIViewAnimationOptionCurveEaseOut;
+    self.clusteringController.animationOptions = UIViewAnimationOptionCurveEaseOut;
 
-    [self.clusteringController2 setAnnotations:[self annotations]];
+    [self.clusteringController setAnnotations:[self annotations]];
     
     self.mapView.showsUserLocation = YES;
     
@@ -77,8 +68,7 @@ static const int kNumberOfTestAnnotations = 30000;
 }
 
 - (IBAction)resetAnnotations:(id)sender {
-    //[self.clusteringController setAnnotations:[self annotations]];
-    [self.clusteringController2 setAnnotations:[self annotations]];
+    [self.clusteringController setAnnotations:[self annotations]];
 }
 
 
@@ -122,10 +112,7 @@ static const int kNumberOfTestAnnotations = 30000;
 #pragma mark - MKMapView
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-//    //[self.clusteringController refresh:self.animationSwitch.on];
-//    Benchmark(1, ^{
-//        [self.clusteringController2 refresh:self.animationSwitch.on];
-//    });
+    [self.clusteringController refresh:self.animationSwitch.on];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
