@@ -89,7 +89,7 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
 
     NSUInteger count = annotations.count;
     tree.size = count;
-    tree.search_stack_info = NULL;
+    tree.search_stack_info = malloc(tree.size * sizeof(kp_search_stack_info_t));
 
     /*
      Kingpin currently implements the algorithm similar to the what is described as "A novel tree-building algorithm" on Wikipedia page:
@@ -316,10 +316,6 @@ static inline void kp_2dtree_free(kp_2dtree_t *tree) {
 }
 
 static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, MKMapPoint *minPoint, MKMapPoint *maxPoint) {
-    if (tree->search_stack_info == NULL) {
-        tree->search_stack_info = malloc(tree->size * sizeof(kp_search_stack_info_t));
-    }
-
     kp_stack_reset(&tree->stack);
     kp_stack_push(&tree->stack, NULL);
 
