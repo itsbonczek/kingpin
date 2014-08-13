@@ -54,6 +54,7 @@
 		53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kingpinTests.xcconfig"; path = "Pods/Pods-kingpinTests.xcconfig"; sourceTree = "<group>"; };
 		8605864518EC13400026144F /* KPAnnotationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAnnotationTests.m; sourceTree = "<group>"; };
 		8605864718EC1F090026144F /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
+		860D4D37199BE6480053E629 /* kp_2dtree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = kp_2dtree.h; path = kp_2dtree.h; sourceTree = "<group>"; };
 		86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm.h; sourceTree = "<group>"; };
 		86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithm.m; sourceTree = "<group>"; };
 		86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithmTests.m; sourceTree = "<group>"; };
@@ -181,6 +182,7 @@
 				86174DD018F9D7CF00014C48 /* KPGeometry.h */,
 				867A7EAE1911A0AE00778F7B /* KPGridClusteringAlgorithm_Private.h */,
 				91F1B6B3193B762500A2E144 /* KPClusteringAlgorithm.h */,
+				860D4D37199BE6480053E629 /* kp_2dtree.h */,
 			);
 			name = kp;
 			sourceTree = "<group>";

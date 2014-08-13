@@ -20,7 +20,7 @@
 
 typedef struct {
     kp_treenode_t *node;
-    int idx;
+    int level;
 } kp_stack_el_t;
 
 
@@ -47,7 +47,7 @@ typedef struct {
 }
 
 - (void)testIntegrityOfAnnotationTree {
-    NSArray *annotations = dataset2_random_NY_and_SF();
+    NSArray *annotations = dataset3_5000_equal_points();
 
     NSUInteger annotationsCount = annotations.count;
 
@@ -61,8 +61,8 @@ typedef struct {
 
     __block NSUInteger numberOfNodes = 0;
 
-    void (^traversalBlock)(kp_treenode_t *node) = ^(kp_treenode_t *node) {
-        NSUInteger XorY = (node->level % 2) == 0;
+    void (^traversalBlock)(kp_treenode_t *, int) = ^(kp_treenode_t *node, int level) {
+        NSUInteger XorY = (level % 2) == 0;
 
         if (node->left) {
             if (XorY) {
@@ -82,42 +82,40 @@ typedef struct {
     };
 
     kp_stack_el_t *stack_info_storage = malloc(annotationsCount * sizeof(kp_stack_el_t));
-    for (int i = 0; i < annotationsCount; i++) {
-        stack_info_storage[i].idx = i;
-    }
     kp_stack_el_t *stack_info_iterator = stack_info_storage;
 
     kp_stack_t stack = kp_stack_create(annotationsCount);
     kp_stack_push(&stack, NULL);
 
-    annotationTree.root->level = 0;
-
     kp_stack_el_t *top = stack_info_iterator;
-    top->node = annotationTree.root;
+    top->node = annotationTree.tree.root;
+    top->level = 0;
 
     while (top != NULL) {
         numberOfNodes++;
 
         kp_treenode_t *node = top->node;
 
-        traversalBlock(node);
+        traversalBlock(top->node, top->level);
 
         if (node->right != NULL) {
+            int next_level = stack_info_iterator->level + 1;
+
             stack_info_iterator++;
 
-            node->right->level = node->level + 1;
-
             (stack_info_iterator)->node = node->right;
+            (stack_info_iterator)->level = next_level;
 
             kp_stack_push(&stack, stack_info_iterator);
         }
 
         if (node->left != NULL) {
+            int next_level = stack_info_iterator->level + 1;
+
             stack_info_iterator++;
 
-            node->left->level = node->level + 1;
-
             (stack_info_iterator)->node = node->left;
+            (stack_info_iterator)->level = next_level;
 
             kp_stack_push(&stack, stack_info_iterator);
         }
@@ -134,7 +132,7 @@ typedef struct {
 }
 
 - (void)testEquivalenceOfAnnotationTrees {
-    NSArray *annotations = dataset2_random_NY_and_SF();
+    NSArray *annotations = dataset3_5000_equal_points();
 
     NSUInteger annotationsCount = annotations.count;
 

@@ -35,6 +35,24 @@ static inline NSArray *dataset1_8000_Moscow() {
     return annotations;
 }
 
+static inline NSArray *dataset3_5000_equal_points() {
+    // build an NYC and SF cluster
+
+    CLLocationCoordinate2D zeroCoordinate = CLLocationCoordinate2DMake(0, 0);
+
+    NSMutableArray *annotations = [NSMutableArray array];
+
+    for (int i = 0; i < 5000; i++) {
+
+        TestAnnotation *a = [[TestAnnotation alloc] init];
+        a.coordinate = zeroCoordinate;
+
+        [annotations addObject:a];
+    }
+    
+    return annotations;
+}
+
 static inline NSArray *dataset2_random_NY_and_SF() {
     // build an NYC and SF cluster
 
