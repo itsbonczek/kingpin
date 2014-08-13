@@ -50,7 +50,7 @@
     MKMapPoint maxPoint = MKMapPointMake(MKMapRectGetMaxX(rect), MKMapRectGetMaxY(rect));
 
     kp_2dtree_t tree = self.tree;
-    kp_2dtree_search(tree.root, &minPoint, &maxPoint, result, KPAnnotationTreeAxisX);
+    kp_2dtree_search(&tree, result, &minPoint, &maxPoint);
 
     return result;
 }

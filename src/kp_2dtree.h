@@ -39,6 +39,12 @@ typedef struct {
 } kp_stack_info_t;
 
 typedef struct {
+    uint32_t level;
+    KPAnnotationTreeAxis axis;
+    kp_treenode_t *node;
+} kp_search_stack_info_t;
+
+typedef struct {
     void **storage;
     void **top;
 } kp_stack_t;
@@ -64,50 +70,20 @@ typedef struct {
     kp_treenode_t *root;
     kp_treenode_t *nodes;
     kp_stack_t stack;
+    NSUInteger size;
 } kp_2dtree_t;
 
 static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations);
 static inline void kp_2dtree_free(kp_2dtree_t *tree);
-static inline void kp_2dtree_search(kp_treenode_t *curNode, MKMapPoint *minPoint, MKMapPoint *maxPoint, NSMutableArray *annotations, KPAnnotationTreeAxis axis);
+static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, MKMapPoint *minPoint, MKMapPoint *maxPoint);
 
-static inline void kp_2dtree_search(kp_treenode_t *curNode, MKMapPoint *minPoint, MKMapPoint *maxPoint, NSMutableArray *annotations, KPAnnotationTreeAxis axis) {
-    if (curNode == NULL) {
-        return;
-    }
-
-    if (minPoint->x <= curNode->mapPoint.x &&
-        minPoint->y <= curNode->mapPoint.y &&
-        curNode->mapPoint.x <= maxPoint->x &&
-        curNode->mapPoint.y <= maxPoint->y) {
-        [annotations addObject:curNode->annotation];
-    }
-
-    double val = MKMapPointGetCoordinateForAxis(&curNode->mapPoint, axis);
-
-    KPAnnotationTreeAxis complementaryAxis = axis ^ 1;
-
-    if (MKMapPointGetCoordinateForAxis(maxPoint, axis) < val) {
-        kp_2dtree_search(curNode->left, minPoint, maxPoint, annotations, complementaryAxis);
-    }
-
-    else if (MKMapPointGetCoordinateForAxis(minPoint, axis) >= val){
-        kp_2dtree_search(curNode->right, minPoint, maxPoint, annotations, complementaryAxis);
-    }
-
-    else {
-        kp_2dtree_search(curNode->left, minPoint, maxPoint, annotations, complementaryAxis);
-        kp_2dtree_search(curNode->right, minPoint, maxPoint, annotations, complementaryAxis);
-    }
-}
-
-#pragma mark - MKMapView
-
-#pragma mark - Tree Building (Private)
+#pragma mark -
 
 static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     kp_2dtree_t tree;
 
     NSUInteger count = annotations.count;
+    tree.size = count;
 
     /*
      Kingpin currently implements the algorithm similar to the what is described as "A novel tree-building algorithm" on Wikipedia page:
@@ -321,3 +297,77 @@ static inline void kp_2dtree_free(kp_2dtree_t *tree) {
     free(tree->nodes);
     free(tree->stack.storage);
 }
+
+static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, MKMapPoint *minPoint, MKMapPoint *maxPoint) {
+    kp_search_stack_info_t *search_stack_info = malloc(tree->size * sizeof(kp_search_stack_info_t));
+
+    kp_stack_push(&tree->stack, NULL);
+
+    kp_search_stack_info_t *top = search_stack_info;
+    kp_search_stack_info_t *top_snapshot;
+
+    top->level = 0;
+    top->node = tree->root;
+    top->axis = 0;
+
+    while (top != NULL) {
+        if (top->node == NULL) {
+            top = kp_stack_pop(&tree->stack);
+            continue;
+        }
+
+        if (minPoint->x <= top->node->mapPoint.x &&
+            minPoint->y <= top->node->mapPoint.y &&
+            top->node->mapPoint.x <= maxPoint->x &&
+            top->node->mapPoint.y <= maxPoint->y) {
+            [result addObject:top->node->annotation];
+        }
+
+        double val = MKMapPointGetCoordinateForAxis(&top->node->mapPoint, top->axis);
+
+        KPAnnotationTreeAxis complementaryAxis = top->axis ^ 1;
+
+        top_snapshot = top;
+
+        if (MKMapPointGetCoordinateForAxis(maxPoint, top->axis) < val) {
+            top++;
+
+            top->axis  = complementaryAxis;
+            top->level = top_snapshot->level + 1;
+            top->node  = top_snapshot->node->left;
+
+            kp_stack_push(&tree->stack, top);
+        }
+
+        else if (MKMapPointGetCoordinateForAxis(minPoint, top->axis) >= val){
+            top++;
+
+            top->axis  = complementaryAxis;
+            top->level = top_snapshot->level + 1;
+            top->node  = top_snapshot->node->right;
+
+            kp_stack_push(&tree->stack, top);
+        }
+
+        else {
+            top++;
+
+            top->axis  = complementaryAxis;
+            top->level = top_snapshot->level + 1;
+            top->node  = top_snapshot->node->right;
+
+            kp_stack_push(&tree->stack, top);
+
+            top++;
+
+            top->axis  = complementaryAxis;
+            top->level = top_snapshot->level + 1;
+            top->node  = top_snapshot->node->left;
+
+            kp_stack_push(&tree->stack, top);
+        }
+
+        top = kp_stack_pop(&tree->stack);
+    }
+}
+
