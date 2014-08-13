@@ -66,17 +66,17 @@ typedef struct {
 
         if (node->left) {
             if (XorY) {
-                XCTAssertTrue(node->left->mapPoint.x < node->mapPoint.x, @"");
+                XCTAssertTrue(node->left->mk_map_point.x < node->mk_map_point.x, @"");
             } else {
-                XCTAssertTrue(node->left->mapPoint.y < node->mapPoint.y, @"");
+                XCTAssertTrue(node->left->mk_map_point.y < node->mk_map_point.y, @"");
             }
         }
 
         if (node->right) {
             if (XorY) {
-                XCTAssertTrue(node->mapPoint.x <= node->right->mapPoint.x, @"");
+                XCTAssertTrue(node->mk_map_point.x <= node->right->mk_map_point.x, @"");
             } else {
-                XCTAssertTrue(node->mapPoint.y <= node->right->mapPoint.y, @"");
+                XCTAssertTrue(node->mk_map_point.y <= node->right->mk_map_point.y, @"");
             }
         }
     };

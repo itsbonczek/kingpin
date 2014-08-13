@@ -22,10 +22,10 @@ typedef enum {
 } KPAnnotationTreeAxis;
 
 typedef struct kp_treenode_t {
-    __unsafe_unretained id<MKAnnotation> annotation;
+    __unsafe_unretained id <MKAnnotation> annotation;
     struct kp_treenode_t *left;
     struct kp_treenode_t *right;
-    MKMapPoint mapPoint;
+    MKMapPoint mk_map_point;
     NSUInteger level;
 } kp_treenode_t;
 
@@ -36,7 +36,7 @@ typedef struct {
     uint32_t count;
     uint32_t level;
     kp_treenode_t *node;
-} kp_stack_info_t;
+} kp_build_stack_info_t;
 
 typedef struct {
     uint32_t level;
@@ -66,11 +66,16 @@ static inline void *kp_stack_pop(kp_stack_t *stack) {
     return *(--stack->top);
 }
 
+static inline void kp_stack_reset(kp_stack_t *stack) {
+    stack->top = stack->storage;
+}
+
 typedef struct {
     kp_treenode_t *root;
     kp_treenode_t *nodes;
     kp_stack_t stack;
     NSUInteger size;
+    kp_search_stack_info_t *search_stack_info;
 } kp_2dtree_t;
 
 static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations);
@@ -84,6 +89,7 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
 
     NSUInteger count = annotations.count;
     tree.size = count;
+    tree.search_stack_info = NULL;
 
     /*
      Kingpin currently implements the algorithm similar to the what is described as "A novel tree-building algorithm" on Wikipedia page:
@@ -156,19 +162,19 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
         return NSOrderedSame;
     });
 
-    kp_treenode_t *nodeIterator = tree.nodes;
+    kp_treenode_t *free_node_iterator = tree.nodes;
     tree.root = tree.nodes;
 
-    kp_stack_info_t *stack_info = malloc(count * sizeof(kp_stack_info_t));
-    kp_stack_info_t *stack_info_iterator = stack_info;
+    kp_build_stack_info_t *stack_info = malloc(count * sizeof(kp_build_stack_info_t));
+    kp_build_stack_info_t *top_snapshot;
 
     kp_stack_t stack = kp_stack_create(count);
     kp_stack_push(&stack, NULL);
 
-    kp_stack_info_t *top = stack_info_iterator++;
+    kp_build_stack_info_t *top = stack_info;
     top->level = 0;
     top->count = (uint32_t)count;
-    top->node  = nodeIterator++;
+    top->node  = free_node_iterator++;
     top->annotationsSortedByCurrentAxis       = annotationsX;
     top->annotationsSortedByComplementaryAxis = annotationsY;
     top->temporaryAnnotationStorage           = KPTemporaryAnnotationStorage;
@@ -199,8 +205,8 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
             medianIdx--;
         }
 
-        top->node->annotation = top->annotationsSortedByCurrentAxis[medianIdx].annotation;
-        top->node->mapPoint = *(top->annotationsSortedByCurrentAxis[medianIdx].mapPoint);
+        top->node->annotation   = top->annotationsSortedByCurrentAxis[medianIdx].annotation;
+        top->node->mk_map_point = *(top->annotationsSortedByCurrentAxis[medianIdx].mapPoint);
 
         /*
          The following strings take heavy use of C pointer <s>gymnastics</s> arithmetics:
@@ -246,36 +252,43 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
         NSUInteger leftAnnotationsSortedByComplementaryAxisCount  = medianIdx;
         NSUInteger rightAnnotationsSortedByComplementaryAxisCount = top->count - medianIdx - 1;
 
+        top_snapshot = top;
+
         if (rightAnnotationsSortedByComplementaryAxisCount > 0) {
-            stack_info_iterator->annotationsSortedByCurrentAxis       = top->annotationsSortedByComplementaryAxis + medianIdx + 1;
-            stack_info_iterator->annotationsSortedByComplementaryAxis = top->annotationsSortedByCurrentAxis + (medianIdx + 1);;
-            stack_info_iterator->temporaryAnnotationStorage           = top->temporaryAnnotationStorage;
+            top++;
 
-            stack_info_iterator->count                                = (uint32_t)rightAnnotationsSortedByComplementaryAxisCount;
-            stack_info_iterator->level                                = top->level + 1;
+            top->annotationsSortedByCurrentAxis       = top_snapshot->annotationsSortedByComplementaryAxis + medianIdx + 1;
+            top->annotationsSortedByComplementaryAxis = top_snapshot->annotationsSortedByCurrentAxis + (medianIdx + 1);;
+            top->temporaryAnnotationStorage           = top_snapshot->temporaryAnnotationStorage;
 
-            stack_info_iterator->node = nodeIterator++;
-            top->node->right = stack_info_iterator->node;
+            top->count                                = (uint32_t)rightAnnotationsSortedByComplementaryAxisCount;
+            top->level                                = top_snapshot->level + 1;
 
-            kp_stack_push(&stack, stack_info_iterator++);
+            top->node = free_node_iterator++;
+
+            top_snapshot->node->right = top->node;
+
+            kp_stack_push(&stack, top);
         } else {
-            top->node->right = NULL;
+            top_snapshot->node->right = NULL;
         }
 
         if (leftAnnotationsSortedByComplementaryAxisCount > 0) {
-            stack_info_iterator->annotationsSortedByCurrentAxis       = top->temporaryAnnotationStorage;;
-            stack_info_iterator->annotationsSortedByComplementaryAxis = top->annotationsSortedByCurrentAxis;
-            stack_info_iterator->temporaryAnnotationStorage           = top->annotationsSortedByComplementaryAxis;
+            top++;
 
-            stack_info_iterator->count                                = (uint32_t)leftAnnotationsSortedByComplementaryAxisCount;
-            stack_info_iterator->level                                = top->level + 1;
+            top->annotationsSortedByCurrentAxis       = top_snapshot->temporaryAnnotationStorage;;
+            top->annotationsSortedByComplementaryAxis = top_snapshot->annotationsSortedByCurrentAxis;
+            top->temporaryAnnotationStorage           = top_snapshot->annotationsSortedByComplementaryAxis;
 
-            stack_info_iterator->node = nodeIterator++;
-            top->node->left = stack_info_iterator->node;
+            top->count                                = (uint32_t)leftAnnotationsSortedByComplementaryAxisCount;
+            top->level                                = top_snapshot->level + 1;
+
+            top->node = free_node_iterator++;
+            top_snapshot->node->left = top->node;
             
-            kp_stack_push(&stack, stack_info_iterator++);
+            kp_stack_push(&stack, top);
         } else {
-            top->node->left = NULL;
+            top_snapshot->node->left = NULL;
         }
         
         top = kp_stack_pop(&stack);
@@ -296,14 +309,21 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
 static inline void kp_2dtree_free(kp_2dtree_t *tree) {
     free(tree->nodes);
     free(tree->stack.storage);
+
+    if (tree->search_stack_info) {
+        free(tree->search_stack_info);
+    }
 }
 
 static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, MKMapPoint *minPoint, MKMapPoint *maxPoint) {
-    kp_search_stack_info_t *search_stack_info = malloc(tree->size * sizeof(kp_search_stack_info_t));
+    if (tree->search_stack_info == NULL) {
+        tree->search_stack_info = malloc(tree->size * sizeof(kp_search_stack_info_t));
+    }
 
+    kp_stack_reset(&tree->stack);
     kp_stack_push(&tree->stack, NULL);
 
-    kp_search_stack_info_t *top = search_stack_info;
+    kp_search_stack_info_t *top = tree->search_stack_info;
     kp_search_stack_info_t *top_snapshot;
 
     top->level = 0;
@@ -316,14 +336,14 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
             continue;
         }
 
-        if (minPoint->x <= top->node->mapPoint.x &&
-            minPoint->y <= top->node->mapPoint.y &&
-            top->node->mapPoint.x <= maxPoint->x &&
-            top->node->mapPoint.y <= maxPoint->y) {
+        if (minPoint->x <= top->node->mk_map_point.x &&
+            minPoint->y <= top->node->mk_map_point.y &&
+            top->node->mk_map_point.x <= maxPoint->x &&
+            top->node->mk_map_point.y <= maxPoint->y) {
             [result addObject:top->node->annotation];
         }
 
-        double val = MKMapPointGetCoordinateForAxis(&top->node->mapPoint, top->axis);
+        double val = MKMapPointGetCoordinateForAxis(&top->node->mk_map_point, top->axis);
 
         KPAnnotationTreeAxis complementaryAxis = top->axis ^ 1;
 
