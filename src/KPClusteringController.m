@@ -37,6 +37,8 @@ typedef enum {
 @property (strong, nonatomic) KPAnnotationTree *annotationTree;
 @property (strong, nonatomic) id <KPClusteringAlgorithm> clusteringAlgorithm;
 
+@property (readonly, nonatomic) NSArray *currentAnnotations;
+
 @property (assign, nonatomic) MKMapRect lastRefreshedMapRect;
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
 @property (assign, readonly, nonatomic) KPClusteringControllerMapViewportChangeState mapViewportChangeState;
@@ -77,8 +79,19 @@ typedef enum {
     return self;
 }
 
+- (NSArray *)currentAnnotations {
+    return [self.mapView.annotations kp_filter:^BOOL(id annotation) {
+        if ([annotation isKindOfClass:[KPAnnotation class]]) {
+            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
+        }
+        else {
+            return NO;
+        }
+    }];
+}
+
 - (void)setAnnotations:(NSArray *)annotations {
-    [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
+    [self.mapView removeAnnotations:self.currentAnnotations];
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
@@ -160,14 +173,7 @@ typedef enum {
         }
     }
 
-    NSArray *oldClusters = [self.mapView.annotations kp_filter:^BOOL(id annotation) {
-        if ([annotation isKindOfClass:[KPAnnotation class]]) {
-            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
-        }
-        else {
-            return NO;
-        }
-    }];
+    NSArray *oldClusters = self.currentAnnotations;
 
     if (animated) {
         
