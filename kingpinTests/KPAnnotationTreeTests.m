@@ -46,6 +46,27 @@ typedef struct {
     XCTAssert(*exp_a == a);
 }
 
+- (void)testEmptyTree {
+    KPAnnotationTree *emptyTree = [[KPAnnotationTree alloc] initWithAnnotations:@[]];
+
+    NSArray *annotations = [emptyTree annotationsInMapRect:MKMapRectWorld];
+
+    XCTAssertTrue([annotations isKindOfClass:[NSArray class]]);
+    XCTAssertEqual(annotations.count, 0);
+}
+
+- (void)testTreeWithOneAnnotation {
+    TestAnnotation *annotation = [[TestAnnotation alloc] init];
+    annotation.coordinate = CLLocationCoordinate2DMake(15, 15);
+
+    KPAnnotationTree *treeWithOneAnnotation = [[KPAnnotationTree alloc] initWithAnnotations:@[ annotation ]];
+
+    NSArray *annotations = [treeWithOneAnnotation annotationsInMapRect:MKMapRectWorld];
+
+    XCTAssertTrue([annotations isKindOfClass:[NSArray class]]);
+    XCTAssertEqual(annotations.count, 1);
+}
+
 - (void)testIntegrityOfAnnotationTree {
     for (NSArray *annotations in [KPTestDatasets datasets]) {
         NSUInteger annotationsCount = annotations.count;

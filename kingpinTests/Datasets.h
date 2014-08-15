@@ -21,7 +21,7 @@
 @implementation KPTestDatasets
 
 + (NSArray *)datasets {
-    return @[ self.dataset1, self.dataset2, self.dataset3 ];
+    return @[ [self dataset1], [self dataset2], [self dataset3] ];
 }
 
 /**

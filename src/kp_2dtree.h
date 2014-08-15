@@ -86,8 +86,12 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
 
 static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     kp_2dtree_t tree;
+    memset(&tree, 0, sizeof(kp_2dtree_t));
 
     NSUInteger count = annotations.count;
+
+    if (count == 0) return tree;
+
     tree.size = count;
     tree.search_stack_info = malloc(tree.size * sizeof(kp_search_stack_info_t));
 
@@ -316,6 +320,8 @@ static inline void kp_2dtree_free(kp_2dtree_t *tree) {
 }
 
 static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, MKMapPoint *minPoint, MKMapPoint *maxPoint) {
+    if (tree->size == 0) return;
+
     kp_stack_reset(&tree->stack);
     kp_stack_push(&tree->stack, NULL);
 
