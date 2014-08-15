@@ -28,8 +28,8 @@
     self = [super init];
     
     if (self) {
-        self.annotations = [NSSet setWithArray:annotations];
-        self.tree = kp_2dtree_create(annotations);
+        _annotations = [NSSet setWithArray:annotations];
+        _tree = kp_2dtree_create(annotations);
     }
 
     return self;
