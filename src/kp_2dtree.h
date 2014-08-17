@@ -84,6 +84,14 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
 
 #pragma mark -
 
+static inline void kp_2dtree_free(kp_2dtree_t *tree) {
+    if (tree->size == 0) return;
+
+    free(tree->nodes);
+    free(tree->stack.storage);
+    free(tree->search_stack_info);
+}
+
 static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     kp_2dtree_t tree;
     memset(&tree, 0, sizeof(kp_2dtree_t));
@@ -94,6 +102,8 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
 
     tree.size = count;
     tree.search_stack_info = malloc(tree.size * sizeof(kp_search_stack_info_t));
+    tree.nodes = malloc(tree.size * sizeof(kp_treenode_t));
+    tree.root = tree.nodes;
 
     /*
      Kingpin currently implements the algorithm similar to the what is described as "A novel tree-building algorithm" on Wikipedia page:
@@ -108,9 +118,6 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
      - These structs and arrays of them allow to eliminate NSObject-based allocations (NSArray and NSIndexSet)
      - These structs allow to skip allocations of corresponding containers on every level of depth.
      */
-
-    kp_treenode_t *nodes = malloc(count * sizeof(kp_treenode_t));
-    tree.nodes = nodes;
 
     __block
     kp_internal_annotation_t *annotationsX = malloc(count * sizeof(kp_internal_annotation_t));
@@ -167,15 +174,15 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     });
 
     kp_treenode_t *free_node_iterator = tree.nodes;
-    tree.root = tree.nodes;
 
-    kp_build_stack_info_t *stack_info = malloc(count * sizeof(kp_build_stack_info_t));
+    kp_build_stack_info_t *build_stack_info = malloc(count * sizeof(kp_build_stack_info_t));
     kp_build_stack_info_t *top_snapshot;
 
     kp_stack_t stack = kp_stack_create(count);
+    tree.stack = stack;
     kp_stack_push(&stack, NULL);
 
-    kp_build_stack_info_t *top = stack_info;
+    kp_build_stack_info_t *top = build_stack_info;
     top->level = 0;
     top->count = (uint32_t)count;
     top->node  = free_node_iterator++;
@@ -297,10 +304,8 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
         
         top = kp_stack_pop(&stack);
     }
-    
-    tree.stack = stack;
-    
-    free(stack_info);
+
+    free(build_stack_info);
     free(annotationsX);
     free(annotationsY);
     
@@ -308,15 +313,6 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     free(KPTemporaryPointStorage);
     
     return tree;
-}
-
-static inline void kp_2dtree_free(kp_2dtree_t *tree) {
-    free(tree->nodes);
-    free(tree->stack.storage);
-
-    if (tree->search_stack_info) {
-        free(tree->search_stack_info);
-    }
 }
 
 static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, MKMapPoint *minPoint, MKMapPoint *maxPoint) {
