@@ -109,72 +109,66 @@ static const int kNumberOfTestAnnotations = 100000;
 }
 
 
-#pragma mark - MKMapView
+#pragma mark - <MKMapViewDelegate>
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     [self.clusteringController refresh:self.animationSwitch.on];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    
-    if([view.annotation isKindOfClass:[KPAnnotation class]]){
+    if ([view.annotation isKindOfClass:[KPAnnotation class]]) {
         
         KPAnnotation *cluster = (KPAnnotation *)view.annotation;
         
-        if(cluster.annotations.count > 1){
+        if (cluster.annotations.count > 1){
             [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(cluster.coordinate,
                                                                        cluster.radius * 2.5f,
                                                                        cluster.radius * 2.5f)
                            animated:YES];
         }
     }
-    
-    
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    
-    MKPinAnnotationView *v = nil;
-    
-    if([annotation isKindOfClass:[KPAnnotation class]]){
-    
+    MKPinAnnotationView *annotationView = nil;
+
+    if ([annotation isKindOfClass:[KPAnnotation class]]) {
         KPAnnotation *a = (KPAnnotation *)annotation;
-        
-        if([annotation isKindOfClass:[MKUserLocation class]]){
+
+        if ([annotation isKindOfClass:[MKUserLocation class]]){
             return nil;
         }
-        
-        if([a isCluster]){
-           
-            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+
+        if (a.isCluster) {
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
             
-            if(!v){
-                v = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:a reuseIdentifier:@"cluster"];
             }
-            
-            v.pinColor = MKPinAnnotationColorPurple;
+
+            annotationView.pinColor = MKPinAnnotationColorPurple;
         }
+
         else {
-            
-            v = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-            
-            if(!v){
-                v = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
+            annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+
+            if (annotationView == nil) {
+                annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:[a.annotations anyObject]
                                                     reuseIdentifier:@"pin"];
             }
-            
-            v.pinColor = MKPinAnnotationColorRed;
+
+            annotationView.pinColor = MKPinAnnotationColorRed;
         }
-        
-        v.canShowCallout = YES;
+
+        annotationView.canShowCallout = YES;
     }
-    else if([annotation isKindOfClass:[MyAnnotation class]]) {
-        v = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
-        v.pinColor = MKPinAnnotationColorGreen;
+
+    else if ([annotation isKindOfClass:[MyAnnotation class]]) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nocluster"];
+        annotationView.pinColor = MKPinAnnotationColorGreen;
     }
-    
-    return v;
-    
+
+    return annotationView;
 }
 
 #pragma mark - <KPClusteringControllerDelegate>
@@ -186,6 +180,10 @@ static const int kNumberOfTestAnnotations = 100000;
 
 - (BOOL)clusteringControllerShouldClusterAnnotations:(KPClusteringController *)clusteringController {
     return YES;
+}
+
+- (void)clusteringControllerWillUpdateVisibleAnnotations:(KPClusteringController *)clusteringController {
+    NSLog(@"Clustering controller %@ will update visible annotations", clusteringController);
 }
 
 @end

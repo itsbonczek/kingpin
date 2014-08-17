@@ -43,7 +43,8 @@ typedef enum {
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
 @property (assign, readonly, nonatomic) KPClusteringControllerMapViewportChangeState mapViewportChangeState;
 
-- (void)_animateCluster:(KPAnnotation *)cluster
+- (void)updateVisibileMapAnnotationsOnMapView:(BOOL)animated;
+- (void)animateCluster:(KPAnnotation *)cluster
          fromAnnotation:(KPAnnotation *)fromAnnotation
            toAnnotation:(KPAnnotation *)toAnnotation
              completion:(void (^)(BOOL finished))completion;
@@ -95,14 +96,14 @@ typedef enum {
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
-    [self _updateVisibileMapAnnotationsOnMapView:NO];
+    [self updateVisibileMapAnnotationsOnMapView:NO];
 }
 
 - (void)refresh:(BOOL)animated {
     KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
     if (mapViewportChangeState != KPClusteringControllerMapViewportNoChange) {
-        [self _updateVisibileMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
+        [self updateVisibileMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
 
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
@@ -139,8 +140,12 @@ typedef enum {
 #pragma mark
 #pragma mark Private
 
-- (void)_updateVisibileMapAnnotationsOnMapView:(BOOL)animated {
-    
+- (void)updateVisibileMapAnnotationsOnMapView:(BOOL)animated {
+
+    if ([self.delegate respondsToSelector:@selector(clusteringControllerWillUpdateVisibleAnnotations:)]) {
+        [self.delegate clusteringControllerWillUpdateVisibleAnnotations:self];
+    }
+
     MKMapRect mapRect = self.mapView.visibleMapRect;
 
     mapRect = MKMapRectInset(self.mapView.visibleMapRect,
@@ -189,7 +194,7 @@ typedef enum {
 
                 if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
                     if (shouldAnimate && [visibleAnnotations member:oldCluster]) {
-                        [self _animateCluster:newCluster
+                        [self animateCluster:newCluster
                                           fromAnnotation:oldCluster
                                             toAnnotation:newCluster
                                               completion:nil];
@@ -204,7 +209,7 @@ typedef enum {
                 else if ([newCluster.annotations member:[oldCluster.annotations anyObject]]) {
                     if (shouldAnimate && MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))) {
 
-                        [self _animateCluster:oldCluster
+                        [self animateCluster:oldCluster
                                           fromAnnotation:oldCluster
                                             toAnnotation:newCluster
                                               completion:^(BOOL finished) {
@@ -226,7 +231,7 @@ typedef enum {
     }
 }
 
-- (void)_animateCluster:(KPAnnotation *)cluster
+- (void)animateCluster:(KPAnnotation *)cluster
          fromAnnotation:(KPAnnotation *)fromAnnotation
            toAnnotation:(KPAnnotation *)toAnnotation
              completion:(void (^)(BOOL finished))completion {
