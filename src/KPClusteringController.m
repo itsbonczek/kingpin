@@ -35,7 +35,9 @@ typedef enum {
 
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) KPAnnotationTree *annotationTree;
-@property (strong, nonatomic) id<KPClusteringAlgorithm> clusteringAlgorithm;
+@property (strong, nonatomic) id <KPClusteringAlgorithm> clusteringAlgorithm;
+
+@property (readonly, nonatomic) NSArray *currentAnnotations;
 
 @property (assign, nonatomic) MKMapRect lastRefreshedMapRect;
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
@@ -77,8 +79,19 @@ typedef enum {
     return self;
 }
 
+- (NSArray *)currentAnnotations {
+    return [self.mapView.annotations kp_filter:^BOOL(id annotation) {
+        if ([annotation isKindOfClass:[KPAnnotation class]]) {
+            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
+        }
+        else {
+            return NO;
+        }
+    }];
+}
+
 - (void)setAnnotations:(NSArray *)annotations {
-    [self.mapView removeAnnotations:[self.annotationTree.annotations allObjects]];
+    [self.mapView removeAnnotations:self.currentAnnotations];
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
@@ -149,7 +162,7 @@ typedef enum {
     } else {
         NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
 
-        newClusters = [newAnnotations kp_mapUsingConcurrentEnumeration:^id(id annotation) {
+        newClusters = [newAnnotations kp_map:^id(id annotation) {
             return [[KPAnnotation alloc] initWithAnnotations:@[ annotation ]];
         }];
     }
@@ -160,14 +173,7 @@ typedef enum {
         }
     }
 
-    NSArray *oldClusters = [self.mapView.annotations kp_filter:^BOOL(id annotation) {
-        if ([annotation isKindOfClass:[KPAnnotation class]]) {
-            return ([self.annotationTree.annotations containsObject:[[(KPAnnotation*)annotation annotations] anyObject]]);
-        }
-        else {
-            return NO;
-        }
-    }];
+    NSArray *oldClusters = self.currentAnnotations;
 
     if (animated) {
         
@@ -179,10 +185,10 @@ typedef enum {
 
             // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
             for (KPAnnotation *oldCluster in oldClusters){
-                BOOL shouldAnimate = ![oldCluster.annotations isEqualToSet:newCluster.annotations];
+                BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
 
                 if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
-                    if ([visibleAnnotations member:oldCluster] && shouldAnimate) {
+                    if (shouldAnimate && [visibleAnnotations member:oldCluster]) {
                         [self _animateCluster:newCluster
                                           fromAnnotation:oldCluster
                                             toAnnotation:newCluster
@@ -196,7 +202,7 @@ typedef enum {
                 // (collapsing animation)
 
                 else if ([newCluster.annotations member:[oldCluster.annotations anyObject]]) {
-                    if (MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate)) && shouldAnimate) {
+                    if (shouldAnimate && MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))) {
 
                         [self _animateCluster:oldCluster
                                           fromAnnotation:oldCluster

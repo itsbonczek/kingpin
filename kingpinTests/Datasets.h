@@ -8,36 +8,26 @@
 
 #import "TestAnnotation.h"
 
-/*
-static NSArray *dataset1_8000_Moscow() {
+@interface KPTestDatasets : NSObject
 
-    // build an NYC and SF cluster
++ (NSArray *)datasets;
 
-    NSString *filePath = [[NSBundle bundleForClass:[TestAnnotation class]] pathForResource:@"Dataset1" ofType:@"txt"];
-    NSData *JSONData = [[NSData alloc] initWithContentsOfFile:filePath];
++ (NSArray *)dataset1;
++ (NSArray *)dataset2;
++ (NSArray *)dataset3;
 
-    //    NSLog(@"%@", JSONData);
+@end
 
-    NSError *error = nil;
-    NSArray *pins = [NSJSONSerialization JSONObjectWithData:JSONData options:0 error:&error];
+@implementation KPTestDatasets
 
-    NSMutableArray *annotations = [NSMutableArray array];
-
-    for (NSDictionary *pin in pins) {
-
-        TestAnnotation *a1 = [[TestAnnotation alloc] init];
-        double latitude = [pin[@"lat"] doubleValue];
-        double longitude = [pin[@"long"] doubleValue];
-
-        a1.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
-        [annotations addObject:a1];
-    }
-    
-    return annotations;
++ (NSArray *)datasets {
+    return @[ [self dataset1], [self dataset2], [self dataset3] ];
 }
- */
 
-static inline NSArray *dataset2_random_NY_and_SF() {
+/**
+ NYC and SF
+ */
++ (NSArray *)dataset1 {
     // build an NYC and SF cluster
 
     CLLocationCoordinate2D NYCoord = CLLocationCoordinate2DMake(40.77, -73.98);
@@ -64,6 +54,52 @@ static inline NSArray *dataset2_random_NY_and_SF() {
         [annotations addObject:a2];
         
     }
+    
+    return annotations;
+}
+
+/**
+ Real dataset provided by developer. Obtained from third-party service.
+ */
++ (NSArray *)dataset2 {
+    NSString *filePath = [[NSBundle bundleForClass:[TestAnnotation class]] pathForResource:@"Dataset1" ofType:@"txt"];
+    NSData *JSONData = [[NSData alloc] initWithContentsOfFile:filePath];
+
+    NSError *error = nil;
+    NSArray *pins = [NSJSONSerialization JSONObjectWithData:JSONData options:0 error:&error];
+
+    NSMutableArray *annotations = [NSMutableArray array];
+
+    for (NSDictionary *pin in pins) {
+
+        TestAnnotation *a1 = [[TestAnnotation alloc] init];
+        double latitude = [pin[@"lat"] doubleValue];
+        double longitude = [pin[@"long"] doubleValue];
+
+        a1.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        [annotations addObject:a1];
+    }
+    
+    return annotations;
+}
+
+/**
+ 5000 equal points
+ */
++ (NSArray *)dataset3 {
+    CLLocationCoordinate2D zeroCoordinate = CLLocationCoordinate2DMake(0, 0);
+
+    NSMutableArray *annotations = [NSMutableArray array];
+
+    for (int i = 0; i < 5000; i++) {
+
+        TestAnnotation *a = [[TestAnnotation alloc] init];
+        a.coordinate = zeroCoordinate;
+
+        [annotations addObject:a];
+    }
 
     return annotations;
 }
+
+@end

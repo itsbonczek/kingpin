@@ -23,10 +23,10 @@
 
 @implementation NSArray (KP)
 
-- (NSArray *)kp_mapUsingConcurrentEnumeration:(id (^)(id))block {
+- (NSArray *)kp_map:(id (^)(id))block {
     __block NSMutableArray *array = [NSMutableArray array];
     
-    [self enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [array addObject:block(obj)];
     }];
     

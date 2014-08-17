@@ -91,11 +91,11 @@ static const uint16_t KPAdjacentClusterPositionDeltas[8][2] = {
     { 1, 1}   // 7
 };
 
-typedef enum {
-    KPClusterStateEmpty   =  0,
-    KPClusterStateHasData =  1,
-    KPClusterStateMerged  = -1,
-} kp_cluster_state_t;
+typedef NS_ENUM(NSUInteger, kp_cluster_state_t) {
+    KPClusterStateEmpty   = 0,
+    KPClusterStateHasData = 1,
+    KPClusterStateMerged  = 2,
+};
 
 typedef struct {
     MKMapRect mapRect; // 32

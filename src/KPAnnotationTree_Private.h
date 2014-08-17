@@ -16,40 +16,12 @@
 
 #import "KPAnnotationTree.h"
 
-#import "KPGeometry.h"
-
-#define KP_LIKELY(x) __builtin_expect(!!(x), 1)
-
-typedef struct {
-    __unsafe_unretained id <MKAnnotation> annotation;
-
-    MKMapPoint *mapPoint;
-} kp_internal_annotation_t;
-
-typedef enum {
-    KPAnnotationTreeAxisX = 0,
-    KPAnnotationTreeAxisY = 1,
-} KPAnnotationTreeAxis;
-
-typedef struct kp_treenode_t {
-    __unsafe_unretained id<MKAnnotation> annotation;
-    struct kp_treenode_t *left;
-    struct kp_treenode_t *right;
-    MKMapPoint mapPoint;
-} kp_treenode_t;
-
-typedef struct {
-    kp_treenode_t *nodes;
-    NSUInteger freeIdx;
-} kp_treenode_storage_t;
-
-static inline kp_treenode_t * kp_tree_build(kp_treenode_storage_t *nodeStorage, kp_internal_annotation_t *annotationsSortedByCurrentAxis, kp_internal_annotation_t *annotationsSortedByComplementaryAxis, kp_internal_annotation_t *temporaryAnnotationStorage, const NSUInteger count, const NSInteger curLevel);
+#import "kp_2dtree.h"
 
 @interface KPAnnotationTree ()
 
 @property (strong, nonatomic, readwrite) NSSet *annotations;
 
-@property (assign, nonatomic) kp_treenode_t *root;
-@property (assign, nonatomic) kp_treenode_storage_t *nodeStorage;
+@property (assign, nonatomic) kp_2dtree_t tree;
 
 @end
