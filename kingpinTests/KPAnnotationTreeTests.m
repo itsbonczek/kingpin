@@ -63,12 +63,17 @@ typedef struct {
 
     NSArray *annotations = [treeWithOneAnnotation annotationsInMapRect:MKMapRectWorld];
 
+    TestAnnotation *annotationBySearch = [annotations firstObject];
+
+    XCTAssertTrue([annotationBySearch isEqual:annotation]);
     XCTAssertTrue([annotations isKindOfClass:[NSArray class]]);
-    XCTAssertEqual(annotations.count, 1);
+    XCTAssertTrue(annotations.count == 1);
 }
 
 - (void)testIntegrityOfAnnotationTree {
-    for (NSArray *annotations in [KPTestDatasets datasets]) {
+    id datasets = [KPTestDatasets datasets];
+
+    for (NSArray *annotations in datasets) {
         NSUInteger annotationsCount = annotations.count;
 
         NSLog(@"Annotation Count: %tu", annotationsCount);
@@ -150,7 +155,9 @@ typedef struct {
 }
 
 - (void)testEquivalenceOfAnnotationTrees {
-    for (NSArray *annotations in [KPTestDatasets datasets]) {
+    id datasets = [KPTestDatasets datasets];
+
+    for (NSArray *annotations in datasets) {
         NSUInteger annotationsCount = annotations.count;
 
         // Create array of shuffled annotations and ensure integrity.
