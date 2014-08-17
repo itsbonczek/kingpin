@@ -44,7 +44,17 @@
 - (BOOL)clusteringControllerShouldClusterAnnotations:(KPClusteringController *)clusteringController;
 
 - (void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation;
-- (void)clusteringController:(KPClusteringController *)clusteringController willAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
-- (void)clusteringController:(KPClusteringController *)clusteringController didAnimateAnnotation:(KPAnnotation *)annotation fromAnnotation:(KPAnnotation *)fromAnntation toAnnotation:(KPAnnotation *)toAnnotation;
+
+- (void)clusteringControllerWillUpdateVisibleAnnotations:(KPClusteringController *)clusteringController;
+
+- (void)clusteringController:(KPClusteringController *)clusteringController
+       willAnimateAnnotation:(KPAnnotation *)annotation
+              fromAnnotation:(KPAnnotation *)fromAnntation
+                toAnnotation:(KPAnnotation *)toAnnotation;
+
+- (void)clusteringController:(KPClusteringController *)clusteringController
+        didAnimateAnnotation:(KPAnnotation *)annotation
+              fromAnnotation:(KPAnnotation *)fromAnntation
+                toAnnotation:(KPAnnotation *)toAnnotation;
 
 @end
