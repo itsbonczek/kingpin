@@ -101,7 +101,7 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     if (count == 0) return tree;
 
     tree.size = count;
-    tree.search_stack_info = malloc(tree.size * sizeof(kp_search_stack_info_t));
+    tree.search_stack_info = malloc((tree.size + 2) * sizeof(kp_search_stack_info_t));
     tree.nodes = malloc(tree.size * sizeof(kp_treenode_t));
     tree.root = tree.nodes;
 
@@ -178,7 +178,7 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     kp_build_stack_info_t *build_stack_info = malloc(count * sizeof(kp_build_stack_info_t));
     kp_build_stack_info_t *top_snapshot;
 
-    kp_stack_t stack = kp_stack_create(count);
+    kp_stack_t stack = kp_stack_create(count + 3);
     tree.stack = stack;
     kp_stack_push(&stack, NULL);
 
