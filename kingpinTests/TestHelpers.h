@@ -56,6 +56,10 @@ static inline MKMapRect MKMapRectRandom() {
     return randomRect;
 }
 
+static inline MKMapPoint MKMapRectWorldPointRandom() {
+    return MKMapPointMake(randomWithinRange(0, MKMapSizeWorld.width), randomWithinRange(0, MKMapSizeWorld.height));
+}
+
 static inline BOOL CLLocationCoordinates2DEqual(CLLocationCoordinate2D coordinate, CLLocationCoordinate2D otherCoordinate) {
     static const double precision = 0.00000000001;
 

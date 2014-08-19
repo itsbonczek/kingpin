@@ -70,6 +70,66 @@ typedef struct {
     XCTAssertTrue(annotations.count == 1);
 }
 
+- (void)testTreesWithVariousNumberOfEqualAnnotations {
+    NSUInteger K = 100;
+    NSUInteger N = 100;
+
+    NSUInteger iterationsCount = 0;
+    for (NSUInteger i = 0; i < N; i++) {
+        for (NSUInteger j = 0; j < K; j++) {
+            iterationsCount++;
+
+            NSArray *annotations = [KPTestDatasets datasetRandomWithNumberOfEqualAnnotations:i];
+
+            KPAnnotationTree *annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
+
+            NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:MKMapRectWorld];
+
+            for (id <MKAnnotation> annotation in annotationsBySearch) {
+                XCTAssertTrue([annotation isKindOfClass:[TestAnnotation class]]);
+                XCTAssertTrue(CLLocationCoordinate2DIsValid([annotation coordinate]));
+            }
+
+            NSSet *annotationsBySearchSet = [NSSet setWithArray:annotationsBySearch];
+
+            XCTAssertTrue([annotationsBySearchSet isEqualToSet:annotationTree.annotations]);
+            XCTAssertTrue(annotations.count == annotations.count);
+        }
+    }
+
+    XCTAssertTrue(iterationsCount == K * N);
+}
+
+- (void)testTreesWithVariousNumberOfAnnotations {
+    NSUInteger K = 100;
+    NSUInteger N = 100;
+
+    NSUInteger iterationsCount = 0;
+    for (NSUInteger i = 0; i < N; i++) {
+        for (NSUInteger j = 0; j < K; j++) {
+            iterationsCount++;
+
+            NSArray *annotations = [KPTestDatasets datasetRandomWithNumberOfAnnotations:i];
+
+            KPAnnotationTree *annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
+
+            NSArray *annotationsBySearch = [annotationTree annotationsInMapRect:MKMapRectWorld];
+
+            for (id <MKAnnotation> annotation in annotationsBySearch) {
+                XCTAssertTrue([annotation isKindOfClass:[TestAnnotation class]]);
+                XCTAssertTrue(CLLocationCoordinate2DIsValid([annotation coordinate]));
+            }
+
+            NSSet *annotationsBySearchSet = [NSSet setWithArray:annotationsBySearch];
+
+            XCTAssertTrue([annotationsBySearchSet isEqualToSet:annotationTree.annotations]);
+            XCTAssertTrue(annotations.count == annotations.count);
+        }
+    }
+    
+    XCTAssertTrue(iterationsCount == K * N);
+}
+
 - (void)testIntegrityOfAnnotationTree {
     id datasets = [KPTestDatasets datasets];
 

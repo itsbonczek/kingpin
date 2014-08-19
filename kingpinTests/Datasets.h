@@ -8,6 +8,8 @@
 
 #import "TestAnnotation.h"
 
+#import "TestHelpers.h"
+
 @interface KPTestDatasets : NSObject
 
 + (NSArray *)datasets;
@@ -101,5 +103,37 @@
 
     return annotations;
 }
+
++ (NSArray *)datasetRandomWithNumberOfEqualAnnotations:(NSUInteger)numberOfAnnotations {
+    NSMutableArray *annotations = [NSMutableArray array];
+
+    CLLocationCoordinate2D randomCoordinate = MKCoordinateForMapPoint(MKMapRectWorldPointRandom());
+
+    for (NSUInteger i = 0; i < numberOfAnnotations; i++) {
+
+        TestAnnotation *a = [[TestAnnotation alloc] init];
+        a.coordinate = randomCoordinate;
+
+        [annotations addObject:a];
+    }
+
+    return annotations;
+}
+
++ (NSArray *)datasetRandomWithNumberOfAnnotations:(NSUInteger)numberOfAnnotations {
+    NSMutableArray *annotations = [NSMutableArray array];
+
+    for (NSUInteger i = 0; i < numberOfAnnotations; i++) {
+        CLLocationCoordinate2D randomCoordinate = MKCoordinateForMapPoint(MKMapRectWorldPointRandom());
+
+        TestAnnotation *a = [[TestAnnotation alloc] init];
+        a.coordinate = randomCoordinate;
+
+        [annotations addObject:a];
+    }
+    
+    return annotations;
+}
+
 
 @end
