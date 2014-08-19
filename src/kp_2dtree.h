@@ -101,7 +101,8 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     if (count == 0) return tree;
 
     tree.size = count;
-    tree.search_stack_info = malloc((tree.size + 3) * sizeof(kp_search_stack_info_t));
+
+    tree.search_stack_info = malloc(tree.size * sizeof(kp_search_stack_info_t));
     tree.nodes = malloc(tree.size * sizeof(kp_treenode_t));
     tree.root = tree.nodes;
 
@@ -178,7 +179,7 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     kp_build_stack_info_t *build_stack_info = malloc(count * sizeof(kp_build_stack_info_t));
     kp_build_stack_info_t *top_snapshot;
 
-    kp_stack_t stack = kp_stack_create(count + 3);
+    kp_stack_t stack = kp_stack_create(count);
     tree.stack = stack;
     kp_stack_push(&stack, NULL);
 
@@ -329,11 +330,6 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
     top->axis = 0;
 
     while (top != NULL) {
-        if (top->node == NULL) {
-            top = kp_stack_pop(&tree->stack);
-            continue;
-        }
-
         if (minPoint->x <= top->node->mk_map_point.x &&
             minPoint->y <= top->node->mk_map_point.y &&
             top->node->mk_map_point.x <= maxPoint->x &&
@@ -347,7 +343,7 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
 
         top_snapshot = top;
 
-        if (MKMapPointGetCoordinateForAxis(maxPoint, top->axis) < val) {
+        if (MKMapPointGetCoordinateForAxis(maxPoint, top->axis) < val && top_snapshot->node->left != NULL) {
             top++;
 
             top->axis  = complementaryAxis;
@@ -357,7 +353,7 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
             kp_stack_push(&tree->stack, top);
         }
 
-        else if (MKMapPointGetCoordinateForAxis(minPoint, top->axis) >= val){
+        else if (MKMapPointGetCoordinateForAxis(minPoint, top->axis) >= val && top_snapshot->node->right != NULL){
             top++;
 
             top->axis  = complementaryAxis;
@@ -368,21 +364,25 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
         }
 
         else {
-            top++;
+            if (top_snapshot->node->right != NULL) {
+                top++;
 
-            top->axis  = complementaryAxis;
-            top->level = top_snapshot->level + 1;
-            top->node  = top_snapshot->node->right;
+                top->axis  = complementaryAxis;
+                top->level = top_snapshot->level + 1;
+                top->node  = top_snapshot->node->right;
 
-            kp_stack_push(&tree->stack, top);
+                kp_stack_push(&tree->stack, top);
+            }
 
-            top++;
+            if (top_snapshot->node->left != NULL) {
+                top++;
 
-            top->axis  = complementaryAxis;
-            top->level = top_snapshot->level + 1;
-            top->node  = top_snapshot->node->left;
+                top->axis  = complementaryAxis;
+                top->level = top_snapshot->level + 1;
+                top->node  = top_snapshot->node->left;
 
-            kp_stack_push(&tree->stack, top);
+                kp_stack_push(&tree->stack, top);
+            }
         }
 
         top = kp_stack_pop(&tree->stack);
