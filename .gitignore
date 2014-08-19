@@ -2,5 +2,4 @@
 *.xcodeproj/project.xcworkspace
 *.xcodeproj/project.xcworkspace/xcuserdata
 Build/
-Pods/
 *.xcworkspace/xcuserdata
