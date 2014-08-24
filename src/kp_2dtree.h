@@ -72,7 +72,6 @@ static inline void kp_stack_reset(kp_stack_t *stack) {
 
 typedef struct {
     kp_treenode_t *root;
-    kp_treenode_t *nodes;
     kp_stack_t stack;
     NSUInteger size;
     kp_search_stack_info_t *search_stack_info;
@@ -87,7 +86,7 @@ static inline void kp_2dtree_search(kp_2dtree_t *tree, NSMutableArray *result, M
 static inline void kp_2dtree_free(kp_2dtree_t *tree) {
     if (tree->size == 0) return;
 
-    free(tree->nodes);
+    free(tree->root);
     free(tree->stack.storage);
     free(tree->search_stack_info);
 }
@@ -102,9 +101,20 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
 
     tree.size = count;
 
-    tree.search_stack_info = malloc(tree.size * sizeof(kp_search_stack_info_t));
-    tree.nodes = malloc(tree.size * sizeof(kp_treenode_t));
-    tree.root = tree.nodes;
+    tree.search_stack_info = malloc(count * sizeof(kp_search_stack_info_t));
+    tree.root = malloc(count * sizeof(kp_treenode_t));
+
+    kp_build_stack_info_t *build_stack_info = malloc(count * sizeof(kp_build_stack_info_t));
+    kp_build_stack_info_t *top_snapshot;
+
+    kp_stack_t stack = kp_stack_create(count);
+    tree.stack = stack;
+
+    kp_internal_annotation_t *annotationsX = malloc(count * sizeof(kp_internal_annotation_t));
+    kp_internal_annotation_t *annotationsY = malloc(count * sizeof(kp_internal_annotation_t));
+
+    MKMapPoint *temporary_point_storage = malloc(count * sizeof(MKMapPoint));
+    kp_internal_annotation_t *temporary_annotation_storage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
 
     /*
      Kingpin currently implements the algorithm similar to the what is described as "A novel tree-building algorithm" on Wikipedia page:
@@ -120,24 +130,17 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
      - These structs allow to skip allocations of corresponding containers on every level of depth.
      */
 
-    __block
-    kp_internal_annotation_t *annotationsX = malloc(count * sizeof(kp_internal_annotation_t));
-    kp_internal_annotation_t *annotationsY = malloc(count * sizeof(kp_internal_annotation_t));
-
-    MKMapPoint *KPTemporaryPointStorage = malloc(count * sizeof(MKMapPoint));
-    kp_internal_annotation_t *KPTemporaryAnnotationStorage = malloc((count / 2) * sizeof(kp_internal_annotation_t));
-
     dispatch_apply(count, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t idx) {
         id <MKAnnotation> annotation = annotations[idx];
 
         MKMapPoint mapPoint = MKMapPointForCoordinate(annotation.coordinate);
 
-        KPTemporaryPointStorage[idx] = mapPoint;
+        temporary_point_storage[idx] = mapPoint;
 
         kp_internal_annotation_t _annotation;
 
         _annotation.annotation = annotation;
-        _annotation.mapPoint = KPTemporaryPointStorage + idx;
+        _annotation.mapPoint = temporary_point_storage + idx;
 
         annotationsX[idx] = _annotation;
     });
@@ -174,14 +177,9 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
         return NSOrderedSame;
     });
 
-    kp_treenode_t *free_node_iterator = tree.nodes;
-
-    kp_build_stack_info_t *build_stack_info = malloc(count * sizeof(kp_build_stack_info_t));
-    kp_build_stack_info_t *top_snapshot;
-
-    kp_stack_t stack = kp_stack_create(count);
-    tree.stack = stack;
     kp_stack_push(&stack, NULL);
+
+    kp_treenode_t *free_node_iterator = tree.root;
 
     kp_build_stack_info_t *top = build_stack_info;
     top->level = 0;
@@ -189,7 +187,7 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     top->node  = free_node_iterator++;
     top->annotationsSortedByCurrentAxis       = annotationsX;
     top->annotationsSortedByComplementaryAxis = annotationsY;
-    top->temporaryAnnotationStorage           = KPTemporaryAnnotationStorage;
+    top->temporaryAnnotationStorage           = temporary_annotation_storage;
 
     while (top != NULL) {
         // We prefer machine way of doing odd/even check over the mathematical one: "% 2"
@@ -310,8 +308,8 @@ static inline kp_2dtree_t kp_2dtree_create(NSArray *annotations) {
     free(annotationsX);
     free(annotationsY);
     
-    free(KPTemporaryAnnotationStorage);
-    free(KPTemporaryPointStorage);
+    free(temporary_annotation_storage);
+    free(temporary_point_storage);
     
     return tree;
 }
