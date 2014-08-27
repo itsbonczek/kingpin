@@ -39,11 +39,13 @@ typedef enum {
 
 @property (readonly, nonatomic) NSArray *currentAnnotations;
 
-@property (assign, nonatomic) MKMapRect lastRefreshedMapRect;
+@property (readonly, nonatomic) MKMapRect clusteringMapRectForVisibleMapRect;
+@property (assign, nonatomic)   MKMapRect lastRefreshedMapRect;
+
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
 @property (assign, readonly, nonatomic) KPClusteringControllerMapViewportChangeState mapViewportChangeState;
 
-- (void)updateVisibileMapAnnotationsOnMapView:(BOOL)animated;
+- (void)updateVisibleMapAnnotationsOnMapView:(BOOL)animated;
 - (void)animateCluster:(KPAnnotation *)cluster
          fromAnnotation:(KPAnnotation *)fromAnnotation
            toAnnotation:(KPAnnotation *)toAnnotation
@@ -96,14 +98,14 @@ typedef enum {
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
-    [self updateVisibileMapAnnotationsOnMapView:NO];
+    [self updateVisibleMapAnnotationsOnMapView:NO];
 }
 
 - (void)refresh:(BOOL)animated {
     KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
     if (mapViewportChangeState != KPClusteringControllerMapViewportNoChange) {
-        [self updateVisibileMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
+        [self updateVisibleMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
 
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
@@ -137,20 +139,23 @@ typedef enum {
     return KPClusteringControllerMapViewportNoChange;
 }
 
+- (MKMapRect)clusteringMapRectForVisibleMapRect {
+    return MKMapRectInset(self.mapView.visibleMapRect,
+                         -self.mapView.visibleMapRect.size.width,
+                         -self.mapView.visibleMapRect.size.height);
+
+}
+
 #pragma mark
 #pragma mark Private
 
-- (void)updateVisibileMapAnnotationsOnMapView:(BOOL)animated {
+- (void)updateVisibleMapAnnotationsOnMapView:(BOOL)animated {
 
     if ([self.delegate respondsToSelector:@selector(clusteringControllerWillUpdateVisibleAnnotations:)]) {
         [self.delegate clusteringControllerWillUpdateVisibleAnnotations:self];
     }
 
-    MKMapRect mapRect = self.mapView.visibleMapRect;
-
-    mapRect = MKMapRectInset(self.mapView.visibleMapRect,
-                             -self.mapView.visibleMapRect.size.width,
-                             -self.mapView.visibleMapRect.size.height);
+    MKMapRect clusteringMapRect = self.clusteringMapRectForVisibleMapRect;
 
     NSArray *newClusters;
 
@@ -161,11 +166,11 @@ typedef enum {
     }
 
     if (clusteringEnabled) {
-        newClusters = [self.clusteringAlgorithm clusterAnnotationsInMapRect:mapRect
+        newClusters = [self.clusteringAlgorithm clusterAnnotationsInMapRect:clusteringMapRect
                                                               parentMapView:self.mapView
                                                              annotationTree:self.annotationTree];
     } else {
-        NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:mapRect];
+        NSArray *newAnnotations = [self.annotationTree annotationsInMapRect:clusteringMapRect];
 
         newClusters = [newAnnotations kp_map:^id(id annotation) {
             return [[KPAnnotation alloc] initWithAnnotations:@[ annotation ]];
@@ -181,18 +186,18 @@ typedef enum {
     NSArray *oldClusters = self.currentAnnotations;
 
     if (animated) {
-        
-        NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:[self.mapView visibleMapRect]];
 
-        for(KPAnnotation *newCluster in newClusters){
+        NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
+
+        for (KPAnnotation *newCluster in newClusters) {
 
             [self.mapView addAnnotation:newCluster];
 
             // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
-            for (KPAnnotation *oldCluster in oldClusters){
-                BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
-
+            for (KPAnnotation *oldCluster in oldClusters) {
                 if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
+                    BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
+
                     if (shouldAnimate && [visibleAnnotations member:oldCluster]) {
                         [self animateCluster:newCluster
                                           fromAnnotation:oldCluster
@@ -207,6 +212,8 @@ typedef enum {
                 // (collapsing animation)
 
                 else if ([newCluster.annotations member:[oldCluster.annotations anyObject]]) {
+                    BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
+
                     if (shouldAnimate && MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))) {
 
                         [self animateCluster:oldCluster
