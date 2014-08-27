@@ -190,9 +190,9 @@ typedef enum {
 
             // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
             for (KPAnnotation *oldCluster in oldClusters){
-                BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
-
                 if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
+                    BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
+
                     if (shouldAnimate && [visibleAnnotations member:oldCluster]) {
                         [self animateCluster:newCluster
                                           fromAnnotation:oldCluster
@@ -207,6 +207,8 @@ typedef enum {
                 // (collapsing animation)
 
                 else if ([newCluster.annotations member:[oldCluster.annotations anyObject]]) {
+                    BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
+
                     if (shouldAnimate && MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))) {
 
                         [self animateCluster:oldCluster
