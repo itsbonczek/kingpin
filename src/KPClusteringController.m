@@ -43,7 +43,7 @@ typedef enum {
 @property (assign, nonatomic) MKCoordinateRegion lastRefreshedMapRegion;
 @property (assign, readonly, nonatomic) KPClusteringControllerMapViewportChangeState mapViewportChangeState;
 
-- (void)updateVisibileMapAnnotationsOnMapView:(BOOL)animated;
+- (void)updateVisibleMapAnnotationsOnMapView:(BOOL)animated;
 - (void)animateCluster:(KPAnnotation *)cluster
          fromAnnotation:(KPAnnotation *)fromAnnotation
            toAnnotation:(KPAnnotation *)toAnnotation
@@ -96,14 +96,14 @@ typedef enum {
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
-    [self updateVisibileMapAnnotationsOnMapView:NO];
+    [self updateVisibleMapAnnotationsOnMapView:NO];
 }
 
 - (void)refresh:(BOOL)animated {
     KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
     if (mapViewportChangeState != KPClusteringControllerMapViewportNoChange) {
-        [self updateVisibileMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
+        [self updateVisibleMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
 
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
@@ -140,7 +140,7 @@ typedef enum {
 #pragma mark
 #pragma mark Private
 
-- (void)updateVisibileMapAnnotationsOnMapView:(BOOL)animated {
+- (void)updateVisibleMapAnnotationsOnMapView:(BOOL)animated {
 
     if ([self.delegate respondsToSelector:@selector(clusteringControllerWillUpdateVisibleAnnotations:)]) {
         [self.delegate clusteringControllerWillUpdateVisibleAnnotations:self];
