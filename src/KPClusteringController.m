@@ -102,6 +102,11 @@ typedef enum {
 }
 
 - (void)refresh:(BOOL)animated {
+    if (self.mapView.visibleMapRect.size.width == 0 ||
+        self.mapView.visibleMapRect.size.height == 0) {
+        return;
+    }
+
     KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
     if (mapViewportChangeState != KPClusteringControllerMapViewportNoChange) {
