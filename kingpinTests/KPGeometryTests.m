@@ -10,6 +10,8 @@
 
 #import "KPGeometry.h"
 
+#import <XCTest/XCTest.h>
+
 
 @interface KPGeometryTests : XCTestCase
 @end
