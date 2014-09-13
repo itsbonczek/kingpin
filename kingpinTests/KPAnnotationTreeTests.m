@@ -15,6 +15,7 @@
 
 #import "Datasets.h"
 
+#import <XCTest/XCTest.h>
 @interface KPAnnotationTreeTests : XCTestCase
 @end
 

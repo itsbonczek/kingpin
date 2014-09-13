@@ -10,29 +10,29 @@
 	<string>kingpin</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>32770503-2BE3-42AE-B552-C002AFAD5FAE</key>
+		<key>227A578621E0FA13C4D256D39778AA4927AF08CD</key>
 		<string>ssh://github.com/stanislaw/kingpin.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>kingpin.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>32770503-2BE3-42AE-B552-C002AFAD5FAE</key>
+		<key>227A578621E0FA13C4D256D39778AA4927AF08CD</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/stanislaw/kingpin.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>32770503-2BE3-42AE-B552-C002AFAD5FAE</string>
+	<string>227A578621E0FA13C4D256D39778AA4927AF08CD</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>32770503-2BE3-42AE-B552-C002AFAD5FAE</string>
+			<string>227A578621E0FA13C4D256D39778AA4927AF08CD</string>
 			<key>IDESourceControlWCCName</key>
 			<string>kingpin</string>
 		</dict>

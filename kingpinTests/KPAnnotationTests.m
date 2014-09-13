@@ -11,6 +11,8 @@
 #import "KPAnnotation.h"
 #import "TestAnnotation.h"
 
+#import <XCTest/XCTest.h>
+
 
 @interface KPAnnotationTests : XCTestCase
 @end

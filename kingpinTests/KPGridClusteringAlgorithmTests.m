@@ -22,6 +22,8 @@
 #define MOCKITO_SHORTHAND
 #import <OCMockito/OCMockito.h>
 
+#import <XCTest/XCTest.h>
+
 @interface KPGridClusteringAlgorithmTests : XCTestCase
 @end
 
