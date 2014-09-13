@@ -6,9 +6,9 @@ A drop-in MKAnnotation clustering library for iOS.
 
 __Update September 11, 2014__
 
-Kingpin is now 0.2.beta. 
+Kingpin is now in 0.2.beta. 
 
-For comers from 0.1: be sure to review README for changes.
+If you are coming from 0.1, be sure to review README for changes.
 
 ## Features
 
@@ -29,7 +29,7 @@ then run
 pod install
 ```
 
-If you want to use the latest version from kingpin's master point your Podfile to the git:
+If you want to use the latest version from kingpin's master, point your Podfile to the git:
 
 ```
 pod 'kingpin', :git => 'https://github.com/itsbonczek/kingpin'
@@ -37,7 +37,7 @@ pod 'kingpin', :git => 'https://github.com/itsbonczek/kingpin'
 
 ## Basic usage
 
-Create an instance of `KPClusteringController`. The most likely you want to do this inside a view controller which has a map view.
+Create an instance of `KPClusteringController`. You'll likely want to do this inside a view controller containing a map view.
 
 ```objective-c
 self.clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView]
@@ -99,7 +99,7 @@ This is typically done in `-mapView:regionDidChangeAnimated:`
 
 ## Configuration
 
-To perform configuration of clustering algorithm create an instance of KPGridClusteringAlgorithm and use it to instantiate KPClusteringController:
+To configure the clustering algorithm, create an instance of KPGridClusteringAlgorithm and use it to instantiate a KPClusteringController:
 
 ```objective-c
 KPGridClusteringAlgorithm *algoritm = [KPGridClusteringAlgorithm new];
@@ -113,7 +113,7 @@ KPClusteringController *clusteringController = [[KPClusteringController alloc] i
 
 ## Clustering algorithm
 
-Currently kingpin uses simple grid-based clustering algorithm backed by k-d tree.
+Kingpin uses simple grid-based clustering algorithm backed by k-d tree.
 
 The good demonstration of this algorithm can be found in WWDC Session 2011: ["Visualizing Information Geographically with MapKit"](https://developer.apple.com/videos/wwdc/2011/).
 
