@@ -13,11 +13,8 @@
 #import "KPClusteringController.h"
 #import "MyAnnotation.h"
 #import "TestAnnotation.h"
-#import "TestHelpers.h"
 
 #import "KPGridClusteringAlgorithm_Private.h"
-
-#import "Datasets.h"
 
 static const int kNumberOfTestAnnotations = 100000;
 
