@@ -51,8 +51,8 @@
     // Normalize grid to a cell size.
     mapRect = MKMapRectNormalizeToCellSize(mapRect, mapCellSize);
 
-    int gridSizeX = mapRect.size.width / mapCellSize.width;
-    int gridSizeY = mapRect.size.height / mapCellSize.height;
+    NSUInteger gridSizeX = mapRect.size.width  / mapCellSize.width;
+    NSUInteger gridSizeY = mapRect.size.height / mapCellSize.height;
 
     __block NSMutableArray *newClusters = [[NSMutableArray alloc] initWithCapacity:(gridSizeX * gridSizeY)];
 
@@ -60,8 +60,8 @@
 
     NSUInteger clusterIndex = 0;
 
-    for(int col = 1; col < (gridSizeY + 1); col++) {
-        for(int row = 1; row < (gridSizeX + 1); row++) {
+    for (NSUInteger col = 1; col < (gridSizeY + 1); col++) {
+        for (NSUInteger row = 1; row < (gridSizeX + 1); row++) {
             double x = mapRect.origin.x + (row - 1) * mapCellSize.width;
             double y = mapRect.origin.y + (col - 1) * mapCellSize.height;
 

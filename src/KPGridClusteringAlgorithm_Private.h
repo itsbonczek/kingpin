@@ -109,6 +109,7 @@ static inline void KPClusterGridValidateNULLMargin(kp_cluster_t **clusterGrid, N
         NSCAssert(clusterGrid[0][row].state == KPClusterStateEmpty, nil);
         NSCAssert(clusterGrid[gridSizeY + 1][row].state == KPClusterStateEmpty, nil);
     }
+
     for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
         NSCAssert(clusterGrid[col][0].state == KPClusterStateEmpty, nil);
         NSCAssert(clusterGrid[col][gridSizeX + 1].state == KPClusterStateEmpty, nil);
@@ -125,7 +126,7 @@ static inline kp_cluster_t **KPClusterGridCreate(NSUInteger gridSizeX, NSUIntege
         clusterGrid[col][gridSizeX + 1].state = KPClusterStateEmpty;
     }
 
-    memset(clusterGrid[0], 0, (gridSizeX + 2) * sizeof(kp_cluster_t));
+    memset(clusterGrid[0],             0, (gridSizeX + 2) * sizeof(kp_cluster_t));
     memset(clusterGrid[gridSizeY + 1], 0, (gridSizeX + 2) * sizeof(kp_cluster_t));
 
     return clusterGrid;
