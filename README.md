@@ -83,6 +83,15 @@ Handle the clusters:
 }
 ```
 
+Customize the annotations:
+```
+- (void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation {
+    annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
+    annotation.subtitle = [NSString stringWithFormat:@"%.0f meters", annotation.radius];
+}
+```
+
+
 Also, see example on how to use kingpin with your own custom annotations in [Wiki/Examples](https://github.com/itsbonczek/kingpin/wiki/Examples).
 
 __Note:__ You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
