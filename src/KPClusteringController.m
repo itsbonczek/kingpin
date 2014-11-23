@@ -191,6 +191,8 @@ typedef enum {
     NSArray *oldClusters = self.currentAnnotations;
 
     if (animated) {
+        // dispatch group to fire off callback after mapView has been updated with all new annotations
+        dispatch_group_t group = dispatch_group_create();
 
         NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
 
@@ -204,10 +206,14 @@ typedef enum {
                     BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
 
                     if (shouldAnimate && [visibleAnnotations member:oldCluster]) {
+                        dispatch_group_enter(group);
+
                         [self animateCluster:newCluster
                                           fromAnnotation:oldCluster
                                             toAnnotation:newCluster
-                                              completion:nil];
+                                              completion:^(BOOL finished) {
+                                                  dispatch_group_leave(group);
+                                              }];
                     }
 
                     [self.mapView removeAnnotation:oldCluster];
@@ -221,11 +227,15 @@ typedef enum {
 
                     if (shouldAnimate && MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))) {
 
+                        dispatch_group_enter(group);
+
                         [self animateCluster:oldCluster
                                           fromAnnotation:oldCluster
                                             toAnnotation:newCluster
                                               completion:^(BOOL finished) {
                                                   [self.mapView removeAnnotation:oldCluster];
+
+                                                  dispatch_group_leave(group);
                                               }];
                     }
 
@@ -235,11 +245,21 @@ typedef enum {
                 }
             }
         }
+
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            if ([self.delegate respondsToSelector:@selector(clusteringControllerDidUpdateVisibleMapAnnotations:)]) {
+                [self.delegate clusteringControllerDidUpdateVisibleMapAnnotations:self];
+            }
+        });
     }
 
     else {
         [self.mapView removeAnnotations:oldClusters];
         [self.mapView addAnnotations:newClusters];
+
+        if ([self.delegate respondsToSelector:@selector(clusteringControllerDidUpdateVisibleMapAnnotations:)]) {
+            [self.delegate clusteringControllerDidUpdateVisibleMapAnnotations:self];
+        }
     }
 }
 

@@ -46,6 +46,7 @@
 - (void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation;
 
 - (void)clusteringControllerWillUpdateVisibleAnnotations:(KPClusteringController *)clusteringController;
+- (void)clusteringControllerDidUpdateVisibleMapAnnotations:(KPClusteringController *)clusteringController;
 
 - (void)clusteringController:(KPClusteringController *)clusteringController
        willAnimateAnnotation:(KPAnnotation *)annotation

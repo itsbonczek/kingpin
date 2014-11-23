@@ -183,4 +183,8 @@ static const int kNumberOfTestAnnotations = 100000;
     NSLog(@"Clustering controller %@ will update visible annotations", clusteringController);
 }
 
+- (void)clusteringControllerDidUpdateVisibleMapAnnotations:(KPClusteringController *)clusteringController {
+    NSLog(@"Clustering controller %@ did update visible annotations", clusteringController);
+}
+
 @end
