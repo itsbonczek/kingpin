@@ -24,11 +24,11 @@
 
 #import "NSArray+KP.h"
 
-typedef enum {
+typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
     KPClusteringControllerMapViewportNoChange,
     KPClusteringControllerMapViewportPan,
     KPClusteringControllerMapViewportZoom
-} KPClusteringControllerMapViewportChangeState;
+};
 
 
 @interface KPClusteringController()

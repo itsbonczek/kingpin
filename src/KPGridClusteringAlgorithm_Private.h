@@ -24,12 +24,12 @@
  |  3   4 |
  --------
  */
-typedef enum {
+typedef NS_OPTIONS(NSInteger, KPClusterDistributionQuadrant) {
     KPClusterDistributionQuadrantOne   = 1 << 0, // Cluster's point is distributed in North East direction from cell's center i.e. cluster.x > cellCenter.x && cluster.y < cellCenter.y (given MKMapPoints: 0, 0 is on north-west...)
     KPClusterDistributionQuadrantTwo   = 1 << 1,
     KPClusterDistributionQuadrantThree = 1 << 2,
     KPClusterDistributionQuadrantFour  = 1 << 3
-} KPClusterDistributionQuadrant;
+};
 
 /*
  cluster 3      cluster 2     cluster 1
@@ -178,13 +178,13 @@ static inline NSComparisonResult KPClusterGridCellPositionCompareWithPosition(kp
     }
 }
 
-typedef enum {
+typedef NS_ENUM(NSInteger, KPClusterMergeResult) {
     KPClusterMergeResultNone = 0,
     KPClusterMergeResultCurrent = 1,
     KPClusterMergeResultOther = 2,
-} kp_cluster_merge_result_t;
+};
 
-typedef kp_cluster_merge_result_t(^kp_cluster_merge_block_t)(kp_cluster_t *, kp_cluster_t *);
+typedef KPClusterMergeResult(^kp_cluster_merge_block_t)(kp_cluster_t *, kp_cluster_t *);
 
 @interface KPGridClusteringAlgorithm (Private)
 

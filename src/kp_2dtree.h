@@ -16,10 +16,11 @@ typedef struct {
     MKMapPoint *mapPoint;
 } kp_internal_annotation_t;
 
-typedef enum {
+// don't use NSInteger to avoid padding in some structs
+typedef NS_ENUM(int, KPAnnotationTreeAxis) {
     KPAnnotationTreeAxisX = 0,
     KPAnnotationTreeAxisY = 1,
-} KPAnnotationTreeAxis;
+};
 
 typedef struct kp_treenode_t {
     __unsafe_unretained id <MKAnnotation> annotation;
