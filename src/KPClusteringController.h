@@ -24,6 +24,7 @@
 
 @interface KPClusteringController : NSObject
 
+/// these are ignored if the delegate implements -clusteringController:performAnimations:withCompletionHandler:
 @property (assign, nonatomic) CGFloat animationDuration;
 @property (assign, nonatomic) UIViewAnimationOptions animationOptions;
 
@@ -57,5 +58,9 @@
         didAnimateAnnotation:(KPAnnotation *)annotation
               fromAnnotation:(KPAnnotation *)fromAnntation
                 toAnnotation:(KPAnnotation *)toAnnotation;
+
+- (void)clusteringController:(KPClusteringController *)clusteringController
+           performAnimations:(void(^)())animations
+       withCompletionHandler:(void(^)(BOOL finished))completion;
 
 @end
