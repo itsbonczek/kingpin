@@ -190,7 +190,7 @@
     kp_cluster_t *currentCellCluster;
     kp_cluster_t *adjacentCellCluster;
     
-    kp_cluster_merge_result_t mergeResult;
+    KPClusterMergeResult mergeResult;
 
     for (uint16_t col = 1; col < (gridSizeY + 2); col++) {
         for (uint16_t row = 1; row < (gridSizeX + 2); row++) {
