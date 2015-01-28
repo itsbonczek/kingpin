@@ -311,10 +311,18 @@ typedef enum {
 }
 
 - (void)executeAnimations:(void(^)(void))animations completion:(void(^)(BOOL finished))completionBlock {
-    if ([self.delegate respondsToSelector:@selector(clusteringController:performAnimations:withCompletionHandler:)]) {
-        [self.delegate clusteringController:self performAnimations:animations withCompletionHandler:completionBlock];
+    if ([self.delegate respondsToSelector:@selector(clusteringController:
+                                                    performAnimations:
+                                                    withCompletionHandler:)]) {
+        [self.delegate clusteringController:self
+                          performAnimations:animations
+                      withCompletionHandler:completionBlock];
     } else {
-        [UIView animateWithDuration:self.animationDuration delay:0 options:self.animationOptions animations:animations completion:completionBlock];
+        [UIView animateWithDuration:self.animationDuration
+                              delay:0
+                            options:self.animationOptions
+                         animations:animations
+                         completion:completionBlock];
     }
 }
 
