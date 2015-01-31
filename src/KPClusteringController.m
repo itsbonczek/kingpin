@@ -304,14 +304,26 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
             completion(finished);
         }
     };
+    [self executeAnimations:^{
+        cluster.coordinate = toCoord;
+    } completion:completionBlock];
     
-    [UIView animateWithDuration:self.animationDuration
-                          delay:0.f
-                        options:self.animationOptions
-                     animations:^{
-                         cluster.coordinate = toCoord;
-                     }
-                     completion:completionBlock];
+}
+
+- (void)executeAnimations:(void(^)(void))animations completion:(void(^)(BOOL finished))completionBlock {
+    if ([self.delegate respondsToSelector:@selector(clusteringController:
+                                                    performAnimations:
+                                                    withCompletionHandler:)]) {
+        [self.delegate clusteringController:self
+                          performAnimations:animations
+                      withCompletionHandler:completionBlock];
+    } else {
+        [UIView animateWithDuration:self.animationDuration
+                              delay:0
+                            options:self.animationOptions
+                         animations:animations
+                         completion:completionBlock];
+    }
 }
 
 @end

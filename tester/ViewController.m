@@ -187,4 +187,14 @@ static const int kNumberOfTestAnnotations = 100000;
     NSLog(@"Clustering controller %@ did update visible annotations", clusteringController);
 }
 
+- (void)clusteringController:(KPClusteringController *)clusteringController performAnimations:(void (^)())animations withCompletionHandler:(void (^)(BOOL))completion {
+    [UIView animateWithDuration:0.5
+                          delay:0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:0.6
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animations
+                     completion:completion];
+}
+
 @end
