@@ -128,8 +128,8 @@ The good demonstration of this algorithm can be found in WWDC Session 2011: ["Vi
 
 Kingpin's algorithm works in two steps (phases): 
 
-1. At the first step it produces a cluster grid.
-2. At the second step algorithm performs a merger of the clusters in this cluster grid that visually overlap.
+1. The first step produces a cluster grid by querying a 2-d tree.
+2. The second step merges clusters in this cluster grid that visually overlap.
 
 ## Versions
 
