@@ -6,7 +6,7 @@ A drop-in MKAnnotation clustering library for iOS.
 
 __Update February 1, 2015__
 
-Kingpin is now in 0.2. 
+Kingpin is now 0.2. 
 
 If you are coming from 0.1, be sure to review README for changes.
 
