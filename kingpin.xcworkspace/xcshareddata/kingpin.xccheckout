@@ -6,22 +6,18 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>23F9891C-941D-49BC-AF15-907FCDFD42AF</string>
-	<key>IDESourceControlProjectName</key>
-	<string>kingpin</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>227A578621E0FA13C4D256D39778AA4927AF08CD</key>
-		<string>ssh://github.com/stanislaw/kingpin.git</string>
+		<string>github.com:stanislaw/kingpin.git</string>
 	</dict>
-	<key>IDESourceControlProjectPath</key>
-	<string>kingpin.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>227A578621E0FA13C4D256D39778AA4927AF08CD</key>
-		<string>..</string>
+		<string>kingpin/</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/stanislaw/kingpin.git</string>
+	<string>github.com:stanislaw/kingpin.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
