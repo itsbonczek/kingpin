@@ -102,19 +102,37 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 }
 
 - (void)refresh:(BOOL)animated {
-    if (self.mapView.visibleMapRect.size.width == 0 ||
-        self.mapView.visibleMapRect.size.height == 0) {
-        return;
-    }
+    // For legacy purposes
+    [self refresh:animated force:NO];
+}
 
-    KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
-    if (mapViewportChangeState != KPClusteringControllerMapViewportNoChange) {
-        [self updateVisibleMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
-
+-(void)refresh:(BOOL)animated force:(BOOL)force {
+    // If force flag is enabled, don't do any validation with the viewport changes
+    if (force) {
+        [self updateVisibleMapAnnotationsOnMapView:animated];
+        
         self.lastRefreshedMapRect = self.mapView.visibleMapRect;
         self.lastRefreshedMapRegion = self.mapView.region;
+        // Else, check for significant panning or if the map is displayed
+    } else {
+        // Check if map is visible
+        if (self.mapView.visibleMapRect.size.width == 0 ||
+            self.mapView.visibleMapRect.size.height == 0) {
+            return;
+        }
+        
+        KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
+        
+        // Check for signficant viewport changes
+        if (mapViewportChangeState != KPClusteringControllerMapViewportNoChange) {
+            [self updateVisibleMapAnnotationsOnMapView:(animated && mapViewportChangeState != KPClusteringControllerMapViewportPan)];
+            
+            self.lastRefreshedMapRect = self.mapView.visibleMapRect;
+            self.lastRefreshedMapRegion = self.mapView.region;
+        }
     }
+
 }
 
 // only refresh if:
