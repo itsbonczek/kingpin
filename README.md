@@ -106,7 +106,7 @@ Refresh visible annotations as needed:
 
 This is typically done in `-mapView:regionDidChangeAnimated:`
 
-The refresh methods checks if the map is visible and if the viewport has significantly changed. In some specific cases, it might be useful to force a refresh without doing the checks. The method `-(void)refresh:(BOOL)animated force:(BOOL)force` of KPClusteringController with force = YES will do that. This method can become CPU heavy and should be used in specific cases.
+__Note:__  The refresh method checks if the map is visible and if the viewport has significantly changed. In some specific cases, it might be useful to force a refresh without doing the checks. The method `-(void)refresh:(BOOL)animated force:(BOOL)force` of KPClusteringController with force = YES will do that. This method can become CPU heavy and should be used in specific cases.
 
 ## Configuration
 
