@@ -35,16 +35,16 @@
 - (void)setAnnotations:(NSArray *)annoations;
 
 /**
- *  @DEPRECATED
+ *  Refreshes the map annotations. This will check if the map is visible and if the viewport has changed
  *
  *  @param animated whether the view refresh is animated or not
  */
 - (void)refresh:(BOOL)animated;
 
 /**
- *  Refreshes the map. The force flag allows the user to force a refresh even though the viewport has not
- *  significantly moved or if the map is not displayed. For most cases, leave the force flag to NO, forcing 
- *  a refresh can be CPU heavy.
+ *  Refreshes the map annotations. The force flag allows the user to force a refresh even though the viewport 
+ *  has not significantly moved or if the map is not displayed. For most cases, leave the force flag to NO, 
+ *  forcing a refresh can be CPU heavy.
  *
  *  @param animated whether the view refresh is animated or not
  *  @param force    YES if you want to force a refresh without checking for viewport change or if the map

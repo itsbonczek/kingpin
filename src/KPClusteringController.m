@@ -102,7 +102,6 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 }
 
 - (void)refresh:(BOOL)animated {
-    // For legacy purposes
     [self refresh:animated force:NO];
 }
 
