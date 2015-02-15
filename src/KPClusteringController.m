@@ -107,6 +107,12 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 
 
 -(void)refresh:(BOOL)animated force:(BOOL)force {
+    // Check if map is visible
+    if (self.mapView.visibleMapRect.size.width  == 0 ||
+        self.mapView.visibleMapRect.size.height == 0) {
+        return;
+    }
+
     // If force flag is enabled, don't do any validation with the viewport changes
     if (force) {
         [self updateVisibleMapAnnotationsOnMapView:animated];
@@ -117,12 +123,6 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 
     // Else, check for significant panning or if the map is displayed
     else {
-        // Check if map is visible
-        if (self.mapView.visibleMapRect.size.width == 0 ||
-            self.mapView.visibleMapRect.size.height == 0) {
-            return;
-        }
-
         KPClusteringControllerMapViewportChangeState mapViewportChangeState = self.mapViewportChangeState;
 
         // Check for signficant viewport changes
