@@ -4,9 +4,9 @@ A drop-in MKAnnotation clustering library for iOS.
 
 [![Build Status](https://travis-ci.org/itsbonczek/kingpin.svg?branch=master)](https://travis-ci.org/itsbonczek/kingpin)
 
-__Update February 1, 2015__
+__Update February 16, 2015__
 
-Kingpin is now 0.2. 
+Kingpin is now 0.2.1.
 
 If you are coming from 0.1, be sure to review README for changes.
 
