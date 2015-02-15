@@ -42,8 +42,8 @@
 - (void)refresh:(BOOL)animated;
 
 /**
- *  Refreshes the map annotations. The force flag allows the user to force a refresh even though the viewport 
- *  has not significantly moved or if the map is not displayed. For most cases, leave the force flag to NO, 
+ *  Refreshes the map annotations. The force flag allows the user to force a refresh even though the viewport
+ *  has not significantly moved or if the map is not displayed. For most cases, leave the force flag to NO,
  *  forcing a refresh can be CPU heavy.
  *
  *  @param animated whether the view refresh is animated or not
