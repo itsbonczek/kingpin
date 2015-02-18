@@ -268,6 +268,8 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
             if ([self.delegate respondsToSelector:@selector(clusteringControllerDidUpdateVisibleMapAnnotations:)]) {
                 [self.delegate clusteringControllerDidUpdateVisibleMapAnnotations:self];
             }
+            
+            dispatch_release(group);
         });
     }
 
