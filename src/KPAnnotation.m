@@ -21,7 +21,7 @@
 @interface KPAnnotation ()
 
 @property (strong, readwrite, nonatomic) NSSet *annotations;
-@property (assign, readwrite, nonatomic) float radius;
+@property (assign, readwrite, nonatomic) double radius;
 
 @end
 
@@ -145,8 +145,13 @@
     self.coordinate = CLLocationCoordinate2DMake(totalLat / self.annotations.count,
                                                  totalLng / self.annotations.count);
 
-    self.radius = MKMetersBetweenMapPoints(MKMapPointForCoordinate(CLLocationCoordinate2DMake(minLat, minLng)),
-                                           MKMapPointForCoordinate(CLLocationCoordinate2DMake(maxLat, maxLng))) / 2.f;
+    double midPointToMax = MKMetersBetweenMapPoints(MKMapPointForCoordinate(self.coordinate),
+                                                    MKMapPointForCoordinate(CLLocationCoordinate2DMake(maxLat, maxLng)));
+    
+    double midPointToMin = MKMetersBetweenMapPoints(MKMapPointForCoordinate(self.coordinate),
+                                                    MKMapPointForCoordinate(CLLocationCoordinate2DMake(minLat, minLng)));
+    
+    self.radius = MAX(midPointToMax, midPointToMin);
 }
 
 - (NSString *)description {
