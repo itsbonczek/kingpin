@@ -20,7 +20,7 @@
 @interface KPAnnotation : NSObject <MKAnnotation>
 
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
-@property (assign, readonly, nonatomic) float radius;
+@property (assign, readonly, nonatomic) double radius;
 
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *subtitle;
