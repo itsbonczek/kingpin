@@ -1,6 +1,28 @@
 # Kingpin CHANGELOG
 
-## 0.2.beta
+## Master
+
+### Changed
+
+* Radius on KPAnnotation now measures from center point to farthest point. Changed Radius from a float to a double to preserve accuracy (#81, thanks to @joshuadutton).
+
+## 0.2.2
+
+### Changed
+
+* Updated podspec platform to `:ios, 6.0` for compatibility with Swift.
+
+## 0.2.1
+
+### Added
+
+* Added a method to force refresh without any check (#78, thanks to @GabrielCartier).
+
+## 0.2
+
+### Added
+
+* Add a delegate callback after map view annotations are updated (#60 and #72).
 
 ### Changed
 
