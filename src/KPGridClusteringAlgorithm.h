@@ -20,12 +20,10 @@
 @class KPAnnotation,
        KPAnnotationTree;
 
-
 typedef NS_ENUM(NSInteger, KPGridClusteringAlgorithmStrategy) {
     KPGridClusteringAlgorithmStrategyBasic = 0,
     KPGridClusteringAlgorithmStrategyTwoPhase,
 };
-
 
 @interface KPGridClusteringAlgorithm : NSObject <KPClusteringAlgorithm>
 

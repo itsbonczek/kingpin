@@ -11,5 +11,6 @@
 
 #import "KPClusteringController.h"
 #import "KPAnnotation.h"
+#import "KPGridClusteringAlgorithm.h"
 
 #endif

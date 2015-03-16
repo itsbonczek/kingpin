@@ -22,6 +22,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
+
+        algorithm.annotationSize = CGSizeMake(25, 50)
+        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
+
         clusteringController = KPClusteringController(mapView: self.mapView)
         clusteringController.delegate = self
 
