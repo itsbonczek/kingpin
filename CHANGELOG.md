@@ -1,6 +1,6 @@
 # Kingpin CHANGELOG
 
-## Master
+## 0.2.3
 
 ### Changed
 
