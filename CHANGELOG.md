@@ -4,7 +4,7 @@
 
 ### Changed
 
-* Radius on KPAnnotation now measures from center point to farthest point. Changed Radius from a float to a double to preserve accuracy (#81, thanks to @joshuadutton).
+* Radius on KPAnnotation now measures from center point to farthest point. Changed Radius from a `float` to a `CLLocationDistance` to preserve accuracy (#81, thanks to @joshuadutton).
 
 ## 0.2.2
 
