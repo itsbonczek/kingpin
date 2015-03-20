@@ -8,6 +8,8 @@
 
 #import "KPGeometry.h"
 
+#import <MapKit/MKAnnotation.h>
+
 #define KP_LIKELY(x) __builtin_expect(!!(x), 1)
 
 typedef struct {
