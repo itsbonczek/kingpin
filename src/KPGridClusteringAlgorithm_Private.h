@@ -117,9 +117,15 @@ static inline void KPClusterGridValidateNULLMargin(kp_cluster_t **clusterGrid, N
 }
 
 static inline kp_cluster_t **KPClusterGridCreate(NSUInteger gridSizeX, NSUInteger gridSizeY) {
+    NSCAssert(gridSizeX > 0 && gridSizeY > 0, @"Grid must be at least 1 x 1!");
+
     kp_cluster_t **clusterGrid = malloc((gridSizeY + 2) * sizeof(kp_cluster_t *));
 
-    for (NSUInteger col = 0; col < (gridSizeY + 2); col++) {
+    // col <= (gridSizeY + 1) instead of col < (gridSizeY + 2) is magic which is important
+    // to prevent Analyzer from producing incorrect warning:
+    // "Function call argument is an uninitialized value (within a call to)"
+    // see https://github.com/itsbonczek/kingpin/issues/69
+    for (NSUInteger col = 0; col <= (gridSizeY + 1); col++) {
         clusterGrid[col] = malloc((gridSizeX + 2) * sizeof(kp_cluster_t));
 
         clusterGrid[col][0].state             = KPClusterStateEmpty;
