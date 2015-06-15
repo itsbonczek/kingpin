@@ -1,5 +1,22 @@
 # Kingpin CHANGELOG
 
+## 0.2.5
+
+### Fixed
+
+* 2 Analyzer warnings: "Function call argument is an uninitialized value (within a call to)". Both are bugs in analyzer, so radar was opened and hacks to suppress warnings were added (#69).
+* Fixed Xcode warning complaining about NSParameterAssert misusing %s in its internals.
+
+## 0.2.4
+
+### Added
+
+* Added Swift version of tester project to Kingpin's demo project (#80).
+
+### Fixed
+
+* Added import of MapKit/MKAnnotation to kp_2dtree (#82, thanks to @GabrielCartier).
+
 ## 0.2.3
 
 ### Changed
