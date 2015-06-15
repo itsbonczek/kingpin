@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 }
 
 - (id)initWithMapView:(MKMapView *)mapView clusteringAlgorithm:(id<KPClusteringAlgorithm>)algorithm {
-    NSParameterAssert(mapView);
+    NSAssert(mapView, @"mapView parameter must not be nil");
 
     self = [self init];
     
