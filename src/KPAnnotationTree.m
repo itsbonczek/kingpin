@@ -29,7 +29,14 @@
     
     if (self) {
         _annotations = [NSSet setWithArray:annotations];
+
+        // The following ifndef is to prevent Analyzer from producing incorrect warning:
+        // "Function call argument is an uninitialized value (within a call to)"
+        // see https://github.com/itsbonczek/kingpin/issues/69
+
+#ifndef __clang_analyzer__
         _tree = kp_2dtree_create(annotations);
+#endif
     }
 
     return self;
