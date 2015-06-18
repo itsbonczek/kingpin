@@ -4,9 +4,9 @@ A drop-in MKAnnotation clustering library for iOS.
 
 [![Build Status](https://travis-ci.org/itsbonczek/kingpin.svg?branch=master)](https://travis-ci.org/itsbonczek/kingpin)
 
-__Update March 16, 2015__
+__Update June 17, 2015__
 
-Kingpin is now 0.2.3.
+Kingpin is now 0.2.5.
 
 If you are coming from 0.1, be sure to review README for changes.
 
@@ -92,7 +92,7 @@ Customize the annotations:
 ```
 
 
-Also, see example on how to use kingpin with your own custom annotations in [Wiki/Examples](https://github.com/itsbonczek/kingpin/wiki/Examples).
+For more information on how to use kingpin with your own custom annotations, please see [Wiki/Examples](https://github.com/itsbonczek/kingpin/wiki/Examples).
 
 __Note:__ You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
 
@@ -124,14 +124,17 @@ KPClusteringController *clusteringController = [[KPClusteringController alloc] i
 
 ## Clustering algorithm
 
-Kingpin uses simple grid-based clustering algorithm backed by k-d tree.
+Kingpin uses simple grid-based clustering algorithm backed by a 2-d tree.
 
-The good demonstration of this algorithm can be found in WWDC Session 2011: ["Visualizing Information Geographically with MapKit"](https://developer.apple.com/videos/wwdc/2011/).
+A good demonstration of this algorithm can be found in WWDC Session 2011: ["Visualizing Information Geographically with MapKit"](https://developer.apple.com/videos/wwdc/2011/).
 
 Kingpin's algorithm works in two steps (phases): 
 
 1. The first step produces a cluster grid by querying a 2-d tree.
 2. The second step merges clusters in this cluster grid that visually overlap.
+
+Note: step 2 may have negative performance consequences for large numbers of annotations. You can disable the second phase by setting KPGridClusteringAlgorithm's ```clusteringStrategy``` property to ```KPGridClusteringAlgorithmStrategyBasic```
+
 
 ## Versions
 
