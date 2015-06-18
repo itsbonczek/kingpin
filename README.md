@@ -113,7 +113,7 @@ __Note:__  The refresh method checks if the map is visible and if the viewport h
 To configure the clustering algorithm, create an instance of KPGridClusteringAlgorithm and use it to instantiate a KPClusteringController:
 
 ```objective-c
-KPGridClusteringAlgorithm *algoritm = [KPGridClusteringAlgorithm new];
+KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
 
 algorithm.gridSize = CGSizeMake(50, 50); // cluster grid cell size
 algorithm.annotationSize = CGSizeMake(25, 50); // annotation view size
