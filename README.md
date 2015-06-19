@@ -35,6 +35,10 @@ If you want to use the latest version from kingpin's master, point your Podfile 
 pod 'kingpin', :git => 'https://github.com/itsbonczek/kingpin'
 ```
 
+## FAQ
+
+See [FAQ](https://github.com/itsbonczek/kingpin/blob/master/Documentation/FAQ.md).
+
 ## Basic usage
 
 Create an instance of `KPClusteringController`. You'll likely want to do this inside a view controller containing a map view.
