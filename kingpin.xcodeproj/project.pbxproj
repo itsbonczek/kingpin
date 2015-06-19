@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		86A192AC1B34A3C20019882D /* kingpin-universal */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 86A192AD1B34A3C30019882D /* Build configuration list for PBXAggregateTarget "kingpin-universal" */;
+			buildPhases = (
+				86A192B01B34A3E50019882D /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "kingpin-universal";
+			productName = "kingpin-universal";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		5F2DFDB8DB8F4D86BF604E35 /* libPods-kingpinTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB9F34F56DF40CBB9AA70B3 /* libPods-kingpinTests.a */; };
 		86174DC718F9A08200014C48 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
@@ -16,6 +30,22 @@
 		8633BAF01989A12500EDE193 /* Dataset1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8633BAEF1989A12500EDE193 /* Dataset1.txt */; };
 		8633BAF11989A6BD00EDE193 /* Dataset1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8633BAEF1989A12500EDE193 /* Dataset1.txt */; };
 		867A7EAF1911B0BD00778F7B /* KPGridClusteringAlgorithmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DCE18F9D25100014C48 /* KPGridClusteringAlgorithmTests.m */; };
+		86A1925D1B3490410019882D /* kingpin.h in Headers */ = {isa = PBXBuildFile; fileRef = 86A1925C1B3490410019882D /* kingpin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86A192711B34913D0019882D /* KPClusteringController.h in Headers */ = {isa = PBXBuildFile; fileRef = 93BBC0881645A68F004BC920 /* KPClusteringController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86A192721B3491CD0019882D /* KPClusteringAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 91F1B6B3193B762500A2E144 /* KPClusteringAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86A192731B3491D90019882D /* KPAnnotationTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 93BBC0411645A1F8004BC920 /* KPAnnotationTree.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		86A192741B3492330019882D /* KPGridClusteringAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 86174DC518F9A08200014C48 /* KPGridClusteringAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86A192751B34923C0019882D /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 86174DC618F9A08200014C48 /* KPGridClusteringAlgorithm.m */; };
+		86A192761B34924D0019882D /* KPAnnotation.h in Headers */ = {isa = PBXBuildFile; fileRef = 93BBC0451645A1F8004BC920 /* KPAnnotation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86A192771B3492510019882D /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0461645A1F8004BC920 /* KPAnnotation.m */; };
+		86A192E61B34A8DA0019882D /* KPClusteringController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0891645A68F004BC920 /* KPClusteringController.m */; };
+		86A192E71B34A91D0019882D /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BBC0421645A1F8004BC920 /* KPAnnotationTree.m */; };
+		86DECE6C1B34AB5A00EDF77C /* NSArray+KP.h in Headers */ = {isa = PBXBuildFile; fileRef = 9346910516A8F1C200DE59FA /* NSArray+KP.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		86DECE6D1B34AB5F00EDF77C /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346910616A8F1C200DE59FA /* NSArray+KP.m */; };
+		86DECE6E1B34AB6200EDF77C /* KPAnnotationTree_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		86DECE6F1B34AB9200EDF77C /* KPGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 86174DD018F9D7CF00014C48 /* KPGeometry.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		86DECE701B34AB9800EDF77C /* KPGridClusteringAlgorithm_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 867A7EAE1911A0AE00778F7B /* KPGridClusteringAlgorithm_Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		86DECE711B34AB9E00EDF77C /* kp_2dtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 860D4D37199BE6480053E629 /* kp_2dtree.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		86E185911AB7530F00C2C9CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E185901AB7530F00C2C9CD /* AppDelegate.swift */; };
 		86E185961AB7530F00C2C9CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86E185941AB7530F00C2C9CD /* Main.storyboard */; };
 		86E185981AB7530F00C2C9CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86E185971AB7530F00C2C9CD /* Images.xcassets */; };
@@ -75,6 +105,9 @@
 		8641D26518CAF3C800B109E4 /* KPAnnotationTree_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAnnotationTree_Private.h; sourceTree = "<group>"; };
 		866335981909E70E009E638D /* KPGeometryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGeometryTests.m; sourceTree = "<group>"; };
 		867A7EAE1911A0AE00778F7B /* KPGridClusteringAlgorithm_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm_Private.h; sourceTree = "<group>"; };
+		86A192581B3490410019882D /* kingpin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = kingpin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86A1925B1B3490410019882D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		86A1925C1B3490410019882D /* kingpin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpin.h; sourceTree = "<group>"; };
 		86D02A241989982F00C526FB /* Datasets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Datasets.h; sourceTree = "<group>"; };
 		86E1858C1AB7530F00C2C9CD /* kingpinSwiftTestApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kingpinSwiftTestApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86E1858F1AB7530F00C2C9CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,6 +164,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		86A192541B3490410019882D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		86E185891AB7530F00C2C9CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -167,6 +207,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86A192591B3490410019882D /* kingpin-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				86A1925C1B3490410019882D /* kingpin.h */,
+				86A1925A1B3490410019882D /* Supporting Files */,
+			);
+			path = "kingpin-iOS";
+			sourceTree = "<group>";
+		};
+		86A1925A1B3490410019882D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				86A1925B1B3490410019882D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		86E1858D1AB7530F00C2C9CD /* tester-swift */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,7 +236,6 @@
 				86E185AE1AB75AB700C2C9CD /* tester-swift-Bridging-Header.h */,
 				86E185AF1AB75BA600C2C9CD /* TestAnnotation.swift */,
 			);
-			name = "tester-swift";
 			path = "tester-swift";
 			sourceTree = "<group>";
 		};
@@ -254,6 +310,7 @@
 				9189259E18E7732900812296 /* kingpinTests */,
 				93BBC0901645B78C004BC920 /* tester */,
 				86E1858D1AB7530F00C2C9CD /* tester-swift */,
+				86A192591B3490410019882D /* kingpin-iOS */,
 				93BBC04E1645A2B2004BC920 /* Frameworks */,
 				93BBC04C1645A2B2004BC920 /* Products */,
 				53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */,
@@ -283,6 +340,7 @@
 				93BBC04B1645A2B2004BC920 /* kingpinTestApplication.app */,
 				9189259918E7732900812296 /* kingpinTests.xctest */,
 				86E1858C1AB7530F00C2C9CD /* kingpinSwiftTestApplication.app */,
+				86A192581B3490410019882D /* kingpin.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -330,7 +388,46 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		86A192551B3490410019882D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86DECE711B34AB9E00EDF77C /* kp_2dtree.h in Headers */,
+				86DECE6E1B34AB6200EDF77C /* KPAnnotationTree_Private.h in Headers */,
+				86A192761B34924D0019882D /* KPAnnotation.h in Headers */,
+				86DECE6F1B34AB9200EDF77C /* KPGeometry.h in Headers */,
+				86A192721B3491CD0019882D /* KPClusteringAlgorithm.h in Headers */,
+				86A1925D1B3490410019882D /* kingpin.h in Headers */,
+				86A192741B3492330019882D /* KPGridClusteringAlgorithm.h in Headers */,
+				86DECE6C1B34AB5A00EDF77C /* NSArray+KP.h in Headers */,
+				86A192731B3491D90019882D /* KPAnnotationTree.h in Headers */,
+				86A192711B34913D0019882D /* KPClusteringController.h in Headers */,
+				86DECE701B34AB9800EDF77C /* KPGridClusteringAlgorithm_Private.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		86A192571B3490410019882D /* kingpin-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 86A1926F1B3490420019882D /* Build configuration list for PBXNativeTarget "kingpin-iOS" */;
+			buildPhases = (
+				86A192531B3490410019882D /* Sources */,
+				86A192541B3490410019882D /* Frameworks */,
+				86A192551B3490410019882D /* Headers */,
+				86A192561B3490410019882D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "kingpin-iOS";
+			productName = "kingpin-iOS";
+			productReference = 86A192581B3490410019882D /* kingpin.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		86E1858B1AB7530F00C2C9CD /* kingpinSwiftTestApplication */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 86E185A81AB7531000C2C9CD /* Build configuration list for PBXNativeTarget "kingpinSwiftTestApplication" */;
@@ -392,6 +489,12 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
+					86A192571B3490410019882D = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					86A192AC1B34A3C20019882D = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
 					86E1858B1AB7530F00C2C9CD = {
 						CreatedOnToolsVersion = 6.2;
 					};
@@ -416,11 +519,20 @@
 				93BBC04A1645A2B2004BC920 /* kingpinTestApplication */,
 				9189259818E7732900812296 /* kingpinTests */,
 				86E1858B1AB7530F00C2C9CD /* kingpinSwiftTestApplication */,
+				86A192571B3490410019882D /* kingpin-iOS */,
+				86A192AC1B34A3C20019882D /* kingpin-universal */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		86A192561B3490410019882D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		86E1858A1AB7530F00C2C9CD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -456,6 +568,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		86A192B01B34A3E50019882D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Taken from https://medium.com/@syshen/create-an-ios-universal-framework-148eb130a46c\n\nREVEAL_ARCHIVE_IN_FINDER=true\n\nFRAMEWORK_NAME=\"kingpin\"\nSCHEME_NAME=\"kingpin-iOS\"\n\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${FRAMEWORK_NAME}.framework\"\n\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${FRAMEWORK_NAME}.framework\"\n\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\n\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${FRAMEWORK_NAME}.framework\"\n\necho \"Project name ${PROJECT_NAME}\"\necho \"Product name ${PRODUCT_NAME}\"\n\necho \"What is copied: ${DEVICE_LIBRARY_PATH}/. ${FRAMEWORK}\"\n\n######################\n# Build Frameworks\n######################\n\nxcodebuild -project kingpin.xcodeproj -scheme ${SCHEME_NAME} -sdk iphonesimulator -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator 2>&1\n\nxcodebuild -project kingpin.xcodeproj -scheme ${SCHEME_NAME} -sdk iphoneos -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos 2>&1\n\n######################\n# Create directory for universal\n######################\n\nrm -rf \"${UNIVERSAL_LIBRARY_DIR}\"\n\nmkdir \"${UNIVERSAL_LIBRARY_DIR}\"\n\nmkdir -p \"${FRAMEWORK}\"\n\n######################\n# Copy files Framework\n######################\n\ncp -r \"${DEVICE_LIBRARY_PATH}/.\" \"${FRAMEWORK}\"\n\n######################\n# Make an universal binary\n######################\n\nlipo \"${SIMULATOR_LIBRARY_PATH}/${FRAMEWORK_NAME}\" \"${DEVICE_LIBRARY_PATH}/${FRAMEWORK_NAME}\" -create -output \"${FRAMEWORK}/${FRAMEWORK_NAME}\" | echo\n\n######################\n# On Release, copy the result to release directory\n######################\n\nOUTPUT_DIR=\"${PROJECT_DIR}/Output/${FRAMEWORK_NAME}-${CONFIGURATION}-iphoneuniversal/\"\n\nrm -rf \"$OUTPUT_DIR\"\nmkdir -p \"$OUTPUT_DIR\"\n\ncp -r \"${FRAMEWORK}\" \"$OUTPUT_DIR\"\n\nif [ ${REVEAL_ARCHIVE_IN_FINDER} = true ]; then\nopen \"${OUTPUT_DIR}/\"\nfi\n";
+		};
 		E57420E1AD034B8695DCDD51 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -489,6 +614,18 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		86A192531B3490410019882D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86A192751B34923C0019882D /* KPGridClusteringAlgorithm.m in Sources */,
+				86DECE6D1B34AB5F00EDF77C /* NSArray+KP.m in Sources */,
+				86A192E61B34A8DA0019882D /* KPClusteringController.m in Sources */,
+				86A192771B3492510019882D /* KPAnnotation.m in Sources */,
+				86A192E71B34A91D0019882D /* KPAnnotationTree.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		86E185881AB7530F00C2C9CD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -585,6 +722,127 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		86A1926B1B3490420019882D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "kingpin-iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = kingpin;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		86A1926C1B3490420019882D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "kingpin-iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = kingpin;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		86A192AE1B34A3C30019882D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		86A192AF1B34A3C30019882D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		86E185A91AB7531000C2C9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -889,6 +1147,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		86A1926F1B3490420019882D /* Build configuration list for PBXNativeTarget "kingpin-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				86A1926B1B3490420019882D /* Debug */,
+				86A1926C1B3490420019882D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		86A192AD1B34A3C30019882D /* Build configuration list for PBXAggregateTarget "kingpin-universal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				86A192AE1B34A3C30019882D /* Debug */,
+				86A192AF1B34A3C30019882D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		86E185A81AB7531000C2C9CD /* Build configuration list for PBXNativeTarget "kingpinSwiftTestApplication" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "KPAnnotationTree.h"
+#import <MapKit/MapKit.h>
+
+@class KPAnnotationTree;
 
 @protocol KPClusteringAlgorithm <NSObject>
 
