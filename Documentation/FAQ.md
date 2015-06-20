@@ -3,10 +3,15 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [How to access cluster's annotations?](#how-to-access-clusters-annotations)
 - [How to disable clustering at a certain zoom level (multiple pins at same location)?](#how-to-disable-clustering-at-a-certain-zoom-level-multiple-pins-at-same-location)
 - [How to configure annotations with custom images?](#how-to-configure-annotations-with-custom-images)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+### How to access cluster's annotations?
+
+You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
 
 ### How to disable clustering at a certain zoom level (multiple pins at same location)?
 
