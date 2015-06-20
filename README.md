@@ -126,19 +126,21 @@ algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
 KPClusteringController *clusteringController = [[KPClusteringController alloc] initWithMapView:self.mapView clusteringAlgorithm:algorithm];
 ```
 
-## Clustering algorithm
+## How it works. Clustering algorithm
 
-Kingpin uses simple grid-based clustering algorithm backed by a 2-d tree.
-
-A good demonstration of this algorithm can be found in WWDC Session 2011: ["Visualizing Information Geographically with MapKit"](https://developer.apple.com/videos/wwdc/2011/).
+Kingpin uses simple grid-based clustering algorithm backed by a 2-d tree. KPClusteringController uses a 2-d tree to store annotations. 2-d (or more generically, [k-d]( http://en.wikipedia.org/wiki/K-d_tree)) trees are designed for fast range based queries (i.e. give me all annotations that lie within a given bounding box).
 
 Kingpin's algorithm works in two steps (phases): 
 
 1. The first step produces a cluster grid by querying a 2-d tree.
+
+Every time -refresh gets called on the clustering controller, the controller splits the current map visible map view into a grid (controlled by the gridSize property), and for each square of the grid performs a query on the 2-d tree for all annotations within the square. The annotations for each square are consolidated into a single KPAnnotation.
+
+A good demonstration of this algorithm can be found in WWDC Session 2011: ["Visualizing Information Geographically with MapKit"](https://developer.apple.com/videos/wwdc/2011/).
+
 2. The second step merges clusters in this cluster grid that visually overlap.
 
 Note: step 2 may have negative performance consequences for large numbers of annotations. You can disable the second phase by setting KPGridClusteringAlgorithm's ```clusteringStrategy``` property to ```KPGridClusteringAlgorithmStrategyBasic```
-
 
 ## Versions
 
