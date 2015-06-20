@@ -95,20 +95,17 @@ Customize the annotations:
 }
 ```
 
-
-For more information on how to use kingpin with your own custom annotations, please see [Wiki/Examples](https://github.com/itsbonczek/kingpin/wiki/Examples).
+For more information on how to use kingpin with your own custom annotations, please see [FAQ](https://github.com/itsbonczek/kingpin/blob/master/Documentation/FAQ.md).
 
 __Note:__ You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
 
-Refresh visible annotations as needed:
+Refresh visible annotations as needed, this is typically done in `-mapView:regionDidChangeAnimated:`:
 
 ```objective-c
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     [self.clusteringController refresh:self.animationSwitch.on];
 }
 ```
-
-This is typically done in `-mapView:regionDidChangeAnimated:`
 
 __Note:__  The refresh method checks if the map is visible and if the viewport has significantly changed. In some specific cases, it might be useful to force a refresh without doing the checks. The method `-(void)refresh:(BOOL)animated force:(BOOL)force` of KPClusteringController with force = YES will do that. This method can become CPU heavy and should be used in specific cases.
 
