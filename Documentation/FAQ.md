@@ -24,7 +24,7 @@ Then implement clustering controller's delegate method:
 
 ### How to configure annotations with custom images?
 
-__Note:__ Notice that in the following example __it is `MKAnnotationView` class__ that should be used for annotations with custom images, __not the `MKPinAnnotationView` !__ which is intended to work specifically with default annotation pin icons provided by Apple. 
+__Note:__ Notice that in the following example __it is `MKAnnotationView` class__ that should be used as class or parent class for annotations with custom images, __not the `MKPinAnnotationView` !__ which is intended to work specifically with default annotation pin icons provided by Apple. 
 
 ```objective-c
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {    
