@@ -8,13 +8,10 @@
 
 #import "ViewController.h"
 
-#import "KPAnnotation.h"
-#import "KPGridClusteringAlgorithm.h"
-#import "KPClusteringController.h"
+#import <kingpin/kingpin.h>
+
 #import "MyAnnotation.h"
 #import "TestAnnotation.h"
-
-#import "KPGridClusteringAlgorithm_Private.h"
 
 static const int kNumberOfTestAnnotations = 100000;
 

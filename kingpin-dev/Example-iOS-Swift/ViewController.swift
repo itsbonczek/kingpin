@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import kingpin
 
 let NumberOfAnnotations: Int = 1000;
 
