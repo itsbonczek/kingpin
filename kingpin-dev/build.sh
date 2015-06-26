@@ -191,7 +191,7 @@ open_distribution_folder() {
 
 distribute() {
 	clean_build_folder
-	# run_unit_tests
+	run_unit_tests
 	build_ios
 	# build_osx
 	export_built_frameworks

@@ -116,7 +116,6 @@
 		862E8CDE1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm.h; sourceTree = "<group>"; };
 		862E8CDF1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGridClusteringAlgorithm.m; sourceTree = "<group>"; };
 		862E8CE01B3DCC8800ACB563 /* KPGridClusteringAlgorithm_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithm_Private.h; sourceTree = "<group>"; };
-		862E8CE11B3DCC8800ACB563 /* KPGridClusteringAlgorithmDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGridClusteringAlgorithmDelegate.h; sourceTree = "<group>"; };
 		862E8CE21B3DCC8800ACB563 /* NSArray+KP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+KP.h"; sourceTree = "<group>"; };
 		862E8CE31B3DCC8800ACB563 /* NSArray+KP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KP.m"; sourceTree = "<group>"; };
 		862E8CEB1B3DCC9400ACB563 /* Dataset1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dataset1.txt; sourceTree = "<group>"; };
@@ -254,7 +253,6 @@
 				862E8CDE1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.h */,
 				862E8CDF1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.m */,
 				862E8CE01B3DCC8800ACB563 /* KPGridClusteringAlgorithm_Private.h */,
-				862E8CE11B3DCC8800ACB563 /* KPGridClusteringAlgorithmDelegate.h */,
 				862E8CE21B3DCC8800ACB563 /* NSArray+KP.h */,
 				862E8CE31B3DCC8800ACB563 /* NSArray+KP.m */,
 			);
@@ -368,10 +366,10 @@
 			isa = PBXGroup;
 			children = (
 				862E8CD31B3DCC8800ACB563 /* kingpin */,
-				9189259E18E7732900812296 /* kingpin-Unit-Tests-iOS */,
 				86A192591B3490410019882D /* kingpin-iOS */,
-				862E8D1F1B3DCEF900ACB563 /* Example-iOS-Swift */,
+				9189259E18E7732900812296 /* kingpin-Unit-Tests-iOS */,
 				862E8D011B3DCEED00ACB563 /* Example-iOS */,
+				862E8D1F1B3DCEF900ACB563 /* Example-iOS-Swift */,
 				93BBC04E1645A2B2004BC920 /* Frameworks */,
 				93BBC04C1645A2B2004BC920 /* Products */,
 				861C02AF1B3DDBCA00CD06E9 /* Distribution */,
