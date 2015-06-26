@@ -9,14 +9,14 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9189259818E7732900812296"
-               BuildableName = "kingpinTests.xctest"
-               BlueprintName = "kingpinTests"
+               BlueprintIdentifier = "93BBC04A1645A2B2004BC920"
+               BuildableName = "kingpinTestApplication.app"
+               BlueprintName = "Example-iOS"
                ReferencedContainer = "container:kingpin.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,12 +33,21 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9189259818E7732900812296"
-               BuildableName = "kingpinTests.xctest"
-               BlueprintName = "kingpinTests"
+               BuildableName = "kingpin-Unit-Tests-iOS.xctest"
+               BlueprintName = "kingpin-Unit-Tests-iOS"
                ReferencedContainer = "container:kingpin.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "93BBC04A1645A2B2004BC920"
+            BuildableName = "kingpinTestApplication.app"
+            BlueprintName = "Example-iOS"
+            ReferencedContainer = "container:kingpin.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -49,6 +58,16 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "93BBC04A1645A2B2004BC920"
+            BuildableName = "kingpinTestApplication.app"
+            BlueprintName = "Example-iOS"
+            ReferencedContainer = "container:kingpin.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -58,6 +77,16 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "93BBC04A1645A2B2004BC920"
+            BuildableName = "kingpinTestApplication.app"
+            BlueprintName = "Example-iOS"
+            ReferencedContainer = "container:kingpin.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

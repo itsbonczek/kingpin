@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         algorithm.annotationSize = CGSizeMake(25, 50)
         algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
 
-        clusteringController = KPClusteringController(mapView: self.mapView)
+        clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
 
         clusteringController.setAnnotations(annotations())
@@ -79,7 +79,7 @@ extension ViewController : MKMapViewDelegate {
         var annotationView : MKPinAnnotationView?
 
         if annotation is KPAnnotation {
-            let a : KPAnnotation = annotation as KPAnnotation
+            let a = annotation as! KPAnnotation
 
             if a.isCluster() {
                 annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("cluster") as? MKPinAnnotationView
@@ -113,7 +113,7 @@ extension ViewController : MKMapViewDelegate {
 
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         if view.annotation is KPAnnotation {
-            let cluster : KPAnnotation = view.annotation as KPAnnotation
+            let cluster = view.annotation as! KPAnnotation
 
             if cluster.annotations.count > 1 {
                 let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
