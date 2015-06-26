@@ -17,10 +17,10 @@
 #import "TestAnnotation.h"
 
 #define HC_SHORTHAND
-#import <OCHamcrest/OCHamcrest.h>
+#import <OCHamcrestIOS/OCHamcrestIOS.h>
 
 #define MOCKITO_SHORTHAND
-#import <OCMockito/OCMockito.h>
+#import <OCMockitoIOS/OCMockitoIOS.h>
 
 #import <XCTest/XCTest.h>
 

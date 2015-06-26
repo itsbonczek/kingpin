@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5F2DFDB8DB8F4D86BF604E35 /* libPods-kingpinTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB9F34F56DF40CBB9AA70B3 /* libPods-kingpinTests.a */; };
+		861C02A41B3DD5D600CD06E9 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 861C029E1B3DD5A500CD06E9 /* OCMockitoIOS.framework */; };
+		861C02A51B3DD5D800CD06E9 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */; };
+		861C02AB1B3DD67A00CD06E9 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 861C02AA1B3DD67A00CD06E9 /* TestAnnotation.m */; };
 		862E8CE41B3DCC8800ACB563 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CD61B3DCC8800ACB563 /* KPAnnotation.m */; };
 		862E8CE51B3DCC8800ACB563 /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CD81B3DCC8800ACB563 /* KPAnnotationTree.m */; };
 		862E8CE61B3DCC8800ACB563 /* KPClusteringController.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CDC1B3DCC8800ACB563 /* KPClusteringController.m */; };
@@ -31,7 +34,6 @@
 		862E8D171B3DCEED00ACB563 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D061B3DCEED00ACB563 /* Default@2x.png */; };
 		862E8D181B3DCEED00ACB563 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D071B3DCEED00ACB563 /* InfoPlist.strings */; };
 		862E8D191B3DCEED00ACB563 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D091B3DCEED00ACB563 /* ViewController.xib */; };
-		862E8D1A1B3DCEED00ACB563 /* Example-iOS-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D0B1B3DCEED00ACB563 /* Example-iOS-Info.plist */; };
 		862E8D1B1B3DCEED00ACB563 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D0D1B3DCEED00ACB563 /* main.m */; };
 		862E8D1C1B3DCEED00ACB563 /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D0F1B3DCEED00ACB563 /* MyAnnotation.m */; };
 		862E8D1D1B3DCEED00ACB563 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D111B3DCEED00ACB563 /* TestAnnotation.m */; };
@@ -40,7 +42,6 @@
 		862E8D2B1B3DCEF900ACB563 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D211B3DCEF900ACB563 /* LaunchScreen.xib */; };
 		862E8D2C1B3DCEF900ACB563 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D231B3DCEF900ACB563 /* Main.storyboard */; };
 		862E8D2D1B3DCEF900ACB563 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D251B3DCEF900ACB563 /* Images.xcassets */; };
-		862E8D2E1B3DCEF900ACB563 /* Example-iOS-Swift.plist in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D261B3DCEF900ACB563 /* Example-iOS-Swift.plist */; };
 		862E8D2F1B3DCEF900ACB563 /* TestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D271B3DCEF900ACB563 /* TestAnnotation.swift */; };
 		862E8D301B3DCEF900ACB563 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D291B3DCEF900ACB563 /* ViewController.swift */; };
 		869059901B3DD3190069D6CC /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CD61B3DCC8800ACB563 /* KPAnnotation.m */; };
@@ -64,7 +65,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kingpinTests.xcconfig"; path = "Pods/Pods-kingpinTests.xcconfig"; sourceTree = "<group>"; };
+		861C029E1B3DD5A500CD06E9 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockitoIOS.framework; path = Frameworks/OCMockitoIOS.framework; sourceTree = "<group>"; };
+		861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrestIOS.framework; path = Frameworks/OCHamcrestIOS.framework; sourceTree = "<group>"; };
+		861C02A91B3DD67A00CD06E9 /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
+		861C02AA1B3DD67A00CD06E9 /* TestAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAnnotation.m; sourceTree = "<group>"; };
 		862E8CD41B3DCC8800ACB563 /* kp_2dtree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kp_2dtree.h; sourceTree = "<group>"; };
 		862E8CD51B3DCC8800ACB563 /* KPAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPAnnotation.h; sourceTree = "<group>"; };
 		862E8CD61B3DCC8800ACB563 /* KPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAnnotation.m; sourceTree = "<group>"; };
@@ -124,9 +128,9 @@
 		9122C06518E77AAA00356A3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		9189259918E7732900812296 /* kingpin-Unit-Tests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "kingpin-Unit-Tests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9189259A18E7732900812296 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		918925A018E7732900812296 /* kingpinTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "kingpinTests-Info.plist"; sourceTree = "<group>"; };
+		918925A018E7732900812296 /* kingpin-Unit-Tests-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "kingpin-Unit-Tests-iOS-Info.plist"; sourceTree = "<group>"; };
 		918925A218E7732900812296 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		918925A618E7732900812296 /* kingpinTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpinTests-Prefix.pch"; sourceTree = "<group>"; };
+		918925A618E7732900812296 /* kingpin-Unit-Tests-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpin-Unit-Tests-iOS-Prefix.pch"; sourceTree = "<group>"; };
 		91E9B69518E7509300EFE22C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		93BBC04B1645A2B2004BC920 /* kingpinTestApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kingpinTestApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93BBC04F1645A2B2004BC920 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -157,7 +161,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */,
+				861C02A41B3DD5D600CD06E9 /* OCMockitoIOS.framework in Frameworks */,
 				9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */,
+				861C02A51B3DD5D800CD06E9 /* OCHamcrestIOS.framework in Frameworks */,
 				9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */,
 				9189259B18E7732900812296 /* XCTest.framework in Frameworks */,
 				9189259D18E7732900812296 /* UIKit.framework in Frameworks */,
@@ -202,7 +208,7 @@
 				862E8CE31B3DCC8800ACB563 /* NSArray+KP.m */,
 			);
 			name = kingpin;
-			path = "../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin";
+			path = ../kingpin;
 			sourceTree = "<group>";
 		};
 		862E8CE91B3DCC9400ACB563 /* Tests */ = {
@@ -215,12 +221,14 @@
 				862E8CF41B3DCC9400ACB563 /* KPGridClusteringAlgorithmTests.m */,
 			);
 			name = Tests;
-			path = "../../../../../../stanislaw/Programming/Open-Source/kingpin/Tests";
+			path = ../../Tests;
 			sourceTree = "<group>";
 		};
 		862E8CEA1B3DCC9400ACB563 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				861C02A91B3DD67A00CD06E9 /* TestAnnotation.h */,
+				861C02AA1B3DD67A00CD06E9 /* TestAnnotation.m */,
 				862E8CEB1B3DCC9400ACB563 /* Dataset1.txt */,
 				862E8CEC1B3DCC9400ACB563 /* Datasets.h */,
 				862E8CED1B3DCC9400ACB563 /* MockMapView.h */,
@@ -251,8 +259,7 @@
 				862E8D121B3DCEED00ACB563 /* ViewController.h */,
 				862E8D131B3DCEED00ACB563 /* ViewController.m */,
 			);
-			name = "Example-iOS";
-			path = "../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin-dev/Example-iOS";
+			path = "Example-iOS";
 			sourceTree = "<group>";
 		};
 		862E8D1F1B3DCEF900ACB563 /* Example-iOS-Swift */ = {
@@ -267,8 +274,7 @@
 				862E8D281B3DCEF900ACB563 /* Example-iOS-Swift-Bridging-Header.h */,
 				862E8D291B3DCEF900ACB563 /* ViewController.swift */,
 			);
-			name = "Example-iOS-Swift";
-			path = "../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin-dev/Example-iOS-Swift";
+			path = "Example-iOS-Swift";
 			sourceTree = "<group>";
 		};
 		86A192591B3490410019882D /* kingpin-iOS */ = {
@@ -294,16 +300,15 @@
 				862E8CE91B3DCC9400ACB563 /* Tests */,
 				9189259F18E7732900812296 /* Supporting Files */,
 			);
-			name = "kingpin-Unit-Tests-iOS";
-			path = "../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin-dev/kingpin-Unit-Tests-iOS";
+			path = "kingpin-Unit-Tests-iOS";
 			sourceTree = "<group>";
 		};
 		9189259F18E7732900812296 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				918925A018E7732900812296 /* kingpinTests-Info.plist */,
+				918925A018E7732900812296 /* kingpin-Unit-Tests-iOS-Info.plist */,
 				918925A118E7732900812296 /* InfoPlist.strings */,
-				918925A618E7732900812296 /* kingpinTests-Prefix.pch */,
+				918925A618E7732900812296 /* kingpin-Unit-Tests-iOS-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -318,7 +323,6 @@
 				862E8D011B3DCEED00ACB563 /* Example-iOS */,
 				93BBC04E1645A2B2004BC920 /* Frameworks */,
 				93BBC04C1645A2B2004BC920 /* Products */,
-				53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -336,6 +340,8 @@
 		93BBC04E1645A2B2004BC920 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				861C029E1B3DD5A500CD06E9 /* OCMockitoIOS.framework */,
+				861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */,
 				9122C06518E77AAA00356A3D /* CoreLocation.framework */,
 				9122C06318E77A9E00356A3D /* CoreGraphics.framework */,
 				91E9B69518E7509300EFE22C /* MapKit.framework */,
@@ -404,11 +410,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 918925A718E7732900812296 /* Build configuration list for PBXNativeTarget "kingpin-Unit-Tests-iOS" */;
 			buildPhases = (
-				EC22EB4CCAFA497491C104EC /* Check Pods Manifest.lock */,
 				9189259518E7732900812296 /* Sources */,
 				9189259618E7732900812296 /* Frameworks */,
 				9189259718E7732900812296 /* Resources */,
-				E57420E1AD034B8695DCDD51 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -442,7 +446,7 @@
 		93BBC02F1645A119004BC920 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0630;
 				TargetAttributes = {
 					86A192571B3490410019882D = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -488,7 +492,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				862E8D2E1B3DCEF900ACB563 /* Example-iOS-Swift.plist in Resources */,
 				862E8D2D1B3DCEF900ACB563 /* Images.xcassets in Resources */,
 				862E8D2B1B3DCEF900ACB563 /* LaunchScreen.xib in Resources */,
 				862E8D2C1B3DCEF900ACB563 /* Main.storyboard in Resources */,
@@ -508,7 +511,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				862E8D1A1B3DCEED00ACB563 /* Example-iOS-Info.plist in Resources */,
 				862E8D191B3DCEED00ACB563 /* ViewController.xib in Resources */,
 				862E8D171B3DCEED00ACB563 /* Default@2x.png in Resources */,
 				862E8D181B3DCEED00ACB563 /* InfoPlist.strings in Resources */,
@@ -518,39 +520,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		E57420E1AD034B8695DCDD51 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-kingpinTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC22EB4CCAFA497491C104EC /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		86A192531B3490410019882D /* Sources */ = {
@@ -581,6 +550,7 @@
 			files = (
 				862E8CF91B3DCC9400ACB563 /* KPAnnotationTreeTests.m in Sources */,
 				862E8D001B3DCCC100ACB563 /* NSArray+KP.m in Sources */,
+				861C02AB1B3DD67A00CD06E9 /* TestAnnotation.m in Sources */,
 				862E8CFB1B3DCC9400ACB563 /* KPGridClusteringAlgorithmTests.m in Sources */,
 				862E8CF71B3DCC9400ACB563 /* TestHelpers.m in Sources */,
 				862E8CFE1B3DCCC100ACB563 /* KPClusteringController.m in Sources */,
@@ -683,6 +653,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -740,6 +714,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -799,7 +777,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin-dev/Example-iOS-Swift/Example-iOS-Swift.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Example-iOS-Swift/Example-iOS-Swift.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -841,7 +819,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin-dev/Example-iOS-Swift/Example-iOS-Swift.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Example-iOS-Swift/Example-iOS-Swift.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -855,7 +833,6 @@
 		};
 		918925A818E7732900812296 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -875,12 +852,13 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "kingpinTests/kingpinTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "kingpin-Unit-Tests-iOS/kingpin-Unit-Tests-iOS-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -892,12 +870,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "kingpinTests/kingpinTests-Info.plist";
+				INFOPLIST_FILE = "kingpin-Unit-Tests-iOS/kingpin-Unit-Tests-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/kingpinTests",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -907,7 +882,6 @@
 		};
 		918925A918E7732900812296 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53FF343114C94B7CBF7FD684 /* Pods-kingpinTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -928,22 +902,20 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "kingpinTests/kingpinTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "kingpin-Unit-Tests-iOS/kingpin-Unit-Tests-iOS-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "kingpinTests/kingpinTests-Info.plist";
+				INFOPLIST_FILE = "kingpin-Unit-Tests-iOS/kingpin-Unit-Tests-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/kingpinTests",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -996,7 +968,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin-dev/Example-iOS/Example-iOS-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Example-iOS/Example-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = kingpinTestApplication;
@@ -1041,7 +1013,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../../../../../stanislaw/Programming/Open-Source/kingpin/kingpin-dev/Example-iOS/Example-iOS-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Example-iOS/Example-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = kingpinTestApplication;
