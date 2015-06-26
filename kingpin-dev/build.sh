@@ -49,8 +49,8 @@ Usage: sh $0 command
 command:
   print_configuration         print all configuration variables
   run_unit_tests              run unit tests
-  build_ios                   build iOS for device and simulator and create universal iOS framework
-  build_osx                   build iOS for device and simulator and create universal OSX framework
+  build_ios                   build iOS frameworks for device and simulator and create universal iOS framework
+  build_osx                   build OSX framework
   export_frameworks           export built frameworks to distribution folder (needs build_ios, build_osx)
   validate_ios                validate universal iOS framework against Example-iOS app (needs build_ios, export_frameworks)
   validate_osx                validate OSX frameworks against Example-OSX-Swift application (needs build_osx, export_frameworks)
