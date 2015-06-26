@@ -1,25 +1,24 @@
 //
 //  ViewController.swift
-//  kingpinSwiftTestApplication
+//  Example-OSX-Swift
 //
-//  Created by Stanislaw Pankevich on 16/03/15.
+//  Created by Stanislaw Pankevich on 27/06/15.
 //
 //
 
-import UIKit
+import Cocoa
 import MapKit
 import kingpin
 
 let NumberOfAnnotations: Int = 1000;
 
-class ViewController: UIViewController {
+class ViewController: NSViewController {
 
     private var clusteringController : KPClusteringController!
 
     @IBOutlet weak var mapView: MKMapView!
 
     // MARK: UIViewController
-    @IBOutlet weak var mapView: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

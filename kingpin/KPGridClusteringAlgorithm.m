@@ -26,6 +26,30 @@
 
 #import "NSArray+KP.h"
 
+static NSValue *NSValueFromCGPoint(CGPoint point) {
+    NSValue *value;
+
+#if TARGET_OS_IPHONE
+    value= [NSValue valueWithCGPoint: point];
+#else
+    value= [NSValue valueWithPoint: point];
+#endif
+
+    return value;
+}
+
+static CGPoint CGPointFromNSValue(NSValue *value) {
+    CGPoint point;
+
+#if TARGET_OS_IPHONE
+    point = value.CGPointValue;
+#else
+    point = value.pointValue;
+#endif
+
+    return point;
+}
+
 @implementation KPGridClusteringAlgorithm
 
 - (id)init {
@@ -258,17 +282,17 @@
     // if the two views overlap, merge them
     
     if (clusterAnnotation._annotationPointInMapView == nil) {
-        clusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[mapView convertCoordinate:clusterAnnotation.coordinate
-                                                                                             toPointToView:mapView]];
+        clusterAnnotation._annotationPointInMapView = NSValueFromCGPoint([mapView convertCoordinate:clusterAnnotation.coordinate
+                                                                                             toPointToView:mapView]);
     }
     
     if (anotherClusterAnnotation._annotationPointInMapView == nil) {
-        anotherClusterAnnotation._annotationPointInMapView = [NSValue valueWithCGPoint:[mapView convertCoordinate:anotherClusterAnnotation.coordinate
-                                                                                                    toPointToView:mapView]];
+        anotherClusterAnnotation._annotationPointInMapView = NSValueFromCGPoint([mapView convertCoordinate:anotherClusterAnnotation.coordinate
+                                                                                                    toPointToView:mapView]);
     }
     
-    CGPoint p1 = [clusterAnnotation._annotationPointInMapView CGPointValue];
-    CGPoint p2 = [anotherClusterAnnotation._annotationPointInMapView CGPointValue];
+    CGPoint p1 = CGPointFromNSValue(clusterAnnotation._annotationPointInMapView);
+    CGPoint p2 = CGPointFromNSValue(anotherClusterAnnotation._annotationPointInMapView);
     
     CGRect r1 = CGRectMake(
                            p1.x - self.annotationSize.width + self.annotationCenterOffset.x,

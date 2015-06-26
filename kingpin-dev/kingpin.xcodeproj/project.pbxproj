@@ -25,10 +25,34 @@
 		861C02C31B3DDD3500CD06E9 /* KPGridClusteringAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CDE1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		861C02C41B3DDD3E00CD06E9 /* KPGridClusteringAlgorithm_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CE01B3DCC8800ACB563 /* KPGridClusteringAlgorithm_Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		861C02C51B3DDD4400CD06E9 /* NSArray+KP.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CE21B3DCC8800ACB563 /* NSArray+KP.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		862051261B3DE0180066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051241B3DE00D0066333D /* kingpin.framework */; };
-		862051271B3DE0180066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051241B3DE00D0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		862051281B3DE04A0066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051241B3DE00D0066333D /* kingpin.framework */; };
-		862051291B3DE04A0066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051241B3DE00D0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		862051961B3E05520066333D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862051951B3E05520066333D /* AppDelegate.swift */; };
+		862051981B3E05520066333D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862051971B3E05520066333D /* ViewController.swift */; };
+		8620519A1B3E05520066333D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 862051991B3E05520066333D /* Images.xcassets */; };
+		8620519D1B3E05520066333D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8620519B1B3E05520066333D /* Main.storyboard */; };
+		862051BA1B3E064D0066333D /* kingpin.h in Headers */ = {isa = PBXBuildFile; fileRef = 862051B91B3E064D0066333D /* kingpin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		862051D51B3E06990066333D /* kp_2dtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CD41B3DCC8800ACB563 /* kp_2dtree.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		862051D61B3E06A10066333D /* NSArray+KP.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CE21B3DCC8800ACB563 /* NSArray+KP.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		862051DE1B3E0AAA0066333D /* TestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862051DD1B3E0AAA0066333D /* TestAnnotation.swift */; };
+		862051E01B3E0B6C0066333D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051DF1B3E0B6C0066333D /* MapKit.framework */; };
+		862051E21B3E0E870066333D /* KPAnnotation.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CD51B3DCC8800ACB563 /* KPAnnotation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		862051E31B3E0E9C0066333D /* KPAnnotationTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CD71B3DCC8800ACB563 /* KPAnnotationTree.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		862051E41B3E0EA10066333D /* KPAnnotationTree_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CD91B3DCC8800ACB563 /* KPAnnotationTree_Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		862051E51B3E0EA80066333D /* KPClusteringController.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CDB1B3DCC8800ACB563 /* KPClusteringController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		862051E61B3E0EAF0066333D /* KPGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CDD1B3DCC8800ACB563 /* KPGeometry.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		862051E71B3E0EB50066333D /* KPGridClusteringAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CDE1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		862051E81B3E0EBC0066333D /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CDF1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.m */; };
+		862051E91B3E0EC20066333D /* KPGridClusteringAlgorithm_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CE01B3DCC8800ACB563 /* KPGridClusteringAlgorithm_Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		862051EA1B3E0ECE0066333D /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CD61B3DCC8800ACB563 /* KPAnnotation.m */; };
+		862051EB1B3E0ECE0066333D /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CD81B3DCC8800ACB563 /* KPAnnotationTree.m */; };
+		862051EC1B3E0ECE0066333D /* KPClusteringController.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CDC1B3DCC8800ACB563 /* KPClusteringController.m */; };
+		862051ED1B3E0ECE0066333D /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CE31B3DCC8800ACB563 /* NSArray+KP.m */; };
+		862051EE1B3E0EDF0066333D /* KPClusteringAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CDA1B3DCC8800ACB563 /* KPClusteringAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		862051F91B3E111A0066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; };
+		862051FA1B3E111A0066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		862051FB1B3E111D0066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; };
+		862051FC1B3E111D0066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		862051FD1B3E11210066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F81B3E110C0066333D /* kingpin.framework */; };
+		862051FE1B3E11210066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F81B3E110C0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		862E8CF51B3DCC9400ACB563 /* Dataset1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 862E8CEB1B3DCC9400ACB563 /* Dataset1.txt */; };
 		862E8CF61B3DCC9400ACB563 /* MockMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CEE1B3DCC9400ACB563 /* MockMapView.m */; };
 		862E8CF71B3DCC9400ACB563 /* TestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CF01B3DCC9400ACB563 /* TestHelpers.m */; };
@@ -79,7 +103,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				862051271B3DE0180066333D /* kingpin.framework in Embed Frameworks */,
+				862051FA1B3E111A0066333D /* kingpin.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,7 +114,18 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				862051291B3DE04A0066333D /* kingpin.framework in Embed Frameworks */,
+				862051FC1B3E111D0066333D /* kingpin.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		862051F31B3E10B20066333D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				862051FE1B3E11210066333D /* kingpin.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,7 +137,21 @@
 		861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrestIOS.framework; path = Frameworks/OCHamcrestIOS.framework; sourceTree = "<group>"; };
 		861C02A91B3DD67A00CD06E9 /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
 		861C02AA1B3DD67A00CD06E9 /* TestAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAnnotation.m; sourceTree = "<group>"; };
-		862051241B3DE00D0066333D /* kingpin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpin.framework; sourceTree = "<group>"; };
+		862051911B3E05520066333D /* Example-OSX-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-OSX-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		862051941B3E05520066333D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		862051951B3E05520066333D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		862051971B3E05520066333D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		862051991B3E05520066333D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8620519C1B3E05520066333D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		862051B51B3E064C0066333D /* kingpin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = kingpin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		862051B81B3E064D0066333D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		862051B91B3E064D0066333D /* kingpin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpin.h; sourceTree = "<group>"; };
+		862051DC1B3E07120066333D /* Example-OSX-Swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-OSX-Swift-Bridging-Header.h"; sourceTree = "<group>"; };
+		862051DD1B3E0AAA0066333D /* TestAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAnnotation.swift; sourceTree = "<group>"; };
+		862051DF1B3E0B6C0066333D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		862051E11B3E0B6C0066333D /* Example-OSX-Swift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Example-OSX-Swift.entitlements"; sourceTree = "<group>"; };
+		862051F61B3E110C0066333D /* kingpin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpin.framework; sourceTree = "<group>"; };
+		862051F81B3E110C0066333D /* kingpin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpin.framework; sourceTree = "<group>"; };
 		862E8CD41B3DCC8800ACB563 /* kp_2dtree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kp_2dtree.h; sourceTree = "<group>"; };
 		862E8CD51B3DCC8800ACB563 /* KPAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPAnnotation.h; sourceTree = "<group>"; };
 		862E8CD61B3DCC8800ACB563 /* KPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAnnotation.m; sourceTree = "<group>"; };
@@ -174,6 +223,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8620518E1B3E05520066333D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				862051E01B3E0B6C0066333D /* MapKit.framework in Frameworks */,
+				862051FD1B3E11210066333D /* kingpin.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		862051B11B3E064C0066333D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		86A192541B3490410019882D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,7 +250,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				862051281B3DE04A0066333D /* kingpin.framework in Frameworks */,
+				862051FB1B3E111D0066333D /* kingpin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,7 +276,7 @@
 				93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */,
 				93BBC0821645A39F004BC920 /* MapKit.framework in Frameworks */,
 				93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */,
-				862051261B3DE0180066333D /* kingpin.framework in Frameworks */,
+				862051F91B3E111A0066333D /* kingpin.framework in Frameworks */,
 				93BBC0521645A2B2004BC920 /* Foundation.framework in Frameworks */,
 				93BBC0541645A2B2004BC920 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -220,21 +285,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		861C02AF1B3DDBCA00CD06E9 /* Distribution */ = {
+		862051921B3E05520066333D /* Example-OSX-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				861C02B01B3DDBCA00CD06E9 /* iOS */,
+				862051E11B3E0B6C0066333D /* Example-OSX-Swift.entitlements */,
+				862051951B3E05520066333D /* AppDelegate.swift */,
+				862051971B3E05520066333D /* ViewController.swift */,
+				862051991B3E05520066333D /* Images.xcassets */,
+				8620519B1B3E05520066333D /* Main.storyboard */,
+				862051931B3E05520066333D /* Supporting Files */,
+				862051DC1B3E07120066333D /* Example-OSX-Swift-Bridging-Header.h */,
+				862051DD1B3E0AAA0066333D /* TestAnnotation.swift */,
 			);
-			name = Distribution;
-			path = "$(PROJECT_DIR)/../Distribution";
+			path = "Example-OSX-Swift";
 			sourceTree = "<group>";
 		};
-		861C02B01B3DDBCA00CD06E9 /* iOS */ = {
+		862051931B3E05520066333D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				862051241B3DE00D0066333D /* kingpin.framework */,
+				862051941B3E05520066333D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		862051B61B3E064D0066333D /* kingpin-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				862051B91B3E064D0066333D /* kingpin.h */,
+				862051B71B3E064D0066333D /* Supporting Files */,
+			);
+			path = "kingpin-OSX";
+			sourceTree = "<group>";
+		};
+		862051B71B3E064D0066333D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				862051B81B3E064D0066333D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		862051F41B3E110C0066333D /* Distribution */ = {
+			isa = PBXGroup;
+			children = (
+				862051F51B3E110C0066333D /* iOS */,
+				862051F71B3E110C0066333D /* OSX */,
+			);
+			name = Distribution;
+			path = "../Distribution";
+			sourceTree = "<group>";
+		};
+		862051F51B3E110C0066333D /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				862051F61B3E110C0066333D /* kingpin.framework */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		862051F71B3E110C0066333D /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				862051F81B3E110C0066333D /* kingpin.framework */,
+			);
+			path = OSX;
 			sourceTree = "<group>";
 		};
 		862E8CD31B3DCC8800ACB563 /* kingpin */ = {
@@ -367,12 +481,14 @@
 			children = (
 				862E8CD31B3DCC8800ACB563 /* kingpin */,
 				86A192591B3490410019882D /* kingpin-iOS */,
+				862051B61B3E064D0066333D /* kingpin-OSX */,
 				9189259E18E7732900812296 /* kingpin-Unit-Tests-iOS */,
 				862E8D011B3DCEED00ACB563 /* Example-iOS */,
 				862E8D1F1B3DCEF900ACB563 /* Example-iOS-Swift */,
+				862051921B3E05520066333D /* Example-OSX-Swift */,
 				93BBC04E1645A2B2004BC920 /* Frameworks */,
 				93BBC04C1645A2B2004BC920 /* Products */,
-				861C02AF1B3DDBCA00CD06E9 /* Distribution */,
+				862051F41B3E110C0066333D /* Distribution */,
 			);
 			sourceTree = "<group>";
 		};
@@ -383,6 +499,8 @@
 				9189259918E7732900812296 /* kingpin-Unit-Tests-iOS.xctest */,
 				86E1858C1AB7530F00C2C9CD /* Example-iOS-Swift.app */,
 				86A192581B3490410019882D /* kingpin.framework */,
+				862051911B3E05520066333D /* Example-OSX-Swift.app */,
+				862051B51B3E064C0066333D /* kingpin.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -390,6 +508,7 @@
 		93BBC04E1645A2B2004BC920 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				862051DF1B3E0B6C0066333D /* MapKit.framework */,
 				861C029E1B3DD5A500CD06E9 /* OCMockitoIOS.framework */,
 				861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */,
 				9122C06518E77AAA00356A3D /* CoreLocation.framework */,
@@ -409,6 +528,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		862051B21B3E064C0066333D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				862051E71B3E0EB50066333D /* KPGridClusteringAlgorithm.h in Headers */,
+				862051D61B3E06A10066333D /* NSArray+KP.h in Headers */,
+				862051E61B3E0EAF0066333D /* KPGeometry.h in Headers */,
+				862051BA1B3E064D0066333D /* kingpin.h in Headers */,
+				862051E31B3E0E9C0066333D /* KPAnnotationTree.h in Headers */,
+				862051EE1B3E0EDF0066333D /* KPClusteringAlgorithm.h in Headers */,
+				862051E21B3E0E870066333D /* KPAnnotation.h in Headers */,
+				862051E41B3E0EA10066333D /* KPAnnotationTree_Private.h in Headers */,
+				862051E51B3E0EA80066333D /* KPClusteringController.h in Headers */,
+				862051D51B3E06990066333D /* kp_2dtree.h in Headers */,
+				862051E91B3E0EC20066333D /* KPGridClusteringAlgorithm_Private.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		86A192551B3490410019882D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,6 +567,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		862051901B3E05520066333D /* Example-OSX-Swift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 862051AA1B3E05520066333D /* Build configuration list for PBXNativeTarget "Example-OSX-Swift" */;
+			buildPhases = (
+				8620518D1B3E05520066333D /* Sources */,
+				8620518E1B3E05520066333D /* Frameworks */,
+				8620518F1B3E05520066333D /* Resources */,
+				862051F31B3E10B20066333D /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Example-OSX-Swift";
+			productName = "Example-OSX-Swift";
+			productReference = 862051911B3E05520066333D /* Example-OSX-Swift.app */;
+			productType = "com.apple.product-type.application";
+		};
+		862051B41B3E064C0066333D /* kingpin-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 862051CE1B3E064D0066333D /* Build configuration list for PBXNativeTarget "kingpin-OSX" */;
+			buildPhases = (
+				862051B01B3E064C0066333D /* Sources */,
+				862051B11B3E064C0066333D /* Frameworks */,
+				862051B21B3E064C0066333D /* Headers */,
+				862051B31B3E064C0066333D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "kingpin-OSX";
+			productName = "kingpin-OSX";
+			productReference = 862051B51B3E064C0066333D /* kingpin.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		86A192571B3490410019882D /* kingpin-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 86A1926F1B3490420019882D /* Build configuration list for PBXNativeTarget "kingpin-iOS" */;
@@ -509,6 +682,18 @@
 			attributes = {
 				LastUpgradeCheck = 0630;
 				TargetAttributes = {
+					862051901B3E05520066333D = {
+						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 399ZF6384C;
+						SystemCapabilities = {
+							com.apple.Maps.Mac = {
+								enabled = 1;
+							};
+						};
+					};
+					862051B41B3E064C0066333D = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
 					86A192571B3490410019882D = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
@@ -534,14 +719,32 @@
 			projectRoot = "";
 			targets = (
 				86A192571B3490410019882D /* kingpin-iOS */,
+				862051B41B3E064C0066333D /* kingpin-OSX */,
 				9189259818E7732900812296 /* kingpin-Unit-Tests-iOS */,
 				93BBC04A1645A2B2004BC920 /* Example-iOS */,
 				86E1858B1AB7530F00C2C9CD /* Example-iOS-Swift */,
+				862051901B3E05520066333D /* Example-OSX-Swift */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8620518F1B3E05520066333D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8620519A1B3E05520066333D /* Images.xcassets in Resources */,
+				8620519D1B3E05520066333D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		862051B31B3E064C0066333D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		86A192561B3490410019882D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,6 +786,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8620518D1B3E05520066333D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				862051DE1B3E0AAA0066333D /* TestAnnotation.swift in Sources */,
+				862051981B3E05520066333D /* ViewController.swift in Sources */,
+				862051961B3E05520066333D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		862051B01B3E064C0066333D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				862051E81B3E0EBC0066333D /* KPGridClusteringAlgorithm.m in Sources */,
+				862051ED1B3E0ECE0066333D /* NSArray+KP.m in Sources */,
+				862051EA1B3E0ECE0066333D /* KPAnnotation.m in Sources */,
+				862051EC1B3E0ECE0066333D /* KPClusteringController.m in Sources */,
+				862051EB1B3E0ECE0066333D /* KPAnnotationTree.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		86A192531B3490410019882D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -639,6 +864,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8620519B1B3E05520066333D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8620519C1B3E05520066333D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		862E8D071B3DCEED00ACB563 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -682,6 +915,217 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		862051AB1B3E05520066333D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Example-OSX-Swift/Example-OSX-Swift.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"../Distribution/OSX",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Example-OSX-Swift/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Example-OSX-Swift/Example-OSX-Swift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		862051AC1B3E05520066333D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Example-OSX-Swift/Example-OSX-Swift.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"../Distribution/OSX",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Example-OSX-Swift/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Example-OSX-Swift/Example-OSX-Swift-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		862051CF1B3E064D0066333D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "kingpin-OSX/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = kingpin;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		862051D01B3E064D0066333D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "kingpin-OSX/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = kingpin;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		86A1926B1B3490420019882D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1109,6 +1553,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		862051AA1B3E05520066333D /* Build configuration list for PBXNativeTarget "Example-OSX-Swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				862051AB1B3E05520066333D /* Debug */,
+				862051AC1B3E05520066333D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		862051CE1B3E064D0066333D /* Build configuration list for PBXNativeTarget "kingpin-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				862051CF1B3E064D0066333D /* Debug */,
+				862051D01B3E064D0066333D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		86A1926F1B3490420019882D /* Build configuration list for PBXNativeTarget "kingpin-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -76,8 +76,11 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
     self.lastRefreshedMapRegion = self.mapView.region;
 
     self.animationDuration = 0.5f;
+
+#if TARGET_OS_IPHONE
     self.animationOptions = UIViewAnimationOptionCurveEaseOut;
-    
+#endif
+
     self.clusteringAlgorithm = algorithm;
 
     return self;
@@ -337,11 +340,23 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
                           performAnimations:animations
                       withCompletionHandler:completionBlock];
     } else {
+#if TARGET_OS_IPHONE
         [UIView animateWithDuration:self.animationDuration
                               delay:0
                             options:self.animationOptions
                          animations:animations
                          completion:completionBlock];
+#else
+        // TODO
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            context.duration = self.animationDuration;
+
+
+            animations();
+        } completionHandler:^{
+            if (completionBlock) completionBlock(YES);
+        }];
+#endif
     }
 }
 
