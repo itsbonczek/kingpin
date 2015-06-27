@@ -8,7 +8,7 @@
 
 import Cocoa
 import MapKit
-import kingpin
+import kingpinOSX
 
 let NumberOfAnnotations: Int = 1000;
 

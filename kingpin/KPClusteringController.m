@@ -348,9 +348,15 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
                          completion:completionBlock];
 #else
         // TODO
+
+        self.mapView.wantsLayer = YES;
+
+        // Set the layer redraw policy. This would be better done in
+        // the initialization method of a NSView subclass instead of here.
+        self.mapView.layerContentsRedrawPolicy = NSViewLayerContentsRedrawOnSetNeedsDisplay;
+
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
             context.duration = 4;
-
 
             animations();
         } completionHandler:^{

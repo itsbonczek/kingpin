@@ -16,8 +16,6 @@ class ViewController: UIViewController {
 
     private var clusteringController : KPClusteringController!
 
-    @IBOutlet weak var mapView: MKMapView!
-
     // MARK: UIViewController
     @IBOutlet weak var mapView: MKMapView!
 

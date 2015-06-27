@@ -669,11 +669,11 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl">
+                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rtq-Tt-qWM">
+                            <mapView wantsLayer="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rtq-Tt-qWM">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                                 <connections>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="y0Q-xr-jPr"/>

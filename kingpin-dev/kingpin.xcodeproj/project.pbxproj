@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86087E4F1B3EC06B00D24197 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051DF1B3E0B6C0066333D /* MapKit.framework */; };
 		861C02A41B3DD5D600CD06E9 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 861C029E1B3DD5A500CD06E9 /* OCMockitoIOS.framework */; };
 		861C02A51B3DD5D800CD06E9 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */; };
 		861C02AB1B3DD67A00CD06E9 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 861C02AA1B3DD67A00CD06E9 /* TestAnnotation.m */; };
@@ -29,7 +30,7 @@
 		862051981B3E05520066333D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862051971B3E05520066333D /* ViewController.swift */; };
 		8620519A1B3E05520066333D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 862051991B3E05520066333D /* Images.xcassets */; };
 		8620519D1B3E05520066333D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8620519B1B3E05520066333D /* Main.storyboard */; };
-		862051BA1B3E064D0066333D /* kingpin.h in Headers */ = {isa = PBXBuildFile; fileRef = 862051B91B3E064D0066333D /* kingpin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		862051BA1B3E064D0066333D /* kingpinOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 862051B91B3E064D0066333D /* kingpinOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		862051D51B3E06990066333D /* kp_2dtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CD41B3DCC8800ACB563 /* kp_2dtree.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		862051D61B3E06A10066333D /* NSArray+KP.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CE21B3DCC8800ACB563 /* NSArray+KP.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		862051DE1B3E0AAA0066333D /* TestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862051DD1B3E0AAA0066333D /* TestAnnotation.swift */; };
@@ -47,19 +48,11 @@
 		862051EC1B3E0ECE0066333D /* KPClusteringController.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CDC1B3DCC8800ACB563 /* KPClusteringController.m */; };
 		862051ED1B3E0ECE0066333D /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CE31B3DCC8800ACB563 /* NSArray+KP.m */; };
 		862051EE1B3E0EDF0066333D /* KPClusteringAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 862E8CDA1B3DCC8800ACB563 /* KPClusteringAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		862051F91B3E111A0066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; };
-		862051FA1B3E111A0066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		862051FB1B3E111D0066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; };
-		862051FC1B3E111D0066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F61B3E110C0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		862051FD1B3E11210066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F81B3E110C0066333D /* kingpin.framework */; };
-		862051FE1B3E11210066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F81B3E110C0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		862052091B3EB6790066333D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 862052081B3EB6790066333D /* AppDelegate.m */; };
 		8620520B1B3EB6790066333D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8620520A1B3EB6790066333D /* main.m */; };
 		8620520E1B3EB6790066333D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8620520D1B3EB6790066333D /* ViewController.m */; };
 		862052101B3EB6790066333D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8620520F1B3EB6790066333D /* Images.xcassets */; };
 		862052131B3EB6790066333D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 862052111B3EB6790066333D /* Main.storyboard */; };
-		862052261B3EB7D80066333D /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F81B3E110C0066333D /* kingpin.framework */; };
-		862052271B3EB7D80066333D /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862051F81B3E110C0066333D /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		862E8CF51B3DCC9400ACB563 /* Dataset1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 862E8CEB1B3DCC9400ACB563 /* Dataset1.txt */; };
 		862E8CF61B3DCC9400ACB563 /* MockMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CEE1B3DCC9400ACB563 /* MockMapView.m */; };
 		862E8CF71B3DCC9400ACB563 /* TestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CF01B3DCC9400ACB563 /* TestHelpers.m */; };
@@ -89,6 +82,8 @@
 		862E8D2F1B3DCEF900ACB563 /* TestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D271B3DCEF900ACB563 /* TestAnnotation.swift */; };
 		862E8D301B3DCEF900ACB563 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D291B3DCEF900ACB563 /* ViewController.swift */; };
 		86A1925D1B3490410019882D /* kingpin.h in Headers */ = {isa = PBXBuildFile; fileRef = 86A1925C1B3490410019882D /* kingpin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86C6DF1C1B3EBCD10048F53D /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DF1B1B3EBCD10048F53D /* MyAnnotation.m */; };
+		86C6DF1F1B3EBD160048F53D /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DF1E1B3EBD160048F53D /* TestAnnotation.m */; };
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
 		9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
@@ -103,14 +98,54 @@
 		93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0861645A42A004BC920 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		86087E531B3ECA2B00D24197 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 862051B41B3E064C0066333D;
+			remoteInfo = "kingpin-OSX";
+		};
+		86087E561B3ECECA00D24197 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 86A192571B3490410019882D;
+			remoteInfo = "kingpin-iOS";
+		};
+		86087E581B3ECECF00D24197 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 86A192571B3490410019882D;
+			remoteInfo = "kingpin-iOS";
+		};
+		86087E5A1B3ECED300D24197 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 862051B41B3E064C0066333D;
+			remoteInfo = "kingpin-OSX";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		86087E551B3ECA2B00D24197 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		861C02B41B3DDC3C00CD06E9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				862051FA1B3E111A0066333D /* kingpin.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,7 +156,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				862051FC1B3E111D0066333D /* kingpin.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,18 +166,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				862051FE1B3E11210066333D /* kingpin.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		862052281B3EB7D80066333D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				862052271B3EB7D80066333D /* kingpin.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +173,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		86087E501B3EC06B00D24197 /* Example-OSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Example-OSX.entitlements"; sourceTree = "<group>"; };
 		861C029E1B3DD5A500CD06E9 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockitoIOS.framework; path = Frameworks/OCMockitoIOS.framework; sourceTree = "<group>"; };
 		861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrestIOS.framework; path = Frameworks/OCHamcrestIOS.framework; sourceTree = "<group>"; };
 		861C02A91B3DD67A00CD06E9 /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
@@ -161,15 +184,13 @@
 		862051971B3E05520066333D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		862051991B3E05520066333D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8620519C1B3E05520066333D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		862051B51B3E064C0066333D /* kingpin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = kingpin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		862051B51B3E064C0066333D /* kingpinOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = kingpinOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		862051B81B3E064D0066333D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		862051B91B3E064D0066333D /* kingpin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpin.h; sourceTree = "<group>"; };
+		862051B91B3E064D0066333D /* kingpinOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpinOSX.h; sourceTree = "<group>"; };
 		862051DC1B3E07120066333D /* Example-OSX-Swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-OSX-Swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		862051DD1B3E0AAA0066333D /* TestAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAnnotation.swift; sourceTree = "<group>"; };
 		862051DF1B3E0B6C0066333D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		862051E11B3E0B6C0066333D /* Example-OSX-Swift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Example-OSX-Swift.entitlements"; sourceTree = "<group>"; };
-		862051F61B3E110C0066333D /* kingpin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpin.framework; sourceTree = "<group>"; };
-		862051F81B3E110C0066333D /* kingpin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpin.framework; sourceTree = "<group>"; };
 		862052031B3EB6790066333D /* Example-OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		862052061B3EB6790066333D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		862052071B3EB6790066333D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -232,6 +253,10 @@
 		86A192581B3490410019882D /* kingpin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = kingpin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86A1925B1B3490410019882D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86A1925C1B3490410019882D /* kingpin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpin.h; sourceTree = "<group>"; };
+		86C6DF1A1B3EBCD10048F53D /* MyAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
+		86C6DF1B1B3EBCD10048F53D /* MyAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
+		86C6DF1D1B3EBD160048F53D /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
+		86C6DF1E1B3EBD160048F53D /* TestAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAnnotation.m; sourceTree = "<group>"; };
 		86E1858C1AB7530F00C2C9CD /* Example-iOS-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-iOS-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9122C06318E77A9E00356A3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		9122C06518E77AAA00356A3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
@@ -255,7 +280,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				862051E01B3E0B6C0066333D /* MapKit.framework in Frameworks */,
-				862051FD1B3E11210066333D /* kingpin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +294,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				862052261B3EB7D80066333D /* kingpin.framework in Frameworks */,
+				86087E4F1B3EC06B00D24197 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +309,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				862051FB1B3E111D0066333D /* kingpin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +334,6 @@
 				93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */,
 				93BBC0821645A39F004BC920 /* MapKit.framework in Frameworks */,
 				93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */,
-				862051F91B3E111A0066333D /* kingpin.framework in Frameworks */,
 				93BBC0521645A2B2004BC920 /* Foundation.framework in Frameworks */,
 				93BBC0541645A2B2004BC920 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -346,7 +368,7 @@
 		862051B61B3E064D0066333D /* kingpin-OSX */ = {
 			isa = PBXGroup;
 			children = (
-				862051B91B3E064D0066333D /* kingpin.h */,
+				862051B91B3E064D0066333D /* kingpinOSX.h */,
 				862051B71B3E064D0066333D /* Supporting Files */,
 			);
 			path = "kingpin-OSX";
@@ -360,35 +382,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		862051F41B3E110C0066333D /* Distribution */ = {
-			isa = PBXGroup;
-			children = (
-				862051F51B3E110C0066333D /* iOS */,
-				862051F71B3E110C0066333D /* OSX */,
-			);
-			name = Distribution;
-			path = ../Distribution;
-			sourceTree = "<group>";
-		};
-		862051F51B3E110C0066333D /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				862051F61B3E110C0066333D /* kingpin.framework */,
-			);
-			path = iOS;
-			sourceTree = "<group>";
-		};
-		862051F71B3E110C0066333D /* OSX */ = {
-			isa = PBXGroup;
-			children = (
-				862051F81B3E110C0066333D /* kingpin.framework */,
-			);
-			path = OSX;
-			sourceTree = "<group>";
-		};
 		862052041B3EB6790066333D /* Example-OSX */ = {
 			isa = PBXGroup;
 			children = (
+				86087E501B3EC06B00D24197 /* Example-OSX.entitlements */,
+				86C6DF1D1B3EBD160048F53D /* TestAnnotation.h */,
+				86C6DF1E1B3EBD160048F53D /* TestAnnotation.m */,
+				86C6DF1A1B3EBCD10048F53D /* MyAnnotation.h */,
+				86C6DF1B1B3EBCD10048F53D /* MyAnnotation.m */,
 				862052071B3EB6790066333D /* AppDelegate.h */,
 				862052081B3EB6790066333D /* AppDelegate.m */,
 				8620520C1B3EB6790066333D /* ViewController.h */,
@@ -547,7 +548,6 @@
 				862052041B3EB6790066333D /* Example-OSX */,
 				93BBC04E1645A2B2004BC920 /* Frameworks */,
 				93BBC04C1645A2B2004BC920 /* Products */,
-				862051F41B3E110C0066333D /* Distribution */,
 			);
 			sourceTree = "<group>";
 		};
@@ -559,7 +559,7 @@
 				86E1858C1AB7530F00C2C9CD /* Example-iOS-Swift.app */,
 				86A192581B3490410019882D /* kingpin.framework */,
 				862051911B3E05520066333D /* Example-OSX-Swift.app */,
-				862051B51B3E064C0066333D /* kingpin.framework */,
+				862051B51B3E064C0066333D /* kingpinOSX.framework */,
 				862052031B3EB6790066333D /* Example-OSX.app */,
 			);
 			name = Products;
@@ -595,7 +595,7 @@
 				862051E71B3E0EB50066333D /* KPGridClusteringAlgorithm.h in Headers */,
 				862051D61B3E06A10066333D /* NSArray+KP.h in Headers */,
 				862051E61B3E0EAF0066333D /* KPGeometry.h in Headers */,
-				862051BA1B3E064D0066333D /* kingpin.h in Headers */,
+				862051BA1B3E064D0066333D /* kingpinOSX.h in Headers */,
 				862051E31B3E0E9C0066333D /* KPAnnotationTree.h in Headers */,
 				862051EE1B3E0EDF0066333D /* KPClusteringAlgorithm.h in Headers */,
 				862051E21B3E0E870066333D /* KPAnnotation.h in Headers */,
@@ -639,6 +639,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				86087E5B1B3ECED300D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-OSX-Swift";
 			productName = "Example-OSX-Swift";
@@ -660,7 +661,7 @@
 			);
 			name = "kingpin-OSX";
 			productName = "kingpin-OSX";
-			productReference = 862051B51B3E064C0066333D /* kingpin.framework */;
+			productReference = 862051B51B3E064C0066333D /* kingpinOSX.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		862052021B3EB6790066333D /* Example-OSX */ = {
@@ -670,11 +671,12 @@
 				862051FF1B3EB6790066333D /* Sources */,
 				862052001B3EB6790066333D /* Frameworks */,
 				862052011B3EB6790066333D /* Resources */,
-				862052281B3EB7D80066333D /* Embed Frameworks */,
+				86087E551B3ECA2B00D24197 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				86087E541B3ECA2B00D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-OSX";
 			productName = "Example-OSX";
@@ -711,6 +713,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				86087E591B3ECECF00D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-iOS-Swift";
 			productName = kingpinSwiftTestApplication;
@@ -746,6 +749,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				86087E571B3ECECA00D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-iOS";
 			productName = CATreeTestApplication;
@@ -771,9 +775,16 @@
 					};
 					862051B41B3E064C0066333D = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 399ZF6384C;
 					};
 					862052021B3EB6790066333D = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 399ZF6384C;
+						SystemCapabilities = {
+							com.apple.Maps.Mac = {
+								enabled = 1;
+							};
+						};
 					};
 					86A192571B3490410019882D = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -804,8 +815,8 @@
 				9189259818E7732900812296 /* kingpin-Unit-Tests-iOS */,
 				93BBC04A1645A2B2004BC920 /* Example-iOS */,
 				86E1858B1AB7530F00C2C9CD /* Example-iOS-Swift */,
-				862051901B3E05520066333D /* Example-OSX-Swift */,
 				862052021B3EB6790066333D /* Example-OSX */,
+				862051901B3E05520066333D /* Example-OSX-Swift */,
 			);
 		};
 /* End PBXProject section */
@@ -905,6 +916,8 @@
 			files = (
 				8620520E1B3EB6790066333D /* ViewController.m in Sources */,
 				8620520B1B3EB6790066333D /* main.m in Sources */,
+				86C6DF1F1B3EBD160048F53D /* TestAnnotation.m in Sources */,
+				86C6DF1C1B3EBCD10048F53D /* MyAnnotation.m in Sources */,
 				862052091B3EB6790066333D /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -963,6 +976,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		86087E541B3ECA2B00D24197 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 862051B41B3E064C0066333D /* kingpin-OSX */;
+			targetProxy = 86087E531B3ECA2B00D24197 /* PBXContainerItemProxy */;
+		};
+		86087E571B3ECECA00D24197 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 86A192571B3490410019882D /* kingpin-iOS */;
+			targetProxy = 86087E561B3ECECA00D24197 /* PBXContainerItemProxy */;
+		};
+		86087E591B3ECECF00D24197 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 86A192571B3490410019882D /* kingpin-iOS */;
+			targetProxy = 86087E581B3ECECF00D24197 /* PBXContainerItemProxy */;
+		};
+		86087E5B1B3ECED300D24197 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 862051B41B3E064C0066333D /* kingpin-OSX */;
+			targetProxy = 86087E5A1B3ECED300D24197 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8620519B1B3E05520066333D /* Main.storyboard */ = {
@@ -1051,7 +1087,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/OSX,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1108,7 +1143,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/OSX,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1146,7 +1180,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1177,7 +1212,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = kingpin;
+				PRODUCT_NAME = kingpinOSX;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1202,7 +1237,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1227,7 +1263,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = kingpin;
+				PRODUCT_NAME = kingpinOSX;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1253,14 +1289,15 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_ENTITLEMENTS = "Example-OSX/Example-OSX.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"../Distribution/OSX",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1282,6 +1319,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1304,7 +1342,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_ENTITLEMENTS = "Example-OSX/Example-OSX.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1312,7 +1352,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"../Distribution/OSX",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1327,6 +1366,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -1361,7 +1401,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/../Distribution/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1423,7 +1462,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/../Distribution/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1472,7 +1510,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../Distribution/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1525,7 +1562,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../Distribution/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1668,7 +1704,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"$(PROJECT_DIR)/../Distribution/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1722,7 +1757,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"$(PROJECT_DIR)/../Distribution/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1783,6 +1817,7 @@
 				862052211B3EB6790066333D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		86A1926F1B3490420019882D /* Build configuration list for PBXNativeTarget "kingpin-iOS" */ = {
 			isa = XCConfigurationList;

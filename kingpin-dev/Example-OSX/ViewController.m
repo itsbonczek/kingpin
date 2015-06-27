@@ -7,12 +7,14 @@
 //
 
 #import "ViewController.h"
+#import <kingpinOSX/kingpinOSX.h>
 
-#import <kingpin/kingpin.h>
+#import "TestAnnotation.h"
+#import "MyAnnotation.h"
 
 static const int kNumberOfTestAnnotations = 100000;
 
-@interface ViewController () <KPClusteringControllerDelegate, KPClusteringControllerDelegate>
+@interface ViewController () <MKMapViewDelegate, KPClusteringControllerDelegate, KPClusteringControllerDelegate>
 
 @property (strong, nonatomic) KPClusteringController *clusteringController;
 
@@ -34,8 +36,6 @@ static const int kNumberOfTestAnnotations = 100000;
                                                             clusteringAlgorithm:algorithm];
     self.clusteringController.delegate = self;
 
-    self.clusteringController.animationOptions = UIViewAnimationOptionCurveEaseOut;
-
     [self.clusteringController setAnnotations:[self annotations]];
 
     self.mapView.showsUserLocation = YES;
@@ -54,7 +54,6 @@ static const int kNumberOfTestAnnotations = 100000;
 }
 
 - (void)viewDidUnload {
-    [super viewDidUnload];
     self.mapView = nil;
 }
 
@@ -103,7 +102,7 @@ static const int kNumberOfTestAnnotations = 100000;
 #pragma mark - <MKMapViewDelegate>
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [self.clusteringController refresh:self.animationSwitch.on];
+    [self.clusteringController refresh:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
@@ -181,14 +180,14 @@ static const int kNumberOfTestAnnotations = 100000;
     NSLog(@"Clustering controller %@ did update visible annotations", clusteringController);
 }
 
-- (void)clusteringController:(KPClusteringController *)clusteringController performAnimations:(void (^)())animations withCompletionHandler:(void (^)(BOOL))completion {
-    [UIView animateWithDuration:0.5
-                          delay:0
-         usingSpringWithDamping:0.8
-          initialSpringVelocity:0.6
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:animations
-                     completion:completion];
-}
+//- (void)clusteringController:(KPClusteringController *)clusteringController performAnimations:(void (^)())animations withCompletionHandler:(void (^)(BOOL))completion {
+//    [UIView animateWithDuration:0.5
+//                          delay:0
+//         usingSpringWithDamping:0.8
+//          initialSpringVelocity:0.6
+//                        options:UIViewAnimationOptionBeginFromCurrentState
+//                     animations:animations
+//                     completion:completion];
+//}
 
 @end

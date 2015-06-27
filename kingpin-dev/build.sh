@@ -3,13 +3,17 @@
 reveal_archive_in_finder=true
 
 project="kingpin.xcodeproj"
-framework_name="kingpin"
-framework="${framework_name}.framework"
+
+ios_framework_name="kingpin"
+ios_framework="${ios_framework_name}.framework"
+
+osx_framework_name="kingpinOSX"
+osx_framework="${osx_framework_name}.framework"
 
 unit_tests_scheme="kingpin-Unit-Tests-iOS"
-ios_scheme="${framework_name}-iOS"
-ios_example_scheme=Example-iOS
-osx_scheme="${framework_name}-OSX"
+ios_scheme="kingpin-iOS"
+ios_example_scheme="Example-iOS"
+osx_scheme="kingpin-OSX"
 osx_example_scheme="Example-OSX"
 osx_swift_example_scheme="Example-OSX-Swift"
 
@@ -18,14 +22,17 @@ build_dir=${BUILD_DIR:-Build}
 configuration=${CONFIGURATION:-Release}
 
 ios_simulator_path="${build_dir}/${ios_scheme}/${configuration}-iphonesimulator"
-ios_simulator_binary="${ios_simulator_path}/${framework}/${framework_name}"
+ios_simulator_binary="${ios_simulator_path}/${ios_framework}/${ios_framework_name}"
 
 ios_device_path="${build_dir}/${ios_scheme}/${configuration}-iphoneos"
-ios_device_binary="${ios_device_path}/${framework}/${framework_name}"
+ios_device_binary="${ios_device_path}/${ios_framework}/${ios_framework_name}"
 
 ios_universal_path="${build_dir}/${ios_scheme}/${configuration}-iphoneuniversal"
-ios_universal_framework="${ios_universal_path}/${framework}"
-ios_universal_binary="${ios_universal_path}/${framework}/${framework_name}"
+ios_universal_framework="${ios_universal_path}/${ios_framework}"
+ios_universal_binary="${ios_universal_path}/${ios_framework}/${ios_framework_name}"
+
+osx_path="${build_dir}/${osx_scheme}/${configuration}-macosx"
+osx_framework="${osx_path}/${osx_framework}"
 
 ios_example_device_path="${build_dir}/${ios_example_scheme}/${configuration}-iphoneos"
 ios_example_device_binary="${ios_example_device_path}/${ios_example_scheme}.app"
@@ -35,9 +42,6 @@ ios_example_simulator_binary="${ios_example_simulator_path}/${ios_example_scheme
 
 osx_swift_example_path="${build_dir}/${osx_swift_example_scheme}/${configuration}-macosx"
 osx_swift_example_binary="${osx_swift_example_path}/${osx_swift_example_scheme}.app"
-
-osx_path="${build_dir}/${osx_scheme}/${configuration}-macosx"
-osx_framework="${osx_path}/${framework}"
 
 distribution_path="${project_dir}/../Distribution"
 distribution_path_ios="${distribution_path}/iOS"

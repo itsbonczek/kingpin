@@ -34,6 +34,20 @@
                ReferencedContainer = "container:kingpin.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "862051B41B3E064C0066333D"
+               BuildableName = "kingpinOSX.framework"
+               BlueprintName = "kingpin-OSX"
+               ReferencedContainer = "container:kingpin.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
