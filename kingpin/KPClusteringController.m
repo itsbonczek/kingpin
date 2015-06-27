@@ -349,7 +349,7 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 #else
         // TODO
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-            context.duration = self.animationDuration;
+            context.duration = 4;
 
 
             animations();
