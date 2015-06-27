@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		86087E4F1B3EC06B00D24197 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051DF1B3E0B6C0066333D /* MapKit.framework */; };
+		86087EA61B3EE9C100D24197 /* KPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CD61B3DCC8800ACB563 /* KPAnnotation.m */; };
+		86087EA71B3EE9C100D24197 /* KPAnnotationTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CD81B3DCC8800ACB563 /* KPAnnotationTree.m */; };
+		86087EA81B3EE9C100D24197 /* KPClusteringController.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CDC1B3DCC8800ACB563 /* KPClusteringController.m */; };
+		86087EA91B3EE9C100D24197 /* KPGridClusteringAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CDF1B3DCC8800ACB563 /* KPGridClusteringAlgorithm.m */; };
+		86087EAA1B3EE9C100D24197 /* NSArray+KP.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E8CE31B3DCC8800ACB563 /* NSArray+KP.m */; };
 		861C02A41B3DD5D600CD06E9 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 861C029E1B3DD5A500CD06E9 /* OCMockitoIOS.framework */; };
 		861C02A51B3DD5D800CD06E9 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 861C029F1B3DD5A500CD06E9 /* OCHamcrestIOS.framework */; };
 		861C02AB1B3DD67A00CD06E9 /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 861C02AA1B3DD67A00CD06E9 /* TestAnnotation.m */; };
@@ -106,13 +111,6 @@
 			remoteGlobalIDString = 862051B41B3E064C0066333D;
 			remoteInfo = "kingpin-OSX";
 		};
-		86087E561B3ECECA00D24197 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 86A192571B3490410019882D;
-			remoteInfo = "kingpin-iOS";
-		};
 		86087E581B3ECECF00D24197 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
@@ -131,16 +129,6 @@
 
 /* Begin PBXCopyFilesBuildPhase section */
 		86087E551B3ECA2B00D24197 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		861C02B41B3DDC3C00CD06E9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -744,12 +732,10 @@
 				93BBC0471645A2B2004BC920 /* Sources */,
 				93BBC0481645A2B2004BC920 /* Frameworks */,
 				93BBC0491645A2B2004BC920 /* Resources */,
-				861C02B41B3DDC3C00CD06E9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				86087E571B3ECECA00D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-iOS";
 			productName = CATreeTestApplication;
@@ -788,6 +774,7 @@
 					};
 					86A192571B3490410019882D = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 399ZF6384C;
 					};
 					86E1858B1AB7530F00C2C9CD = {
 						CreatedOnToolsVersion = 6.2;
@@ -967,7 +954,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86087EA91B3EE9C100D24197 /* KPGridClusteringAlgorithm.m in Sources */,
+				86087EAA1B3EE9C100D24197 /* NSArray+KP.m in Sources */,
+				86087EA71B3EE9C100D24197 /* KPAnnotationTree.m in Sources */,
 				862E8D1C1B3DCEED00ACB563 /* MyAnnotation.m in Sources */,
+				86087EA81B3EE9C100D24197 /* KPClusteringController.m in Sources */,
+				86087EA61B3EE9C100D24197 /* KPAnnotation.m in Sources */,
 				862E8D141B3DCEED00ACB563 /* AppDelegate.m in Sources */,
 				862E8D1E1B3DCEED00ACB563 /* ViewController.m in Sources */,
 				862E8D1B1B3DCEED00ACB563 /* main.m in Sources */,
@@ -982,11 +974,6 @@
 			isa = PBXTargetDependency;
 			target = 862051B41B3E064C0066333D /* kingpin-OSX */;
 			targetProxy = 86087E531B3ECA2B00D24197 /* PBXContainerItemProxy */;
-		};
-		86087E571B3ECECA00D24197 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 86A192571B3490410019882D /* kingpin-iOS */;
-			targetProxy = 86087E561B3ECECA00D24197 /* PBXContainerItemProxy */;
 		};
 		86087E591B3ECECF00D24197 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1085,9 +1072,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1141,9 +1126,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1296,9 +1279,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1350,9 +1331,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1508,9 +1487,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1560,9 +1537,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1722,7 +1697,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Example-iOS/Example-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "Example-iOS";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
