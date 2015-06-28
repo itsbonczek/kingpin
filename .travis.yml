@@ -1,5 +1,4 @@
 language: objective-c
 before_install:
-- cd kingpin-dev
 script: ./build.sh run_unit_tests
 
