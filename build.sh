@@ -54,9 +54,10 @@ command:
   run_unit_tests              run unit tests
   build_ios                   build iOS frameworks for device and simulator and create universal iOS framework
   build_osx                   build OSX framework
-  export_frameworks           export built frameworks to distribution folder (needs build_ios, build_osx)
-  validate_ios                validate universal iOS framework against Example-iOS app (needs build_ios, export_frameworks)
-  validate_osx                validate OSX frameworks against Example-OSX-Swift application (needs build_osx, export_frameworks)
+  export_ios                  export built iOS framework to distribution folder (needs build_ios)
+  export_osx                  export built OSX framework to distribution folder (needs build_osx)
+  validate_ios                validate universal iOS framework against Example-iOS app (needs build_ios, export_ios)
+  validate_osx                validate OSX frameworks against Example-OSX-Swift application (needs build_osx, export_osx)
   distribute                  run tests, build iOS frameworks, validate iOS frameworks
 EOF
 }
