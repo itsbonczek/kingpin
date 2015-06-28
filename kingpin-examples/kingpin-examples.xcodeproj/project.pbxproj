@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		86087E4F1B3EC06B00D24197 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862051DF1B3E0B6C0066333D /* MapKit.framework */; };
-		86087ED61B40A8BE00D24197 /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ECE1B40A81900D24197 /* kingpin.framework */; };
-		86087ED71B40A8BE00D24197 /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ECE1B40A81900D24197 /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		86087ED91B40A92F00D24197 /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ECE1B40A81900D24197 /* kingpin.framework */; };
-		86087EDA1B40A92F00D24197 /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ECE1B40A81900D24197 /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		86087EDB1B40AB9100D24197 /* kingpinOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ED01B40A81900D24197 /* kingpinOSX.framework */; };
-		86087EDC1B40AB9100D24197 /* kingpinOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ED01B40A81900D24197 /* kingpinOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		86087EDD1B40AB9600D24197 /* kingpinOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ED01B40A81900D24197 /* kingpinOSX.framework */; };
-		86087EDE1B40AB9600D24197 /* kingpinOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087ED01B40A81900D24197 /* kingpinOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		86087EF31B40BE6300D24197 /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF01B40BE4300D24197 /* kingpin.framework */; };
+		86087EF41B40BE6300D24197 /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF01B40BE4300D24197 /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		86087EF51B40BE6C00D24197 /* kingpin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF01B40BE4300D24197 /* kingpin.framework */; };
+		86087EF61B40BE6C00D24197 /* kingpin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF01B40BE4300D24197 /* kingpin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		86087EF71B40BE7400D24197 /* kingpinOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF21B40BE4300D24197 /* kingpinOSX.framework */; };
+		86087EF81B40BE7400D24197 /* kingpinOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF21B40BE4300D24197 /* kingpinOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		86087EF91B40BE7800D24197 /* kingpinOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF21B40BE4300D24197 /* kingpinOSX.framework */; };
+		86087EFA1B40BE7800D24197 /* kingpinOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86087EF21B40BE4300D24197 /* kingpinOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		862051961B3E05520066333D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862051951B3E05520066333D /* AppDelegate.swift */; };
 		862051981B3E05520066333D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862051971B3E05520066333D /* ViewController.swift */; };
 		8620519A1B3E05520066333D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 862051991B3E05520066333D /* Images.xcassets */; };
@@ -59,7 +59,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				86087EDC1B40AB9100D24197 /* kingpinOSX.framework in Embed Frameworks */,
+				86087EF81B40BE7400D24197 /* kingpinOSX.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,7 +70,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				86087ED71B40A8BE00D24197 /* kingpin.framework in Embed Frameworks */,
+				86087EF41B40BE6300D24197 /* kingpin.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,7 +81,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				86087EDA1B40A92F00D24197 /* kingpin.framework in Embed Frameworks */,
+				86087EF61B40BE6C00D24197 /* kingpin.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,7 +92,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				86087EDE1B40AB9600D24197 /* kingpinOSX.framework in Embed Frameworks */,
+				86087EFA1B40BE7800D24197 /* kingpinOSX.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,8 +101,8 @@
 
 /* Begin PBXFileReference section */
 		86087E501B3EC06B00D24197 /* Example-OSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Example-OSX.entitlements"; sourceTree = "<group>"; };
-		86087ECE1B40A81900D24197 /* kingpin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpin.framework; sourceTree = "<group>"; };
-		86087ED01B40A81900D24197 /* kingpinOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpinOSX.framework; sourceTree = "<group>"; };
+		86087EF01B40BE4300D24197 /* kingpin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpin.framework; sourceTree = "<group>"; };
+		86087EF21B40BE4300D24197 /* kingpinOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kingpinOSX.framework; sourceTree = "<group>"; };
 		862051911B3E05520066333D /* Example-OSX-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-OSX-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		862051941B3E05520066333D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		862051951B3E05520066333D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86087EDD1B40AB9600D24197 /* kingpinOSX.framework in Frameworks */,
+				86087EF91B40BE7800D24197 /* kingpinOSX.framework in Frameworks */,
 				862051E01B3E0B6C0066333D /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,7 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86087EDB1B40AB9100D24197 /* kingpinOSX.framework in Frameworks */,
+				86087EF71B40BE7400D24197 /* kingpinOSX.framework in Frameworks */,
 				86087E4F1B3EC06B00D24197 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,7 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86087ED91B40A92F00D24197 /* kingpin.framework in Frameworks */,
+				86087EF51B40BE6C00D24197 /* kingpin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +198,7 @@
 				93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */,
 				93BBC0821645A39F004BC920 /* MapKit.framework in Frameworks */,
 				93BBC0501645A2B2004BC920 /* UIKit.framework in Frameworks */,
-				86087ED61B40A8BE00D24197 /* kingpin.framework in Frameworks */,
+				86087EF31B40BE6300D24197 /* kingpin.framework in Frameworks */,
 				93BBC0521645A2B2004BC920 /* Foundation.framework in Frameworks */,
 				93BBC0541645A2B2004BC920 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -207,28 +207,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		86087ECC1B40A81900D24197 /* Distribution */ = {
+		86087EEE1B40BE4300D24197 /* kingpin-frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				86087ECD1B40A81900D24197 /* iOS */,
-				86087ECF1B40A81900D24197 /* OSX */,
+				86087EEF1B40BE4300D24197 /* iOS */,
+				86087EF11B40BE4300D24197 /* OSX */,
 			);
-			name = Distribution;
-			path = ../Distribution;
+			name = "kingpin-frameworks";
+			path = "../kingpin-frameworks";
 			sourceTree = "<group>";
 		};
-		86087ECD1B40A81900D24197 /* iOS */ = {
+		86087EEF1B40BE4300D24197 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				86087ECE1B40A81900D24197 /* kingpin.framework */,
+				86087EF01B40BE4300D24197 /* kingpin.framework */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		86087ECF1B40A81900D24197 /* OSX */ = {
+		86087EF11B40BE4300D24197 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
-				86087ED01B40A81900D24197 /* kingpinOSX.framework */,
+				86087EF21B40BE4300D24197 /* kingpinOSX.framework */,
 			);
 			path = OSX;
 			sourceTree = "<group>";
@@ -325,7 +325,7 @@
 		93BBC02D1645A119004BC920 = {
 			isa = PBXGroup;
 			children = (
-				86087ECC1B40A81900D24197 /* Distribution */,
+				86087EEE1B40BE4300D24197 /* kingpin-frameworks */,
 				862E8D011B3DCEED00ACB563 /* Example-iOS */,
 				862E8D1F1B3DCEF900ACB563 /* Example-iOS-Swift */,
 				862051921B3E05520066333D /* Example-OSX-Swift */,
@@ -663,7 +663,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/OSX,
+					../kingpin-frameworks/OSX,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -720,7 +720,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/OSX,
+					../kingpin-frameworks/OSX,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -768,7 +768,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/OSX,
+					../kingpin-frameworks/OSX,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -823,7 +823,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/OSX,
+					../kingpin-frameworks/OSX,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -868,7 +868,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/iOS,
+					../kingpin-frameworks/iOS,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -923,7 +923,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					../Distribution/iOS,
+					../kingpin-frameworks/iOS,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -975,7 +975,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					../Distribution/iOS,
+					../kingpin-frameworks/iOS,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1029,7 +1029,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					../Distribution/iOS,
+					../kingpin-frameworks/iOS,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
