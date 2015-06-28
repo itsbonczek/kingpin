@@ -2,7 +2,7 @@
 
 reveal_archive_in_finder=true
 
-project="kingpin.xcodeproj"
+project="kingpin-dev.xcodeproj"
 project_dir="$(pwd)/kingpin-dev"
 build_dir="$project_dir/Build"
 configuration="Release"
@@ -16,9 +16,6 @@ osx_framework="${osx_framework_name}.framework"
 ios_scheme="kingpin-iOS"
 osx_scheme="kingpin-OSX"
 unit_tests_scheme="kingpin-Unit-Tests-iOS"
-ios_example_scheme="Example-iOS"
-osx_example_scheme="Example-OSX"
-osx_swift_example_scheme="Example-OSX-Swift"
 
 ios_simulator_path="${build_dir}/${ios_scheme}/${configuration}-iphonesimulator"
 ios_simulator_binary="${ios_simulator_path}/${ios_framework}/${ios_framework_name}"
@@ -33,6 +30,20 @@ ios_universal_binary="${ios_universal_path}/${ios_framework}/${ios_framework_nam
 osx_path="${build_dir}/${osx_scheme}/${configuration}-macosx"
 osx_framework="${osx_path}/${osx_framework}"
 
+distribution_path="$(pwd)/Distribution"
+distribution_path_ios="${distribution_path}/iOS"
+distribution_path_osx="${distribution_path}/OSX"
+
+# Examples
+
+examples_project="kingpin-examples.xcodeproj"
+examples_dir="$(pwd)/kingpin-examples"
+build_dir="$examples_dir/Build"
+
+ios_example_scheme="Example-iOS"
+osx_example_scheme="Example-OSX"
+osx_swift_example_scheme="Example-OSX-Swift"
+
 ios_example_device_path="${build_dir}/${ios_example_scheme}/${configuration}-iphoneos"
 ios_example_device_binary="${ios_example_device_path}/${ios_example_scheme}.app"
 
@@ -41,10 +52,6 @@ ios_example_simulator_binary="${ios_example_simulator_path}/${ios_example_scheme
 
 osx_swift_example_path="${build_dir}/${osx_swift_example_scheme}/${configuration}-macosx"
 osx_swift_example_binary="${osx_swift_example_path}/${osx_swift_example_scheme}.app"
-
-distribution_path="$(pwd)/Distribution"
-distribution_path_ios="${distribution_path}/iOS"
-distribution_path_osx="${distribution_path}/OSX"
 
 usage() {
 cat <<EOF
@@ -166,8 +173,8 @@ export_osx() {
 validate_ios() {
     # Build Example iOS app against simulator
     run "
-cd $project_dir &&
-xcodebuild -project ${project}
+cd $examples_dir &&
+xcodebuild -project ${examples_project}
            -target ${ios_example_scheme}
            -sdk iphonesimulator
            -configuration ${configuration}
@@ -176,8 +183,8 @@ xcodebuild -project ${project}
 
     # Build Example iOS app against device
     run "
-cd $project_dir &&
-xcodebuild -project ${project}
+cd $examples_dir &&
+xcodebuild -project ${examples_project}
 	       -target ${ios_example_scheme}
 	       -sdk iphoneos
 	       -configuration ${configuration}
@@ -195,8 +202,8 @@ xcodebuild -project ${project}
 validate_osx() {
     # Build Example OSX Swift app
     run "
-cd $project_dir &&
-xcodebuild -project ${project}
+cd $examples_dir &&
+xcodebuild -project ${examples_project}
            -target ${osx_swift_example_scheme}
            -sdk macosx
            -configuration ${configuration}
@@ -215,15 +222,15 @@ open_distribution_folder() {
 
 
 distribute() {
-	clean
-	run_unit_tests
-	build_ios
-	build_osx
-	export_ios
-	export_osx
-	validate_ios
-	validate_osx
-	open_distribution_folder
+    clean
+    run_unit_tests
+    build_ios
+    build_osx
+    export_ios
+    export_osx
+    validate_ios
+    validate_osx
+    open_distribution_folder
 }
 
 
