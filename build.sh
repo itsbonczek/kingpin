@@ -3,6 +3,9 @@
 reveal_archive_in_finder=true
 
 project="kingpin.xcodeproj"
+project_dir="$(pwd)/kingpin-dev"
+build_dir="$project_dir/Build"
+configuration="Release"
 
 ios_framework_name="kingpin"
 ios_framework="${ios_framework_name}.framework"
@@ -10,16 +13,12 @@ ios_framework="${ios_framework_name}.framework"
 osx_framework_name="kingpinOSX"
 osx_framework="${osx_framework_name}.framework"
 
-unit_tests_scheme="kingpin-Unit-Tests-iOS"
 ios_scheme="kingpin-iOS"
-ios_example_scheme="Example-iOS"
 osx_scheme="kingpin-OSX"
+unit_tests_scheme="kingpin-Unit-Tests-iOS"
+ios_example_scheme="Example-iOS"
 osx_example_scheme="Example-OSX"
 osx_swift_example_scheme="Example-OSX-Swift"
-
-project_dir=${PROJECT_DIR:-$(pwd)}
-build_dir=${BUILD_DIR:-Build}
-configuration=${CONFIGURATION:-Release}
 
 ios_simulator_path="${build_dir}/${ios_scheme}/${configuration}-iphonesimulator"
 ios_simulator_binary="${ios_simulator_path}/${ios_framework}/${ios_framework_name}"
@@ -43,7 +42,7 @@ ios_example_simulator_binary="${ios_example_simulator_path}/${ios_example_scheme
 osx_swift_example_path="${build_dir}/${osx_swift_example_scheme}/${configuration}-macosx"
 osx_swift_example_binary="${osx_swift_example_path}/${osx_swift_example_scheme}.app"
 
-distribution_path="${project_dir}/../Distribution"
+distribution_path="$(pwd)/Distribution"
 distribution_path_ios="${distribution_path}/iOS"
 distribution_path_osx="${distribution_path}/OSX"
 
@@ -64,7 +63,7 @@ EOF
 
 
 run() {
-    echo "Running command: $@"
+    echo "Running command:$@"
     eval $@ || {
 		echo "Command failed: \"$@\""
         exit 1
@@ -79,7 +78,6 @@ Scheme iOS:               $ios_scheme
 Project dir:              $project_dir
 Build dir:                $build_dir
 Configuration:            $configuration
-Framework                 $framework
 
 iOS Simulator build path: $ios_simulator_path
 iOS Device build path:    $ios_device_path
@@ -101,27 +99,33 @@ clean() {
 
 
 run_unit_tests() {
-	run xcodebuild -project ${project} \
-                   -scheme ${unit_tests_scheme} \
-                   -sdk iphonesimulator \
-                   clean test
+    run "
+cd $project_dir; 
+xcodebuild -project ${project_dir}/${project}
+           -scheme ${unit_tests_scheme}
+           -sdk iphonesimulator
+           clean test"
 }
 
 
 build_ios() {
-    run xcodebuild -project ${project} \
-                   -scheme ${ios_scheme} \
-                   -sdk iphonesimulator \
-                   -configuration ${configuration} \
-                   CONFIGURATION_BUILD_DIR=${ios_simulator_path} \
-                   clean build 
+    run "
+cd $project_dir;
+xcodebuild -project ${project}
+           -scheme ${ios_scheme}
+           -sdk iphonesimulator
+           -configuration ${configuration}
+           CONFIGURATION_BUILD_DIR=${ios_simulator_path}
+           clean build"
 
-    run xcodebuild -project ${project} \
-                   -scheme ${ios_scheme} \
-                   -sdk iphoneos \
-                   -configuration ${configuration} \
-                   CONFIGURATION_BUILD_DIR=${ios_device_path} \
-                   clean build
+    run "
+cd $project_dir &&	
+xcodebuild -project ${project}
+           -scheme ${ios_scheme}
+           -sdk iphoneos
+           -configuration ${configuration}
+           CONFIGURATION_BUILD_DIR=${ios_device_path}
+           clean build"
 
     rm -rf "${ios_universal_path}"
     mkdir "${ios_universal_path}"
@@ -135,12 +139,14 @@ build_ios() {
 
 
 build_osx() {
-    run xcodebuild -project ${project} \
-                   -scheme ${osx_scheme} \
-                   -sdk macosx \
-                   -configuration ${configuration} \
-                   CONFIGURATION_BUILD_DIR=${osx_path} \
-                   clean build
+    run "
+cd $project_dir &&
+xcodebuild -project ${project}
+           -scheme ${osx_scheme}
+           -sdk macosx
+           -configuration ${configuration}
+           CONFIGURATION_BUILD_DIR=${osx_path}
+           clean build"
 }
 
 
@@ -157,22 +163,25 @@ export_osx() {
 
 
 validate_ios() {
-
     # Build Example iOS app against simulator
-    run xcodebuild -project ${project} \
-                   -target ${ios_example_scheme} \
-                   -sdk iphonesimulator \
-                   -configuration ${configuration} \
-                   CONFIGURATION_BUILD_DIR=${ios_example_simulator_path} \
-                   clean build
+    run "
+cd $project_dir &&
+xcodebuild -project ${project}
+           -target ${ios_example_scheme}
+           -sdk iphonesimulator
+           -configuration ${configuration}
+           CONFIGURATION_BUILD_DIR=${ios_example_simulator_path}
+           clean build"
 
     # Build Example iOS app against device
-    run xcodebuild -project ${project} \
-                   -target ${ios_example_scheme} \
-                   -sdk iphoneos \
-                   -configuration ${configuration} \
-                   CONFIGURATION_BUILD_DIR=${ios_example_device_path} \
-                   clean build
+    run "
+cd $project_dir &&
+xcodebuild -project ${project}
+	       -target ${ios_example_scheme}
+	       -sdk iphoneos
+	       -configuration ${configuration}
+	       CONFIGURATION_BUILD_DIR=${ios_example_device_path}
+	       clean build"
 
     run codesign -vvvv --verify --deep ${ios_example_device_binary}
 
@@ -184,14 +193,16 @@ validate_ios() {
 
 validate_osx() {
     # Build Example OSX Swift app
-    run xcodebuild -project ${project} \
-                   -target ${osx_swift_example_scheme} \
-                   -sdk macosx \
-                   -configuration ${configuration} \
-                   CONFIGURATION_BUILD_DIR=${osx_swift_example_path} \
-                   clean build
+    run "
+cd $project_dir &&
+xcodebuild -project ${project}
+           -target ${osx_swift_example_scheme}
+           -sdk macosx
+           -configuration ${configuration}
+           CONFIGURATION_BUILD_DIR=${osx_swift_example_path}
+           clean build"
 
-    run codesign -vvvv --verify --deep ${osx_swift_example_binary}
+	run codesign -vvvv --verify --deep ${osx_swift_example_binary}
 }
 
 
@@ -227,7 +238,3 @@ if type -t $@ | grep "function" &> /dev/null; then
 else
     echo "Command '$@' not found"	
 fi
-	
-	
-
-
