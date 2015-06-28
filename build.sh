@@ -38,19 +38,20 @@ distribution_path_osx="${distribution_path}/OSX"
 
 examples_project="kingpin-examples.xcodeproj"
 examples_dir="$(pwd)/kingpin-examples"
-build_dir="$examples_dir/Build"
+examples_build_dir="$examples_dir/Build"
 
 ios_example_scheme="Example-iOS"
+ios_swift_example_scheme="Example-iOS-Swift"
 osx_example_scheme="Example-OSX"
 osx_swift_example_scheme="Example-OSX-Swift"
 
-ios_example_device_path="${build_dir}/${ios_example_scheme}/${configuration}-iphoneos"
+ios_example_device_path="${examples_build_dir}/${ios_example_scheme}/${configuration}-iphoneos"
 ios_example_device_binary="${ios_example_device_path}/${ios_example_scheme}.app"
 
-ios_example_simulator_path="${build_dir}/${ios_example_scheme}/${configuration}-iphonesimulator"
+ios_example_simulator_path="${examples_build_dir}/${ios_example_scheme}/${configuration}-iphonesimulator"
 ios_example_simulator_binary="${ios_example_simulator_path}/${ios_example_scheme}.app"
 
-osx_swift_example_path="${build_dir}/${osx_swift_example_scheme}/${configuration}-macosx"
+osx_swift_example_path="${examples_build_dir}/${osx_swift_example_scheme}/${configuration}-macosx"
 osx_swift_example_binary="${osx_swift_example_path}/${osx_swift_example_scheme}.app"
 
 usage() {
@@ -82,27 +83,36 @@ run() {
 print_configuration() {
     cat <<EOF
 Project:                  $project
-Scheme iOS:               $ios_scheme
 Project dir:              $project_dir
 Build dir:                $build_dir
 Configuration:            $configuration
+Scheme iOS:               $ios_scheme
+Scheme OSX:               $osx_scheme
 
 iOS Simulator build path: $ios_simulator_path
 iOS Device build path:    $ios_device_path
 iOS Universal build path: $ios_universal_path
 iOS Universal framework:  $ios_universal_framework
+OSX Build path            $osx_path
+OSX Framework             $osx_framework
 
 Distribution path:        $distribution_path"
 Distribution path (iOS):  $distribution_path_ios"
+Distribution path (OSX):  $distribution_path_osx"
+
+Examples project          $examples_project
+Examples project dir:     $examples_dir
+Examples build dir:       $examples_build_dir
 EOF
 }
 
 
 clean() {
+    rm -rf "$distribution_path"
     rm -rf "${build_dir}"
     mkdir -p "${build_dir}"
-
-    rm -rf "$distribution_path"
+    rm -rf "${examples_build_dir}"
+    mkdir -p "${examples_build_dir}"
 }
 
 
@@ -171,6 +181,8 @@ export_osx() {
 
 
 validate_ios() {
+    rm -rf $examples_build_dir
+
     # Build Example iOS app against simulator
     run "
 cd $examples_dir &&
@@ -185,11 +197,11 @@ xcodebuild -project ${examples_project}
     run "
 cd $examples_dir &&
 xcodebuild -project ${examples_project}
-	       -target ${ios_example_scheme}
-	       -sdk iphoneos
-	       -configuration ${configuration}
-	       CONFIGURATION_BUILD_DIR=${ios_example_device_path}
-	       clean build"
+           -scheme ${ios_example_scheme}
+           -sdk iphoneos
+           -configuration ${configuration}
+           CONFIGURATION_BUILD_DIR=${ios_example_device_path}
+           clean build"
 
     run codesign -vvvv --verify --deep ${ios_example_device_binary}
 
@@ -200,6 +212,8 @@ xcodebuild -project ${examples_project}
 
 
 validate_osx() {
+    rm -rf $examples_build_dir
+
     # Build Example OSX Swift app
     run "
 cd $examples_dir &&
