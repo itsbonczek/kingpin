@@ -218,11 +218,11 @@ validate_osx() {
     run "
 cd $examples_dir &&
 xcodebuild -project ${examples_project}
-           -scheme ${osx_swift_example_scheme}
+           -target ${osx_swift_example_scheme}
            -sdk macosx
            -configuration ${configuration}
            CONFIGURATION_BUILD_DIR=${osx_swift_example_path}
-           clean archive"
+           clean build"
 
 	run codesign -vvvv --verify --deep ${osx_swift_example_binary}
 }
