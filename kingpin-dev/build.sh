@@ -92,9 +92,11 @@ EOF
 }
 
 
-clean_build_folder() {
+clean() {
     rm -rf "${build_dir}"
     mkdir -p "${build_dir}"
+
+    rm -rf "$distribution_path"
 }
 
 
@@ -142,12 +144,14 @@ build_osx() {
 }
 
 
-export_frameworks() {
-    rm -rf "$distribution_path"
+export_ios() {
     mkdir -p "$distribution_path_ios"
-    mkdir -p "$distribution_path_osx"
-
     cp -av "${ios_universal_framework}" "${distribution_path_ios}"
+}
+
+
+export_osx() {
+    mkdir -p "$distribution_path_osx"
     cp -av "${osx_framework}" "${distribution_path_osx}"
 }
 
@@ -199,11 +203,12 @@ open_distribution_folder() {
 
 
 distribute() {
-	clean_build_folder
+	clean
 	run_unit_tests
 	build_ios
 	build_osx
-	export_frameworks
+	export_ios
+	export_osx
 	validate_ios
 	validate_osx
 	open_distribution_folder
