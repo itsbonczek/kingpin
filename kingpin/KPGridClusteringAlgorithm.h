@@ -17,9 +17,6 @@
 #import <Foundation/Foundation.h>
 #import "KPClusteringAlgorithm.h"
 
-@class KPAnnotation,
-       KPAnnotationTree;
-
 typedef NS_ENUM(NSInteger, KPGridClusteringAlgorithmStrategy) {
     KPGridClusteringAlgorithmStrategyBasic = 0,
     KPGridClusteringAlgorithmStrategyTwoPhase,
