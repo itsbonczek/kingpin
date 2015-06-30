@@ -104,6 +104,8 @@
 		86A1925D1B3490410019882D /* kingpin.h in Headers */ = {isa = PBXBuildFile; fileRef = 86A1925C1B3490410019882D /* kingpin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		86C6DF1C1B3EBCD10048F53D /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DF1B1B3EBCD10048F53D /* MyAnnotation.m */; };
 		86C6DF1F1B3EBD160048F53D /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DF1E1B3EBD160048F53D /* TestAnnotation.m */; };
+		86F45E1A1B43381300698445 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 86F45E191B43381300698445 /* LICENSE */; };
+		86F45E1C1B43382100698445 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 86F45E1B1B43382100698445 /* LICENSE */; };
 		9122C06418E77A9E00356A3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06318E77A9E00356A3D /* CoreGraphics.framework */; };
 		9122C06618E77AAA00356A3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9122C06518E77AAA00356A3D /* CoreLocation.framework */; };
 		9122C06718E77AB800356A3D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E9B69518E7509300EFE22C /* MapKit.framework */; };
@@ -261,6 +263,8 @@
 		86C6DF1D1B3EBD160048F53D /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
 		86C6DF1E1B3EBD160048F53D /* TestAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAnnotation.m; sourceTree = "<group>"; };
 		86E1858C1AB7530F00C2C9CD /* Example-iOS-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-iOS-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		86F45E191B43381300698445 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		86F45E1B1B43382100698445 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9122C06318E77A9E00356A3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		9122C06518E77AAA00356A3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		9189259918E7732900812296 /* kingpin-Unit-Tests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "kingpin-Unit-Tests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -371,6 +375,7 @@
 		862051B61B3E064D0066333D /* kingpin-OSX */ = {
 			isa = PBXGroup;
 			children = (
+				86F45E1B1B43382100698445 /* LICENSE */,
 				862051B91B3E064D0066333D /* kingpinOSX.h */,
 				862051B71B3E064D0066333D /* Supporting Files */,
 			);
@@ -505,6 +510,7 @@
 		86A192591B3490410019882D /* kingpin-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				86F45E191B43381300698445 /* LICENSE */,
 				86A1925C1B3490410019882D /* kingpin.h */,
 				86A1925A1B3490410019882D /* Supporting Files */,
 			);
@@ -837,6 +843,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86F45E1C1B43382100698445 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,6 +860,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86F45E1A1B43381300698445 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
