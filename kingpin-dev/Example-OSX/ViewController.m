@@ -124,12 +124,12 @@ static const int kNumberOfTestAnnotations = 100000;
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     MKPinAnnotationView *annotationView = nil;
 
+    if ([annotation isKindOfClass:[MKUserLocation class]]){
+        return nil;
+    }
+
     if ([annotation isKindOfClass:[KPAnnotation class]]) {
         KPAnnotation *a = (KPAnnotation *)annotation;
-
-        if ([annotation isKindOfClass:[MKUserLocation class]]){
-            return nil;
-        }
 
         if (a.isCluster) {
             annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
