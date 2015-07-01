@@ -222,8 +222,8 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 
             [self.mapView addAnnotation:newCluster];
 
-            // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
             for (KPAnnotation *oldCluster in oldClusters) {
+                // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
                 if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
                     BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
 
@@ -347,16 +347,9 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
                          animations:animations
                          completion:completionBlock];
 #else
-        // TODO
-
-        self.mapView.wantsLayer = YES;
-
-        // Set the layer redraw policy. This would be better done in
-        // the initialization method of a NSView subclass instead of here.
-        self.mapView.layerContentsRedrawPolicy = NSViewLayerContentsRedrawOnSetNeedsDisplay;
-
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-            context.duration = 4;
+            context.duration = self.animationDuration;
+            context.allowsImplicitAnimation = YES;
 
             animations();
         } completionHandler:^{
