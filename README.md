@@ -4,11 +4,14 @@ A drop-in MKAnnotation clustering library for iOS.
 
 [![Build Status](https://travis-ci.org/itsbonczek/kingpin.svg?branch=master)](https://travis-ci.org/itsbonczek/kingpin)
 
-__Update June 17, 2015__
+__Update July 2, 2015__
 
-Kingpin is now 0.2.5.
+Kingpin is now 0.3.0-beta, the following features are under test:
 
-If you are coming from 0.1, be sure to review README for changes.
+- Carthage support
+- OSX support (no animations support yet)
+- Dynamic frameworks: iOS and OSX
+- 4 example apps: iOS, OSX, iOS-Swift, OSX-Swift.
 
 ## Features
 
@@ -17,22 +20,26 @@ If you are coming from 0.1, be sure to review README for changes.
 
 ## Installation
 
-Install via CocoaPods. To get stable release in your `Podfile` add:
+### Cocoa Pods
+
+To get stable release in your `Podfile` add:
 
 ```ruby
 pod 'kingpin'
-```
-
-then run 
-
-```bash
-pod install
 ```
 
 If you want to use the latest version from kingpin's master, point your Podfile to the git:
 
 ```
 pod 'kingpin', :git => 'https://github.com/itsbonczek/kingpin'
+```
+
+### Carthage
+
+In Cartfile add:
+
+```
+github "itsbonczek/kingpin"
 ```
 
 ## FAQ
@@ -95,7 +102,7 @@ Customize the annotations:
 }
 ```
 
-For more information on how to use kingpin with your own custom annotations, please see [FAQ](https://github.com/itsbonczek/kingpin/blob/master/Documentation/FAQ.md).
+For more information on how to use kingpin with your own custom annotations see [FAQ](https://github.com/itsbonczek/kingpin/blob/master/Documentation/FAQ.md).
 
 __Note:__ You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
 
