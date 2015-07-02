@@ -234,6 +234,7 @@
 		86A192581B3490410019882D /* kingpin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = kingpin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86A1925B1B3490410019882D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86A1925C1B3490410019882D /* kingpin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpin.h; sourceTree = "<group>"; };
+		86C3464F1B45BB4400D6D88B /* kingpin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpin.h; sourceTree = "<group>"; };
 		86C6DF1A1B3EBCD10048F53D /* MyAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
 		86C6DF1B1B3EBCD10048F53D /* MyAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
 		86C6DF1D1B3EBD160048F53D /* TestAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAnnotation.h; sourceTree = "<group>"; };
@@ -412,6 +413,7 @@
 				862E8CE01B3DCC8800ACB563 /* KPGridClusteringAlgorithm_Private.h */,
 				862E8CE21B3DCC8800ACB563 /* NSArray+KP.h */,
 				862E8CE31B3DCC8800ACB563 /* NSArray+KP.m */,
+				86C3464F1B45BB4400D6D88B /* kingpin.h */,
 			);
 			name = kingpin;
 			path = ../kingpin;
