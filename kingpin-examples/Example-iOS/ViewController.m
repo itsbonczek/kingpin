@@ -54,6 +54,8 @@ static const int kNumberOfTestAnnotations = 100000;
     
     [self.mapView addAnnotation:nycAnnotation];
     [self.mapView addAnnotation:sfAnnotation];
+
+    self.mapView.centerCoordinate = [self nycCoord];
 }
 
 - (void)viewDidUnload {

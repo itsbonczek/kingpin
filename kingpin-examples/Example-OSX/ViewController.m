@@ -51,6 +51,8 @@ static const int kNumberOfTestAnnotations = 100000;
 
     [self.mapView addAnnotation:nycAnnotation];
     [self.mapView addAnnotation:sfAnnotation];
+
+    self.mapView.centerCoordinate = [self nycCoord];
 }
 
 - (void)viewDidUnload {
@@ -102,7 +104,7 @@ static const int kNumberOfTestAnnotations = 100000;
 #pragma mark - <MKMapViewDelegate>
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [self.clusteringController refresh:YES];
+    [self.clusteringController refresh:NO]; // NO because animations are not supported on OSX yet
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {

@@ -31,6 +31,8 @@ class ViewController: UIViewController {
         clusteringController.delegate = self
 
         clusteringController.setAnnotations(annotations())
+
+        mapView.centerCoordinate = self.nycCoord()
     }
 
     // MARK: Fake annotation set

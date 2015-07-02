@@ -32,6 +32,8 @@ class ViewController: NSViewController {
         clusteringController.delegate = self
 
         clusteringController.setAnnotations(annotations())
+
+        mapView.centerCoordinate = self.nycCoord()
     }
 
     // MARK: Fake annotation set
@@ -109,7 +111,7 @@ extension ViewController : MKMapViewDelegate {
     }
 
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
-        clusteringController.refresh(true)
+        clusteringController.refresh(false) // "false" because animations are not supported on OSX yet
     }
 
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
