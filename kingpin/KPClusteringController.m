@@ -347,6 +347,8 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
                          animations:animations
                          completion:completionBlock];
 #else
+        NSAssert(NO, @"Kingpin does not support animations on OSX yet!");
+
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
             context.duration = self.animationDuration;
             context.allowsImplicitAnimation = YES;
