@@ -64,6 +64,12 @@ Handle the clusters:
 
 ## Basic usage (Swift)
 
+Kingpin is written on Objective-C so for interoperability with Swift (see [Apple's "Swift and Objective-C in the Same Project"](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html)) you will need to add bridging header and add import of `<kingpin/kingpin.h>` header to it:
+
+```
+#import <kingpin/kingpin.h>
+```
+
 Create an instance of `KPClusteringController`. You'll likely want to do this inside a view controller containing a map view.
 
 ```swift
