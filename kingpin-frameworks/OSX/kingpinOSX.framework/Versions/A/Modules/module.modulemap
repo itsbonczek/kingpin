@@ -1,0 +1,6 @@
+framework module kingpinOSX {
+  umbrella header "kingpinOSX.h"
+
+  export *
+  module * { export * }
+}

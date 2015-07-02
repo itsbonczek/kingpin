@@ -3,4 +3,4 @@
 **/*.xcodeproj/project.xcworkspace/xcuserdata
 **/*.xcworkspace/xcuserdata
 Build/
-kingpin-frameworks/
+# kingpin-frameworks/
