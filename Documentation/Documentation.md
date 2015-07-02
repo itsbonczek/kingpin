@@ -136,7 +136,7 @@ func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -
 }
 
 func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
-    clusteringController.refresh(false) // "false" because animations are not supported on OSX yet
+    clusteringController.refresh(true)
 }
 ```
 
