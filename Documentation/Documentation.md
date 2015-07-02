@@ -4,13 +4,17 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Basic usage](#basic-usage)
+- [Basic usage (Objective-C)](#basic-usage-objective-c)
+- [Basic usage (Swift)](#basic-usage-swift)
+- [Customize the annotations](#customize-the-annotations)
+- [Accessing cluster's annotations](#accessing-clusters-annotations)
+- [Refreshing visible annotations](#refreshing-visible-annotations)
 - [Configuration](#configuration)
 - [How it works: clustering algorithm](#how-it-works-clustering-algorithm)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Basic usage
+## Basic usage (Objective-C)
 
 Create an instance of `KPClusteringController`. You'll likely want to do this inside a view controller containing a map view.
 
@@ -58,7 +62,80 @@ Handle the clusters:
 }
 ```
 
-Customize the annotations:
+## Basic usage (Swift)
+
+Create an instance of `KPClusteringController`. You'll likely want to do this inside a view controller containing a map view.
+
+```swift
+class ViewController: NSViewController {
+    private var clusteringController : KPClusteringController!
+    @IBOutlet weak var mapView: MKMapView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
+
+        algorithm.annotationSize = CGSizeMake(25, 50)
+        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
+
+        clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
+        clusteringController.delegate = self // If you want to use delegate methods
+```
+
+Set the controller's annotations:
+
+```swift
+        clusteringController.setAnnotations(annotations())
+```
+
+Handle the clusters:
+
+```swift
+func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    if annotation is MKUserLocation {
+        // return nil so map view draws "blue dot" for standard user location
+        return nil
+    }
+
+    var annotationView : MKPinAnnotationView?
+
+    if annotation is KPAnnotation {
+        let a = annotation as! KPAnnotation
+
+        if a.isCluster() {
+            annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("cluster") as? MKPinAnnotationView
+
+            if (annotationView == nil) {
+                annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "cluster")
+            }
+
+            annotationView!.pinColor = .Purple
+        }
+
+        else {
+            annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as? MKPinAnnotationView
+
+            if (annotationView == nil) {
+                annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "pin")
+            }
+
+            annotationView!.pinColor = .Red
+        }
+
+        annotationView!.canShowCallout = true;
+    }
+
+    return annotationView;
+}
+
+func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
+    clusteringController.refresh(false) // "false" because animations are not supported on OSX yet
+}
+```
+
+## Customize the annotations
+
 ```
 - (void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation {
     annotation.title = [NSString stringWithFormat:@"%lu custom annotations", (unsigned long)annotation.annotations.count];
@@ -68,9 +145,14 @@ Customize the annotations:
 
 For more information on how to use kingpin with your own custom annotations see [FAQ](https://github.com/itsbonczek/kingpin/blob/master/Documentation/FAQ.md).
 
+
+## Accessing cluster's annotations
+
 __Note:__ You can gain access to the cluster's annotations via `-[KPAnnotation annotations]`.
 
-Refresh visible annotations as needed, this is typically done in `-mapView:regionDidChangeAnimated:`:
+## Refreshing visible annotations
+
+This is typically done in `-mapView:regionDidChangeAnimated:`:
 
 ```objective-c
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
