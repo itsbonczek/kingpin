@@ -120,30 +120,6 @@
 		93BBC0871645A42A004BC920 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBC0861645A42A004BC920 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		86087E531B3ECA2B00D24197 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 862051B41B3E064C0066333D;
-			remoteInfo = "kingpin-OSX";
-		};
-		86087E581B3ECECF00D24197 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 86A192571B3490410019882D;
-			remoteInfo = "kingpin-iOS";
-		};
-		86087E5A1B3ECED300D24197 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93BBC02F1645A119004BC920 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 862051B41B3E064C0066333D;
-			remoteInfo = "kingpin-OSX";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		86087E551B3ECA2B00D24197 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -648,7 +624,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				86087E5B1B3ECED300D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-OSX-Swift";
 			productName = "Example-OSX-Swift";
@@ -685,7 +660,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				86087E541B3ECA2B00D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-OSX";
 			productName = "Example-OSX";
@@ -722,7 +696,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				86087E591B3ECECF00D24197 /* PBXTargetDependency */,
 			);
 			name = "Example-iOS-Swift";
 			productName = kingpinSwiftTestApplication;
@@ -1006,24 +979,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		86087E541B3ECA2B00D24197 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 862051B41B3E064C0066333D /* kingpin-OSX */;
-			targetProxy = 86087E531B3ECA2B00D24197 /* PBXContainerItemProxy */;
-		};
-		86087E591B3ECECF00D24197 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 86A192571B3490410019882D /* kingpin-iOS */;
-			targetProxy = 86087E581B3ECECF00D24197 /* PBXContainerItemProxy */;
-		};
-		86087E5B1B3ECED300D24197 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 862051B41B3E064C0066333D /* kingpin-OSX */;
-			targetProxy = 86087E5A1B3ECED300D24197 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8620519B1B3E05520066333D /* Main.storyboard */ = {
