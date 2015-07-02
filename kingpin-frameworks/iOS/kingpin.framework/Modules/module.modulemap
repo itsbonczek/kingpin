@@ -1,0 +1,6 @@
+framework module kingpin {
+  umbrella header "kingpin.h"
+
+  export *
+  module * { export * }
+}

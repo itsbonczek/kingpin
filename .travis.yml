@@ -1,4 +1,4 @@
 language: objective-c
-xcode_workspace: kingpin.xcworkspace
-xcode_scheme: kingpinTests
-xcode_sdk: iphonesimulator8.1
+before_install:
+script: ./build.sh run_unit_tests
+

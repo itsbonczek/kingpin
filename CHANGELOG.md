@@ -1,5 +1,15 @@
 # Kingpin CHANGELOG
 
+## 0.3.0 (Beta)
+
+### Added 
+
+- OS X support is added. The only thing missing from iOS is support of animations. 
+- OSX and OSX-Swift example applications are added.
+- build.sh script to build frameworks for 4 targets is added: iOS, iOS-Swift, OSX, OSX-Swift.
+- kingpin.xcodeproj is now `kingpin-dev.xcodeproj` that is inside `kingpin-dev` folder.
+- Another Xcode project: `kingpin-examples` to hold 4 examples working against kingpin iOS and OSX frameworks is added. This is done to completely separate `kingpin-dev` project having developer targets that build kingpin from source and `kingpin-examples` project which has end-user targets that use kingpin as framework.
+
 ## 0.2.5
 
 ### Fixed
