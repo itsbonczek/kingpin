@@ -13,6 +13,8 @@ Kingpin is now 0.3.0-beta, the following features are under test:
 - Dynamic frameworks: iOS and OSX
 - 4 example apps: iOS, OSX, iOS-Swift, OSX-Swift.
 
+The latest stable release: [0.2.5](https://github.com/itsbonczek/kingpin/releases/tag/0.2.5)
+
 ## Features
 
 * Uses a [2-d tree](http://en.wikipedia.org/wiki/K-d_tree) under the hood for maximum performance.
