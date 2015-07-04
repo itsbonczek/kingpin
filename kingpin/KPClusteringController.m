@@ -55,13 +55,15 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 
 @implementation KPClusteringController
 
-- (id)initWithMapView:(MKMapView *)mapView {
+- (id)initWithMapView:(MKMapView *)mapView
+{
     return [self initWithMapView:mapView
              clusteringAlgorithm:[[KPGridClusteringAlgorithm alloc] init]];
             
 }
 
-- (id)initWithMapView:(MKMapView *)mapView clusteringAlgorithm:(id<KPClusteringAlgorithm>)algorithm {
+- (id)initWithMapView:(MKMapView *)mapView clusteringAlgorithm:(id<KPClusteringAlgorithm>)algorithm
+{
     NSAssert(mapView, @"mapView parameter must not be nil");
 
     self = [self init];
@@ -213,6 +215,9 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
     NSArray *oldClusters = self.currentAnnotations;
 
     if (animated) {
+        
+        NSMutableArray *removedAnnotations = [NSMutableArray arrayWithCapacity:[oldClusters count]];
+        
         // dispatch group to fire off callback after mapView has been updated with all new annotations
         dispatch_group_t group = dispatch_group_create();
 
@@ -223,11 +228,13 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
             [self.mapView addAnnotation:newCluster];
 
             for (KPAnnotation *oldCluster in oldClusters) {
+                
                 // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
                 if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
                     BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
 
                     if (shouldAnimate && [visibleAnnotations member:oldCluster]) {
+                        
                         dispatch_group_enter(group);
 
                         [self animateCluster:newCluster
@@ -238,13 +245,14 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
                                               }];
                     }
 
-                    [self.mapView removeAnnotation:oldCluster];
+                    [removedAnnotations addObject:oldCluster];
                 }
 
                 // if the new cluster had old annotations, then animate the old annotations to the new one, and remove it
                 // (collapsing animation)
 
                 else if ([newCluster.annotations member:[oldCluster.annotations anyObject]]) {
+                    
                     BOOL shouldAnimate = [oldCluster.annotations isEqualToSet:newCluster.annotations] == NO;
 
                     if (shouldAnimate && MKMapRectContainsPoint(self.mapView.visibleMapRect, MKMapPointForCoordinate(newCluster.coordinate))) {
@@ -262,11 +270,13 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
                     }
 
                     else {
-                        [self.mapView removeAnnotation:oldCluster];
+                        [removedAnnotations addObject:oldCluster];
                     }
                 }
             }
         }
+        
+        [self.mapView removeAnnotations:removedAnnotations];
 
         dispatch_group_notify(group, dispatch_get_main_queue(), ^{
             if ([self.delegate respondsToSelector:@selector(clusteringControllerDidUpdateVisibleMapAnnotations:)]) {
