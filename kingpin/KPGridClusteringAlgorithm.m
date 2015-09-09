@@ -144,10 +144,10 @@ static CGPoint CGPointFromNSValue(NSValue *value) {
 
 - (void)_ensureStrategyIntegrity {
     if (self.clusteringStrategy == KPGridClusteringAlgorithmStrategyTwoPhase &&
-        CGSizeEqualToSize(self.annotationSize, CGSizeZero))
-    {
-        [NSException raise:@"annotationSize must be set when using two phase strategy"
-                    format:nil];
+        CGSizeEqualToSize(self.annotationSize, CGSizeZero)) {
+        NSString *failureReason = @"annotationSize must be set when using two phase strategy";
+
+        @throw [NSException exceptionWithName:NSGenericException reason:failureReason userInfo:nil];
     }
 }
 

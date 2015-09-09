@@ -376,10 +376,14 @@
 - (void)testAlgorithmThrowsOnTwoPhaseWhenNoAnnotationSizeIsSet {
     KPGridClusteringAlgorithm *algorithm = [KPGridClusteringAlgorithm new];
     algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategyTwoPhase;
-    XCTAssertThrows([algorithm clusterAnnotationsInMapRect:MKMapRectRandom()
-                                             parentMapView:[self configuredMockMapView]
-                                            annotationTree:mock([KPAnnotationTree class])],
-                     @"algorithm should throw");
+
+    void (^sut)(void) = ^{
+        [algorithm clusterAnnotationsInMapRect:MKMapRectRandom()
+                                 parentMapView:[self configuredMockMapView]
+                                annotationTree:mock([KPAnnotationTree class])];
+    };
+
+    XCTAssertThrowsSpecificNamed(sut(), NSException, NSGenericException, @"");
 }
 
 
