@@ -44,7 +44,7 @@ github "itsbonczek/kingpin"
 
 ### Dynamic framework
 
-Currently latest frameworks are included to the project's tree, they are located in the `kingpin-frameworks' folder. If you want to use kingpin as framework be sure to read short documentation about using [Kingpin as dynamic framework](https://github.com/itsbonczek/kingpin/blob/master/Documentation/Framework.md).
+Currently latest frameworks are included to the project's tree, they are located in the `kingpin-frameworks` folder. If you want to use kingpin as framework be sure to read short documentation about using [Kingpin as dynamic framework](https://github.com/itsbonczek/kingpin/blob/master/Documentation/Framework.md).
 
 ## Documentation
 
