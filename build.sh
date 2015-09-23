@@ -207,7 +207,7 @@ xcodebuild -project ${examples_project}
 
     # How To Perform iOS App Validation From the Command Line
     # http://stackoverflow.com/questions/7568420/how-to-perform-ios-app-validation-from-the-command-line
-    run xcrun -v -sdk iphoneos Validation ${ios_example_device_binary}
+    # run xcrun -v -sdk iphoneos Validation ${ios_example_device_binary}
 }
 
 
