@@ -3,4 +3,7 @@
 **/*.xcodeproj/project.xcworkspace/xcuserdata
 **/*.xcworkspace/xcuserdata
 Build/
+**/DerivedData/**
 # kingpin-frameworks/
+.DS_Store
+
