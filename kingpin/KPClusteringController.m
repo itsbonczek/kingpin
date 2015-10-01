@@ -179,6 +179,15 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 #pragma mark Private
 
 - (void)updateVisibleMapAnnotationsOnMapView:(BOOL)animated {
+    // FIXME: the following if -> drop out is the workaround to prevent kingpin from crashing in
+    // applications which have tricky auto-layout enabled
+    // In future versions of kingpin this will be replaced with strong prompt about misuse
+    // that is being done by a developer
+    // Check if map is visible
+    if (self.mapView.visibleMapRect.size.width  == 0 ||
+        self.mapView.visibleMapRect.size.height == 0) {
+        return;
+    }
 
     if ([self.delegate respondsToSelector:@selector(clusteringControllerWillUpdateVisibleAnnotations:)]) {
         [self.delegate clusteringControllerWillUpdateVisibleAnnotations:self];
