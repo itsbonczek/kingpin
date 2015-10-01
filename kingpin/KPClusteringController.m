@@ -190,6 +190,7 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
     }
 
     if ([self.delegate respondsToSelector:@selector(clusteringControllerWillUpdateVisibleAnnotations:)]) {
+
         [self.delegate clusteringControllerWillUpdateVisibleAnnotations:self];
     }
 

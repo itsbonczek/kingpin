@@ -101,6 +101,7 @@
 		862E8D2D1B3DCEF900ACB563 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 862E8D251B3DCEF900ACB563 /* Images.xcassets */; };
 		862E8D2F1B3DCEF900ACB563 /* TestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D271B3DCEF900ACB563 /* TestAnnotation.swift */; };
 		862E8D301B3DCEF900ACB563 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E8D291B3DCEF900ACB563 /* ViewController.swift */; };
+		864E2AF81BBDCACC007A5A5F /* KPClusteringControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 864E2AF71BBDCACC007A5A5F /* KPClusteringControllerTests.m */; settings = {ASSET_TAGS = (); }; };
 		86A1925D1B3490410019882D /* kingpin.h in Headers */ = {isa = PBXBuildFile; fileRef = 86A1925C1B3490410019882D /* kingpin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		86C6DF1C1B3EBCD10048F53D /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DF1B1B3EBCD10048F53D /* MyAnnotation.m */; };
 		86C6DF1F1B3EBD160048F53D /* TestAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DF1E1B3EBD160048F53D /* TestAnnotation.m */; };
@@ -231,6 +232,7 @@
 		862E8D281B3DCEF900ACB563 /* Example-iOS-Swift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Example-iOS-Swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		862E8D291B3DCEF900ACB563 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8641D25318CAF14700B109E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		864E2AF71BBDCACC007A5A5F /* KPClusteringControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPClusteringControllerTests.m; path = "../../../../../stanislaw/Programming/Open-Source/kingpin/Tests/KPClusteringControllerTests.m"; sourceTree = "<group>"; };
 		86A192581B3490410019882D /* kingpin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = kingpin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86A1925B1B3490410019882D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86A1925C1B3490410019882D /* kingpin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kingpin.h; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				862E8CF21B3DCC9400ACB563 /* KPAnnotationTreeTests.m */,
 				862E8CF31B3DCC9400ACB563 /* KPGeometryTests.m */,
 				862E8CF41B3DCC9400ACB563 /* KPGridClusteringAlgorithmTests.m */,
+				864E2AF71BBDCACC007A5A5F /* KPClusteringControllerTests.m */,
 			);
 			name = Tests;
 			path = ../../Tests;
@@ -955,6 +958,7 @@
 				862E8CFB1B3DCC9400ACB563 /* KPGridClusteringAlgorithmTests.m in Sources */,
 				862E8CF71B3DCC9400ACB563 /* TestHelpers.m in Sources */,
 				862E8CFE1B3DCCC100ACB563 /* KPClusteringController.m in Sources */,
+				864E2AF81BBDCACC007A5A5F /* KPClusteringControllerTests.m in Sources */,
 				862E8CF61B3DCC9400ACB563 /* MockMapView.m in Sources */,
 				862E8CFA1B3DCC9400ACB563 /* KPGeometryTests.m in Sources */,
 				862E8CFF1B3DCCC100ACB563 /* KPGridClusteringAlgorithm.m in Sources */,
