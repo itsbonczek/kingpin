@@ -4,6 +4,6 @@
 **/*.xcworkspace/xcuserdata
 Build/
 **/DerivedData/**
-# kingpin-frameworks/
+kingpin-frameworks/
 .DS_Store
 
