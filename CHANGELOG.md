@@ -1,6 +1,16 @@
 # Kingpin CHANGELOG
 
-## 0.3.0 (Beta)
+## 0.3.1
+
+### Changed
+
+- `ENABLE_BITCODE` option for iOS framework is added, deployment target is set to 8.0
+
+### Fixed
+
+- Issue [#107: NaN at some values](https://github.com/itsbonczek/kingpin/issues/107) related to the kingpin crashing in application that uses PureLayout and exotic lifecycle management
+
+## 0.3.0
 
 ### Added 
 
