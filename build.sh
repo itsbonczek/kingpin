@@ -30,7 +30,7 @@ ios_universal_binary="${ios_universal_path}/${ios_framework}/${ios_framework_nam
 osx_path="${build_dir}/${osx_scheme}/${configuration}-macosx"
 osx_framework="${osx_path}/${osx_framework}"
 
-distribution_path="$(pwd)/kingpin-frameworks"
+distribution_path="$(pwd)/kingpin.frameworks"
 distribution_path_ios="${distribution_path}/iOS"
 distribution_path_osx="${distribution_path}/OSX"
 
