@@ -78,6 +78,7 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
     self.lastRefreshedMapRegion = self.mapView.region;
 
     self.animationDuration = 0.5f;
+    self.minimalZoomChange = 0.1f;
 
 #if TARGET_OS_IPHONE
     self.animationOptions = UIViewAnimationOptionCurveEaseOut;
@@ -150,7 +151,7 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
         return KPClusteringControllerMapViewportNoChange;
     }
 
-    if (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > 0.1f) {
+    if (fabs(self.lastRefreshedMapRect.size.width - self.mapView.visibleMapRect.size.width) > self.minimalZoomChange) {
         return KPClusteringControllerMapViewportZoom;
     }
 
