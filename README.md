@@ -22,7 +22,7 @@ The following features are under test:
 
 ## Installation
 
-### Cocoa Pods
+### CocoaPods
 
 To get stable release in your `Podfile` add:
 
