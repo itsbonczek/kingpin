@@ -1,6 +1,5 @@
 
 #import <XCTest/XCTest.h>
-
 #import <MapKit/MapKit.h>
 
 // https://github.com/EvgenyKarkan/EKAlgorithms/blob/master/EKAlgorithms/NSArray%2BEKStuff.m

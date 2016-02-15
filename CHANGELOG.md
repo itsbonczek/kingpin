@@ -1,5 +1,11 @@
 # Kingpin CHANGELOG
 
+## Master
+
+### Fixed
+
+- Issue with KPAnnotation tree producing incorrect results when queried against MKMapRects spanning international dateline [#116: No clusters or pins displayed when zoomed out](https://github.com/itsbonczek/kingpin/issues/116), thanks to @smahmoodpbm.
+
 ## 0.3.1
 
 ### Changed
