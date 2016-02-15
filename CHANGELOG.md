@@ -2,9 +2,13 @@
 
 ## Master
 
+### Added
+
+- [Added a minimal zoom change for refreshing the cluster #118](https://github.com/itsbonczek/kingpin/pull/118) [CWalig]
+
 ### Fixed
 
-- Issue with KPAnnotation tree producing incorrect results when queried against MKMapRects spanning international dateline [#116: No clusters or pins displayed when zoomed out](https://github.com/itsbonczek/kingpin/issues/116), thanks to @smahmoodpbm.
+- Issue with KPAnnotation tree producing incorrect results when queried against MKMapRects spanning international dateline [#116: No clusters or pins displayed when zoomed out](https://github.com/itsbonczek/kingpin/issues/116), thanks to @smahmoodpbm [Stanislaw Pankevich]
 
 ## 0.3.1
 
