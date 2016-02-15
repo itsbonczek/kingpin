@@ -27,6 +27,9 @@
 /// these are ignored if the delegate implements -clusteringController:performAnimations:withCompletionHandler:
 @property (assign, nonatomic) CGFloat animationDuration;
 
+/// override the minimum zoom needed to refresh the cluster
+@property (assign, nonatomic) CGFloat minimalZoomChange;
+
 #if TARGET_OS_IPHONE
 @property (assign, nonatomic) UIViewAnimationOptions animationOptions;
 #endif
