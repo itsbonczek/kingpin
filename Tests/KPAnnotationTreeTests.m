@@ -15,36 +15,29 @@
 
 #import "Datasets.h"
 
-#import <XCTest/XCTest.h>
-@interface KPAnnotationTreeTests : XCTestCase
+@interface KPAnnotationTree_Queries_Test : XCTestCase
 @end
 
-typedef struct {
-    kp_treenode_t *node;
-    int level;
-} kp_stack_el_t;
+@implementation KPAnnotationTree_Queries_Test
 
+- (void)test_simpleCaseTwoPoints {
+    CLLocationCoordinate2D coordinate1 = MKCoordinateForMapPoint(MKMapPointMake(0, 0));
+    CLLocationCoordinate2D coordinate2 = MKCoordinateForMapPoint(MKMapPointMake(MKMapRectWorld.size.width, MKMapRectWorld.size.height));
 
-@implementation KPAnnotationTreeTests
+    TestAnnotation *annotation1 = [[TestAnnotation alloc] init];
+    annotation1.coordinate = coordinate1;
 
-- (void)testStack {
-    kp_stack_t stack = kp_stack_create(10);
-    int a = 1;
-    int b = 2;
-    int c = 3;
+    TestAnnotation *annotation2 = [[TestAnnotation alloc] init];
+    annotation2.coordinate = coordinate2;
 
-    kp_stack_push(&stack, &a);
-    kp_stack_push(&stack, &b);
-    kp_stack_push(&stack, &c);
+    KPAnnotationTree *tree = [[KPAnnotationTree alloc] initWithAnnotations:@[
+        annotation1,
+        annotation2
+    ]];
 
-    int *exp_c = kp_stack_pop(&stack);
-    XCTAssert(*exp_c == c);
-
-    int *exp_b = kp_stack_pop(&stack);
-    XCTAssert(*exp_b == b);
-
-    int *exp_a = kp_stack_pop(&stack);
-    XCTAssert(*exp_a == a);
+    NSArray *annotations = [tree annotationsInMapRect:MKMapRectWorld];
+    
+    XCTAssertTrue(annotations.count == 2);
 }
 
 - (void)testEmptyTree {
@@ -70,6 +63,18 @@ typedef struct {
     XCTAssertTrue([annotations isKindOfClass:[NSArray class]]);
     XCTAssertTrue(annotations.count == 1);
 }
+
+@end
+
+@interface KPAnnotationTree_Integration_Test : XCTestCase
+@end
+
+@implementation KPAnnotationTree_Integration_Test
+
+typedef struct {
+    kp_treenode_t *node;
+    int level;
+} kp_stack_el_t;
 
 - (void)testTreesWithVariousNumberOfEqualAnnotations {
     NSUInteger K = 100;
@@ -127,7 +132,7 @@ typedef struct {
             XCTAssertTrue(annotations.count == annotations.count);
         }
     }
-    
+
     XCTAssertTrue(iterationsCount == K * N);
 }
 
@@ -231,7 +236,6 @@ typedef struct {
 
         NSAssert([annotationSet isEqual:shuffledAnnotationSet], nil);
 
-
         // Build to two different trees based on original and shuffled annotations arrays.
         KPAnnotationTree *annotationTree1 = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
         KPAnnotationTree *annotationTree2 = [[KPAnnotationTree alloc] initWithAnnotations:shuffledAnnotations];
@@ -251,12 +255,12 @@ typedef struct {
 
         // Create random rect
         MKMapRect randomRect = MKMapRectRandom();
-
+        
         NSAssert(MKMapRectContainsRect(MKMapRectWorld, randomRect), nil);
-
+        
         annotationsBySearch1 = [annotationTree1 annotationsInMapRect:randomRect];
         annotationsBySearch2 = [annotationTree2 annotationsInMapRect:randomRect];
-
+        
         annotationSetBySearch1 = [NSSet setWithArray:annotationsBySearch1];
         annotationSetBySearch2 = [NSSet setWithArray:annotationsBySearch2];
         
@@ -265,3 +269,4 @@ typedef struct {
 }
 
 @end
+
