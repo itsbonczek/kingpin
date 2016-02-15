@@ -51,6 +51,48 @@
 #pragma mark - Search
 
 - (NSArray *)annotationsInMapRect:(MKMapRect)rect {
+    MKMapRect normalizedRect = rect;
+
+    double rectMinX = fmod(MKMapRectGetMinX(rect), MKMapRectWorld.size.width);
+    double rectMaxX = fmod(MKMapRectGetMaxX(rect), MKMapRectWorld.size.width);
+
+    if (rectMinX > rectMaxX) {
+        MKMapRect rectLeft = MKMapRectMake(
+                                           rectMinX,
+                                           rect.origin.y,
+                                           MKMapRectWorld.size.width - rectMinX,
+                                           rect.size.height
+                                           );
+
+        NSArray *annotationsLeft = [self _annotationsInMapRect:rectLeft];
+
+        MKMapRect rectRight = MKMapRectMake(
+                                            0,
+                                            rect.origin.y,
+                                            rectMaxX,
+                                            rect.size.height
+                                            );
+
+        NSArray *annotationsRight = [self _annotationsInMapRect:rectRight];
+
+        NSMutableArray *annotationsLeftMinusRight = [annotationsLeft mutableCopy];
+        [annotationsLeftMinusRight removeObjectsInArray:annotationsRight];
+
+        NSAssert([annotationsLeftMinusRight isEqualToArray:annotationsLeft], nil);
+
+        return [annotationsLeft arrayByAddingObjectsFromArray:annotationsRight];
+    } else {
+        normalizedRect.origin.x = rectMinX;
+
+        NSArray *annotations = [self _annotationsInMapRect:normalizedRect];
+        
+        return annotations;
+    }
+}
+
+#pragma mark - Private
+
+- (NSArray *)_annotationsInMapRect:(MKMapRect)rect {
     NSMutableArray *result = [NSMutableArray array];
 
     MKMapPoint minPoint = rect.origin;
