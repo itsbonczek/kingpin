@@ -59,7 +59,7 @@ cat <<EOF
 Usage: sh $0 command
 command:
   print_configuration         print all configuration variables
-  run_unit_tests              run unit tests
+  test                        run tests
   build_ios                   build iOS frameworks for device and simulator and create universal iOS framework
   build_osx                   build OSX framework
   export_ios                  export built iOS framework to distribution folder (needs build_ios)
@@ -116,12 +116,13 @@ clean() {
 }
 
 
-run_unit_tests() {
+test() {
     run "
 cd $project_dir; 
 xcodebuild -project ${project_dir}/${project}
            -scheme ${unit_tests_scheme}
            -sdk iphonesimulator
+           -destination 'platform=iOS Simulator,name=iPhone 6S Plus,OS=latest'
            clean test"
 }
 
@@ -133,6 +134,7 @@ xcodebuild -project ${project}
            -scheme ${ios_scheme}
            -sdk iphonesimulator
            -configuration ${configuration}
+           -destination 'platform=iOS Simulator,name=iPhone 6S Plus,OS=latest'
            CONFIGURATION_BUILD_DIR=${ios_simulator_path}
            clean build"
 
@@ -171,12 +173,16 @@ xcodebuild -project ${project}
 export_ios() {
     mkdir -p "$distribution_path_ios"
     cp -av "${ios_universal_framework}" "${distribution_path_ios}"
+
+    cd "${distribution_path_ios}" && zip -FSrv "${distribution_path}/kingpin-iOS.zip" kingpin.framework
 }
 
 
 export_osx() {
     mkdir -p "$distribution_path_osx"
     cp -av "${osx_framework}" "${distribution_path_osx}"
+
+    cd "${distribution_path_osx}" && zip -FSrv "${distribution_path}/kingpin-OSX.zip" kingpinOSX.framework
 }
 
 
@@ -224,7 +230,7 @@ xcodebuild -project ${examples_project}
            CONFIGURATION_BUILD_DIR=${osx_swift_example_path}
            clean build"
 
-	run codesign -vvvv --verify --deep ${osx_swift_example_binary}
+    run codesign -vvvv --verify --deep ${osx_swift_example_binary}
 }
 
 
@@ -237,7 +243,7 @@ open_distribution_folder() {
 
 distribute() {
     clean
-    run_unit_tests
+    test
     build_ios
     build_osx
     export_ios
