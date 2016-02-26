@@ -25,7 +25,9 @@
 
 @end
 
-@implementation KPAnnotation
+@implementation KPAnnotation {
+    NSString * _key;
+}
 
 - (id)initWithAnnotations:(NSArray *)annotations {
     return [self initWithAnnotationSet:[NSSet setWithArray:annotations]];
@@ -152,10 +154,29 @@
                                                                 MKMapPointForCoordinate(CLLocationCoordinate2DMake(minLat, minLng)));
     
     self.radius = MAX(midPointToMax, midPointToMin);
+
+    _key = [NSString stringWithFormat:@"[%f, %f] r: %f; a: %i",
+            self.coordinate.latitude,
+            self.coordinate.longitude,
+            self.radius,
+            self.annotations.count];
 }
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: %p; coordinate = (%f, %f); annotations = %@>", NSStringFromClass(self.class), self, self.coordinate.latitude, self.coordinate.longitude, self.annotations];
+}
+
+- (BOOL)isEqual:(id)object {
+    if ([object isKindOfClass: [KPAnnotation class]]) {
+        KPAnnotation *otherAnnotation = (KPAnnotation *)object;
+        return [_key isEqualToString:otherAnnotation->_key];
+    } else {
+        return NO;
+    }
+}
+
+- (NSUInteger)hash {
+    return _key.hash;
 }
 
 @end

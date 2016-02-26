@@ -227,6 +227,15 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 
     if (animated) {
         
+        NSMutableSet *newClustersSet       = [[NSSet setWithArray:newClusters] mutableCopy];
+        NSMutableSet *oldClustersSet       = [[NSSet setWithArray:oldClusters] mutableCopy];
+        NSMutableSet *intersectClustersSet = [newClustersSet mutableCopy];
+
+        [intersectClustersSet intersectSet:oldClustersSet];
+
+        [newClustersSet minusSet:intersectClustersSet];
+        [oldClustersSet minusSet:intersectClustersSet];
+        
         NSMutableArray *removedAnnotations = [NSMutableArray arrayWithCapacity:[oldClusters count]];
         
         // dispatch group to fire off callback after mapView has been updated with all new annotations
@@ -234,11 +243,11 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 
         NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
 
-        for (KPAnnotation *newCluster in newClusters) {
+        for (KPAnnotation *newCluster in newClustersSet) {
 
             [self.mapView addAnnotation:newCluster];
 
-            for (KPAnnotation *oldCluster in oldClusters) {
+            for (KPAnnotation *oldCluster in oldClustersSet) {
                 
                 // if was part of an old cluster, then we want to animate it from the old to the new (spreading animation)
                 if ([oldCluster.annotations member:[newCluster.annotations anyObject]]) {
