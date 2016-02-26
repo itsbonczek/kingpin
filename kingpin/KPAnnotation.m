@@ -35,15 +35,17 @@
 
 - (id)initWithAnnotationSet:(NSSet *)set {
     self = [super init];
-    
+
     if (self == nil) {
         return nil;
     }
 
+    _key = @"<empty>";
     self.annotations = set;
-    self.title = [NSString stringWithFormat:@"%lu things", (unsigned long)[self.annotations count]];;
+    self.title = [NSString stringWithFormat:@"%lu things", (unsigned long)[self.annotations count]];
     [self calculateValues];
-    
+    [self buildKey];
+
     return self;
 }
 
@@ -63,7 +65,6 @@
     if (count == 1) {
         self.radius = 0;
         self.coordinate = [[[self annotations] anyObject] coordinate];
-
         return;
     }
 
@@ -78,7 +79,7 @@
     NSUInteger idx = 0;
     CLLocationCoordinate2D coords[2];
 
-    /* 
+    /*
      This algorithm is approx. 1.2-2x faster than naive one.
      It is described here: https://github.com/EvgenyKarkan/EKAlgorithms/issues/30
      */
@@ -149,17 +150,19 @@
 
     CLLocationDistance midPointToMax = MKMetersBetweenMapPoints(MKMapPointForCoordinate(self.coordinate),
                                                                 MKMapPointForCoordinate(CLLocationCoordinate2DMake(maxLat, maxLng)));
-    
+
     CLLocationDistance midPointToMin = MKMetersBetweenMapPoints(MKMapPointForCoordinate(self.coordinate),
                                                                 MKMapPointForCoordinate(CLLocationCoordinate2DMake(minLat, minLng)));
-    
-    self.radius = MAX(midPointToMax, midPointToMin);
 
-    _key = [NSString stringWithFormat:@"[%f, %f] r: %f; a: %i",
+    self.radius = MAX(midPointToMax, midPointToMin);
+}
+
+- (void)buildKey {
+    _key = [NSString stringWithFormat:@"[%f, %f] r: %f; t: %@",
             self.coordinate.latitude,
             self.coordinate.longitude,
             self.radius,
-            self.annotations.count];
+            self.title];
 }
 
 - (NSString *)description {
