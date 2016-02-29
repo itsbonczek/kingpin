@@ -101,11 +101,13 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
 }
 
 - (void)setAnnotations:(NSArray *)annotations {
-    [self.mapView removeAnnotations:self.currentAnnotations];
+    NSArray * currentAnnotations = self.currentAnnotations;
 
     self.annotationTree = [[KPAnnotationTree alloc] initWithAnnotations:annotations];
 
     [self updateVisibleMapAnnotationsOnMapView:NO];
+    
+    [self.mapView removeAnnotations:currentAnnotations];
 }
 
 - (void)refresh:(BOOL)animated {
