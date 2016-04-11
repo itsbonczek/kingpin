@@ -308,8 +308,18 @@ typedef NS_ENUM(NSInteger, KPClusteringControllerMapViewportChangeState) {
     }
 
     else {
-        [self.mapView removeAnnotations:oldClusters];
-        [self.mapView addAnnotations:newClusters];
+        
+        NSMutableSet *newClustersSet       = [[NSSet setWithArray:newClusters] mutableCopy];
+        NSMutableSet *oldClustersSet       = [[NSSet setWithArray:oldClusters] mutableCopy];
+        NSMutableSet *intersectClustersSet = [newClustersSet mutableCopy];
+
+        [intersectClustersSet intersectSet:oldClustersSet];
+
+        [newClustersSet minusSet:intersectClustersSet];
+        [oldClustersSet minusSet:intersectClustersSet];
+       
+        [self.mapView removeAnnotations:oldClustersSet];
+        [self.mapView addAnnotations:newClustersSet];
 
         if ([self.delegate respondsToSelector:@selector(clusteringControllerDidUpdateVisibleMapAnnotations:)]) {
             [self.delegate clusteringControllerDidUpdateVisibleMapAnnotations:self];
